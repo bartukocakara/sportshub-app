@@ -15,9 +15,9 @@
             <form class="form w-100" novalidate="novalidate" action="{{ route('register') }}" method="POST" id="auth">
                 @csrf
                 <div class="text-center mb-10">
-                    <h1 class="text-dark mb-3">Estasyon'a Kayıt Olun</h1>
+                    <h1 class="text-dark mb-3">Sportshub'a Kayıt Olun</h1>
                     <div class="text-gray-400 fw-semibold fs-4">
-                        <a href="{{ route('login') }}" class="link-danger fw-bold">Hesaba giriş yap</a>
+                        <a href="{{ route('login') }}" class="link-primary fw-bold">Hesaba giriş yap</a>
                     </div>
                 </div>
                 <div class="fv-row mb-10">
@@ -51,7 +51,7 @@
                     @enderror
                 </div>
                 <div class="text-center">
-                    <button type="submit" id="kt_sign_submit" class="btn btn-lg btn-danger w-100 mb-5">
+                    <button type="submit" id="kt_sign_submit" class="btn btn-lg btn-primary w-100 mb-5">
                         <span class="indicator-label">Devam Et</span>
                     </button>
                 </div>
