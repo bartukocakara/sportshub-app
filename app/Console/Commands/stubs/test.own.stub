@@ -1,0 +1,75 @@
+<?php
+
+namespace Tests\Feature\Controllers;
+
+use App\Models\$model_name$;
+use Symfony\Component\HttpFoundation\Response;
+use Tests\TestCase;
+use Laravel\Sanctum\Sanctum;
+
+class $model_name$ControllerTest extends BaseTestCase
+{
+    public function test_list_$own$_status_ok()
+    {
+        $user = $this->createUser();
+        Sanctum::actingAs($user, ['*']);
+
+        $response = $this->getJson(route('$route$.index'));
+        $response->assertStatus(Response::HTTP_OK);
+    }
+
+    public function test_create_$own$_status_ok()
+    {
+        $user = $this->createUser();
+        Sanctum::actingAs($user, ['*']);
+
+        $model = $model_name$::factory()->make();
+        $response = $this->postJson(route('$route$.store'), $model->toArray());
+        $response->assertStatus(Response::HTTP_CREATED);
+    }
+
+    public function test_create_$own$_status_unproccessable_content()
+    {
+        $user = $this->createUser();
+        Sanctum::actingAs($user, ['*']);
+
+        $data = [
+            'names' => "name",
+        ];
+        $response = $this->postJson(route('$route$.store'), $data);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    public function test_show_$own$_status_ok()
+    {
+        $user = $this->createUser();
+        Sanctum::actingAs($user, ['*']);
+
+        $model = $model_name$::factory()->create();
+        $response = $this->getJson(route('$route$.show', $model->id));
+        $response->assertStatus(Response::HTTP_OK);
+    }
+
+    public function test_update_$own$_status_ok()
+    {
+        $user = $this->createUser();
+        Sanctum::actingAs($user, ['*']);
+
+        $model = $model_name$::factory()->create();
+        $modelMake = $model_name$::factory()->make();
+        $data = $modelMake->toArray();
+
+        $response = $this->putJson(route('$route$.update', $model->id), $data);
+        $response->assertStatus(Response::HTTP_NO_CONTENT);
+    }
+
+    public function test_delete_$own$_status_ok()
+    {
+        $user = $this->createUser();
+        Sanctum::actingAs($user, ['*']);
+
+        $model = $model_name$::factory()->create();
+        $response = $this->deleteJson(route('$route$.destroy', $model->id));
+        $response->assertStatus(Response::HTTP_NO_CONTENT);
+    }
+}

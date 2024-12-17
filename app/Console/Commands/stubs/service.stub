@@ -1,0 +1,20 @@
+<?php
+
+namespace App\Services;
+
+use App\Repositories\$repository$;
+
+class $name$Service extends CrudService
+{
+    protected $repository$ $$variable$;
+
+    /**
+     * @param $repository$ $$variable$
+     * @return void
+    */
+    public function __construct($repository$ $$variable$)
+    {
+        $this->$variable$ = $$variable$;
+        parent::__construct($this->$variable$); // Crud işlemleri yoksa kaldırınız.
+    }
+}

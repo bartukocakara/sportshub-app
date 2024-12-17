@@ -1,0 +1,86 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\$name$Request;
+use App\Http\Resources\$name$Resource;
+use App\Services\$service$;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+
+class $class_name$ extends Controller
+{
+    private $service$ $$variable$;
+
+    /**
+     * Service interface tanımlanıyor.
+     *
+     * @param  $service$ $$variable$
+     * @return void
+    */
+    public function __construct($service$ $$variable$)
+    {
+        $this->$variable$ = $$variable$;
+    }
+
+    /**
+     * Kaynakları listelemek için kullanılır.
+     *
+     * @param  Request  $request
+     * @return JsonResponse
+    */
+    public function index(Request $request) : JsonResponse
+    {
+        return $this->okApiResponse(
+            $name$Resource::collection($this->$variable$->all($request))
+                ->response()
+                ->getData(true)
+        );
+    }
+
+    /**
+     * Yeni bir kaynağı kaydetmek için kullanılır.
+     *
+     * @param  $name$Request $request
+     * @return JsonResponse
+    */
+    public function store($name$Request $request) : JsonResponse
+    {
+        return $this->createdApiResponse($this->$variable$->store($request->validated()));
+    }
+
+    /**
+     * Kaynağı görüntülemek için kullanılır.
+     *
+     * @param  string $id
+     * @return JsonResponse
+    */
+    public function show(string $id) : JsonResponse
+    {
+        return $this->okApiResponse(new $name$Resource($this->$variable$->show($id)));
+    }
+
+    /**
+     * Kaynağı güncellemek için kullanılır.
+     *
+     * @param  $name$Request $request
+     * @param  string $id
+     * @return JsonResponse
+    */
+    public function update($name$Request $request, string $id) : JsonResponse
+    {
+        return $this->noContentApiResponse($this->$variable$->update($request->validated(), $id));
+    }
+
+    /**
+     * Kaynağı kaldırmak için kullanılır.
+     *
+     * @param  string $id
+     * @return JsonResponse
+     */
+    public function destroy(string $id) : JsonResponse
+    {
+        return $this->noContentApiResponse($this->$variable$->destroy($id));
+    }
+}
