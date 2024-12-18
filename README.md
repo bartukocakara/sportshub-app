@@ -1,66 +1,250 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<a name="readme-top"></a>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+    <img src="public/images/logo-color.png" alt="Logo" width="80" height="80">
+  <h3 align="center">Sportshub</h3>
 
-## About Laravel
+  <p align="center">
+    <br />
+    <br />
+    <a href="https://islergucler.tardigrad.com.tr/sixt/skeleton"><strong>Dökümantasyon »</strong></a>
+    <br />
+    <br />
+    ·
+    <a href="https://islergucler.tardigrad.com.tr/sixt/skeleton/issues">Bug Bildir</a>
+    ·
+    <a href="https://islergucler.tardigrad.com.tr/sixt/skeleton/issues">Feature Talebi</a>
+  </p>
+</div>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Dökümantasyon</summary>
+  <ol>
+    <li>
+      <a href="#proje-hakkinda">Proje Hakkında</a>
+        <ul>
+            <li><a href="#teknolojiler">Teknolojiler</a></li>
+        </ul>
+    </li>
+    <li>
+        <a href="#baslarken">Başlarken</a>
+        <ul>
+            <li><a href="#gereksinimler">Gereksinimler</a></li>
+            <li><a href="#kurulum">Kurulum</a></li>
+        </ul>
+    </li>
+    <li><a href="#dosya-olusturma">Dosya Oluşturma</a></li>
+    <li><a href="#serviceProvider-atamasi">ServiceProvider Ataması</a></li>
+    <li><a href="#cronjob-calistirma">Cronjoblar</a></li>
+    <li>
+        <a href="#testler">Testler</a>
+        <ul>
+            <li><a href="#testleri-calistirma">Testleri Çalıştırma</a></li>
+            <li><a href="#test-filtreleme">Test Filtreleme</a></li>
+        </ul>
+    </li>
+    <li>
+        <a href="http://findeks.test/api/docs">Api Dökümantasyon</a>
+    </li>
+  </ol>
+</details>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<!-- ABOUT THE PROJECT -->
+## Proje Hakkında
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<a name="proje-hakkinda"></a>
+<br />
 
-## Learning Laravel
+Bu uygulama sport tipi, maç, takım oluşturup sosyal ağ üzerinden spor tipi, maç, takım, oyuncu oluşturma amacıyla oluşturulmuştur.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+<div align="right"><b><a href="#readme-top">↥ back to top</a></b></div>
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Teknolojiler
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* Laravel
+* Postgresql
+* ...
 
-## Laravel Sponsors
+<div align="right"><b><a href="#readme-top">↥ back to top</a></b></div>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+<!-- GETTING STARTED -->
 
-### Premium Partners
+<a name="baslarken"></a>
+<br />
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Başlarken
 
-## Contributing
+Projeyi ayağa kaldırmak için aşağıdaki adımları izleyebilirsiniz.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Gereksinimler
 
-## Code of Conduct
+Gereken teknolojiler ve kurulum linkleri. (macOS)
+* PHP
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+  ```sh
+  brew install php
+  ```
+* Composer
 
-## Security Vulnerabilities
+  ```sh
+  brew install composer
+  ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Kurulum
 
-## License
+1. Proje clone
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+   ```sh
+   git clone https://github.com/bartukocakara/laravel-sportshub
+   ```
+2. Paketleri yükleme
+
+   ```sh
+   composer install
+   ```
+   ```sh
+   npm install
+   ```
+3. Env'yi kopyala ve bilgileri düzenle
+
+   ```sh
+   cp .env.example .env
+   ```
+4. Migration & Seeding
+
+   ```sh
+   php artisan migrate --seed
+   php artisan db:seed --class=Database\Seeders\Court\CourtSubscriptionOwnerSeeder (WINDOWS)
+   php artisan db:seed --class=Database\\Seeders\\Court\\CourtSubscriptionSeeder (MAC)  
+   ```
+   ```sh
+   npm run prod
+   ```
+5. Migration specific table
+
+   ```sh
+   php artisan migrate --path=/database/migrations/2023_06_01_123456_create_table_name.php
+   ```
+   ```sh
+   npm run prod
+   ```
+
+<div align="right"><b><a href="#readme-top">↥ back to top</a></b></div>
+
+<a name="dosya-olusturma"></a>
+<br />
+
+## Dosya Oluşturma
+* Controller -> Service -> Repository Pattern Oluşturma 
+(XController, XServiceInterface, XService, XRepositoryInterface, XRepository,)
+```sh
+php artisan make:api-pattern x
+```
+
+* Controller (Bu komut App\Http\Controllers altında UserController.php oluşturur.)
+```sh
+php artisan make:controller-own user
+```
+* Service Interface (Bu komut App\Services\Interfaces altında UserServiceInterface.php oluşturur.)
+```sh
+php artisan make:interface user service
+```
+Kısa Kullanım
+```sh
+php artisan make:interface user s
+```
+* Service (Bu komut App\Services altında UserService.php oluşturur.)
+```sh
+php artisan make:service user
+```
+* Repository Interface (Bu komut App\Repository\Interfaces altında UserRepositoryInterface.php oluşturur.)
+```sh
+php artisan make:interface user repository
+```
+Kısa Kullanım
+```sh
+php artisan make:interface user r
+```
+* Repository (Bu komut App\Repository altında UserRepository.php oluşturur.)
+```sh
+php artisan make:repository user
+```
+Kısa Kullanım
+```sh
+php artisan make:repo user
+```
+* Filter (Bu komut App\Filters\UserFilters altında name alanı için Name.php oluşturur.)
+```sh
+php artisan make:filter user name
+```
+* Test (Bu komut tests\Feature\Controllers altında UserControllerTest.php oluşturur.)
+```sh
+php artisan make:test-own user
+```
+
+<div align="right"><b><a href="#readme-top">↥ back to top</a></b></div>
+
+<a name="serviceProvider-atamasi"></a>
+<br />
+
+## ServiceProvider Ataması
+* Yeni bir service provider oluşturun örneğin: MyServiceProvider gibi.
+```sh
+php artisan make:provider MyServiceProvider
+```
+* İçerisinde oluşturduğunuz interface ler bind ediliyor.
+```php
+public function register()
+{
+    $this->app->bind(UserServiceInterface::class, UserService::class);
+    $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+}
+```
+* Oluşturduğunuz provider AppServiceProvider içerisinde register ediliyor.
+```php
+public function register()
+{
+    $this->app->register(
+        MyServiceProvider::class,
+    );
+}
+```
+
+<div align="right"><b><a href="#readme-top">↥ back to top</a></b></div>
+
+## Cronjoblar
+
+Oluşturulan cronjobların çalıştırılması.
+
+<a name="cronjob-calistirma"></a>
+<br />
+
+### Cronjobları Çalıştırma
+```sh
+php artisan schedule:work
+```
+
+<div align="right"><b><a href="#readme-top">↥ back to top</a></b></div>
+
+## Testler
+
+Oluşturulan testlerin çalıştırılması.
+
+<a name="testleri-calistirma"></a>
+<br />
+
+### Testleri Çalıştırma
+```sh
+php artisan test
+```
+
+### Test Filtreleme
+* User Controller test için filtreleme
+```sh
+php artisan test --filter=UserControllerTest
+```
+
+<div align="right"><b><a href="#readme-top">↥ back to top</a></b></div>

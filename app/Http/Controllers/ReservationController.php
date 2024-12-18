@@ -5,9 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Reservation;
 use App\Http\Requests\StoreReservationRequest;
 use App\Http\Requests\UpdateReservationRequest;
+use App\Services\ReservationService;
 
 class ReservationController extends Controller
 {
+    private ReservationService $reservationService;
+
+    /**
+     * Service  tanımlanıyor.
+     *
+     * @param  ReservationService $reservationService
+     * @return void
+    */
+    public function __construct(ReservationService $reservationService)
+    {
+        $this->reservationService = $reservationService;
+    }
     /**
      * Display a listing of the resource.
      */

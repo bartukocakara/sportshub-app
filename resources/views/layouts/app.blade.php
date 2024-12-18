@@ -7,15 +7,14 @@
                 @include('components.sidebar-toggle')
                 @include('components.navbar')
             </div>
-            <div class="app-header-separator"></div>
         </div>
         <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
             @include('components.sidebar')
             <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
-                @yield('content') <!-- Placeholder for content -->
+                @yield('content') 
                 @include('components.footer')
             </div>
-            @include('components.aside')
+            {{-- @include('components.aside') --}}
         </div>
     </div>
 </div>

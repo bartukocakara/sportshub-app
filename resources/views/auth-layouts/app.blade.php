@@ -4,12 +4,12 @@
 	<head><base href="../../"/>
 		<title>Sportshup App - @yield('title')</title>
 		<meta charset="utf-8" />
-		<meta name="description" content="Estasyon" />
-		<meta name="keywords" content="Estasyon" />
+		<meta name="description" content="Sportshub" />
+		<meta name="keywords" content="Sportshub" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:type" content="article" />
-		<meta property="og:site_name" content="Estasyon" />
+		<meta property="og:site_name" content="Sportshub" />
 		<link rel="shortcut icon" href="{{ asset('favicon.png') }}" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
 		<link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />

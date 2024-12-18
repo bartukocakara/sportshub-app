@@ -2,6 +2,12 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Address\CitySeeder;
+use Database\Seeders\Address\CountrySeeder;
+use Database\Seeders\Address\DistrictFourSeeder;
+use Database\Seeders\Address\DistrictSeeder;
+use Database\Seeders\Address\DistrictThreeSeeder;
+use Database\Seeders\Address\DistrictTwoSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,9 +18,18 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            CountrySeeder::class,
+            CitySeeder::class,
+            DistrictSeeder::class,
+            DistrictTwoSeeder::class,
+            DistrictThreeSeeder::class,
+            DistrictFourSeeder::class,
             UserSeeder::class,
+            SportTypeSeeder::class,
             CourtBusinessSeeder::class,
-            CourtSeeder::class
+            CourtSeeder::class,
+            CourtImageSeeder::class,
+            ReservationSeeder::class,
         ]);
     }
 }

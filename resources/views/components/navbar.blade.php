@@ -726,77 +726,7 @@
                     </div>
                 </div>
             </div>
-            <div class="app-navbar-item">
-                <div class="btn btn-icon btn-custom btn-color-gray-600 btn-active-color-primary w-35px h-35px w-md-40px h-md-40px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-                    <i class="ki-duotone ki-notification-status fs-1">
-                        <span class="path1"></span>
-                        <span class="path2"></span>
-                        <span class="path3"></span>
-                        <span class="path4"></span>
-                    </i>
-                </div>
-                <div class="menu menu-sub menu-sub-dropdown menu-column w-250px w-lg-325px" data-kt-menu="true">
-                    <div class="d-flex flex-column flex-center bgi-no-repeat rounded-top px-9 py-10" style="background-image:url('assets/media/misc/menu-header-bg.jpg')">
-                        <h3 class="text-white fw-semibold mb-3">Quick Links</h3>
-                        <span class="badge bg-primary text-inverse-primary py-2 px-3">25 pending tasks</span>
-                    </div>
-                    <!--begin:Nav-->
-                    <div class="row g-0">
-                        <!--begin:Item-->
-                        <div class="col-6">
-                            <a href="#" class="d-flex flex-column flex-center h-100 p-6 bg-hover-light border-end border-bottom">
-                                <i class="ki-duotone ki-dollar fs-3x text-primary mb-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                    <span class="path3"></span>
-                                </i>
-                                <span class="fs-5 fw-semibold text-gray-800 mb-0">Accounting</span>
-                                <span class="fs-7 text-gray-400">eCommerce</span>
-                            </a>
-                        </div>
-                        <!--begin:Item-->
-                        <div class="col-6">
-                            <a href="#" class="d-flex flex-column flex-center h-100 p-6 bg-hover-light border-bottom">
-                                <i class="ki-duotone ki-sms fs-3x text-primary mb-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
-                                <span class="fs-5 fw-semibold text-gray-800 mb-0">Administration</span>
-                                <span class="fs-7 text-gray-400">Console</span>
-                            </a>
-                        </div>
-                        <!--begin:Item-->
-                        <div class="col-6">
-                            <a href="../dist/apps/projects/list.html" class="d-flex flex-column flex-center h-100 p-6 bg-hover-light border-end">
-                                <i class="ki-duotone ki-abstract-41 fs-3x text-primary mb-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
-                                <span class="fs-5 fw-semibold text-gray-800 mb-0">Projects</span>
-                                <span class="fs-7 text-gray-400">Pending Tasks</span>
-                            </a>
-                        </div>
-                        <!--begin:Item-->
-                        <div class="col-6">
-                            <a href="#" class="d-flex flex-column flex-center h-100 p-6 bg-hover-light">
-                                <i class="ki-duotone ki-briefcase fs-3x text-primary mb-2">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
-                                <span class="fs-5 fw-semibold text-gray-800 mb-0">Customers</span>
-                                <span class="fs-7 text-gray-400">Latest cases</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="py-2 text-center border-top">
-                        <a href="#" class="btn btn-color-gray-600 btn-active-color-primary">View All
-                        <i class="ki-duotone ki-arrow-right fs-5">
-                            <span class="path1"></span>
-                            <span class="path2"></span>
-                        </i></a>
-                    </div>
-                </div>
-            </div>
+
             <div class="app-navbar-item ms-3 ms-lg-4 me-lg-2" id="kt_header_user_menu_toggle">
                 <div class="cursor-pointer symbol symbol-30px symbol-lg-40px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
                     <img src="assets/media/avatars/300-2.jpg" alt="user">
@@ -816,11 +746,11 @@
                     </div>
                     <div class="separator my-2"></div>
                     <div class="menu-item px-5">
-                        <a href="../dist/account/overview.html" class="menu-link px-5">My Profile</a>
+                        <a href="{{ route('profile.edit') }}" class="menu-link px-5">{{ __('messages.my_profile') }}</a>
                     </div>
                     <div class="menu-item px-5">
-                        <a href="../dist/apps/projects/list.html" class="menu-link px-5">
-                            <span class="menu-text">My Projects</span>
+                        <a href="{{ route('reservations.index') }}" class="menu-link px-5">
+                            <span class="menu-text">{{ __('messages.my_reservations') }}</span>
                             <span class="menu-badge">
                                 <span class="badge badge-light-danger badge-circle fw-bold fs-7">3</span>
                             </span>
@@ -977,35 +907,13 @@
                         <a href="../dist/account/settings.html" class="menu-link px-5">Account Settings</a>
                     </div>
                     <div class="menu-item px-5">
-                        <a href="../dist/authentication/layouts/corporate/sign-in.html" class="menu-link px-5">Sign Out</a>
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <button type="submit" class="menu-link px-5" style="border: none; background: none; color: inherit;">
+                                {{ __('messages.logout') }}
+                            </button>
+                        </form>
                     </div>
-                </div>
-            </div>
-            <div class="app-navbar-item ms-3 ms-lg-4 me-lg-6">
-                <a href="../dist/authentication/sign-in/basic.html" class="btn btn-icon btn-custom btn-color-gray-600 btn-active-color-primary w-35px h-35px w-md-40px h-md-40px">
-                    <i class="ki-duotone ki-setting-3 fs-1">
-                        <span class="path1"></span>
-                        <span class="path2"></span>
-                        <span class="path3"></span>
-                        <span class="path4"></span>
-                        <span class="path5"></span>
-                    </i>
-                </a>
-            </div>
-            <div class="app-navbar-item ms-3 ms-lg-4 ms-n2 me-3 d-flex d-lg-none">
-                <div class="btn btn-icon btn-custom btn-color-gray-600 btn-active-color-primary w-35px h-35px w-md-40px h-md-40px" id="kt_app_aside_mobile_toggle">
-                    <i class="ki-duotone ki-burger-menu-2 fs-2">
-                        <span class="path1"></span>
-                        <span class="path2"></span>
-                        <span class="path3"></span>
-                        <span class="path4"></span>
-                        <span class="path5"></span>
-                        <span class="path6"></span>
-                        <span class="path7"></span>
-                        <span class="path8"></span>
-                        <span class="path9"></span>
-                        <span class="path10"></span>
-                    </i>
                 </div>
             </div>
         </div>

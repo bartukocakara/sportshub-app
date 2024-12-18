@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CourtImage;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class CourtImageSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        CourtImage::factory(100)->create();
     }
 }

@@ -27,7 +27,6 @@ return new class extends Migration
                   ->on('courts')
                   ->onDelete('cascade');
             $table->string('code', 10);
-            $table->enum('field_usage_type', ['Half', 'Full'])->nullable(true);
             // $table->enum('payment_status', [ReservationPaymentStatusEnum::WAITING_FOR_PAYMENT->value,
             //                                 ReservationPaymentStatusEnum::PAYMENT_APPROVED->value,
             //                                 ReservationPaymentStatusEnum::PAYMENT_CANCELED->value,

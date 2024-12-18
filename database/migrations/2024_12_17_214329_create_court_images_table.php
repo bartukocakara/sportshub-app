@@ -22,7 +22,6 @@ return new class extends Migration
                   ->onDelete('cascade');
 
             $table->integer('order');
-
             $table->string('file_path');
             $table->timestamps();
         });

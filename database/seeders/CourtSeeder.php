@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Court;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class CourtSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Court::factory(50)->create();
     }
 }

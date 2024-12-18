@@ -13,18 +13,15 @@ class CourtBusiness extends Model
     protected $table = 'court_businesses';
 
     protected $fillable = [
-        'court_status_id',
-        'sport_type_id',
-        'title',
-        'is_private',
-        'court_business_id',
-        'zipcode',
-        'street_name',
-        'address_detail',
+        'name',
+        'tax_no',
+        'phone',
+        'email',
+        'address',
         'district_id',
         'longitude',
         'latitude',
-        'neighborhood',
-        'building_number',
+        'postal_code',
+        'standard_price',
     ];
 }
