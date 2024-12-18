@@ -99,9 +99,8 @@ class MakeServiceCommand extends Command
             'name' => $this->getSingularClassName($this->argument('name')),
             'namespace' => 'App\\Services',
             'class_name' => $this->getSingularClassName($this->argument('name')).'Service',
-            'repository' => $this->getSingularClassName($this->argument('name')).'RepositoryInterface',
+            'repository' => $this->getSingularClassName($this->argument('name')).'Repository',
             'variable' => lcfirst($this->argument('name')).'Repository',
-            'interface' => $this->getSingularClassName($this->argument('name')).'ServiceInterface',
         ];
     }
 

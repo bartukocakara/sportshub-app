@@ -11,20 +11,38 @@ class CreateApiPattern extends Command
      *
      * @var string
      */
-    protected $signature = 'app:create-api-pattern';
+    protected $signature = 'make:api-pattern {name}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Creating api pattern';
 
     /**
      * Execute the console command.
+     *
+     * @return int
      */
     public function handle()
     {
-        //
+        $this->call('make:controller-own', [
+            'name' => $this->argument('name'),
+        ]);
+
+        $this->call('make:service', [
+            'name' => $this->argument('name'),
+        ]);
+
+        $this->call('make:repository', [
+            'name' => $this->argument('name'),
+        ]);
+
+        $this->call('make:test-own', [
+            'name' => $this->argument('name'),
+        ]);
+
+        $this->info('Commands executed successfully.');
     }
 }

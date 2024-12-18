@@ -14,7 +14,7 @@ class MakeFilterCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'make:filter {model} {column}';
+    protected $signature = 'make:filter {model} {column} {type=operator}';
 
     /**
      * The console command description.
@@ -67,7 +67,14 @@ class MakeFilterCommand extends Command
      */
     public function getStubPath()
     {
-        return __DIR__ . '/../stubs/filter.stub';
+        $filterType = $this->argument('type');
+        if($filterType === 'operator') {
+            return __DIR__ . '/../stubs/filter.operator.stub';
+        } else if($filterType === 'like') {
+            return __DIR__ . '/../stubs/filter.like.stub';
+        } else {
+            return __DIR__ . '/../stubs/filter.operator.stub';
+        }
     }
 
     /**

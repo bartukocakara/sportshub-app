@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\CourtBusinessController;
 use App\Http\Controllers\CourtController;
 use App\Http\Controllers\ProfileController;
@@ -15,9 +16,14 @@ Route::get('/home', function () {
     return view('home');
 })->name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+// Google Login
+Route::get('auth/google', [SocialLoginController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('auth/google/callback', [SocialLoginController::class, 'handleGoogleCallback']);
+
+// Facebook Login
+Route::get('auth/facebook', [SocialLoginController::class, 'redirectToFacebook'])->name('auth.facebook');
+Route::get('auth/facebook/callback', [SocialLoginController::class, 'handleFacebookCallback']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
