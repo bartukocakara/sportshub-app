@@ -74,4 +74,5 @@ return [
     'start_filter' => 'Start filter',
     'back' => 'Back',
     'please_wait' => 'Please wait',
+    'court_business_detail' => 'Court Business Detail',
  ];

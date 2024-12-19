@@ -3,25 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SportTypeRequest;
-use App\Http\Resources\SportTypeResource;
-use App\Services\SportTypeService;
+use App\Http\Requests\DistrictRequest;
+use App\Http\Resources\DistrictResource;
+use App\Services\DistrictService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class SportTypeController extends Controller
+class DistrictController extends Controller
 {
-    private SportTypeService $sportTypeService;
+    private DistrictService $districtService;
 
     /**
      * Service interface tanımlanıyor.
      *
-     * @param  SportTypeService $sportTypeService
+     * @param  DistrictService $districtService
      * @return void
     */
-    public function __construct(SportTypeService $sportTypeService)
+    public function __construct(DistrictService $districtService)
     {
-        $this->sportTypeService = $sportTypeService;
+        $this->districtService = $districtService;
     }
 
     /**
@@ -33,7 +33,7 @@ class SportTypeController extends Controller
     public function index(Request $request) : JsonResponse
     {
         return $this->okApiResponse(
-            SportTypeResource::collection($this->sportTypeService->all($request))
+            DistrictResource::collection($this->districtService->all($request))
                 ->response()
                 ->getData(true)
         );
@@ -42,12 +42,12 @@ class SportTypeController extends Controller
     /**
      * Yeni bir kaynağı kaydetmek için kullanılır.
      *
-     * @param  SportTypeRequest $request
+     * @param  DistrictRequest $request
      * @return JsonResponse
     */
-    public function store(SportTypeRequest $request) : JsonResponse
+    public function store(DistrictRequest $request) : JsonResponse
     {
-        return $this->createdApiResponse($this->sportTypeService->store($request->validated()));
+        return $this->createdApiResponse($this->districtService->store($request->validated()));
     }
 
     /**
@@ -58,19 +58,19 @@ class SportTypeController extends Controller
     */
     public function show(string $id) : JsonResponse
     {
-        return $this->okApiResponse(new SportTypeResource($this->sportTypeService->show($id)));
+        return $this->okApiResponse(new DistrictResource($this->districtService->show($id)));
     }
 
     /**
      * Kaynağı güncellemek için kullanılır.
      *
-     * @param  SportTypeRequest $request
+     * @param  DistrictRequest $request
      * @param  string $id
      * @return JsonResponse
     */
-    public function update(SportTypeRequest $request, string $id) : JsonResponse
+    public function update(DistrictRequest $request, string $id) : JsonResponse
     {
-        return $this->noContentApiResponse($this->sportTypeService->update($request->validated(), $id));
+        return $this->noContentApiResponse($this->districtService->update($request->validated(), $id));
     }
 
     /**
@@ -81,6 +81,6 @@ class SportTypeController extends Controller
      */
     public function destroy(string $id) : JsonResponse
     {
-        return $this->noContentApiResponse($this->sportTypeService->destroy($id));
+        return $this->noContentApiResponse($this->districtService->destroy($id));
     }
 }

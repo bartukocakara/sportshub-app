@@ -3,25 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SportTypeRequest;
-use App\Http\Resources\SportTypeResource;
-use App\Services\SportTypeService;
+use App\Http\Requests\UserRequest;
+use App\Http\Resources\UserResource;
+use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class SportTypeController extends Controller
+class UserController extends Controller
 {
-    private SportTypeService $sportTypeService;
+    private UserService $userService;
 
     /**
      * Service interface tanımlanıyor.
      *
-     * @param  SportTypeService $sportTypeService
+     * @param  UserService $userService
      * @return void
     */
-    public function __construct(SportTypeService $sportTypeService)
+    public function __construct(UserService $userService)
     {
-        $this->sportTypeService = $sportTypeService;
+        $this->userService = $userService;
     }
 
     /**
@@ -33,7 +33,7 @@ class SportTypeController extends Controller
     public function index(Request $request) : JsonResponse
     {
         return $this->okApiResponse(
-            SportTypeResource::collection($this->sportTypeService->all($request))
+            UserResource::collection($this->userService->all($request))
                 ->response()
                 ->getData(true)
         );
@@ -42,12 +42,12 @@ class SportTypeController extends Controller
     /**
      * Yeni bir kaynağı kaydetmek için kullanılır.
      *
-     * @param  SportTypeRequest $request
+     * @param  UserRequest $request
      * @return JsonResponse
     */
-    public function store(SportTypeRequest $request) : JsonResponse
+    public function store(UserRequest $request) : JsonResponse
     {
-        return $this->createdApiResponse($this->sportTypeService->store($request->validated()));
+        return $this->createdApiResponse($this->userService->store($request->validated()));
     }
 
     /**
@@ -58,19 +58,19 @@ class SportTypeController extends Controller
     */
     public function show(string $id) : JsonResponse
     {
-        return $this->okApiResponse(new SportTypeResource($this->sportTypeService->show($id)));
+        return $this->okApiResponse(new UserResource($this->userService->show($id)));
     }
 
     /**
      * Kaynağı güncellemek için kullanılır.
      *
-     * @param  SportTypeRequest $request
+     * @param  UserRequest $request
      * @param  string $id
      * @return JsonResponse
     */
-    public function update(SportTypeRequest $request, string $id) : JsonResponse
+    public function update(UserRequest $request, string $id) : JsonResponse
     {
-        return $this->noContentApiResponse($this->sportTypeService->update($request->validated(), $id));
+        return $this->noContentApiResponse($this->userService->update($request->validated(), $id));
     }
 
     /**
@@ -81,6 +81,6 @@ class SportTypeController extends Controller
      */
     public function destroy(string $id) : JsonResponse
     {
-        return $this->noContentApiResponse($this->sportTypeService->destroy($id));
+        return $this->noContentApiResponse($this->userService->destroy($id));
     }
 }

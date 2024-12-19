@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Reservation;
-use App\Http\Requests\StoreReservationRequest;
-use App\Http\Requests\UpdateReservationRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\ReservationRequest;
+use App\Http\Resources\ReservationResource;
 use App\Services\ReservationService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
     private ReservationService $reservationService;
 
     /**
-     * Service  tanımlanıyor.
+     * Service interface tanımlanıyor.
      *
      * @param  ReservationService $reservationService
      * @return void
@@ -21,59 +23,64 @@ class ReservationController extends Controller
     {
         $this->reservationService = $reservationService;
     }
+
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
+     * Kaynakları listelemek için kullanılır.
+     *
+     * @param  Request  $request
+     * @return JsonResponse
+    */
+    public function index(Request $request) : JsonResponse
     {
-        //
+        return $this->okApiResponse(
+            ReservationResource::collection($this->reservationService->all($request))
+                ->response()
+                ->getData(true)
+        );
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+     * Yeni bir kaynağı kaydetmek için kullanılır.
+     *
+     * @param  ReservationRequest $request
+     * @return JsonResponse
+    */
+    public function store(ReservationRequest $request) : JsonResponse
     {
-        //
+        return $this->createdApiResponse($this->reservationService->store($request->validated()));
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreReservationRequest $request)
+     * Kaynağı görüntülemek için kullanılır.
+     *
+     * @param  string $id
+     * @return JsonResponse
+    */
+    public function show(string $id) : JsonResponse
     {
-        //
+        return $this->okApiResponse(new ReservationResource($this->reservationService->show($id)));
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Reservation $reservation)
+     * Kaynağı güncellemek için kullanılır.
+     *
+     * @param  ReservationRequest $request
+     * @param  string $id
+     * @return JsonResponse
+    */
+    public function update(ReservationRequest $request, string $id) : JsonResponse
     {
-        //
+        return $this->noContentApiResponse($this->reservationService->update($request->validated(), $id));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Kaynağı kaldırmak için kullanılır.
+     *
+     * @param  string $id
+     * @return JsonResponse
      */
-    public function edit(Reservation $reservation)
+    public function destroy(string $id) : JsonResponse
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateReservationRequest $request, Reservation $reservation)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Reservation $reservation)
-    {
-        //
+        return $this->noContentApiResponse($this->reservationService->destroy($id));
     }
 }

@@ -2,65 +2,85 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CourtBusiness;
-use App\Http\Requests\StoreCourtBusinessRequest;
-use App\Http\Requests\UpdateCourtBusinessRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CourtBusinessRequest;
+use App\Http\Resources\CourtBusinessResource;
+use App\Services\CourtBusinessService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class CourtBusinessController extends Controller
 {
+    private CourtBusinessService $courtBusinessService;
+
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
+     * Service interface tanımlanıyor.
+     *
+     * @param  CourtBusinessService $courtBusinessService
+     * @return void
+    */
+    public function __construct(CourtBusinessService $courtBusinessService)
     {
-        //
+        $this->courtBusinessService = $courtBusinessService;
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+     * Kaynakları listelemek için kullanılır.
+     *
+     * @param  Request  $request
+     * @return JsonResponse
+    */
+    public function index(Request $request) : JsonResponse
     {
-        //
+        return $this->okApiResponse(
+            CourtBusinessResource::collection($this->courtBusinessService->all($request))
+                ->response()
+                ->getData(true)
+        );
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreCourtBusinessRequest $request)
+     * Yeni bir kaynağı kaydetmek için kullanılır.
+     *
+     * @param  CourtBusinessRequest $request
+     * @return JsonResponse
+    */
+    public function store(CourtBusinessRequest $request) : JsonResponse
     {
-        //
+        return $this->createdApiResponse($this->courtBusinessService->store($request->validated()));
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(CourtBusiness $courtBusiness)
+     * Kaynağı görüntülemek için kullanılır.
+     *
+     * @param  string $id
+     * @return JsonResponse
+    */
+    public function show(string $id) : JsonResponse
     {
-        //
+        return $this->okApiResponse(new CourtBusinessResource($this->courtBusinessService->show($id)));
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(CourtBusiness $courtBusiness)
+     * Kaynağı güncellemek için kullanılır.
+     *
+     * @param  CourtBusinessRequest $request
+     * @param  string $id
+     * @return JsonResponse
+    */
+    public function update(CourtBusinessRequest $request, string $id) : JsonResponse
     {
-        //
+        return $this->noContentApiResponse($this->courtBusinessService->update($request->validated(), $id));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Kaynağı kaldırmak için kullanılır.
+     *
+     * @param  string $id
+     * @return JsonResponse
      */
-    public function update(UpdateCourtBusinessRequest $request, CourtBusiness $courtBusiness)
+    public function destroy(string $id) : JsonResponse
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(CourtBusiness $courtBusiness)
-    {
-        //
+        return $this->noContentApiResponse($this->courtBusinessService->destroy($id));
     }
 }

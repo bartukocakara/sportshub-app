@@ -75,4 +75,5 @@ return [
     'start_filter' => 'Filtreyi baslat',
     'back' => 'Geri dön',
     'please_wait' => 'Lütfen bekleyiniz',
+    'court_business_detail' => 'Saha işletme detayları',
 ];

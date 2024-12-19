@@ -2,65 +2,85 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Court;
-use App\Http\Requests\StoreCourtRequest;
-use App\Http\Requests\UpdateCourtRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CourtRequest;
+use App\Http\Resources\CourtResource;
+use App\Services\CourtService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class CourtController extends Controller
 {
+    private CourtService $courtService;
+
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
+     * Service interface tanımlanıyor.
+     *
+     * @param  CourtService $courtService
+     * @return void
+    */
+    public function __construct(CourtService $courtService)
     {
-        //
+        $this->courtService = $courtService;
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+     * Kaynakları listelemek için kullanılır.
+     *
+     * @param  Request  $request
+     * @return JsonResponse
+    */
+    public function index(Request $request) : JsonResponse
     {
-        //
+        return $this->okApiResponse(
+            CourtResource::collection($this->courtService->all($request))
+                ->response()
+                ->getData(true)
+        );
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreCourtRequest $request)
+     * Yeni bir kaynağı kaydetmek için kullanılır.
+     *
+     * @param  CourtRequest $request
+     * @return JsonResponse
+    */
+    public function store(CourtRequest $request) : JsonResponse
     {
-        //
+        return $this->createdApiResponse($this->courtService->store($request->validated()));
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Court $court)
+     * Kaynağı görüntülemek için kullanılır.
+     *
+     * @param  string $id
+     * @return JsonResponse
+    */
+    public function show(string $id) : JsonResponse
     {
-        //
+        return $this->okApiResponse(new CourtResource($this->courtService->show($id)));
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Court $court)
+     * Kaynağı güncellemek için kullanılır.
+     *
+     * @param  CourtRequest $request
+     * @param  string $id
+     * @return JsonResponse
+    */
+    public function update(CourtRequest $request, string $id) : JsonResponse
     {
-        //
+        return $this->noContentApiResponse($this->courtService->update($request->validated(), $id));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Kaynağı kaldırmak için kullanılır.
+     *
+     * @param  string $id
+     * @return JsonResponse
      */
-    public function update(UpdateCourtRequest $request, Court $court)
+    public function destroy(string $id) : JsonResponse
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Court $court)
-    {
-        //
+        return $this->noContentApiResponse($this->courtService->destroy($id));
     }
 }
