@@ -47,9 +47,6 @@
 @endsection
 @section('page-scripts')
     <script src="{{ asset('assets/plugins/custom/leaflet/leaflet.bundle.js') }}"></script>
-    <script src="{{ asset('assets/js/custom/utilities/modals/create-app.js') }}"><script>
-		<script>var hostUrl = "assets/";</script>
-		<script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
-		<script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
-		<script src="assets/js/custom/utilities/modals/create-app.js"></script>
+    <script src="{{ asset('assets/js/custom/utilities/modals/create-app.js') }}"></script>
+	<script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
 @endsection

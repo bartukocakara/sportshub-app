@@ -16,7 +16,25 @@
 		<link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 	</head>
 	<body id="kt_body" class="app-blank">
-		<script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if ( localStorage.getItem("data-bs-theme") !== null ) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
+		<script>
+            var defaultThemeMode = "light";
+            var themeMode;
+            if ( document.documentElement ){
+                if ( document.documentElement.hasAttribute("data-bs-theme-mode")) {
+                    themeMode = document.documentElement.getAttribute("data-bs-theme-mode");
+                } else {
+                    if ( localStorage.getItem("data-bs-theme") !== null ) {
+                        themeMode = localStorage.getItem("data-bs-theme");
+                    } else {
+                        themeMode = defaultThemeMode;
+                    }
+                }
+                if (themeMode === "system") {
+                    themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+                }
+                document.documentElement.setAttribute("data-bs-theme", themeMode);
+            }
+        </script>
 		<div class="d-flex flex-column flex-root" id="kt_app_root">
 			<div class="d-flex flex-column flex-lg-row flex-column-fluid">
 				<div class="d-flex flex-column flex-lg-row-auto bg-primary w-xl-600px positon-xl-relative">
@@ -25,11 +43,17 @@
 							<a href="../dist/index.html" class="py-2 py-lg-20">
 								<img alt="Logo" src="assets/media/logos/mail.svg" class="h-40px h-lg-50px" />
 							</a>
-							<h1 class="d-none d-lg-block fw-bold text-white fs-2qx pb-5 pb-md-10">Welcome to Saul HTML Free</h1>
-							<p class="d-none d-lg-block fw-semibold fs-2 text-white">Plan your blog post by choosing a topic creating
-							<br />an outline and checking facts</p>
+							<h1 class="d-none d-lg-block fw-bold text-white fs-2qx pb-5 pb-md-10">
+                                {{ __('messages.welcome_to_sportshub')}}
+                            </h1>
+							<p class="d-none d-lg-block fw-semibold fs-2 text-white">
+                                Plan your blog post by choosing a topic creating
+							    <br />
+                                an outline and checking facts
+                            </p>
 						</div>
-						<div class="d-none d-lg-block d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px" style="background-image: url(assets/media/illustrations/sketchy-1/17.png)"></div>
+						<div class="d-none d-lg-block d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px"
+                             style="background-image: url(assets/media/illustrations/sketchy-1/17.png)"></div>
 					</div>
 				</div>
 				@yield('content')
