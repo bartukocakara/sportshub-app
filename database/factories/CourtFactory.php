@@ -20,7 +20,6 @@ class CourtFactory extends Factory
     public function definition(): array
     {
         return [
-            'id' => Str::uuid()->toString(),
             'court_business_id' => fake()->randomElement(CourtBusiness::all()->pluck('id')),
             'title' => fake()->cityPrefix(). ' Sports Arena',
             'zipcode' => fake()->postcode,

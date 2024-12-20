@@ -12,12 +12,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
-            'first_name' => 'Bartu',
-            'last_name' => 'Kocakara',
-            'birth_date' => date('Y-m-d'),
-            'email' => 'kocakarabartu@gmail.com',
-            'password' => 'password',
-        ]);
+        User::factory(50)->create();
+
     }
 }

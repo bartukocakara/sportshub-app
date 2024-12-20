@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ReservationRequest;
-use App\Http\Resources\ReservationResource;
 use App\Services\ReservationService;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class ReservationController extends Controller
 {
@@ -18,69 +17,92 @@ class ReservationController extends Controller
      *
      * @param  ReservationService $reservationService
      * @return void
-    */
+     */
     public function __construct(ReservationService $reservationService)
     {
         $this->reservationService = $reservationService;
     }
 
     /**
-     * Kaynakları listelemek için kullanılır.
+     * Rezervasyonları listelemek için kullanılır.
      *
-     * @param  Request  $request
-     * @return JsonResponse
-    */
-    public function index(Request $request) : JsonResponse
-    {
-        return $this->okApiResponse(
-            ReservationResource::collection($this->reservationService->all($request))
-                ->response()
-                ->getData(true)
-        );
-    }
-
-    /**
-     * Yeni bir kaynağı kaydetmek için kullanılır.
-     *
-     * @param  ReservationRequest $request
-     * @return JsonResponse
-    */
-    public function store(ReservationRequest $request) : JsonResponse
-    {
-        return $this->createdApiResponse($this->reservationService->store($request->validated()));
-    }
-
-    /**
-     * Kaynağı görüntülemek için kullanılır.
-     *
-     * @param  string $id
-     * @return JsonResponse
-    */
-    public function show(string $id) : JsonResponse
-    {
-        return $this->okApiResponse(new ReservationResource($this->reservationService->show($id)));
-    }
-
-    /**
-     * Kaynağı güncellemek için kullanılır.
-     *
-     * @param  ReservationRequest $request
-     * @param  string $id
-     * @return JsonResponse
-    */
-    public function update(ReservationRequest $request, string $id) : JsonResponse
-    {
-        return $this->noContentApiResponse($this->reservationService->update($request->validated(), $id));
-    }
-
-    /**
-     * Kaynağı kaldırmak için kullanılır.
-     *
-     * @param  string $id
-     * @return JsonResponse
+     * @param  Request $request
+     * @return \Illuminate\View\View
      */
-    public function destroy(string $id) : JsonResponse
+    public function index(Request $request)
     {
-        return $this->noContentApiResponse($this->reservationService->destroy($id));
+        $reservations = $this->reservationService->all($request);
+        return view('reservations.index', compact('reservations'));
+    }
+
+    /**
+     * Yeni bir rezervasyon oluşturma formunu görüntülemek için kullanılır.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
+    {
+        return view('reservations.create');
+    }
+
+    /**
+     * Yeni bir rezervasyonu kaydetmek için kullanılır.
+     *
+     * @param  ReservationRequest $request
+     * @return RedirectResponse
+     */
+    public function store(ReservationRequest $request): RedirectResponse
+    {
+        $this->reservationService->store($request->validated());
+        return redirect()->route('reservations.index')->with('success', 'Reservation created successfully.');
+    }
+
+    /**
+     * Belirli bir rezervasyonu görüntülemek için kullanılır.
+     *
+     * @param  string $id
+     * @return \Illuminate\View\View
+     */
+    public function show(string $id)
+    {
+        $reservation = $this->reservationService->show($id);
+        return view('reservations.show.index', compact('reservation'));
+    }
+
+    /**
+     * Belirli bir rezervasyonu düzenleme formunu görüntülemek için kullanılır.
+     *
+     * @param  string $id
+     * @return \Illuminate\View\View
+     */
+    public function edit(string $id)
+    {
+        $reservation = $this->reservationService->show($id);
+        return view('reservations.edit', compact('reservation'));
+    }
+
+    /**
+     * Belirli bir rezervasyonu güncellemek için kullanılır.
+     *
+     * @param  ReservationRequest $request
+     * @param  string $id
+     * @return RedirectResponse
+     */
+    public function update(ReservationRequest $request, string $id): RedirectResponse
+    {
+        $this->reservationService->update($request->validated(), $id);
+        return redirect()->route('reservations.index')->with('success', 'Reservation updated successfully.');
+    }
+
+    /**
+     * Belirli bir rezervasyonu silmek için kullanılır.
+     *
+     * @param  string $id
+     * @return RedirectResponse
+     */
+    public function destroy(string $id): RedirectResponse
+    {
+        $this->reservationService->destroy($id);
+        return redirect()->route('reservations.index')->with('success', 'Reservation deleted successfully.');
     }
 }

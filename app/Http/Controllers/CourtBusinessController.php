@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CourtBusinessRequest;
-use App\Http\Resources\CourtBusinessResource;
 use App\Services\CourtBusinessService;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class CourtBusinessController extends Controller
 {
@@ -18,7 +17,7 @@ class CourtBusinessController extends Controller
      *
      * @param  CourtBusinessService $courtBusinessService
      * @return void
-    */
+     */
     public function __construct(CourtBusinessService $courtBusinessService)
     {
         $this->courtBusinessService = $courtBusinessService;
@@ -27,38 +26,59 @@ class CourtBusinessController extends Controller
     /**
      * Kaynakları listelemek için kullanılır.
      *
-     * @param  Request  $request
-     * @return JsonResponse
-    */
-    public function index(Request $request) : JsonResponse
+     * @param  Request $request
+     * @return \Illuminate\View\View
+     */
+    public function index(Request $request)
     {
-        return $this->okApiResponse(
-            CourtBusinessResource::collection($this->courtBusinessService->all($request))
-                ->response()
-                ->getData(true)
-        );
+        $courtBusinesses = $this->courtBusinessService->all($request);
+        return view('courtBusinesses.index', compact('courtBusinesses'));
+    }
+
+    /**
+     * Yeni bir kaynak oluşturma formunu görüntülemek için kullanılır.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
+    {
+        return view('courtBusinesses.create');
     }
 
     /**
      * Yeni bir kaynağı kaydetmek için kullanılır.
      *
      * @param  CourtBusinessRequest $request
-     * @return JsonResponse
-    */
-    public function store(CourtBusinessRequest $request) : JsonResponse
+     * @return RedirectResponse
+     */
+    public function store(CourtBusinessRequest $request): RedirectResponse
     {
-        return $this->createdApiResponse($this->courtBusinessService->store($request->validated()));
+        $this->courtBusinessService->store($request->validated());
+        return redirect()->route('courtBusinesses.index')->with('success', 'Court Business created successfully.');
     }
 
     /**
      * Kaynağı görüntülemek için kullanılır.
      *
      * @param  string $id
-     * @return JsonResponse
-    */
-    public function show(string $id) : JsonResponse
+     * @return \Illuminate\View\View
+     */
+    public function show(string $id)
     {
-        return $this->okApiResponse(new CourtBusinessResource($this->courtBusinessService->show($id)));
+        $courtBusiness = $this->courtBusinessService->show($id);
+        return view('courtBusinesses.show.index', compact('courtBusiness'));
+    }
+
+    /**
+     * Kaynağı düzenleme formunu görüntülemek için kullanılır.
+     *
+     * @param  string $id
+     * @return \Illuminate\View\View
+     */
+    public function edit(string $id)
+    {
+        $courtBusiness = $this->courtBusinessService->show($id);
+        return view('courtBusinesses.edit', compact('courtBusiness'));
     }
 
     /**
@@ -66,21 +86,23 @@ class CourtBusinessController extends Controller
      *
      * @param  CourtBusinessRequest $request
      * @param  string $id
-     * @return JsonResponse
-    */
-    public function update(CourtBusinessRequest $request, string $id) : JsonResponse
+     * @return RedirectResponse
+     */
+    public function update(CourtBusinessRequest $request, string $id): RedirectResponse
     {
-        return $this->noContentApiResponse($this->courtBusinessService->update($request->validated(), $id));
+        $this->courtBusinessService->update($request->validated(), $id);
+        return redirect()->route('courtBusinesses.index')->with('success', 'Court Business updated successfully.');
     }
 
     /**
      * Kaynağı kaldırmak için kullanılır.
      *
      * @param  string $id
-     * @return JsonResponse
+     * @return RedirectResponse
      */
-    public function destroy(string $id) : JsonResponse
+    public function destroy(string $id): RedirectResponse
     {
-        return $this->noContentApiResponse($this->courtBusinessService->destroy($id));
+        $this->courtBusinessService->destroy($id);
+        return redirect()->route('courtBusinesses.index')->with('success', 'Court Business deleted successfully.');
     }
 }
