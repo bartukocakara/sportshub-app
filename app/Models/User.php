@@ -13,6 +13,8 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, UUID;
 
+    protected $guard = 'web';
+
     /**
      * The attributes that are mass assignable.
      *

@@ -1,9 +1,13 @@
 <?php
 
 use App\Http\Controllers\Auth\SocialLoginController;
+use App\Http\Controllers\CommissionController;
+use App\Http\Controllers\CourtBusiness\LoginController;
 use App\Http\Controllers\CourtBusinessController;
 use App\Http\Controllers\CourtController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RefundController;
 use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +37,21 @@ Route::middleware('auth')->group(function () {
     Route::resource('court-businesses', CourtBusinessController::class);
     Route::resource('courts', CourtController::class);
     Route::resource('reservations', ReservationController::class);
+    Route::resource('payments', PaymentController::class);
+    Route::resource('refunds', RefundController::class);
+    Route::resource('commissions', CommissionController::class);
+});
+
+Route::prefix('court-business')->group(function () {
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('court_business.login');
+    Route::post('/login', [LoginController::class, 'login']);
+    Route::post('/logout', [LoginController::class, 'logout'])->name('court_business.logout');
+
+    Route::middleware('auth:court_business')->group(function () {
+        Route::get('/dashboard', function () {
+            return view('court_business.dashboard');
+        })->name('court_business.dashboard');
+    });
 });
 
 require __DIR__.'/auth.php';

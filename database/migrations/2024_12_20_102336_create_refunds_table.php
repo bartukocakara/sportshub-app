@@ -12,13 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('refunds', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('payment_id')->constrained()->onDelete('cascade');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('payment_id')
+                  ->nullable(true);
+            $table->foreign('payment_id')
+                  ->references('id')
+                  ->on('payments')
+                  ->onDelete('cascade');
             $table->decimal('refund_amount', 10, 2);
             $table->string('refund_reason')->nullable();
             $table->string('status')->default('pending');
             $table->timestamp('refunded_at')->nullable();
-            $table->timestamps();
             $table->timestamps();
         });
     }

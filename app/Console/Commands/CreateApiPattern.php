@@ -39,10 +39,6 @@ class CreateApiPattern extends Command
             'name' => $this->argument('name'),
         ]);
 
-        $this->call('make:test-own', [
-            'name' => $this->argument('name'),
-        ]);
-
         $this->info('Commands executed successfully.');
     }
 }

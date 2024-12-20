@@ -25,11 +25,18 @@ class DatabaseSeeder extends Seeder
             DistrictThreeSeeder::class,
             DistrictFourSeeder::class,
             UserSeeder::class,
+            AdminSeeder::class,
             SportTypeSeeder::class,
             CourtBusinessSeeder::class,
             CourtSeeder::class,
             CourtImageSeeder::class,
             ReservationSeeder::class,
+            PaymentSeeder::class,
+            RefundSeeder::class,
+            CommissionSeeder::class,
+            AccountSeeder::class,
+            InvoiceSeeder::class
+
         ]);
     }
 }

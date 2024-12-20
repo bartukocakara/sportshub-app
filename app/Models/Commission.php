@@ -6,16 +6,14 @@ use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Refund extends Model
+class Commission extends Model
 {
-    /** @use HasFactory<\Database\Factories\RefundFactory> */
+    /** @use HasFactory<\Database\Factories\CommissionFactory> */
     use HasFactory, UUID;
 
     protected $fillable = [
-        'payment_id',
-        'refund_amount',
-        'refund_reason',
-        'status',
-        'refunded_at',
+        'court_business_id',
+        'admin_id',
+        'percentage',
     ];
 }

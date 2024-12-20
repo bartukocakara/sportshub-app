@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Payment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,11 @@ class RefundFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'payment_id' => Payment::factory(),
+            'refund_amount' => $this->faker->randomFloat(2, 50, 500),
+            'refund_reason' => $this->faker->sentence,
+            'status' => $this->faker->randomElement(['pending', 'processed', 'failed']),
+            'refunded_at' => now(),
         ];
     }
 }
