@@ -49,7 +49,7 @@ Route::prefix('court-business')->group(function () {
 
     Route::middleware('auth:court_business')->group(function () {
         Route::get('/dashboard', function () {
-            return view('court_business.dashboard');
+            return view('court-business.dashboard.index');
         })->name('court_business.dashboard');
     });
 });

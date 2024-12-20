@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('courts', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->foreignUuid('sport_type_id')
+                  ->nullable(false);
+            $table->foreign('sport_type_id')
+                  ->references('id')
+                  ->on('sport_types')
+                  ->onDelete('cascade');
             $table->foreignUuid('court_business_id')
                   ->nullable(true);
             $table->foreign('court_business_id')

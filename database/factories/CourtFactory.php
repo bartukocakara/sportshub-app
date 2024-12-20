@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\CourtBusiness;
 use App\Models\District;
+use App\Models\SportType;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,6 +21,7 @@ class CourtFactory extends Factory
     public function definition(): array
     {
         return [
+            'sport_type_id' => fake()->randomElement(SportType::all()->pluck('id')),
             'court_business_id' => fake()->randomElement(CourtBusiness::all()->pluck('id')),
             'title' => fake()->cityPrefix(). ' Sports Arena',
             'zipcode' => fake()->postcode,

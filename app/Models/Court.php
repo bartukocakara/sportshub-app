@@ -13,8 +13,8 @@ class Court extends Model
     protected $table = 'courts';
 
     protected $fillable = [
-        'court_status_id',
         'sport_type_id',
+        'court_status_id',
         'title',
         'is_private',
         'court_business_id',

@@ -22,4 +22,8 @@ class Payment extends Model
         'status',
         'paid_at',
     ];
+
+    public function reservation() {
+        return $this->belongsTo(Reservation::class);
+    }
 }

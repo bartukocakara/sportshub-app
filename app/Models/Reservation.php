@@ -22,4 +22,9 @@ class Reservation extends Model
         'date',
         'price',
     ];
+
+    public function court()
+    {
+        return $this->belongsTo(Court::class);
+    }
 }

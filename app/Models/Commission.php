@@ -16,4 +16,31 @@ class Commission extends Model
         'admin_id',
         'percentage',
     ];
+
+    /**
+     * Get the court business associated with the commission.
+     */
+    public function courtBusiness()
+    {
+        return $this->belongsTo(CourtBusiness::class, 'court_business_id');
+    }
+
+    /**
+     * Get the admin associated with the commission.
+     */
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class, 'admin_id');
+    }
+
+    /**
+     * Calculate the commission based on the amount.
+     *
+     * @param float $amount
+     * @return float
+     */
+    public function calculateCommission($amount)
+    {
+        return ($this->percentage / 100) * $amount;
+    }
 }

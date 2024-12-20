@@ -25,8 +25,8 @@ class Invoice extends Model
     }
 
     // Define the relationship with User (the payer)
-    public function user()
+    public function admin()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Admin::class);
     }
 }

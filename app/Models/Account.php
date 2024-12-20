@@ -17,4 +17,12 @@ class Account extends Model
         'court_business_id', // Court business ID to link with the business
         'balance', // The balance of the account
     ];
+
+    /**
+     * Get the court business that owns the account.
+     */
+    public function courtBusiness()
+    {
+        return $this->belongsTo(CourtBusiness::class);
+    }
 }
