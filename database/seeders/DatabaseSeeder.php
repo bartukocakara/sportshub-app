@@ -8,6 +8,7 @@ use Database\Seeders\Address\DistrictFourSeeder;
 use Database\Seeders\Address\DistrictSeeder;
 use Database\Seeders\Address\DistrictThreeSeeder;
 use Database\Seeders\Address\DistrictTwoSeeder;
+use Database\Seeders\CourtReservationPricingSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -35,7 +36,8 @@ class DatabaseSeeder extends Seeder
             RefundSeeder::class,
             CommissionSeeder::class,
             AccountSeeder::class,
-            InvoiceSeeder::class
+            InvoiceSeeder::class,
+            CourtReservationPricingSeeder::class
 
         ]);
     }
