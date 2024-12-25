@@ -47,13 +47,13 @@
                                 {{ __('messages.welcome_to_sportshub')}}
                             </h1>
 							<p class="d-none d-lg-block fw-semibold fs-2 text-white">
-                                Plan your blog post by choosing a topic creating
-							    <br />
-                                an outline and checking facts
+                            Sportshub'a hoş geldiniz! Favori sporlarınızı keşfedin, maçlara katılın ve yeni arkadaşlarla tanışın.
+                            <br />
+                            Sporu eğlenceyle birleştiren topluluğumuza katılmak için hemen başlayın!
                             </p>
 						</div>
 						<div class="d-none d-lg-block d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px"
-                             style="background-image: url(assets/media/illustrations/sketchy-1/17.png)"></div>
+                             style="background-image: url(assets/media/sportshub.webp)"></div>
 					</div>
 				</div>
 				@yield('content')

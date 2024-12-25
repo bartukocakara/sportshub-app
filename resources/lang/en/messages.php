@@ -75,4 +75,5 @@ return [
     'back' => 'Back',
     'please_wait' => 'Please wait',
     'court_business_detail' => 'Court Business Detail',
+    'welcome_to_sportshub' => 'Welcome To Sportshub'
 ];
