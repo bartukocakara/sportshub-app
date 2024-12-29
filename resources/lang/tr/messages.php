@@ -76,5 +76,11 @@ return [
     'back' => 'Geri dön',
     'please_wait' => 'Lütfen bekleyiniz',
     'court_business_detail' => 'Saha işletme detayları',
-    'welcome_to_sportshub' => "Sportshub'a Hoşgeldiniz"
+    'welcome_to_sportshub' => "Sportshub'a Hoşgeldiniz",
+    'date_picker_from' => 'From Date',
+    'date_picker_to' => 'To Date',
+    'filter' => 'Filter',
+    'empty_reservations' => 'Empty Reservations',
+    'filtered_dates' => 'Filtered Results: From :from to :to',
+    'no_empty_courts' => 'No empty courts available.',
 ];

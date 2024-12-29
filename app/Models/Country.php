@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Filters\FilterBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,4 +18,9 @@ class Country extends Model
     ];
 
     public $timestamps = false;
+
+    public function scopeFilterBy($query, $filters)
+    {
+        return  (new FilterBuilder($query, $filters, 'CountryFilters'))->apply();
+    }
 }

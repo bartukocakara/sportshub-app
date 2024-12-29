@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Filters\FilterBuilder;
 use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +23,11 @@ class Payment extends Model
         'status',
         'paid_at',
     ];
+
+    public function scopeFilterBy($query, $filters)
+    {
+        return  (new FilterBuilder($query, $filters, 'PaymentFilters'))->apply();
+    }
 
     public function reservation() {
         return $this->belongsTo(Reservation::class);

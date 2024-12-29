@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Filters\FilterBuilder;
 use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +18,11 @@ class Invoice extends Model
         'due_date',
         'status',
     ];
+
+    public function scopeFilterBy($query, $filters)
+    {
+        return  (new FilterBuilder($query, $filters, 'InvoiceFilters'))->apply();
+    }
 
     // Define the relationship with CourtBusiness
     public function courtBusiness()

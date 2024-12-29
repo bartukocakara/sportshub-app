@@ -75,5 +75,11 @@ return [
     'back' => 'Back',
     'please_wait' => 'Please wait',
     'court_business_detail' => 'Court Business Detail',
-    'welcome_to_sportshub' => 'Welcome To Sportshub'
+    'welcome_to_sportshub' => 'Welcome To Sportshub',
+    'date_picker_from' => 'From Date',
+    'date_picker_to' => 'To Date',
+    'filter' => 'Filter',
+    'empty_reservations' => 'Empty Reservations',
+    'filtered_dates' => 'Filtered Results: From :from to :to',
+    'no_empty_courts' => 'No empty courts available.',
 ];
