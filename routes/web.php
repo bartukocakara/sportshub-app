@@ -5,6 +5,7 @@ use App\Http\Controllers\CommissionController;
 use App\Http\Controllers\CourtBusiness\LoginController;
 use App\Http\Controllers\CourtBusinessController;
 use App\Http\Controllers\CourtController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RefundController;
@@ -16,9 +17,7 @@ Route::get('/', function () {
 });
 
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 // Google Login
@@ -28,6 +27,7 @@ Route::get('auth/google/callback', [SocialLoginController::class, 'handleGoogleC
 // Facebook Login
 Route::get('auth/facebook', [SocialLoginController::class, 'redirectToFacebook'])->name('auth.facebook');
 Route::get('auth/facebook/callback', [SocialLoginController::class, 'handleFacebookCallback']);
+Route::get('courts/{id}', [CourtController::class, 'show'])->name('courts.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -7,12 +7,8 @@ use App\Http\Controllers\CourtBusinessController;
 use App\Http\Controllers\CourtController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('admin')->group(function () {
-    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('/login', [LoginController::class, 'login']);
-    Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout');
-
-    Route::middleware('auth:admin')->group(function () {
+Route::prefix('api')->group(function () {
+    Route::middleware('auth:web')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
         Route::resource('/courts', CourtController::class);
         Route::resource('/court-businesses', CourtBusinessController::class);

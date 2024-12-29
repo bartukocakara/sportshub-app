@@ -13,6 +13,6 @@ class CommissionSeeder extends Seeder
      */
     public function run(): void
     {
-        Commission::factory(100)->create();
+        Commission::factory(50)->create();
     }
 }

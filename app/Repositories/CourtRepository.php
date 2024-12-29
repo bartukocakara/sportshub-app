@@ -3,6 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Court;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class CourtRepository extends BaseRepository
 {
@@ -16,5 +19,15 @@ class CourtRepository extends BaseRepository
     {
         parent::__construct($court);
         $this->court = $court;
+    }
+
+    public function home(Request $request) : LengthAwarePaginator|Collection
+    {
+        return $this->court->with(['sportType',
+                                   'courtBusiness',
+                                   'district',
+                                   'courtImages',
+                                   'courtReservationPricings'])
+                            ->filterBy($request->all());
     }
 }

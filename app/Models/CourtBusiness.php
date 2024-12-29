@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Filters\FilterBuilder;
 use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable; // Import Authenticatable
@@ -24,4 +25,9 @@ class CourtBusiness extends Authenticatable
         'postal_code',
         'standard_price',
     ];
+
+    public function scopeFilterBy($query, $filters)
+    {
+        return  (new FilterBuilder($query, $filters, 'CourtBusinessFilters'))->apply();
+    }
 }

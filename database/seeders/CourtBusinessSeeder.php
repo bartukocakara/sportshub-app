@@ -13,6 +13,6 @@ class CourtBusinessSeeder extends Seeder
      */
     public function run(): void
     {
-        CourtBusiness::factory(100)->create();
+        CourtBusiness::factory(50)->create();
     }
 }

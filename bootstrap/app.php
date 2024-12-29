@@ -10,8 +10,9 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: [
             __DIR__.'/../routes/web.php',
-            __DIR__.'/../routes/court-business.php', // Add court-business routes
-            __DIR__.'/../routes/admin.php', // Add admin routes
+            __DIR__.'/../routes/court-business.php',
+            __DIR__.'/../routes/admin.php',
+            __DIR__.'/../routes/api.php',
         ],
         commands: __DIR__.'/../routes/console.php',
         health: '/up',

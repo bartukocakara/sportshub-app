@@ -9,10 +9,10 @@ class AdminMiddleware
 {
     public function handle($request, Closure $next)
     {
-        if (Auth::guard('admin')->check()) {
+        if (Auth::guard('court_business')->check()) {
             return $next($request);
         }
 
-        return redirect('/admin/login');
+        return redirect('/court-business/login');
     }
 }

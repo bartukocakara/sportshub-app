@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('title', 'Ana Sayfa')
-
+@section('custom-styles')
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+            integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+crossorigin=""/>
+@endsection
 @section('content')
 
-@section('custom-styles')
-    <link href="{{ asset('assets/plugins/custom/leaflet/leaflet.bundle.css') }}" rel="stylesheet" type="text/css">
-
-@endsection
 @include('components.home.modals.filter-modal')
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
     <div class="d-flex flex-column flex-column-fluid">
@@ -46,7 +46,35 @@
 </div>
 @endsection
 @section('page-scripts')
-    <script src="{{ asset('assets/plugins/custom/leaflet/leaflet.bundle.js') }}"></script>
     <script src="{{ asset('assets/js/custom/utilities/modals/create-app.js') }}"></script>
-	<script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize the map
+            const map = L.map('kt_contact_map').setView([37.0, 30.0], 10);
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Court data from backend
+            const courts = @json($homeData['courts']['data']);
+
+            courts.forEach(court => {
+                console.log(court);
+
+                if (court.latitude && court.longitude) {
+                    const marker = L.marker([court.latitude, court.longitude]).addTo(map);
+
+                    // Add popup with court details
+                    marker.bindPopup(`
+                        <strong>${court.title || 'Unnamed Court'}</strong><br>
+                        ${court.street_name}, ${court.neighborhood}<br>
+                        <a href="/courts/${court.id}">View Details</a>
+                    `);
+                }
+            });
+        });
+    </script>
 @endsection

@@ -13,6 +13,6 @@ class CourtImageSeeder extends Seeder
      */
     public function run(): void
     {
-        CourtImage::factory(100)->create();
+        CourtImage::factory(50)->create();
     }
 }
