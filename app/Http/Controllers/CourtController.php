@@ -7,6 +7,7 @@ use App\Http\Requests\CourtRequest;
 use App\Services\CourtService;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class CourtController extends Controller
 {
@@ -29,7 +30,7 @@ class CourtController extends Controller
      * @param  Request $request
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index(Request $request) : View
     {
         $courts = $this->courtService->all($request);
         return view('courts.index', compact('courts'));
@@ -63,7 +64,7 @@ class CourtController extends Controller
      * @param  string $id
      * @return \Illuminate\View\View
      */
-    public function show(string $id)
+    public function show(string $id) : View
     {
         $court = $this->courtService->show($id);
         return view('courts.show.index', compact('court'));
@@ -75,7 +76,7 @@ class CourtController extends Controller
      * @param  string $id
      * @return \Illuminate\View\View
      */
-    public function edit(string $id)
+    public function edit(string $id) : View
     {
         $court = $this->courtService->show($id);
         return view('courts.edit', compact('court'));

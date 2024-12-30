@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\Auth\SocialLoginController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CommissionController;
-use App\Http\Controllers\CourtBusiness\LoginController;
 use App\Http\Controllers\CourtBusinessController;
 use App\Http\Controllers\CourtController;
 use App\Http\Controllers\HomeController;
@@ -12,13 +13,9 @@ use App\Http\Controllers\RefundController;
 use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-});
 
-
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index']);
 
 // Google Login
 Route::get('auth/google', [SocialLoginController::class, 'redirectToGoogle'])->name('auth.google');
@@ -27,9 +24,18 @@ Route::get('auth/google/callback', [SocialLoginController::class, 'handleGoogleC
 // Facebook Login
 Route::get('auth/facebook', [SocialLoginController::class, 'redirectToFacebook'])->name('auth.facebook');
 Route::get('auth/facebook/callback', [SocialLoginController::class, 'handleFacebookCallback']);
+Route::resource('announcements', AnnouncementController::class);
 Route::get('courts/{id}', [CourtController::class, 'show'])->name('courts.show');
 
+Route::get('checkout/guest', [CheckoutController::class, 'guestIndex'])->name('checkout.guest.index');
+Route::post('checkout/guest/payment', [CheckoutController::class, 'guestPayment'])->name('checkout.guest.payment');
+
 Route::middleware('auth')->group(function () {
+
+    Route::get('checkout/user/user', [CheckoutController::class, 'userIndex'])->name('checkout.user.index');
+    Route::post('checkout/user/payment', [CheckoutController::class, 'userPayment'])->name('checkout.user.payment');
+
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

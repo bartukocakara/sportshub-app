@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace $namespace$;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\$name$Request;
-use App\Http\Resources\$name$Resource;
-use App\Services\$service$;
-use Illuminate\Http\JsonResponse;
+use App\Models\$name$;
 use Illuminate\Http\Request;
 
 class $class_name$ extends Controller
@@ -18,7 +16,7 @@ class $class_name$ extends Controller
      *
      * @param  $service$ $$variable$
      * @return void
-    */
+     */
     public function __construct($service$ $$variable$)
     {
         $this->$variable$ = $$variable$;
@@ -28,59 +26,80 @@ class $class_name$ extends Controller
      * Kaynakları listelemek için kullanılır.
      *
      * @param  Request  $request
-     * @return JsonResponse
-    */
-    public function index(Request $request) : JsonResponse
+     * @return \Illuminate\View\View
+     */
+    public function index(Request $request)
     {
-        return $this->okApiResponse(
-            $name$Resource::collection($this->$variable$->all($request))
-                ->response()
-                ->getData(true)
-        );
+        $items = $this->$variable$->all($request);
+        return view('$name$s.index', compact('items'));
+    }
+
+    /**
+     * Yeni bir kaynağın formunu görüntülemek için kullanılır.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
+    {
+        return view('$name$s.create');
     }
 
     /**
      * Yeni bir kaynağı kaydetmek için kullanılır.
      *
      * @param  $name$Request $request
-     * @return JsonResponse
-    */
-    public function store($name$Request $request) : JsonResponse
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store($name$Request $request)
     {
-        return $this->createdApiResponse($this->$variable$->store($request->validated()));
+        $this->$variable$->store($request->validated());
+        return redirect()->route('$name$s.index')->with('success', '$name$ created successfully.');
     }
 
     /**
-     * Kaynağı görüntülemek için kullanılır.
+     * Belirli bir kaynağı görüntülemek için kullanılır.
      *
-     * @param  string $id
-     * @return JsonResponse
-    */
-    public function show(string $id) : JsonResponse
+     * @param  $name$ $name$
+     * @return \Illuminate\View\View
+     */
+    public function show($name$ $name$)
     {
-        return $this->okApiResponse(new $name$Resource($this->$variable$->show($id)));
+        return view('$name$s.show', compact('$name$'));
     }
 
     /**
-     * Kaynağı güncellemek için kullanılır.
+     * Belirli bir kaynağı düzenleme formunu görüntülemek için kullanılır.
+     *
+     * @param  $name$ $name$
+     * @return \Illuminate\View\View
+     */
+    public function edit($name$ $name$)
+    {
+        return view('$name$s.edit', compact('$name$'));
+    }
+
+    /**
+     * Belirli bir kaynağı güncellemek için kullanılır.
      *
      * @param  $name$Request $request
-     * @param  string $id
-     * @return JsonResponse
-    */
-    public function update($name$Request $request, string $id) : JsonResponse
+     * @param  $name$ $name$
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update($name$Request $request, $name$ $name$)
     {
-        return $this->noContentApiResponse($this->$variable$->update($request->validated(), $id));
+        $this->$variable$->update($request->validated(), $name$->id);
+        return redirect()->route('$name$s.index')->with('success', '$name$ updated successfully.');
     }
 
     /**
-     * Kaynağı kaldırmak için kullanılır.
+     * Belirli bir kaynağı kaldırmak için kullanılır.
      *
-     * @param  string $id
-     * @return JsonResponse
+     * @param  $name$ $name$
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(string $id) : JsonResponse
+    public function destroy($name$ $name$)
     {
-        return $this->noContentApiResponse($this->$variable$->destroy($id));
+        $this->$variable$->destroy($name$->id);
+        return redirect()->route('$name$s.index')->with('success', '$name$ deleted successfully.');
     }
 }

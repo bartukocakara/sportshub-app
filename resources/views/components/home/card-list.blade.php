@@ -19,14 +19,16 @@
                     {{ $value['title'] }}
                 </a>
                 <div class="fw-semibold fs-5 text-gray-600 mt-3">
-                    We've been focused on
+                    {{ $value['address_detail'] }}
                 </div>
                 <div class="fs-6 fw-bold mt-5 d-flex flex-stack">
                     <span class="badge border border-dashed fs-2 fw-bold text-dark p-2">
                         <span class="fs-6 fw-semibold text-gray-400">₺</span>
                         {{ $value['court_reservation_pricings'][0]['hours'][0]['price'] }}
                     </span>
-                    <a href="#" class="btn btn-sm btn-primary">{{ __('messages.make_reservation') }}</a>
+                    <a href="{{ auth()->check() ? route('checkout.user.index') : route('checkout.guest.index') }}">
+                        {{ __('messages.make_reservation') }}
+                    </a>
                 </div>
             </div>
         </div>

@@ -37,7 +37,8 @@ class DatabaseSeeder extends Seeder
             CommissionSeeder::class,
             AccountSeeder::class,
             InvoiceSeeder::class,
-            CourtReservationPricingSeeder::class
+            CourtReservationPricingSeeder::class,
+            AnnouncementSeeder::class
 
         ]);
     }
