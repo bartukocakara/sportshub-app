@@ -15,6 +15,6 @@
             </div>
         </div>
 
-        <div class="fv-plugins-message-container invalid-feedback"></div>
+        <div class="fv-plugins-message-container invalid-feedback" style="display: none;"></div>
     </div>
 </div>

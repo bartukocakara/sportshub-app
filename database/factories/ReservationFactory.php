@@ -26,13 +26,13 @@ class ReservationFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(3),
-            'user_id' => $this->faker->randomElement(User::all()->pluck('id')), // Assuming user IDs between 1 and 5 exist
-            'court_id' => $this->faker->randomElement(Court::all()->pluck('id')), // Assuming court IDs between 1 and 5 exist
-            'code' => strtoupper($this->faker->bothify('??###')), // Random code like AB123
+            'user_id' => $this->faker->randomElement(User::all()->pluck('id')),
+            'court_id' => $this->faker->randomElement(Court::all()->pluck('id')),
+            'code' => strtoupper($this->faker->bothify('??###')),
             'from_hour' => $this->faker->time('H:i', '08:00'),
             'to_hour' => $this->faker->time('H:i', '18:00'),
-            'date' => $this->faker->date(),
-            'price' => $this->faker->randomFloat(2, 100, 500), // Price between 100 and 500
+            'date' => $this->faker->dateTimeBetween('-3 days', '+3 days')->format('Y-m-d'),
+            'price' => $this->faker->randomFloat(2, 100, 500),
         ];
     }
 }

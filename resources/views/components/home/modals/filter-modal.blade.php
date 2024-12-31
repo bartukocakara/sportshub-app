@@ -17,7 +17,9 @@
                             <div class="stepper-item current" data-step="1">
                                 <div class="stepper-wrapper">
                                     <div class="stepper-icon w-40px h-40px">
-                                        <span class="stepper-number">1</span>
+                                        <span class="stepper-number ">
+                                            <i class="fa-solid fa-calendar-days"></i>
+                                        </span>
                                     </div>
                                     <div class="stepper-label">
                                         <h3 class="stepper-title">{{ __('messages.date') }}</h3>
@@ -29,7 +31,9 @@
                             <div class="stepper-item" data-step="2">
                                 <div class="stepper-wrapper">
                                     <div class="stepper-icon w-40px h-40px">
-                                        <span class="stepper-number">2</span>
+                                        <span class="stepper-number">
+                                            <i class="fa-solid fa-tag"></i>
+                                        </span>
                                     </div>
                                     <div class="stepper-label">
                                         <h3 class="stepper-title">{{ __('messages.price') }}</h3>
@@ -41,18 +45,34 @@
                             <div class="stepper-item" data-step="3">
                                 <div class="stepper-wrapper">
                                     <div class="stepper-icon w-40px h-40px">
-                                        <span class="stepper-number">3</span>
+                                        <span class="stepper-number">
+                                            <i class="fa-solid fa-medal"></i>
+                                        </span>
                                     </div>
                                     <div class="stepper-label">
                                         <h3 class="stepper-title">{{ __('messages.sport_type') }}</h3>
                                         <div class="stepper-desc">{{ __('messages.sport_type_filtering') }}</div>
                                     </div>
                                 </div>
+                                <div class="stepper-line h-40px"></div>
+                            </div>
+                            <div class="stepper-item" data-step="4">
+                                <div class="stepper-wrapper">
+                                    <div class="stepper-icon w-40px h-40px">
+                                        <span class="stepper-number">
+                                            <i class="fa-solid fa-location-crosshairs"></i>
+                                        </span>
+                                    </div>
+                                    <div class="stepper-label">
+                                        <h3 class="stepper-title">{{ __('messages.location') }}</h3>
+                                        <div class="stepper-desc">{{ __('messages.location_filtering') }}</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="flex-row-fluid py-lg-5 px-lg-15">
-                        <form class="form fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="filter_form">
+                        <form class="form fv-plugins-bootstrap5 fv-plugins-framework" id="filter_form">
                             <div class="step-content" data-step="1">
                                 @include('components.home.modals.filter-types.date-filtering')
                             </div>

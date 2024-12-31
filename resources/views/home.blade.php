@@ -29,8 +29,7 @@
                 <div class="card">
                     <div class="p-2">
                         <div class="row mb-3">
-                            <p>Filters : <div id="filters"></div></p>
-
+                            <p>{{ __('messages.filters') }} : <div id="filters"></div></p>
                             <div class="col-md-6 pe-lg-10">
                                 @include('components.home.card-list')
                             </div>

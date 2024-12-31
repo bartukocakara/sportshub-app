@@ -27,7 +27,9 @@ class CourtRepository extends BaseRepository
                                    'courtBusiness',
                                    'district',
                                    'courtImages',
-                                   'courtReservationPricings'])
+                                   'courtReservationPricings',
+                                   'reservations'
+                                   ])
                             ->filterBy($request->all());
     }
 }
