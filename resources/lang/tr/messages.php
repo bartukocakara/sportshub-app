@@ -99,5 +99,14 @@ return [
     'price_must_be_a_number' => 'Fiyat bir sayı olmalıdır.',
     'price_cannot_be_negative' => 'Fiyat negatif olamaz.',
     'min_price_cannot_be_greater_than_max_price' => 'Minimum fiyat, maksimum fiyattan büyük olamaz.',
-
+    'time_range' => 'Zaman aralığı',
+    'start_time' => 'Başlangıç zamanı',
+    'end_time' => 'Bitiş zamanı',
+    'select_sport' => 'Spor seçiniz',
+    'city' => 'İl',
+    'district' => 'İlçe',
+    'select_city' => 'İl seçiniz',
+    'select_district' => 'İlçe seçiniz',
+    'loading' => 'Yükleniyor...',
+    'failed_to_load_districts' => 'İlçeler yüklenemedi.',
 ];

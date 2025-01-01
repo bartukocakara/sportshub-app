@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DistrictRequest;
@@ -38,6 +38,22 @@ class DistrictController extends Controller
                 ->getData(true)
         );
     }
+
+     /**
+     * Kaynakları listelemek için kullanılır.
+     *
+     * @param string $id
+     * @return JsonResponse
+    */
+    public function getByCityId(string $id) : JsonResponse
+    {
+        return $this->okApiResponse(
+            DistrictResource::collection($this->districtService->getByCityId($id))
+                ->response()
+                ->getData(true)
+        );
+    }
+
 
     /**
      * Yeni bir kaynağı kaydetmek için kullanılır.

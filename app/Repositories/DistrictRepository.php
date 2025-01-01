@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\District;
+use Illuminate\Support\Collection;
 
 class DistrictRepository extends BaseRepository
 {
@@ -16,5 +17,10 @@ class DistrictRepository extends BaseRepository
     {
         parent::__construct($district);
         $this->district = $district;
+    }
+
+    public function getByCityId(string $id) : Collection
+    {
+        return $this->district->where('city_id', $id)->get();
     }
 }

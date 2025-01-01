@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\DistrictRepository;
+use Illuminate\Support\Collection;
 
 class DistrictService extends CrudService
 {
@@ -16,5 +17,10 @@ class DistrictService extends CrudService
     {
         $this->districtRepository = $districtRepository;
         parent::__construct($this->districtRepository); // Crud işlemleri yoksa kaldırınız.
+    }
+
+    public function getByCityId(string $id) : Collection
+    {
+        return $this->districtRepository->getByCityId($id);
     }
 }

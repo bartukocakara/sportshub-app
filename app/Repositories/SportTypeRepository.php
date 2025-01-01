@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\SportType;
+use Illuminate\Support\Collection;
 
 class SportTypeRepository extends BaseRepository
 {
@@ -16,5 +17,10 @@ class SportTypeRepository extends BaseRepository
     {
         parent::__construct($sportType);
         $this->sportType = $sportType;
+    }
+
+    public function home(): Collection
+    {
+        return $this->sportType->all();
     }
 }

@@ -1,7 +1,7 @@
 <div class="w-100">
     <div class="fv-row fv-plugins-icon-container">
         <label class="d-flex align-items-center fs-5 fw-semibold mb-4">
-            <span class="required">{{ __('messages.price_filtering') }}</span>
+            <h3 class="required">{{ __('messages.price_filtering') }}</h3>
         </label>
 
         <div class="d-flex">

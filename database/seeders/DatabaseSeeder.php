@@ -4,10 +4,7 @@ namespace Database\Seeders;
 
 use Database\Seeders\Address\CitySeeder;
 use Database\Seeders\Address\CountrySeeder;
-use Database\Seeders\Address\DistrictFourSeeder;
 use Database\Seeders\Address\DistrictSeeder;
-use Database\Seeders\Address\DistrictThreeSeeder;
-use Database\Seeders\Address\DistrictTwoSeeder;
 use Database\Seeders\CourtReservationPricingSeeder;
 use Illuminate\Database\Seeder;
 
@@ -22,9 +19,6 @@ class DatabaseSeeder extends Seeder
             CountrySeeder::class,
             CitySeeder::class,
             DistrictSeeder::class,
-            DistrictTwoSeeder::class,
-            DistrictThreeSeeder::class,
-            DistrictFourSeeder::class,
             UserSeeder::class,
             AdminSeeder::class,
             SportTypeSeeder::class,

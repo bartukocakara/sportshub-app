@@ -95,4 +95,14 @@ return [
     'price_must_be_a_number' => 'Price must be a number.',
     'price_cannot_be_negative' => 'Price cannot be negative.',
     'min_price_cannot_be_greater_than_max_price' => 'Min price cannot be greater than max price.',
+    'time_range' => 'Time range',
+    'start_time' => 'Start time',
+    'end_time' => 'End time',
+    'select_sport' => 'Select sport',
+    'city' => 'City',
+    'district' => 'District',
+    'select_city' => 'Select city',
+    'select_district' => 'Select district',
+    'loading' => 'Loading...',
+    'failed_to_load_districts' => 'Failed to load districts.'
 ];

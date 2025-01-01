@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->bigInteger('sport_type_id');
+            $table->foreignUuid('sport_type_id');
             $table->foreign('sport_type_id')
                   ->references('id')
                   ->on('sport_types')

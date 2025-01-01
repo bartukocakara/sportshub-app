@@ -31,14 +31,14 @@ class AnnouncementSeeder extends Seeder
     {
         $announcements = [];
 
-        Reservation::all()->each(function ($match) use (&$announcements) {
+        Reservation::all()->each(function ($reservation) use (&$announcements) {
             $announcements[] = [
                 'id' => Str::uuid()->toString(),
-                'sport_type_id' => SportType::all()->random()->first()->id,
+                'sport_type_id' => SportType::all()->random()->id, // Fixed random usage
                 'subject_type' => Reservation::class,
-                'subject_id' => $match->id,
+                'subject_id' => $reservation->id,
                 'created_user_id' => User::inRandomOrder()->first()->id,
-                'title' => SportType::find($match->sport_type_id)->title . ' match',
+                'title' => SportType::all()->random()->title . ' match', // Fixed random usage
                 'message' => 'We need ' . $this->faker->numberBetween(1, 5) . ' more players for this match!',
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -48,7 +48,7 @@ class AnnouncementSeeder extends Seeder
         Court::all()->each(function ($court) use (&$announcements) {
             $announcements[] = [
                 'id' => Str::uuid()->toString(),
-                'sport_type_id' => SportType::all()->random()->first()->id,
+                'sport_type_id' => SportType::all()->random()->id, // Fixed random usage
                 'subject_type' => Court::class,
                 'subject_id' => $court->id,
                 'created_user_id' => User::inRandomOrder()->first()->id,
