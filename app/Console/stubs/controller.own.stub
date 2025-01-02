@@ -5,6 +5,7 @@ namespace $namespace$;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\$name$Request;
 use App\Models\$name$;
+use App\Services\$service$;
 use Illuminate\Http\Request;
 
 class $class_name$ extends Controller
@@ -28,7 +29,7 @@ class $class_name$ extends Controller
      * @param  Request  $request
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index(Request $request) : View
     {
         $items = $this->$variable$->all($request);
         return view('$name$s.index', compact('items'));
@@ -39,7 +40,7 @@ class $class_name$ extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create() : View
     {
         return view('$name$s.create');
     }
@@ -50,7 +51,7 @@ class $class_name$ extends Controller
      * @param  $name$Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store($name$Request $request)
+    public function store($name$Request $request) : RedirectResponse
     {
         $this->$variable$->store($request->validated());
         return redirect()->route('$name$s.index')->with('success', '$name$ created successfully.');
@@ -59,22 +60,24 @@ class $class_name$ extends Controller
     /**
      * Belirli bir kaynağı görüntülemek için kullanılır.
      *
-     * @param  $name$ $name$
+     * @param  string $id
      * @return \Illuminate\View\View
      */
-    public function show($name$ $name$)
+    public function show(string $id) : View
     {
+        $name$ = $this->$variable$->show($id);
         return view('$name$s.show', compact('$name$'));
     }
 
     /**
      * Belirli bir kaynağı düzenleme formunu görüntülemek için kullanılır.
      *
-     * @param  $name$ $name$
+     * @param  string $id
      * @return \Illuminate\View\View
      */
-    public function edit($name$ $name$)
+    public function edit(string $id) : View
     {
+        $data = $this->$variable$->show($id);
         return view('$name$s.edit', compact('$name$'));
     }
 
@@ -82,24 +85,24 @@ class $class_name$ extends Controller
      * Belirli bir kaynağı güncellemek için kullanılır.
      *
      * @param  $name$Request $request
-     * @param  $name$ $name$
+     * @param  string $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update($name$Request $request, $name$ $name$)
+    public function update($name$Request $request, string $id) : RedirectResponse
     {
-        $this->$variable$->update($request->validated(), $name$->id);
+        $this->$variable$->update($request->validated(), $id);
         return redirect()->route('$name$s.index')->with('success', '$name$ updated successfully.');
     }
 
     /**
      * Belirli bir kaynağı kaldırmak için kullanılır.
      *
-     * @param  $name$ $name$
+     * @param  string $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($name$ $name$)
+    public function destroy(string $id) : RedirectResponse
     {
-        $this->$variable$->destroy($name$->id);
+        $this->$variable$->destroy($id);
         return redirect()->route('$name$s.index')->with('success', '$name$ deleted successfully.');
     }
 }

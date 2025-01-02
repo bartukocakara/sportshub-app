@@ -39,7 +39,7 @@ class CrudService
     }
 
     /**
-     * @param int $id
+     * @param string $id
      * @return Model
     */
     public function show(string $id) : Model

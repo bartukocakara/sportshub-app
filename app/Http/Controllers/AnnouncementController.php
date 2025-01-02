@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnouncementRequest;
 use App\Models\Announcement;
+use App\Services\AnnouncementService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class AnnouncementController extends Controller
 {
@@ -31,7 +34,7 @@ class AnnouncementController extends Controller
     public function index(Request $request)
     {
         $items = $this->announcementService->all($request);
-        return view('Announcements.index', compact('items'));
+        return view('announcements.index', compact('items'));
     }
 
     /**
@@ -41,7 +44,7 @@ class AnnouncementController extends Controller
      */
     public function create()
     {
-        return view('Announcements.create');
+        return view('announcements.create');
     }
 
     /**
@@ -53,53 +56,54 @@ class AnnouncementController extends Controller
     public function store(AnnouncementRequest $request)
     {
         $this->announcementService->store($request->validated());
-        return redirect()->route('Announcements.index')->with('success', 'Announcement created successfully.');
+        return redirect()->route('announcements.index')->with('success', 'Announcement created successfully.');
     }
 
     /**
      * Belirli bir kaynağı görüntülemek için kullanılır.
      *
-     * @param  Announcement Announcement
+     * @param  string $id
      * @return \Illuminate\View\View
      */
-    public function show(Announcement Announcement)
+    public function show(string $id) : View
     {
-        return view('Announcements.show', compact('Announcement'));
+        $data = $this->announcementService->show($id);
+        return view('announcements.show', compact('data'));
     }
 
     /**
      * Belirli bir kaynağı düzenleme formunu görüntülemek için kullanılır.
-     *
-     * @param  Announcement Announcement
+     * @param  string $id
      * @return \Illuminate\View\View
      */
-    public function edit(Announcement Announcement)
+    public function edit(string $id) : View
     {
-        return view('Announcements.edit', compact('Announcement'));
+        $data = $this->announcementService->show($id);
+        return view('announcements.edit', compact('data'));
     }
 
     /**
      * Belirli bir kaynağı güncellemek için kullanılır.
      *
      * @param  AnnouncementRequest $request
-     * @param  Announcement Announcement
+     * @param  string $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(AnnouncementRequest $request, Announcement Announcement)
+    public function update(AnnouncementRequest $request, string $id) : RedirectResponse
     {
-        $this->announcementService->update($request->validated(), Announcement->id);
-        return redirect()->route('Announcements.index')->with('success', 'Announcement updated successfully.');
+        $this->announcementService->update($request->validated(), $id);
+        return redirect()->route('announcements.index')->with('success', 'Announcement updated successfully.');
     }
 
     /**
      * Belirli bir kaynağı kaldırmak için kullanılır.
      *
-     * @param  Announcement Announcement
+     * @param  string $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Announcement Announcement)
+    public function destroy(string $id) : RedirectResponse
     {
-        $this->announcementService->destroy(Announcement->id);
-        return redirect()->route('Announcements.index')->with('success', 'Announcement deleted successfully.');
+        $this->announcementService->destroy($id);
+        return redirect()->route('announcements.index')->with('success', 'Announcement deleted successfully.');
     }
 }
