@@ -26,12 +26,17 @@
                         <span class="fs-6 fw-semibold text-gray-400">₺</span>
                         {{ $value['court_reservation_pricings'][0]['hours'][0]['price'] }}
                     </span>
-                    <a href="{{ auth()->check() ? route('checkout.user.index') : route('checkout.guest.index') }}">
-                        {{ __('messages.make_reservation') }}
-                    </a>
+                    <button class="btn btn-info make-reservation-btn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#pricingModal"
+                            data-pricings="{{ json_encode($value['court_reservation_pricings']) }}">
+                        {{ __('messages.show_pricing_list') }}
+                    </button>
                 </div>
             </div>
         </div>
     </div>
     @endforeach
 </div>
+
+@include('components.home.modals.pricing-list-modal')

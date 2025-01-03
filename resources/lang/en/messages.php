@@ -106,4 +106,5 @@ return [
     'select_district' => 'Select district',
     'loading' => 'Loading...',
     'failed_to_load_districts' => 'Failed to load districts.',
+    'show_pricing_list' => 'Show pricing list'
 ];
