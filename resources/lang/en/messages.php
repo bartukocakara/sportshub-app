@@ -106,5 +106,12 @@ return [
     'select_district' => 'Select district',
     'loading' => 'Loading...',
     'failed_to_load_districts' => 'Failed to load districts.',
-    'show_pricing_list' => 'Show pricing list'
+    'show_pricing_list' => 'Show pricing list',
+    'monday'    => 'Monday',
+    'tuesday'   => 'Tuesday',
+    'wednesday' => 'Wednesday',
+    'thursday'  => 'Thursday',
+    'friday'    => 'Friday',
+    'saturday'  => 'Saturday',
+    'sunday'    => 'Sunday',
 ];

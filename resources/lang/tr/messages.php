@@ -109,5 +109,12 @@ return [
     'select_district' => 'İlçe seçiniz',
     'loading' => 'Yükleniyor...',
     'failed_to_load_districts' => 'İlçeler yüklenemedi.',
-    'show_pricing_list' => 'Fiyatları göster'
+    'show_pricing_list' => 'Fiyatları göster',
+    'monday'    => 'Pazartesi',
+    'tuesday'   => 'Salı',
+    'wednesday' => 'Çarşamba',
+    'thursday'  => 'Perşembe',
+    'friday'    => 'Cuma',
+    'saturday'  => 'Cumartesi',
+    'sunday'    => 'Pazar',
 ];
