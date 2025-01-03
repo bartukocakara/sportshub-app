@@ -75,9 +75,9 @@
 @section('page-scripts')
 @include('components.home.scripts.leaflet-scripts')
 @include('components.home.scripts.filter-scripts')
+@include('components.home.scripts.card-scripts')
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
-
 
 @endsection
