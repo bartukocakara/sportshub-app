@@ -4,9 +4,9 @@
     @foreach($homeData['courts']['data'] as $key => $value)
     <div class="col-md-6">
         <div class="card-xl-stretch me-md-6">
-            <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('storage/courts/court5.jpg') }}">
+            <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('storage/courts/' . (($value['court_images'][0]['file_path'] ?? 'placeholder-court.webp'))) }}">
                 <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
-                    style="background-image: url('{{ asset('storage/courts/' . (($value['court_images'][0]['file_path'] ?? 'default.jpg'))) }}')">
+                    style="background-image: url('{{ asset('storage/courts/' . (($value['court_images'][0]['file_path'] ?? 'placeholder-court.webp'))) }}')">
                 </div>
                 <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
                     <i class="ki-duotone ki-eye fs-2x text-white">

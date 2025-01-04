@@ -114,4 +114,5 @@ return [
     'friday'    => 'Friday',
     'saturday'  => 'Saturday',
     'sunday'    => 'Sunday',
+    'pricing_filter' => 'Pricing filter'
 ];

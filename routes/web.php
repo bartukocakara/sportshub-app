@@ -24,7 +24,11 @@ Route::get('auth/google/callback', [SocialLoginController::class, 'handleGoogleC
 // Facebook Login
 Route::get('auth/facebook', [SocialLoginController::class, 'redirectToFacebook'])->name('auth.facebook');
 Route::get('auth/facebook/callback', [SocialLoginController::class, 'handleFacebookCallback']);
+
 Route::resource('announcements', AnnouncementController::class);
+Route::get('courts', [CourtController::class, 'index'])->name('courts.index');
+Route::get('courts/{id}', [CourtController::class, 'show'])->name('courts.show');
+
 Route::get('courts/{id}', [CourtController::class, 'show'])->name('courts.show');
 
 Route::get('checkout/guest/{id}', [CheckoutController::class, 'guestIndex'])->name('checkout.guest.index');
@@ -41,7 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('court-businesses', CourtBusinessController::class);
-    Route::resource('courts', CourtController::class);
+    Route::resource('courts', CourtController::class)->except(['index', 'show']);
     Route::resource('reservations', ReservationController::class);
     Route::resource('payments', PaymentController::class);
     Route::resource('refunds', RefundController::class);

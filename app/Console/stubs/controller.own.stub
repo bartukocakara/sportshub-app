@@ -4,9 +4,10 @@ namespace $namespace$;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\$name$Request;
-use App\Models\$name$;
 use App\Services\$service$;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class $class_name$ extends Controller
 {
@@ -65,8 +66,8 @@ class $class_name$ extends Controller
      */
     public function show(string $id) : View
     {
-        $name$ = $this->$variable$->show($id);
-        return view('$name$s.show', compact('$name$'));
+        $data = $this->$variable$->show($id);
+        return view('$name$s.show', compact('data'));
     }
 
     /**
@@ -78,7 +79,7 @@ class $class_name$ extends Controller
     public function edit(string $id) : View
     {
         $data = $this->$variable$->show($id);
-        return view('$name$s.edit', compact('$name$'));
+        return view('$name$s.edit', compact('data'));
     }
 
     /**

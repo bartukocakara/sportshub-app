@@ -117,4 +117,5 @@ return [
     'friday'    => 'Cuma',
     'saturday'  => 'Cumartesi',
     'sunday'    => 'Pazar',
+    'pricing_filter' => 'Fiyat filtreleme',
 ];

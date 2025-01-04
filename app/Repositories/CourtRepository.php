@@ -25,6 +25,7 @@ class CourtRepository extends BaseRepository
     {
         return $this->court->with(['sportType',
                                    'courtBusiness',
+                                   'courtAddress',
                                    'district',
                                    'courtImages',
                                    'courtReservationPricings',

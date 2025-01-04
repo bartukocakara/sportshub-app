@@ -14,6 +14,20 @@
     font-size: 1rem;
     font-weight: bold;
 }
+.form-select option {
+    text-transform: capitalize; /* Capitalize first letter of city and district names */
+    font-size: 16px; /* Increase font size */
+}
+input[type="date"] {
+    font-size: 18px; /* Adjust this value to change the font size */
+    padding: 8px 12px;
+}
+
+/* For larger calendar cells and better styling */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    padding: 10px;
+    font-size: 16px; /* Increase the size of the date picker trigger */
+}
 </style>
 @endsection
 @section('content')
@@ -25,30 +39,33 @@
                 <div class="row">
                     <div class="col-12 text-center">
                         <h1 class="w-50 m-auto text-center page-heading d-flex justify-content-center align-items-center text-dark fw-bolder">
-                            {{ __('messages.home') }}
+                            {{ __('messages.courts') }}
                         </h1>
                     </div>
                 </div>
-                <div class="row mt-4">
-                    <div class="col-md-4">
-                        @include('components.home.filters.location-filtering')
+                <form id="filters-form" method="GET" action="{{ route('home') }}">
+                    <div class="row mt-4">
+                        <div class="col-md-4 text-center">
+                            @include('components.home.filters.location-filtering')
+                        </div>
+                        <div class="col-md-4 row">
+                            @include('components.home.filters.date-filtering')
+                        </div>
+                        <div class="col-md-2">
+                            @include('components.home.filters.sport-type-filter')
+                        </div>
+                        <div class="col-md-2 mt-4 d-flex justify-content-center align-items-center">
+                            <a href="#" class="btn btn-lg btn-success px-4 py-3"
+                            data-bs-toggle="modal"
+                            data-bs-target="#kt_modal_create_app">
+                            {{ __('messages.pricing_filter') }}
+                            </a>
+                        </div>
                     </div>
-                    <div class="col-md-6 row">
-                        @include('components.home.filters.date-filtering')
+                    <div class="d-flex justify-content-center mt-5">
+                        <button type="submit" class="m-4 btn btn-primary">{{ __('messages.start_filter') }}</button>
                     </div>
-                    <div class="col-md-2">
-                        @include('components.home.filters.sport-type-filter')
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-12 d-flex justify-content-center">
-                        <a href="#" class="btn btn-lg btn-success px-4 py-3"
-                           data-bs-toggle="modal"
-                           data-bs-target="#kt_modal_create_app">
-                           {{ __('messages.pricing_filter') }}
-                        </a>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
 
@@ -58,7 +75,7 @@
                     <div class="p-2">
                         <div class="row mb-3">
                             <p>{{ __('messages.filters') }} : <div id="filters"></div></p>
-                            <div class="col-md-6 pe-lg-10">
+                            <div class="col-md-6 pe-lg-10" style="max-height: calc(100vh - 200px); overflow-y: auto;">
                                 @include('components.home.card-list')
                             </div>
                             <div class="col-md-6 ps-lg-10">
