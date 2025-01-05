@@ -25,16 +25,12 @@ class HomeController extends Controller
         $this->homeService = $homeService;
     }
 
-    /**
-     * Kaynakları listelemek için kullanılır.
-     *
-     * @param  Request  $request
-     * @return View
-    */
     public function index(Request $request) : View
     {
         $homeData = $this->homeService->index($request);
 
         return view('home', compact('homeData'));
     }
+
+
 }

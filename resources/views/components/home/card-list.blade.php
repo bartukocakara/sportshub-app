@@ -1,9 +1,9 @@
-
-
 <div class="row g-10">
+
+    <!-- Court cards loop -->
     @foreach($homeData['courts']['data'] as $key => $value)
     <div class="col-md-6">
-        <div class="card-xl-stretch me-md-6">
+        <div class="card-xl-stretch me-md-6 shadow-sm border border-grey rounded p-4">
             <a class="d-block overlay" data-fslightbox="lightbox-hot-sales" href="{{ asset('storage/courts/' . (($value['court_images'][0]['file_path'] ?? 'placeholder-court.webp'))) }}">
                 <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
                     style="background-image: url('{{ asset('storage/courts/' . (($value['court_images'][0]['file_path'] ?? 'placeholder-court.webp'))) }}')">
@@ -21,23 +21,40 @@
                     {{ $value['title'] }}
                 </a>
                 <div class="fw-semibold fs-5 text-gray-600 mt-3">
-                    {{ $value['address_detail'] }}
+                    @if(isset($value['court_business']) && $value['court_business']['address'])
+                        {{ $value['court_business']['address'] }}
+                    @elseif(isset($value['court_address']) && $value['court_address']['address_detail'])
+                        {{ $value['court_address']['address_detail'] }}
+                    @else
+                        {{ __('messages.no_address_available') }}
+                    @endif
                 </div>
-                <div class="fs-6 fw-bold mt-5 d-flex flex-stack">
-                    <span class="badge border border-dashed fs-2 fw-bold text-dark p-2">
-                        <span class="fs-6 fw-semibold text-gray-400">₺</span>
-                        {{ $value['court_reservation_pricings'][0]['hours'][0]['price'] }}
-                    </span>
-                    <button class="btn btn-info make-reservation-btn"
-                            data-bs-toggle="modal"
-                            data-bs-target="#pricingModal"
-                            data-pricings="{{ json_encode($value['court_reservation_pricings']) }}"
-                            data-route="{{ Auth::check() ? 'checkout/user/': 'checkout/guest/' }}"
-                            data-court-title="{{ $value['title'] }}"
-                            data-court-address="{{ $value['address_detail'] }}">
-                        {{ __('messages.show_pricing_list') }}
-                    </button>
-                </div>
+
+                <!-- Check if pricing is available -->
+                @if(isset($value['court_reservation_pricings']) && count($value['court_reservation_pricings']) > 0 && !isset($value['court_address']))
+                    <div class="fs-6 fw-bold mt-5 d-flex flex-stack">
+                        <span class="badge border border-dashed fs-2 fw-bold text-dark p-2">
+                            <span class="fs-6 fw-semibold text-gray-400">₺</span>
+                            {{ $value['court_reservation_pricings'][0]['hours'][0]['price'] }}
+                        </span>
+                        <button class="btn btn-info make-reservation-btn"
+                                data-bs-toggle="modal"
+                                data-bs-target="#pricingModal"
+                                data-pricings="{{ json_encode($value['court_reservation_pricings']) }}"
+                                data-route="{{ Auth::check() ? 'checkout/user/' : 'checkout/guest/' }}"
+                                data-court-title="{{ $value['title'] }}"
+                                data-court-address="{{ isset($value['court_business']['address']) ? $value['court_business']['address'] : (isset($value['court_address']['address_detail']) ? $value['court_address']['address_detail'] : '') }}">
+                            {{ __('messages.show_pricing_list') }}
+                        </button>
+                    </div>
+                @else
+                    <!-- If it's a public court, redirect to the court detail page -->
+                    <div class="fs-6 fw-bold mt-5 d-flex flex-stack">
+                        <a href="{{ route('courts.show', ['id' => $value['id']]) }}" class="btn btn-primary">
+                            {{ __('messages.view_court_details') }}
+                        </a>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -45,4 +62,3 @@
 </div>
 
 @include('components.home.modals.pricing-list-modal')
-

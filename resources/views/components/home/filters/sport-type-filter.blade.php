@@ -1,6 +1,6 @@
 <div class="form-group">
-    <label for="sport_type">{{ __('messages.sport_type') }}</label>
-    <select id="sport_type" name="sport_type_id" class="form-control form-select text-white" required>
+    <h4 for="sport_type">{{ __('messages.sport_type') }}</h4>
+    <select id="sport_type" name="sport_type_id" class="form-control form-select text-dark" required>
         <option value="">{{ __('messages.select_sport') }}</option>
         @foreach ($homeData['sport_types'] as $item)
             <option value="{{ $item->id }}"

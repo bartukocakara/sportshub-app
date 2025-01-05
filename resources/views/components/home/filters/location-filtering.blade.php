@@ -11,7 +11,7 @@
             <div class="mb-10">
                 <label class="form-label fs-6 fw-semibold">{{ __('messages.city') }}:</label>
                 <select id="city-select"
-                        class="form-select form-select-solid fw-bold text-white"
+                        class="form-select form-select-solid fw-bold text-dark"
                         data-placeholder="Select City"
                         name="city_id"
                         data-allow-clear="true">
@@ -25,7 +25,7 @@
                 <label class="form-label fs-6 fw-semibold">{{ __('messages.district') }}:</label>
                 <select id="district-select"
                         name="district_id"
-                        class="form-select form-select-solid fw-bold text-white"
+                        class="form-select form-select-solid fw-bold text-dark"
                         data-placeholder="Select District"
                         data-allow-clear="true"
                         disabled>

@@ -6,13 +6,22 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
 
 <style>
-#price-slider {
-    margin: 20px 0;
+#pagination {
+    position: sticky;
+    top: 0;
+    z-index: 100; /* Ensure it's above other content */
+    background-color: white; /* Optional: Add background to prevent text overlap */
+    padding: 10px; /* Add some padding for spacing */
 }
 
-#price-min, #price-max {
-    font-size: 1rem;
-    font-weight: bold;
+.pagination-link {
+    margin-right: 10px;
+    text-decoration: none;
+    color: #007bff;
+}
+
+.pagination-link:hover {
+    text-decoration: underline;
 }
 .form-select option {
     text-transform: capitalize; /* Capitalize first letter of city and district names */
@@ -37,35 +46,36 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         <div id="kt_app_toolbar" class="app-toolbar pt-5">
             <div class="app-container container-fluid">
                 <div class="row">
-                    <div class="col-12 text-center">
+                    <div class="mb-4 col-12 text-center">
                         <h1 class="w-50 m-auto text-center page-heading d-flex justify-content-center align-items-center text-dark fw-bolder">
                             {{ __('messages.courts') }}
                         </h1>
                     </div>
+                    <form class="mt-5" id="filters-form" method="GET" action="{{ route('home') }}">
+                        <div class="row mt-4">
+                            <div class="col-md-3 text-center">
+                                @include('components.home.filters.location-filtering')
+                            </div>
+                            <div class="col-md-5 row">
+                                @include('components.home.filters.date-filtering')
+                            </div>
+                            <div class="col-md-2">
+                                @include('components.home.filters.sport-type-filter')
+                            </div>
+                            <div class="col-md-2 mt-4 d-flex justify-content-center align-items-center">
+                                <a href="#" class="btn btn-lg btn-success px-4 py-3"
+                                data-bs-toggle="modal"
+                                data-bs-target="#kt_modal_create_app">
+                                {{ __('messages.pricing_filter') }}
+                                </a>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center mt-5">
+                            <button type="submit" class="m-4 btn btn-primary">{{ __('messages.start_filter') }}</button>
+                        </div>
+                    </form>
                 </div>
-                <form id="filters-form" method="GET" action="{{ route('home') }}">
-                    <div class="row mt-4">
-                        <div class="col-md-4 text-center">
-                            @include('components.home.filters.location-filtering')
-                        </div>
-                        <div class="col-md-4 row">
-                            @include('components.home.filters.date-filtering')
-                        </div>
-                        <div class="col-md-2">
-                            @include('components.home.filters.sport-type-filter')
-                        </div>
-                        <div class="col-md-2 mt-4 d-flex justify-content-center align-items-center">
-                            <a href="#" class="btn btn-lg btn-success px-4 py-3"
-                            data-bs-toggle="modal"
-                            data-bs-target="#kt_modal_create_app">
-                            {{ __('messages.pricing_filter') }}
-                            </a>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-center mt-5">
-                        <button type="submit" class="m-4 btn btn-primary">{{ __('messages.start_filter') }}</button>
-                    </div>
-                </form>
+
             </div>
         </div>
 
@@ -74,7 +84,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
                 <div class="card">
                     <div class="p-2">
                         <div class="row mb-3">
-                            <p>{{ __('messages.filters') }} : <div id="filters"></div></p>
+                            @include('components.pagination.default', ['data' => $homeData['courts']])
                             <div class="col-md-6 pe-lg-10" style="max-height: calc(100vh - 200px); overflow-y: auto;">
                                 @include('components.home.card-list')
                             </div>
@@ -94,7 +104,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 @include('components.home.scripts.filter-scripts')
 @include('components.home.scripts.card-scripts')
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
 
 @endsection

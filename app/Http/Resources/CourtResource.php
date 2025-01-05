@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\CourtBusiness;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,18 +21,15 @@ class CourtResource extends JsonResource
             'sport_type_id' => $this->sport_type_id,
             'court_status_id' => $this->court_status_id,
             'title' => $this->title,
-            'is_private' => $this->is_private,
             'court_business_id' => $this->court_business_id,
-            'zipcode' => $this->zipcode,
-            'street_name' => $this->street_name,
-            'address_detail' => $this->address_detail,
-            'district_id' => $this->district_id,
-            'longitude' => $this->longitude,
-            'latitude' => $this->latitude,
-            'neighborhood' => $this->neighborhood,
+            'court_business' => CourtBusinessResource::make($this->whenLoaded('courtBusiness')),
+            'court_address' => CourtBusinessResource::make($this->whenLoaded('courtAddress')),
             'court_images' => CourtImageResource::collection($this->whenLoaded('courtImages')),
-            'court_reservation_pricings' => CourtReservationPricingResource::collection($this->whenLoaded('courtReservationPricings')),
-            'building_number' => $this->building_number,
+            // Only show court_reservation_pricings if court_address is not loaded
+            'court_reservation_pricings' => $this->when(
+                !$this->whenLoaded('courtAddress'),
+                CourtReservationPricingResource::collection($this->whenLoaded('courtReservationPricings'))
+            ),
         ];
     }
 }

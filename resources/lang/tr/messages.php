@@ -118,4 +118,5 @@ return [
     'saturday'  => 'Cumartesi',
     'sunday'    => 'Pazar',
     'pricing_filter' => 'Fiyat filtreleme',
+    'view_court_details' => 'Detay',
 ];

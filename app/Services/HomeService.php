@@ -29,6 +29,7 @@ class HomeService extends CrudService
         $homeData['courts'] = CourtResource::collection($this->courtRepository->home($request))
                                             ->response()
                                             ->getData(true);
+
         $homeData['sport_types'] = (new SportTypeRepository(new SportType()))->home();
         $language = $request->server('HTTP_ACCEPT_LANGUAGE');
         $countryCode = substr($language, 3, 2); // Extract country code (e.g., 'US' for 'en-US')

@@ -29,8 +29,6 @@ Route::resource('announcements', AnnouncementController::class);
 Route::get('courts', [CourtController::class, 'index'])->name('courts.index');
 Route::get('courts/{id}', [CourtController::class, 'show'])->name('courts.show');
 
-Route::get('courts/{id}', [CourtController::class, 'show'])->name('courts.show');
-
 Route::get('checkout/guest/{id}', [CheckoutController::class, 'guestIndex'])->name('checkout.guest.index');
 Route::post('checkout/guest/payment', [CheckoutController::class, 'guestPayment'])->name('checkout.guest.payment');
 

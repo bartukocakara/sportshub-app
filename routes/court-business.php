@@ -12,6 +12,5 @@ Route::prefix('court-business')->group(function () {
 
     Route::middleware('auth:court_business')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('court_business.dashboard');
-        Route::resource('/courts', CourtController::class);
     });
 });

@@ -19,7 +19,6 @@ class CourtAddressFactory extends Factory
     public function definition(): array
     {
         return [
-            'court_id' => fake()->randomElement(Court::whereNull('court_business_id')->get()->pluck('id')),
             'address_detail' => fake()->streetAddress,
             'street_name' => fake()->streetName,
             'district_id' => fake()->randomElement(District::all()->pluck('id')),

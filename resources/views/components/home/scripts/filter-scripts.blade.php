@@ -10,20 +10,36 @@
 </script>
 
 <script>
+
      $('#filters-form').on('submit', function(e) {
         e.preventDefault();
 
-        const formData = $(this).serialize();
+        // Serialize the form data into an array of key-value pairs
+        const formDataArray = $(this).serializeArray();
 
-        const url = '/home?' + formData;
+        // Filter out fields with null, empty, or undefined values
+        const filteredData = formDataArray
+            .filter(field => field.value.trim() !== '' && field.value !== null) // Exclude empty or null values
+            .map(field => `${encodeURIComponent(field.name)}=${encodeURIComponent(field.value)}`); // Encode the data
 
+        // Join the filtered fields into a query string
+        const queryString = filteredData.join('&');
+
+        // Construct the URL with the filtered query string
+        const url = `/home?${queryString}`;
+
+        // Set the action attribute and submit the form
         $(this).attr('action', url);
-
         this.submit();
     });
+
     $(document).ready(function() {
-        $('#city-select').on('change', function() {
-            const cityId = $(this).val();
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function loadDistricts(cityId) {
             const districtSelect = $('#district-select');
 
             if (cityId) {
@@ -32,12 +48,18 @@
                 $.ajax({
                     url: `/api/districts/cities/${cityId}`,
                     method: 'GET',
-                    success: function(response) {
-                        let districts = response?.result.data;
+                    success: function (response) {
+                        const districts = response?.result.data;
                         districtSelect.prop('disabled', false).empty().append(`<option value="">${window.translations.select_district}</option>`);
                         districtSelect.append(districts.map(district => `<option value="${district.id}">${district.title}</option>`));
+
+                        // Check if district_id exists in the URL and set it
+                        const districtId = getQueryParam('district_id');
+                        if (districtId) {
+                            districtSelect.val(districtId);
+                        }
                     },
-                    error: function() {
+                    error: function () {
                         alert(window.translations.failed_to_load_districts);
                         districtSelect.prop('disabled', true).empty().append(`<option value="">${window.translations.select_district}</option>`);
                     }
@@ -45,17 +67,30 @@
             } else {
                 districtSelect.prop('disabled', true).empty().append(`<option value="">${window.translations.select_district}</option>`);
             }
+        }
+
+        // Check if city_id exists in the URL and load districts
+        const cityId = getQueryParam('city_id');
+        if (cityId) {
+            $('#city-select').val(cityId);
+            loadDistricts(cityId);
+        }
+
+        // Handle city select change event
+        $('#city-select').on('change', function () {
+            const selectedCityId = $(this).val();
+            loadDistricts(selectedCityId);
         });
     });
 
 
     $(document).ready(function () {
         function generateTimeOptions() {
-            const startHour = 0; // 00:00
-            const endHour = 24; // 24:00 (not inclusive)
+            const fromHour = 0; // 00:00
+            const toHour = 24; // 24:00 (not inclusive)
             let timeOptions = "";
 
-            for (let hour = startHour; hour < endHour; hour++) {
+            for (let hour = fromHour; hour < toHour; hour++) {
                 const formattedTime = hour.toString().padStart(2, "0") + ":00"; // Format time as HH:00
                 timeOptions += `<option value="${formattedTime}">${formattedTime}</option>`;
             }
@@ -65,28 +100,7 @@
 
         // Populate both start and end time dropdowns
         const timeOptions = generateTimeOptions();
-        $("#start_time").append(timeOptions);
-        $("#end_time").append(timeOptions);
-    });
-    $(function () {
-        const minPrice = 0;
-        const maxPrice = 1000;
-
-        // Initialize the slider
-        $("#price-slider").slider({
-            range: true,
-            min: minPrice,
-            max: maxPrice,
-            values: [200, 800], // Initial range
-            slide: function (event, ui) {
-                // Update the displayed values dynamically
-                $("#price-min").text(`$${ui.values[0]}`);
-                $("#price-max").text(`$${ui.values[1]}`);
-            }
-        });
-
-        // Set initial values
-        $("#price-min").text(`$${$("#price-slider").slider("values", 0)}`);
-        $("#price-max").text(`$${$("#price-slider").slider("values", 1)}`);
+        $("#from_hour").append(timeOptions);
+        $("#to_hour").append(timeOptions);
     });
 </script>

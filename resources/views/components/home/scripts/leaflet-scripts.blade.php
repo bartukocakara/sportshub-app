@@ -12,13 +12,28 @@
         const courts = @json($homeData['courts']['data']);
 
         $.each(courts, function (index, court) {
-            if (court.latitude && court.longitude) {
-                const marker = L.marker([court.latitude, court.longitude]).addTo(map);
+            let latitude = null;
+            let longitude = null;
+
+            // Check if latitude and longitude are available from court_business
+            if (court.court_business && court.court_business.latitude && court.court_business.longitude) {
+                latitude = court.court_business.latitude;
+                longitude = court.court_business.longitude;
+            }
+            // If not, check court_address for latitude and longitude
+            else if (court.court_address && court.court_address.latitude && court.court_address.longitude) {
+                latitude = court.court_address.latitude;
+                longitude = court.court_address.longitude;
+            }
+
+            // If latitude and longitude are available, add the marker
+            if (latitude && longitude) {
+                const marker = L.marker([latitude, longitude]).addTo(map);
 
                 // Add popup with court details
                 marker.bindPopup(`
                     <strong>${court.title || 'Unnamed Court'}</strong><br>
-                    ${court.street_name}, ${court.neighborhood}<br>
+                    ${court.street_name || 'No Street Info'}, ${court.neighborhood || 'No Neighborhood Info'}<br>
                     <a href="/courts/${court.id}">View Details</a>
                 `);
             }

@@ -26,18 +26,7 @@ return new class extends Migration
                   ->on('court_businesses')
                   ->onDelete('cascade');
             $table->string('title');
-            $table->string('zipcode')->nullable(true);
-            $table->string('street_name')->nullable(true);
-            $table->string('address_detail');
-            $table->unsignedBigInteger('district_id')->nullable(true);
-            $table->foreign('district_id')
-                  ->references('id')
-                  ->on('districts')
-                  ->onDelete('cascade');
-            $table->decimal('longitude', 10, 6); // 10 digits in total, 6 digits after the decimal point
-            $table->decimal('latitude', 10, 6); // 10 digits in total, 6 digits after the decimal point
-            $table->string('neighborhood')->nullable(true);
-            $table->string('building_number')->nullable(true);
+
             $table->timestamps();
         });
     }
