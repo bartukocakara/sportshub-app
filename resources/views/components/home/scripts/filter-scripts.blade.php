@@ -46,7 +46,7 @@
                 districtSelect.prop('disabled', true).empty().append(`<option value="">${window.translations.loading}</option>`);
 
                 $.ajax({
-                    url: `/api/districts/cities/${cityId}`,
+                    url: `/api/districts-with-courts/cities/${cityId}`,
                     method: 'GET',
                     success: function (response) {
                         const districts = response?.result.data;

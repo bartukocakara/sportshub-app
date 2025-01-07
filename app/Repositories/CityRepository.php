@@ -21,8 +21,17 @@ class CityRepository extends BaseRepository
 
     public function getByCountryCode(string $countryCode): Collection
     {
-        return $this->city->with(['country'])->whereHas('country', function($query) use($countryCode) {
-            $query->where('code', $countryCode);
-        })->get();
+        return $this->city
+            ->whereHas('districts.courtAddresses', function ($query) {
+                $query->whereNotNull('district_id');
+            })
+            ->orWhereHas('districts.courtBusinesses', function ($query) {
+                $query->whereNotNull('district_id');
+            })
+            ->with(['districts.courtAddresses', 'districts.courtBusinesses'])
+            ->whereHas('country', function ($query) use ($countryCode) {
+                $query->where('code', $countryCode);
+            })
+            ->get();
     }
 }

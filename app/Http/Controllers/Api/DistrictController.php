@@ -39,7 +39,7 @@ class DistrictController extends Controller
         );
     }
 
-     /**
+    /**
      * Kaynakları listelemek için kullanılır.
      *
      * @param string $id
@@ -49,6 +49,21 @@ class DistrictController extends Controller
     {
         return $this->okApiResponse(
             DistrictResource::collection($this->districtService->getByCityId($id))
+                ->response()
+                ->getData(true)
+        );
+    }
+
+    /**
+     * Kaynakları listelemek için kullanılır.
+     *
+     * @param string $id
+     * @return JsonResponse
+    */
+    public function getWithCourtAssociations(string $id) : JsonResponse
+    {
+        return $this->okApiResponse(
+            DistrictResource::collection($this->districtService->getWithCourtAssociations($id))
                 ->response()
                 ->getData(true)
         );

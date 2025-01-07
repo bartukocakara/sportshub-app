@@ -23,4 +23,15 @@ class DistrictService extends CrudService
     {
         return $this->districtRepository->getByCityId($id);
     }
+
+    /**
+     * Get districts associated with CourtAddress or CourtBusiness.
+     *
+     * @param string $cityId
+     * @return Collection
+     */
+    public function getWithCourtAssociations(string $cityId): Collection
+    {
+        return $this->districtRepository->getWithCourtAssociations($cityId);
+    }
 }

@@ -23,4 +23,26 @@ class DistrictRepository extends BaseRepository
     {
         return $this->district->where('city_id', $id)->get();
     }
+
+    /**
+     * Get districts with CourtAddress or CourtBusiness associations.
+     *
+     * @param string $cityId
+     * @return Collection
+     */
+    public function getWithCourtAssociations(string $cityId): Collection
+    {
+        return $this->district
+            ->where('city_id', $cityId)
+            ->where(function ($query) {
+                $query->whereHas('courtAddresses', function ($subQuery) {
+                    $subQuery->whereNotNull('district_id');
+                })
+                ->orWhereHas('courtBusinesses', function ($subQuery) {
+                    $subQuery->whereNotNull('district_id');
+                });
+            })
+            ->with(['courtAddresses', 'courtBusinesses'])
+            ->get();
+    }
 }
