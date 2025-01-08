@@ -23,7 +23,6 @@ class CheckoutController extends Controller
     public function guestReservation()
     {
         $court = Session::get('checkout');
-
         // Check if court data exists in the session (optional)
         if (!$court) {
             return redirect()->route('home')->with('error', 'No court data found.');

@@ -2,6 +2,13 @@
 @section('title', __('messages.guest_checkout'))
 @section('custom-styles')
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<style>
+    .carousel-inner .carousel-item img {
+    width: 100%;
+    height: 500px; /* Or any specific height you prefer */
+    object-fit: cover; /* This ensures the image covers the entire space without distorting */
+}
+</style>
 @endsection
 @section('content')
 
@@ -52,4 +59,5 @@
 @endsection
 @section('page-scripts')
 @include('components.checkout.scripts.leaflet-scripts')
+@include('components.checkout.scripts.slider-scripts')
 @endsection
