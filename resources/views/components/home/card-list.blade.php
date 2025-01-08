@@ -29,18 +29,16 @@
                         {{ __('messages.no_address_available') }}
                     @endif
                 </div>
-
-                <!-- Check if pricing is available -->
                 @if(isset($value['court_reservation_pricings']) && count($value['court_reservation_pricings']) > 0 && !isset($value['court_address']))
                     <div class="fs-6 fw-bold mt-5 d-flex flex-stack">
                         <span class="badge border border-dashed fs-2 fw-bold text-dark p-2">
                             <span class="fs-6 fw-semibold text-gray-400">₺</span>
-                            {{ $value['court_reservation_pricings'][0]['hours'][0]['price'] }}
+                            {{ $value['court_reservation_pricing_average_price'] }}
                         </span>
-                        <button class="btn btn-info make-reservation-btn"
+                        <button class="btn btn-sm btn-info show-pricing-list"
                                 data-bs-toggle="modal"
                                 data-bs-target="#pricingModal"
-                                data-pricings="{{ json_encode($value['court_reservation_pricings']) }}"
+                                data-id="{{ $value['id'] }}"
                                 data-route="{{ Auth::check() ? 'checkout/user/' : 'checkout/guest/' }}"
                                 data-court-title="{{ $value['title'] }}"
                                 data-court-address="{{ isset($value['court_business']['address']) ? $value['court_business']['address'] : (isset($value['court_address']['address_detail']) ? $value['court_address']['address_detail'] : '') }}">

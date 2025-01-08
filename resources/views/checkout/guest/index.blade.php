@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('title', __('messages.guest_checkout'))
-
+@section('custom-styles')
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+@endsection
 @section('content')
 
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
@@ -33,18 +35,10 @@
                                         <h2 class="fw-bold">{{ __('messages.customer_details') }}</h2>
                                     </div>
                                 </div>
-
-
                             </div>
-                            <div
-                                class="card card-flush pt-3 mb-5 mb-lg-10"
-                                data-kt-subscriptions-form="pricing">
-
-
+                            <div class="card card-flush pt-3 mb-5 mb-lg-10">
                                 <div class="card-body pt-0">
-                                    <div id="kt_create_new_payment_method">
-
-                                    </div>
+                                    @include('components.checkout.guest.customer-form')
                                 </div>
                             </div>
                         </form>
@@ -57,4 +51,5 @@
 </div>
 @endsection
 @section('page-scripts')
+@include('components.checkout.scripts.leaflet-scripts')
 @endsection

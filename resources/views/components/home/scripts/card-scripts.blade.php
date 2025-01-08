@@ -21,7 +21,7 @@
         }
 
         // Attach the click event handler for the reservation button
-        $('.make-reservation-btn').on('click', function () {
+        $('.show-pricing-list').on('click', function () {
             const pricings = $(this).data('pricings'); // Get the pricing data for all days
             const courtTitle = $(this).data('court-title');
             const courtAddress = $(this).data('court-address');

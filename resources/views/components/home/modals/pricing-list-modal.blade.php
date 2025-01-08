@@ -17,6 +17,13 @@
                     <button id="nextDay" class="btn btn-secondary">→</button>
                 </div>
 
+                <!-- Spinner (Initially hidden) -->
+                <div id="loadingSpinner" class="text-center mb-3" style="display:none;">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+
                 <!-- Pricing List -->
                 <div id="pricing-list" class="row">
                     <!-- Pricing cards will be appended here -->

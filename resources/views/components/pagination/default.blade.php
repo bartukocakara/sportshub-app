@@ -1,49 +1,35 @@
-{{-- Pagination Component --}}
 @if (isset($data['meta']['links']) && count($data['meta']['links']) > 1)
     <div class="d-flex justify-content-between align-items-center">
         <ul class="pagination">
-            {{-- Previous Page Link --}}
-            @if (isset($data['meta']['prev_page_url']))
-                <li class="paginate_button page-item previous">
-                    <a href="{{ $data['meta']['prev_page_url'] }}" class="page-link" rel="prev" aria-label="@lang('pagination.previous')">
-                        <i class="previous"></i>
-                    </a>
-                </li>
-            @else
-                <li class="paginate_button page-item previous disabled" aria-disabled="true">
-                    <a href="#" class="page-link" aria-label="@lang('pagination.previous')">
-                        <i class="previous"></i>
-                    </a>
-                </li>
-            @endif
-
             {{-- Pagination Elements --}}
-            @foreach ($data['meta']['links'] as $link)
-                @if ($link['label'] == '...')
-                    <li class="paginate_button page-item disabled" aria-disabled="true">
-                        <span>{{ $link['label'] }}</span>
+            @foreach ($data['meta']['links'] as $key => $link)
+                {{-- Handle "Previous" Link --}}
+                @if ($key === 0)
+                    <li class="paginate_button page-item {{ $link['url'] ? '' : 'disabled' }}" aria-disabled="{{ $link['url'] ? 'false' : 'true' }}">
+                        <a href="{{ $link['url'] ?: '#' }}" class="page-link" aria-label="@lang('pagination.previous')">
+                            {!! $link['label'] !!}
+                        </a>
                     </li>
+                {{-- Handle "Next" Link --}}
+                @elseif ($key === count($data['meta']['links']) - 1)
+                    <li class="paginate_button page-item {{ $link['url'] ? '' : 'disabled' }}" aria-disabled="{{ $link['url'] ? 'false' : 'true' }}">
+                        <a href="{{ $link['url'] ?: '#' }}" class="page-link" aria-label="@lang('pagination.next')">
+                            {!! $link['label'] !!}
+                        </a>
+                    </li>
+                {{-- Handle Numbered Links --}}
                 @else
-                    <li class="paginate_button page-item {{ $link['active'] ? 'active' : '' }}">
-                        <a href="{{ $link['url'] }}" class="page-link">{{ $link['label'] }}</a>
-                    </li>
+                    @if ($link['label'] == '...')
+                        <li class="paginate_button page-item disabled" aria-disabled="true">
+                            <span>{{ $link['label'] }}</span>
+                        </li>
+                    @else
+                        <li class="paginate_button page-item {{ $link['active'] ? 'active' : '' }}">
+                            <a href="{{ $link['url'] }}" class="page-link">{{ $link['label'] }}</a>
+                        </li>
+                    @endif
                 @endif
             @endforeach
-
-            {{-- Next Page Link --}}
-            @if (isset($data['meta']['next_page_url']))
-                <li class="paginate_button page-item next">
-                    <a href="{{ $data['meta']['next_page_url'] }}" class="page-link" rel="next" aria-label="@lang('pagination.next')">
-                        <i class="next"></i>
-                    </a>
-                </li>
-            @else
-                <li class="paginate_button page-item next disabled" aria-disabled="true">
-                    <a href="#" class="page-link" aria-label="@lang('pagination.next')">
-                        <i class="next"></i>
-                    </a>
-                </li>
-            @endif
         </ul>
 
         {{-- Display Total Entries --}}

@@ -26,7 +26,7 @@ return new class extends Migration
             $table->enum('day_of_week', [
                     'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
                 ]);
-            $table->json('hours');
+            $table->jsonb('hours');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

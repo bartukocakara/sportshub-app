@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Court;
+namespace App\Services;
 
 use App\Services\CrudService;
 use App\Repositories\CourtReservationPricingRepository;
