@@ -29,12 +29,14 @@ Route::resource('announcements', AnnouncementController::class);
 Route::get('courts', [CourtController::class, 'index'])->name('courts.index');
 Route::get('courts/{id}', [CourtController::class, 'show'])->name('courts.show');
 
-Route::get('checkout/guest/{id}', [CheckoutController::class, 'guestIndex'])->name('checkout.guest.index');
+Route::post('checkout/guest', [CheckoutController::class, 'guestIndex'])->name('checkout.guest.index');
+Route::get('checkout/guest/reservation', [CheckoutController::class, 'guestReservation'])->name('checkout.guest.reservation');
 Route::post('checkout/guest/payment', [CheckoutController::class, 'guestPayment'])->name('checkout.guest.payment');
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('checkout/user/{id}', [CheckoutController::class, 'userIndex'])->name('checkout.user.index');
+    Route::post('checkout/user', [CheckoutController::class, 'userIndex'])->name('checkout.user.index');
+    Route::get('checkout/user/reservation', [CheckoutController::class, 'userReservation'])->name('checkout.user.reservation');
     Route::post('checkout/user/payment', [CheckoutController::class, 'userPayment'])->name('checkout.user.payment');
 
 

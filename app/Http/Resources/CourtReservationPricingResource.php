@@ -35,7 +35,6 @@ class CourtReservationPricingResource extends JsonResource
         //     'hours' => $request->is_monthly ? $adjustedHours : $this->hours,
         //     'created_at' => $this->created_at?->format('Y-m-d H:i:s')
         // ];
-        return parent::toArray($request);
 
     }
 }

@@ -42,11 +42,6 @@ class Court extends Model
         return $this->belongsTo(CourtBusiness::class);
     }
 
-    public function district() : BelongsTo
-    {
-        return $this->belongsTo(District::class);
-    }
-
     public function courtImages() : HasMany
     {
         return $this->hasMany(CourtImage::class);

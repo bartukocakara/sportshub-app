@@ -1,63 +1,111 @@
 <script>
-    $(document).ready(function () {
-        let currentDayIndex = 0;  // Track the current day
-        let pricingData = [];    // Array to store the pricing data
-        const days = {
-            'monday': "{{ __('messages.monday') }}",
-            'tuesday': "{{ __('messages.tuesday') }}",
-            'wednesday': "{{ __('messages.wednesday') }}",
-            'thursday': "{{ __('messages.thursday') }}",
-            'friday': "{{ __('messages.friday') }}",
-            'saturday': "{{ __('messages.saturday') }}",
-            'sunday': "{{ __('messages.sunday') }}"
-        };
+    const days = {
+        'monday': "{{ __('messages.monday') }}",
+        'tuesday': "{{ __('messages.tuesday') }}",
+        'wednesday': "{{ __('messages.wednesday') }}",
+        'thursday': "{{ __('messages.thursday') }}",
+        'friday': "{{ __('messages.friday') }}",
+        'saturday': "{{ __('messages.saturday') }}",
+        'sunday': "{{ __('messages.sunday') }}"
+    };
 
-        // Function to format date as DD-MM-YYYY
-        function formatDate(date) {
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const year = date.getFullYear();
-            return `${day}-${month}-${year}`;
+    $(document).ready(function () {
+        let checkoutRoute = ''
+        let courtId = '';
+        let apiRoute = "{{ route('api.court-reservation-pricings.check-availability') }}";
+        let currentDayIndex = 0; // Track the current day
+        let pricingData = []; // Array to store the pricing data
+        let currentDate = new Date(); // Track the current date
+        const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+
+        const $spinner = $('#loadingSpinner'); // Reference to loading spinner
+
+        // Show spinner
+        function showSpinner() {
+            $spinner.show();
         }
 
-        // Attach the click event handler for the reservation button
+        // Hide spinner
+        function hideSpinner() {
+            $spinner.hide();
+        }
+
+        // Format date as YYYY-MM-DD
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // Get the day name (e.g., 'sunday', 'monday') from the currentDate
+        function getDayName(date) {
+            return days[date.getDay()];
+        }
+
+        // Fetch pricing data for the specified court, day, and date
+        function fetchPricingData(courtId, dayName, date) {
+            return new Promise((resolve, reject) => {
+                if (!courtId) {
+                    alert("Court ID is missing.");
+                    reject("Court ID is missing.");
+                    return;
+                }
+
+                showSpinner();
+
+                setTimeout(() => {
+                    $.ajax({
+                        url: apiRoute,
+                        method: 'GET',
+                        data: {
+                            court_id: courtId, // Include courtId in the request
+                            day_name: dayName,
+                            date: date
+                        },
+                        success: function (response) {
+                            hideSpinner();
+                            pricingData = response.result.data || [];
+                            updatePricing(pricingData[currentDayIndex]);
+                            updateDateDisplay();
+                            resolve(response);
+                        },
+                        error: function () {
+                            hideSpinner();
+                            alert("Failed to fetch pricing data.");
+                            reject("Failed to fetch pricing data.");
+                        }
+                    });
+                }, 500); // Delay for 500ms
+            });
+        }
+
         $('.show-pricing-list').on('click', function () {
-            const pricings = $(this).data('pricings'); // Get the pricing data for all days
+            courtId = $(this).data('id'); // Get court ID
             const courtTitle = $(this).data('court-title');
             const courtAddress = $(this).data('court-address');
-            const routePrefix = $(this).data('route');
+            checkoutRoute = $(this).data('route');
+            console.log(checkoutRoute);
 
-            const pricingList = $('#pricing-list');
-            pricingList.empty(); // Clear any previous content in the modal
-
-            // Set the court title and address in the modal
             $('#pricingModalLabel').text(courtTitle + ' - ' + courtAddress);
 
-            pricingData = pricings; // Store the pricing data for day navigation
-
-            // Get today's date and format it
-            const todayDate = new Date();
-            const formattedDate = formatDate(todayDate);
-
-            // Display today's date in Turkish
-            $('#todaysDate').html(`
-                <h3>{{ __('messages.date') }}: ${formattedDate}</h3>
-            `);
-
-            // Initialize the modal with the first day's pricing
-            updatePricing(pricingData[currentDayIndex], routePrefix);
-
-            // Update the current day label
-            $('#currentDay').text('Day: ' + days[pricingData[currentDayIndex].day_of_week]);
+            fetchPricingData(courtId, getDayName(currentDate), formatDate(currentDate))
+                .then(() => {
+                    console.log("Pricing data loaded successfully.");
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         });
 
-        // Function to update pricing list for the current day
-        function updatePricing(pricing, routePrefix) {
+        // Update pricing list for the current day
+        function updatePricing(pricing) {
             const pricingList = $('#pricing-list');
-            pricingList.empty(); // Clear any previous content in the modal
+            pricingList.empty();
 
-            // Loop through the hours for the selected day and display each hour's pricing
+            // Loop through the hours for the selected day
             pricing.hours && $.each(pricing.hours, function (hourIndex, hour) {
+                const isReserved = hour.reserved;
                 const card = `
                     <div class="col-md-12 mb-4">
                         <div class="d-flex justify-content-between align-items-center">
@@ -65,37 +113,67 @@
                                 <h5 class="mb-2">${hour.from_hour} - ${hour.to_hour}</h5>
                                 <h4 class="mt-2 mb-3">₺${hour.price}</h4>
                             </div>
-                            <a href="${routePrefix}${pricing.id}" class="btn btn-primary">
-                                {{ __('messages.make_reservation') }}
-                            </a>
+                            <div class="d-flex align-items-center">
+                                ${isReserved ?
+                                    `<span class="btn btn-danger">{{ __('messages.reserved') }}</span>` :
+                                    `<form action="${checkoutRoute}" method="POST" class="d-inline-block">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="hidden" name="court_id" value="${courtId}">
+                                        <input type="hidden" name="from_hour" value="${hour.from_hour}">
+                                        <input type="hidden" name="to_hour" value="${hour.to_hour}">
+                                        <input type="hidden" name="day_of_week" value="${getDayName(currentDate)}">
+                                        <input type="hidden" name="date" value="${formatDate(currentDate)}">
+                                        <button type="submit" class="btn btn-primary" id="checkoutButton">
+                                            {{ __('messages.make_reservation') }}
+                                        </button>
+                                    </form>`
+                                }
+                            </div>
                         </div>
                     </div>
                     ${hourIndex < pricing.hours.length - 1 ? '<hr class="my-3">' : ''}
                 `;
-                pricingList.append(card); // Add each hour's pricing to the list
+
+
+
+                pricingList.append(card);
             });
+
+            $('#currentDay').text(getDayName(currentDate));
         }
 
-        // Handle "next day" button click to navigate to the next day
+        // Update the displayed date
+        function updateDateDisplay() {
+            const formattedDate = formatDate(currentDate);
+            $('#todaysDate').html(`<h3>{{ __('messages.date') }}: ${formattedDate}</h3>`);
+        }
+
+        // Handle "next day" button click
         $('#nextDay').on('click', function () {
-            if (currentDayIndex < pricingData.length - 1) {
-                currentDayIndex++;
-            } else {
-                currentDayIndex = 0;
-            }
-            updatePricing(pricingData[currentDayIndex]);  // Update pricing for the new day
-            $('#currentDay').text('Day: ' + days[pricingData[currentDayIndex].day_of_week]);  // Update day label
+            currentDayIndex = (currentDayIndex + 1) % pricingData.length;
+            currentDate.setDate(currentDate.getDate() + 1);
+
+            fetchPricingData(courtId, getDayName(currentDate), formatDate(currentDate))
+                .then(() => {
+                    console.log("Next day's data loaded.");
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         });
 
-        // Handle "previous day" button click to navigate to the previous day
+        // Handle "previous day" button click
         $('#prevDay').on('click', function () {
-            if (currentDayIndex > 0) {
-                currentDayIndex--;
-            } else {
-                currentDayIndex = pricingData.length - 1;
-            }
-            updatePricing(pricingData[currentDayIndex]);  // Update pricing for the previous day
-            $('#currentDay').text('Day: ' + days[pricingData[currentDayIndex].day_of_week]);  // Update day label
+            currentDayIndex = (currentDayIndex - 1 + pricingData.length) % pricingData.length;
+            currentDate.setDate(currentDate.getDate() - 1);
+
+            fetchPricingData(courtId, getDayName(currentDate), formatDate(currentDate))
+                .then(() => {
+                    console.log("Previous day's data loaded.");
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         });
     });
-    </script>
+</script>

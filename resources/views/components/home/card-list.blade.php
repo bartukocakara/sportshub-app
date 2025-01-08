@@ -1,6 +1,4 @@
 <div class="row g-10">
-
-    <!-- Court cards loop -->
     @foreach($homeData['courts']['data'] as $key => $value)
     <div class="col-md-6">
         <div class="card-xl-stretch me-md-6 shadow-sm border border-grey rounded p-4">
@@ -36,14 +34,16 @@
                             {{ $value['court_reservation_pricing_average_price'] }}
                         </span>
                         <button class="btn btn-sm btn-info show-pricing-list"
-                                data-bs-toggle="modal"
-                                data-bs-target="#pricingModal"
-                                data-id="{{ $value['id'] }}"
-                                data-route="{{ Auth::check() ? 'checkout/user/' : 'checkout/guest/' }}"
-                                data-court-title="{{ $value['title'] }}"
-                                data-court-address="{{ isset($value['court_business']['address']) ? $value['court_business']['address'] : (isset($value['court_address']['address_detail']) ? $value['court_address']['address_detail'] : '') }}">
+                            data-bs-toggle="modal"
+                            data-bs-target="#pricingModal"
+                            data-id="{{ $value['id'] }}"
+                            data-pricings="{{ json_encode($value['court_reservation_pricings']) }}"
+                            data-route="{{ Auth::check() ? route('checkout.user.index') : route('checkout.guest.index') }}"
+                            data-court-title="{{ $value['title'] }}"
+                            data-court-address="{{ isset($value['court_business']['address']) ? $value['court_business']['address'] : (isset($value['court_address']['address_detail']) ? $value['court_address']['address_detail'] : '') }}">
                             {{ __('messages.show_pricing_list') }}
                         </button>
+
                     </div>
                 @else
                     <!-- If it's a public court, redirect to the court detail page -->

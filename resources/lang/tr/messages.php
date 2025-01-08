@@ -133,4 +133,5 @@ return [
     'enter_customer_name' => 'Müşteri adını girin',
     'enter_customer_email' => 'Müşteri e-posta adresini girin',
     'enter_customer_phone' => 'Müşteri telefon numarasını girin',
+    'reserved' => 'Rezerve edildi',
 ];

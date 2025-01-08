@@ -31,6 +31,11 @@ class CourtReservationPricingRepository extends BaseRepository
         return $this->courtReservationPricing->with([ 'court.courtBusiness' ])->filterBy($request->all());
     }
 
+    public function checkAvailablitiy(Request $request) : LengthAwarePaginator|Collection
+    {
+        return $this->courtReservationPricing->with([ 'court.reservations' ])->filterBy($request->all());
+    }
+
     public function findByIds(array $courtReservationPricings) : Collection|array
     {
         return $this->courtReservationPricing->whereIn('id', $courtReservationPricings)->get();
@@ -40,6 +45,33 @@ class CourtReservationPricingRepository extends BaseRepository
     {
         return $this->courtReservationPricing->where($params)->get();
     }
+
+    public function priceCheck(array $params)
+{
+    // Get the reservation based on court_id and day_of_week
+    $reservation = $this->courtReservationPricing
+        ->where('court_id', $params['court_id'])
+        ->where('day_of_week', $params['day_of_week'])
+        ->whereRaw("EXISTS (
+            SELECT 1
+            FROM jsonb_array_elements(hours) AS hour
+            WHERE hour->>'from_hour' = ?
+        )", [$params['from_hour']])
+        ->first(); // Use first() to get a single result
+
+    if ($reservation) {
+        // Extract the price based on the from_hour
+        $price = collect($reservation->hours) // Assuming hours is already an array
+            ->firstWhere('from_hour', $params['from_hour'])['price'] ?? null;
+
+        // Return the price or null if not found
+        return $price;
+    }
+
+    return null; // Return null if no reservation was found
+}
+
+
 
     public function getByCourtIdAndDays(array $params)
     {

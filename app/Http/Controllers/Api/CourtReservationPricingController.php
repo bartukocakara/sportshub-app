@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CourtReservationPricingRequest;
+use App\Http\Resources\CourtReservationPricingAvailabilityResource;
 use App\Http\Resources\CourtReservationPricingResource;
 use App\Services\CourtReservationPricingService;
 use Illuminate\Http\JsonResponse;
@@ -34,6 +35,21 @@ class CourtReservationPricingController extends Controller
     {
         return $this->okApiResponse(
             CourtReservationPricingResource::collection($this->courtMatchPricingService->all($request))
+                ->response()
+                ->getData(true)
+        );
+    }
+
+    /**
+     * Kaynakları listelemek için kullanılır.
+     *
+     * @param  Request  $request
+     * @return JsonResponse
+    */
+    public function checkAvailablitiy(Request $request) : JsonResponse
+    {
+        return $this->okApiResponse(
+            CourtReservationPricingAvailabilityResource::collection($this->courtMatchPricingService->checkAvailablitiy($request))
                 ->response()
                 ->getData(true)
         );

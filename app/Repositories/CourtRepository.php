@@ -26,11 +26,20 @@ class CourtRepository extends BaseRepository
         return $this->court->with(['sportType',
                                    'courtBusiness',
                                    'courtAddress',
-                                   'district',
                                    'courtImages',
                                    'courtReservationPricings',
                                    'reservations'
                                    ])
                             ->filterBy($request->all());
+    }
+
+    public function checkout(string $id) : Court
+    {
+        return $this->court->with(['sportType',
+                                   'courtBusiness.district.city',
+                                   'courtImages',
+                                   'courtReservationPricings',
+                                   'reservations'
+                                   ])->findOrFail($id);
     }
 }

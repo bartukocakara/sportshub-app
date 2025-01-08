@@ -130,4 +130,5 @@ return [
     'enter_customer_name' => 'Enter customer name',
     'enter_customer_email' => 'Enter customer email',
     'enter_customer_phone' => 'Enter customer phone number',
+    'reserved' => 'Reserved',
 ];
