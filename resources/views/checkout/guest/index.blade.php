@@ -10,6 +10,9 @@
 }
 </style>
 @endsection
+@php
+    $showSidebar = false;
+@endphp
 @section('content')
 
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
@@ -58,6 +61,8 @@
 </div>
 @endsection
 @section('page-scripts')
+@include('components.scripts.court-scripts')
+
 @include('components.checkout.scripts.leaflet-scripts')
 @include('components.checkout.scripts.slider-scripts')
 @endsection

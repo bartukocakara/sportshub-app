@@ -44,6 +44,7 @@ class CheckoutService extends CrudService
         $court = $this->courtRepository->checkout($request->court_id);
         $sessionData = [
             'title' => $court->title,
+            'address' => $court->courtBusiness->address,
             'sport_type_title' => $court->sportType->title,
             'court_id' => $request->court_id,
             'from_hour' => $request->from_hour,
@@ -51,6 +52,8 @@ class CheckoutService extends CrudService
             'date' => $request->date,
             'court_business' => $court->courtBusiness,
             'price' => $priceCheck,
+            'court_id' => $court->id,
+            'court_reservation_pricings' => $court->courtReservationPricings,
             'court_location' => [
                 'city' => $court->courtBusiness->district->city->title,
                 'district' => $court->courtBusiness->district->title,

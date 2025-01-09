@@ -9,7 +9,9 @@
             </div>
         </div>
         <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
-            @include('components.sidebar')
+            @if (!isset($showSidebar) || $showSidebar)
+                @include('components.sidebar')
+            @endif
             <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
                 @yield('content')
                 @include('components.footer')

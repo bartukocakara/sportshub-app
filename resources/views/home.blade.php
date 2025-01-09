@@ -102,7 +102,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 @section('page-scripts')
 @include('components.home.scripts.leaflet-scripts')
 @include('components.home.scripts.filter-scripts')
-@include('components.home.scripts.card-scripts')
+@include('components.scripts.court-scripts')
+@include('components.checkout.scripts.slider-scripts')
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
 

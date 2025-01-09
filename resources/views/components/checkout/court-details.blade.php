@@ -16,6 +16,22 @@
     </div>
 
     <div class="mb-3">
+        <div class="fs-6 fw-bold mt-5 d-flex flex-stack">
+            <span class="badge border border-dashed fs-2 fw-bold text-dark p-2">
+                <span class="fs-6 fw-semibold text-gray-400">₺</span>
+                {{ $court['price'] }}
+            </span>
+            <button class="btn btn-sm btn-info show-pricing-list"
+                data-bs-toggle="modal"
+                data-bs-target="#pricingModal"
+                data-id="{{ $court['court_id'] }}"
+                data-pricings="{{ json_encode($court['court_reservation_pricings']) }}"
+                data-route="{{ Auth::check() ? route('checkout.user.index') : route('checkout.guest.index') }}"
+                data-court-title="{{ $court['title'] }}"
+                data-court-address="{{ $court['address'] }}">
+                {{ __('messages.show_pricing_list') }}
+            </button>
+        </div>
         <label for="courtPrice" class="form-label">{{ __('messages.court_price') }}</label>
         <span id="courtPrice" class="form-control-plaintext">{{ $court['price'] }}</span>
     </div>
