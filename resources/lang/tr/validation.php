@@ -266,6 +266,9 @@ return [
         'team_min_player' => 'Takım minimum oyuncu sayısı',
         'match_min_player' => 'Maç minimum oyuncu sayısı',
         'match_max_player' => 'Maç maksimum oyuncu sayısı',
+        'customer_name' => 'Customer name',
+        'customer_phone' => 'Customer phone',
+        'customer_email' => 'Customer email',
     ],
 
 ];

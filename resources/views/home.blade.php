@@ -4,40 +4,11 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="{{ asset('assets/css/pagination.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/css/carousel.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/css/date-select.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/css/form-select.css') }}" rel="stylesheet" type="text/css" />
 
-<style>
-#pagination {
-    position: sticky;
-    top: 0;
-    z-index: 100; /* Ensure it's above other content */
-    background-color: white; /* Optional: Add background to prevent text overlap */
-    padding: 10px; /* Add some padding for spacing */
-}
-
-.pagination-link {
-    margin-right: 10px;
-    text-decoration: none;
-    color: #007bff;
-}
-
-.pagination-link:hover {
-    text-decoration: underline;
-}
-.form-select option {
-    text-transform: capitalize; /* Capitalize first letter of city and district names */
-    font-size: 16px; /* Increase font size */
-}
-input[type="date"] {
-    font-size: 18px; /* Adjust this value to change the font size */
-    padding: 8px 12px;
-}
-
-/* For larger calendar cells and better styling */
-input[type="date"]::-webkit-calendar-picker-indicator {
-    padding: 10px;
-    font-size: 16px; /* Increase the size of the date picker trigger */
-}
-</style>
 @endsection
 @section('content')
 @include('components.home.modals.price-filter-modal')

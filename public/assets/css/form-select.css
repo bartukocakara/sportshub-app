@@ -1,0 +1,5 @@
+
+.form-select option {
+    text-transform: capitalize; /* Capitalize first letter of city and district names */
+    font-size: 16px; /* Increase font size */
+}

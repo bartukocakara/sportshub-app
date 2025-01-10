@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CheckoutGuestCustomerRequest;
+use App\Http\Requests\CheckoutPaymentRequest;
 use App\Services\CheckoutService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,12 +25,32 @@ class CheckoutController extends Controller
     public function guestReservation()
     {
         $court = Session::get('checkout');
-        // Check if court data exists in the session (optional)
         if (!$court) {
             return redirect()->route('home')->with('error', 'No court data found.');
         }
         // Pass the court data to the view
         return view('checkout.guest.index', compact('court'));
+    }
+
+    public function guestSaveCustomer(CheckoutGuestCustomerRequest $request)
+    {
+        return $this->checkoutService->guestSaveCustomer($request->validated());
+    }
+
+    public function guestPaymentIndex()
+    {
+        $checkout = Session::get('checkout');
+        if (!$checkout) {
+            return redirect()->route('home')->with('error', 'No court data found.');
+        }
+        // Pass the court data to the view
+        return view('checkout.payment.index', compact('checkout'));
+    }
+
+    public function guestMakePayment(CheckoutPaymentRequest $request)
+    {
+        $this->checkoutService->guestMakePayment($request->validated());
+        return view('checkout.payment.index', compact('court'));
     }
 
     public function guestPayment()

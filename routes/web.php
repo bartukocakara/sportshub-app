@@ -31,10 +31,12 @@ Route::get('courts/{id}', [CourtController::class, 'show'])->name('courts.show')
 
 Route::post('checkout/guest', [CheckoutController::class, 'guestIndex'])->name('checkout.guest.index');
 Route::get('checkout/guest/reservation', [CheckoutController::class, 'guestReservation'])->name('checkout.guest.reservation');
-Route::post('checkout/guest/payment', [CheckoutController::class, 'guestPayment'])->name('checkout.guest.payment');
+
+Route::post('guest/customer', [CheckoutController::class, 'guestSaveCustomer'])->name('guest.save.customer');
+Route::get('guest/reservation/payment', [CheckoutController::class, 'guestPaymentIndex'])->name('guest.payment.index');
+Route::post('guest/reservation/payment', [CheckoutController::class, 'guestMakePayment'])->name('guest.make.payment');
 
 Route::middleware('auth')->group(function () {
-
     Route::post('checkout/user', [CheckoutController::class, 'userIndex'])->name('checkout.user.index');
     Route::get('checkout/user/reservation', [CheckoutController::class, 'userReservation'])->name('checkout.user.reservation');
     Route::post('checkout/user/payment', [CheckoutController::class, 'userPayment'])->name('checkout.user.payment');

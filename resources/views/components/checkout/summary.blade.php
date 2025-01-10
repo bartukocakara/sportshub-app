@@ -1,13 +1,12 @@
-<div class="flex-column flex-lg-row-auto w-100 w-lg-250px w-xl-300px mb-10 order-1 order-lg-2">
+<div class="col-6">
     <div class="card card-flush pt-3 mb-0">
         <div class="card-header">
             <div class="card-title">
                 <h2>{{ __('messages.court_details') }}</h2>
             </div>
         </div>
-        <div class="card-body pt-0 fs-6">
-            <!-- Court Image -->
-            <img class="w-100 card-rounded"
+        <div class="row">
+            <img class="col-6"
                 src="{{ asset('storage/courts/' . (($court['court_images'][0]['file_path'] ?? 'placeholder-court.webp'))) }}"
                 alt="Court Image"
                 id="courtImage"
@@ -15,11 +14,10 @@
                 style="cursor: pointer;"
                 data-bs-toggle="modal"
                 data-bs-target="#imageModal">
-
-            <div class="separator separator-dashed mb-7"></div>
+            <div class="col-6 separator separator-dashed mb-7">
             @include('components.checkout.court-details')
-            <div class="separator separator-dashed mb-7"></div>
-            <div class="mb-0">
+            </div>
+            <div class="col-12 p-4">
                 <button type="submit" class="btn btn-primary" id="kt_subscriptions_create_button">
                     <span class="indicator-label">{{ __('messages.make_payment') }}</span>
                     <span class="indicator-progress">

@@ -1,0 +1,10 @@
+input[type="date"] {
+    font-size: 18px; /* Adjust this value to change the font size */
+    padding: 8px 12px;
+}
+
+/* For larger calendar cells and better styling */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    padding: 10px;
+    font-size: 16px; /* Increase the size of the date picker trigger */
+}

@@ -258,6 +258,9 @@ return [
         'team_min_player' => 'Minimale Spieleranzahl im Team',
         'match_min_player' => 'Minimale Spieleranzahl im Match',
         'match_max_player' => 'Maximale Spieleranzahl im Match',
+        'customer_name' => 'Customer name',
+        'customer_phone' => 'Customer phone',
+        'customer_email' => 'Customer email',
     ],
 
 

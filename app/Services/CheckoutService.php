@@ -66,4 +66,21 @@ class CheckoutService extends CrudService
 
         return redirect()->route('checkout.guest.reservation');
     }
+
+    public function guestMakePayment(array $params)
+    {
+        dd($params);
+    }
+
+
+    public function guestSaveCustomer(array $params)
+    {
+        $sessionData = Session::get('checkout');
+        $sessionData['customer_name'] = $params['customer_name'];
+        $sessionData['customer_email'] = $params['customer_email'];
+        $sessionData['customer_phone'] = $params['customer_phone'];
+        Session::put('checkout', $sessionData);
+
+        return redirect()->route('guest.payment.index');
+    }
 }

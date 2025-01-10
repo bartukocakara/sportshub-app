@@ -1,0 +1,17 @@
+#pagination {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: white;
+    padding: 10px;
+}
+
+.pagination-link {
+    margin-right: 10px;
+    text-decoration: none;
+    color: #007bff;
+}
+
+.pagination-link:hover {
+    text-decoration: underline;
+}

@@ -172,6 +172,9 @@ return [
     'attributes' => [
         'email' => 'E-Mail adress',
         'password' => 'Password',
+        'customer_name' => 'Customer name',
+        'customer_phone' => 'Customer phone',
+        'customer_email' => 'Customer email',
     ],
 
 ];
