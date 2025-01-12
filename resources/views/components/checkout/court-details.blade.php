@@ -51,3 +51,4 @@
 </div>
 
 @include('components.checkout.modals.map-modal')
+@include('components.modals.pricing-list-modal')
