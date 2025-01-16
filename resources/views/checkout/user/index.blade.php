@@ -1,6 +1,11 @@
 @extends('layouts.no-sidebar')
 @section('title', __('messages.guest_checkout'))
-
+@section('custom-styles')
+.show-pricing-list {
+    position: relative;
+    z-index: 10;
+}
+@endsection
 @section('content')
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
     <div class="d-flex flex-column flex-column-fluid">
@@ -18,8 +23,7 @@
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div class="app-container container-fluid">
-                <form class="row" action="{{ route('reservation.user.payment.index') }}" method="GET" >
-                    @csrf
+                <div class="row" >
                     <div class="col-6 mb-10 mb-lg-0">
                         <div class="card card-flush pt-3 mb-5 mb-lg-10">
                             <div class="card-header">
@@ -35,7 +39,7 @@
                         </div>
                     </div>
                     @include('components.checkout.summary')
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

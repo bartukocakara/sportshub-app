@@ -139,6 +139,7 @@ return [
     'invalid_customer_name' => 'Lütfen 3 ile 255 karakter arasında geçerli bir ad girin.',
     'invalid_customer_email' => 'Lütfen geçerli bir e-posta adresi girin.',
     'invalid_customer_phone' => 'Lütfen 10 ile 12 rakam arasında geçerli bir telefon numarası girin.',
+    'find_location' => 'Konum bul',
     'payment_details' => 'Ödeme detayları',
     'full_name' => 'Tam Ad',
     'first_name' => 'Ad',
@@ -148,4 +149,5 @@ return [
     'expiry_date' => 'Son Kullanma Tarihi',
     'cvv' => 'Güvenlik Kodu (CVV)',
     'complete_payment' => 'Ödemeyi Tamamla',
+    'make_payment' => 'Ödeme Yap',
 ];

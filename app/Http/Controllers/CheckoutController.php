@@ -72,8 +72,12 @@ class CheckoutController extends Controller
         return view('checkout.user.index', compact('court'));
     }
 
-    public function userPayment()
+    public function userPaymentIndex()
     {
-        return;
+        $checkout = Session::get('checkout');
+        if (!$checkout) {
+            return redirect()->route('home')->with('error', 'No court data found.');
+        }
+        return view('checkout.payment.index', compact('checkout'));
     }
 }

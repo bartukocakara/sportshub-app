@@ -18,6 +18,15 @@
             @include('components.checkout.court-details')
             </div>
             <div class="col-12 p-4">
+            @if (Auth::check())
+                <a href="{{ route('reservation.user.payment.index') }}"class="btn btn-primary">
+                    <span class="indicator-label">{{ __('messages.make_payment') }}</span>
+                    <span class="indicator-progress">
+                        Please wait...
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                    </span>
+                </a>
+                @else
                 <button type="submit" class="btn btn-primary" id="kt_subscriptions_create_button">
                     <span class="indicator-label">{{ __('messages.make_payment') }}</span>
                     <span class="indicator-progress">
@@ -25,6 +34,8 @@
                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                     </span>
                 </button>
+                @endif
+
             </div>
         </div>
     </div>

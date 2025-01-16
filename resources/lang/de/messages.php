@@ -136,6 +136,7 @@ return [
     'invalid_customer_email' => 'Please enter a valid email address.',
     'invalid_customer_phone' => 'Please enter a valid phone number (10 to 12 digits).',
     'payment_details' => 'Payment details',
+    'find_location' => 'Find Location',
     'full_name' => 'Full Name',
     'first_name' => 'First Name',
     'last_name' => 'Last Name',
@@ -144,4 +145,5 @@ return [
     'expiry_date' => 'Expiry Date',
     'cvv' => 'CVV',
     'complete_payment' => 'Complete Payment',
+    'make_payment' => 'Make Payment',
 ];

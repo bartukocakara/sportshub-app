@@ -82,7 +82,7 @@ class CheckoutService extends CrudService
         $sessionData['customer_phone'] = $params['customer_phone'];
         Session::put('checkout', $sessionData);
 
-        return redirect()->route('reservation.payment.index');
+        return redirect()->route('reservation.guest.payment.index');
     }
 
     public function userIndex(Request $request) : RedirectResponse
