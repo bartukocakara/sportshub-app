@@ -18,10 +18,14 @@ class Reservation extends Model
         'user_id',
         'court_id',
         'code',
+        'payment_status',
         'from_hour',
         'to_hour',
         'date',
         'price',
+        'customer_name',
+        'customer_email',
+        'customer_phone'
     ];
 
     public function scopeFilterBy($query, $filters)

@@ -28,7 +28,6 @@ class CheckoutController extends Controller
         if (!$court) {
             return redirect()->route('home')->with('error', 'No court data found.');
         }
-        // Pass the court data to the view
         return view('checkout.guest.index', compact('court'));
     }
 
@@ -53,11 +52,6 @@ class CheckoutController extends Controller
         return view('checkout.payment.index', compact('court'));
     }
 
-    public function guestPayment()
-    {
-        return;
-    }
-
     public function userIndex(Request $request) : RedirectResponse
     {
         return $this->checkoutService->userIndex($request);
@@ -79,5 +73,11 @@ class CheckoutController extends Controller
             return redirect()->route('home')->with('error', 'No court data found.');
         }
         return view('checkout.payment.index', compact('checkout'));
+    }
+
+    public function userMakePayment(CheckoutPaymentRequest $request)
+    {
+        $this->checkoutService->userMakePayment($request->validated());
+        return view('checkout.payment.index', compact('court'));
     }
 }

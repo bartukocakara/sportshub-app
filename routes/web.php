@@ -35,6 +35,7 @@ Route::get('checkout/guest/reservation', [CheckoutController::class, 'guestReser
 Route::post('reservation/customer', [CheckoutController::class, 'guestSaveCustomer'])->name('guest.save.customer');
 Route::get('reservation/guest/payment', [CheckoutController::class, 'guestPaymentIndex'])->name('reservation.guest.payment.index');
 Route::post('reservation/guest/payment', [CheckoutController::class, 'guestMakePayment'])->name('reservation.guest.make.payment');
+Route::get('reservation/payment/completed', [CheckoutController::class, 'paymentComplted'])->name('reservation.payment.completed');
 
 Route::middleware('auth')->group(function () {
     Route::post('checkout/user', [CheckoutController::class, 'userIndex'])->name('checkout.user.index');

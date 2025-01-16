@@ -1,5 +1,22 @@
 <script>
    $(document).ready(function () {
+
+    $('#card_number').on('input', function() {
+        let value = $(this).val().replace(/\D/g, ''); // Remove non-numeric characters
+        value = value.substring(0, 16); // Limit to 16 digits
+
+        // Format the value as '#### #### #### ####'
+        let formattedValue = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+
+        $(this).val(formattedValue); // Set the formatted value back to the input
+    });
+
+    $('#cvv').on('input', function() {
+        let value = $(this).val().replace(/\D/g, ''); // Remove non-numeric characters
+        value = value.substring(0, 3); // Limit to 3 digits
+
+        $(this).val(value); // Set the value back to the input
+    });
     // Initialize form validation
     $('#paymentForm').validate({
         rules: {

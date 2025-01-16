@@ -20,7 +20,7 @@
                 <div class="row">
                     <!-- Payment Form -->
                     <div class="col-md-6">
-                        <form action="{{ route('reservation.guest.make.payment') }}" method="POST" id="paymentForm">
+                        <form action="{{ Auth::check() ? route('reservation.user.make.payment') : route('reservation.guest.make.payment') }}" method="POST" id="paymentForm">
                             @csrf
                             <div class="card card-flush pt-3 mb-5 mb-lg-10">
                                 <div class="card-header">
@@ -53,18 +53,17 @@
                                     <div class="row mb-6">
                                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">{{ __('messages.card_number') }}</label>
                                         <div class="col-lg-8">
-                                            <input type="text" name="card_number" class="form-control form-control-lg form-control-solid" placeholder="{{ __('messages.enter_card_number') }}" required>
+                                        <input type="text" name="card_number" class="form-control form-control-lg form-control-solid"
+                                                placeholder="{{ __('messages.enter_card_number') }}" maxlength="19" id="card_number" required>
                                             @error('card_number')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
-                                    <!-- Expiry Date -->
                                     <div class="row mb-6">
                                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">{{ __('messages.expiry_date') }}</label>
                                         <div class="col-lg-8">
                                             <div class="row">
-                                                <!-- Month Dropdown -->
                                                 <div class="col-lg-6 fv-row fv-plugins-icon-container">
                                                     <select name="expiry_month" class="form-control form-control-lg form-control-solid" required>
                                                         <option value="" disabled selected>{{ __('messages.select_month') }}</option>
@@ -79,7 +78,6 @@
                                                     @enderror
                                                 </div>
 
-                                                <!-- Year Dropdown -->
                                                 <div class="col-lg-6 fv-row fv-plugins-icon-container">
                                                     <select name="expiry_year" class="form-control form-control-lg form-control-solid" required>
                                                         <option value="" disabled selected>{{ __('messages.select_year') }}</option>
@@ -97,23 +95,21 @@
                                         </div>
                                     </div>
 
-                                    <!-- CVV -->
                                     <div class="row mb-6">
                                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">{{ __('messages.cvv') }}</label>
                                         <div class="col-lg-8">
-                                            <input type="text" name="cvv" class="form-control form-control-lg form-control-solid" placeholder="CVV" required>
+                                            <input type="text" name="cvv" class="form-control form-control-lg form-control-solid"
+                                            placeholder="CVV" maxlength="3" id="cvv" required>
                                             @error('cvv')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
-                                    <!-- Submit Button -->
                                     <button type="submit" class="btn btn-primary">{{ __('messages.complete_payment') }}</button>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <!-- Reservation Details -->
                     <div class="col-md-6">
                         <div class="card card-flush pt-3 mb-5 mb-lg-10">
                             <div class="card-header">

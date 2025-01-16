@@ -2,13 +2,17 @@
 
 namespace App\Services;
 
-use App\Repositories\CourtRepository;
-use App\Repositories\CourtReservationPricingRepository;
-use App\Repositories\ReservationRepository;
-use Illuminate\Http\RedirectResponse;
+use App\Enums\ReservationPaymentStatusEnum;
+use App\Models\Reservation;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\CourtRepository;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
+use App\Repositories\ReservationRepository;
+use App\Repositories\CourtReservationPricingRepository;
+use Illuminate\View\View;
 
 class CheckoutService extends CrudService
 {
@@ -68,9 +72,36 @@ class CheckoutService extends CrudService
         return redirect()->route('checkout.guest.reservation');
     }
 
-    public function guestMakePayment(array $params)
+    public function guestMakePayment(array $params) : View
     {
-        dd($params);
+        try {
+            $checkoutData = Session::get('checkout');
+            if($checkoutData){
+                $reservationRepo = new ReservationRepository(new Reservation());
+                $reservationParams = [
+                    'title' => '',
+                    'court_id' => $checkoutData['court_id'],
+                    'code' => Str::random(6),
+                    'from_hour' => $checkoutData['from_hour'],
+                    'to_hour' => $checkoutData['to_hour'],
+                    'payment_status' => ReservationPaymentStatusEnum::WAITING_FOR_PAYMENT->value,
+                    'date' => $checkoutData['date'],
+                    'price' => $checkoutData['price'],
+                    'customer_name' => $checkoutData['customer_name'],
+                    'customer_email' => $checkoutData['customer_email'],
+                    'customer_phone' => $checkoutData['customer_phone'],
+                ];
+                $reservation = $reservationRepo->create($reservationParams);
+
+
+                // PAYMENT SERVICE
+                // Pay tr send $params
+                return view('reservation.payment.completed', compact('reservation'));
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+
     }
 
 
@@ -125,5 +156,10 @@ class CheckoutService extends CrudService
         Session::put('checkout', $sessionData);
 
         return redirect()->route('reservation.user.index');
+    }
+
+    public function userMakePayment(array $params)
+    {
+        dd($params);
     }
 }

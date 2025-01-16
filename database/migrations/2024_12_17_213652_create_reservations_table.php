@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ReservationPaymentStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,22 +25,19 @@ return new class extends Migration
             $table->string('code', 10);
 
             // Payment status (currently commented out, but can be re-enabled if needed)
-            // $table->enum('payment_status', [
-            //     ReservationPaymentStatusEnum::WAITING_FOR_PAYMENT->value,
-            //     ReservationPaymentStatusEnum::PAYMENT_APPROVED->value,
-            //     ReservationPaymentStatusEnum::PAYMENT_CANCELED->value,
-            //     ReservationPaymentStatusEnum::PAYMENT_REFUNDED->value,
-            // ])->default(ReservationPaymentStatusEnum::WAITING_FOR_PAYMENT->value);
+            $table->enum('payment_status', [
+                ReservationPaymentStatusEnum::WAITING_FOR_PAYMENT->value,
+                ReservationPaymentStatusEnum::PAYMENT_APPROVED->value,
+                ReservationPaymentStatusEnum::PAYMENT_CANCELED->value,
+                ReservationPaymentStatusEnum::PAYMENT_REFUNDED->value,
+            ])->default(ReservationPaymentStatusEnum::WAITING_FOR_PAYMENT->value);
 
-            // Reservation hours and date
             $table->time('from_hour');
             $table->time('to_hour');
             $table->date('date');
 
-            // Reservation price
             $table->decimal('price', 8, 2);
 
-            // Customer details (only for guest reservations)
             $table->string('customer_name')->nullable();
             $table->string('customer_email')->nullable();
             $table->string('customer_phone')->nullable(); // Optional, add more fields as needed
