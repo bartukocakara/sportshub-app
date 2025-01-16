@@ -20,7 +20,7 @@
                 <div class="row">
                     <!-- Payment Form -->
                     <div class="col-md-6">
-                        <form action="{{ route('guest.make.payment') }}" method="POST" id="paymentForm">
+                        <form action="{{ route('reservation.guest.make.payment') }}" method="POST" id="paymentForm">
                             @csrf
                             <div class="card card-flush pt-3 mb-5 mb-lg-10">
                                 <div class="card-header">

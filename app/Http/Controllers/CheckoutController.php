@@ -58,15 +58,18 @@ class CheckoutController extends Controller
         return;
     }
 
-    public function userIndex(Request $request, string $id) : View
+    public function userIndex(Request $request) : RedirectResponse
     {
-
-        return view('checkout.user.index');
+        return $this->checkoutService->userIndex($request);
     }
 
     public function userReservation()
     {
-        return view('checkout.user.index');
+        $court = Session::get('checkout');
+        if (!$court) {
+            return redirect()->route('home')->with('error', 'No court data found.');
+        }
+        return view('checkout.user.index', compact('court'));
     }
 
     public function userPayment()
