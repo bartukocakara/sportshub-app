@@ -9,9 +9,16 @@
                     <img alt="Logo" src="assets/media/avatars/300-2.jpg">
                 </div>
                 <div class="d-flex flex-column">
-                    <div class="fw-bold d-flex align-items-center fs-5">Jane Cooper
-                    <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span></div>
-                    <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">jane@kt.com</a>
+                    @auth
+                        <div class="fw-bold d-flex align-items-center fs-5">
+                            {{ auth()->user()->first_name }} {{ auth()->user()->last_name }}
+                            <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span>
+                        </div>
+                        <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">{{ auth()->user()->email }}</a>
+                    @else
+                        <div class="fw-bold d-flex align-items-center fs-5">Guest User</div>
+                        <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">guest@example.com</a>
+                    @endauth
                 </div>
             </div>
         </div>
@@ -19,6 +26,7 @@
         <div class="menu-item px-5">
             <a href="{{ route('profile.edit') }}" class="menu-link px-5">{{ __('messages.my_profile') }}</a>
         </div>
+        @auth
         <div class="menu-item px-5">
             <a href="{{ route('reservations.index') }}" class="menu-link px-5">
                 <span class="menu-text">{{ __('messages.my_reservations') }}</span>
@@ -27,45 +35,7 @@
                 </span>
             </a>
         </div>
-        <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
-            <a href="#" class="menu-link px-5">
-                <span class="menu-title">My Subscription</span>
-                <span class="menu-arrow"></span>
-            </a>
-            <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                <div class="menu-item px-3">
-                    <a href="#" class="menu-link px-5">Referrals</a>
-                </div>
-                <div class="menu-item px-3">
-                    <a href="#" class="menu-link px-5">Billing</a>
-                </div>
-                <div class="menu-item px-3">
-                    <a href="#" class="menu-link px-5">Payments</a>
-                </div>
-                <div class="menu-item px-3">
-                    <a href="#" class="menu-link d-flex flex-stack px-5">Statements
-                    <span class="ms-2 lh-0" data-bs-toggle="tooltip" aria-label="View your statements" data-bs-original-title="View your statements" data-kt-initialized="1">
-                        <i class="ki-duotone ki-information-5 fs-5">
-                            <span class="path1"></span>
-                            <span class="path2"></span>
-                            <span class="path3"></span>
-                        </i>
-                    </span></a>
-                </div>
-                <div class="separator my-2"></div>
-                <div class="menu-item px-3">
-                    <div class="menu-content px-3">
-                        <label class="form-check form-switch form-check-custom form-check-solid">
-                            <input class="form-check-input w-30px h-20px" type="checkbox" value="1" checked="checked" name="notifications">
-                            <span class="form-check-label text-muted fs-7">Notifications</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="menu-item px-5">
-            <a href="#" class="menu-link px-5">My Statements</a>
-        </div>
+        @endauth
         <div class="separator my-2"></div>
         <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
             <a href="#" class="menu-link px-5">

@@ -147,4 +147,10 @@ return [
     'cvv' => 'CVV',
     'complete_payment' => 'Complete Payment',
     'make_payment' => 'Make Payment',
+    'payment_successfull' => 'Payment Successful',
+    'payment_success_message' => 'Your payment has been processed successfully.',
+    'back_to_home' => 'Back to Home',
+    'court' => 'Court',
+    'sport_type' => 'Sport Type',
+    'time' => 'Time',
 ];

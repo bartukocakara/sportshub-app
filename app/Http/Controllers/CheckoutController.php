@@ -75,9 +75,8 @@ class CheckoutController extends Controller
         return view('checkout.payment.index', compact('checkout'));
     }
 
-    public function userMakePayment(CheckoutPaymentRequest $request)
+    public function userMakePayment(CheckoutPaymentRequest $request) : View
     {
-        $this->checkoutService->userMakePayment($request->validated());
-        return view('checkout.payment.index', compact('court'));
+        return $this->checkoutService->userMakePayment($request->validated());
     }
 }

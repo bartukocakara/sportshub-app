@@ -158,8 +158,45 @@ class CheckoutService extends CrudService
         return redirect()->route('reservation.user.index');
     }
 
-    public function userMakePayment(array $params)
+    public function userMakePayment(array $params) : View
     {
-        dd($params);
+        try {
+            $checkoutData = Session::get('checkout');
+            if ($checkoutData) {
+                $reservationRepo = new ReservationRepository(new Reservation());
+
+                // Generate the reservation title based on court, date, and sport type
+                $courtTitle = $checkoutData['title']; // Court title
+                $sportTypeTitle = $checkoutData['sport_type_title']; // Sport type title
+                $reservationDate = $checkoutData['date']; // Reservation date
+
+                // Format the reservation date (you can adjust the format as needed)
+                $formattedDate = \Carbon\Carbon::parse($reservationDate)->format('l, F j, Y');
+
+                // Combine the elements to create a title
+                $reservationTitle = "{$courtTitle} - {$sportTypeTitle} on {$formattedDate}";
+                $reservationParams = [
+                    'title' => $reservationTitle,  // Use the generated title
+                    'court_id' => $checkoutData['court_id'],
+                    'code' => Str::random(6),
+                    'from_hour' => $checkoutData['from_hour'],
+                    'to_hour' => $checkoutData['to_hour'],
+                    'payment_status' => ReservationPaymentStatusEnum::WAITING_FOR_PAYMENT->value,
+                    'date' => $checkoutData['date'],
+                    'price' => $checkoutData['price'],
+                    'customer_name' => $checkoutData['customer_name'],
+                    'customer_email' => $checkoutData['customer_email'],
+                    'customer_phone' => $checkoutData['customer_phone'],
+                ];
+                $reservation = $reservationRepo->create($reservationParams);
+
+                // PAYMENT SERVICE
+                // Pay tr send $params
+                return view('checkout.payment.completed', compact('reservation', 'checkoutData'));
+            }
+        } catch (\Throwable $th) {
+            // Handle the exception (log or rethrow)
+        }
     }
+
 }

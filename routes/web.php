@@ -51,7 +51,10 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('court-businesses', CourtBusinessController::class);
     Route::resource('courts', CourtController::class)->except(['index', 'show']);
-    Route::resource('reservations', ReservationController::class);
+
+    Route::get('reservations', [ReservationController::class, 'index']);
+    Route::get('reservations/{id}', [ReservationController::class, 'show']);
+    Route::post('reservations', [ReservationController::class, 'store']);
     Route::resource('payments', PaymentController::class);
     Route::resource('refunds', RefundController::class);
     Route::resource('commissions', CommissionController::class);
