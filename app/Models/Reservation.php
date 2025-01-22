@@ -37,4 +37,9 @@ class Reservation extends Model
     {
         return $this->belongsTo(Court::class);
     }
+
+    public function sportType()
+    {
+        return $this->belongsTo(SportType::class);
+    }
 }

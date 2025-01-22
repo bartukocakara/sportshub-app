@@ -15,25 +15,27 @@
                 </div>
             </div>
         </div>
+
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div class="app-container container-fluid">
-                <!-- Reservation List -->
-                <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
-                    @foreach ($reservations as $reservation)
-                        <div class="col">
-                            <!-- Reservation Card Component -->
-                            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card">
+                    <div class="card-body">
+                    @include('components.pagination.default', ['data' => $data['data']])
+
+                    @foreach ($data['data'] as $reservation)
+                        <div class="col-2">
+                            <div class="card shadow-sm border-1 rounded-3">
                                 <div class="card-img-top position-relative">
-                                    <img src="{{ asset('storage/' . $reservation->court_image) }}" class="img-fluid rounded-top" alt="{{ $reservation->court_title }}">
-                                    <div class="badge bg-success position-absolute top-0 end-0 m-3">{{ $reservation->status }}</div>
+                                    <img src="{{ asset('storage/courts/' . $reservation['court']['court_images'][0]['file_path']) }}" class="img-fluid rounded-top" alt="{{ $reservation['court']['title'] }}">
+                                    <div class="badge bg-success position-absolute top-0 end-0 m-3">{{ $reservation['payment_status'] }}</div>
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ $reservation->court_title }}</h5>
-                                    <p class="card-text text-muted">{{ $reservation->sport_type }} | {{ $reservation->date }}</p>
-                                    <p class="card-text">{{ $reservation->time }} | {{ $reservation->price }}</p>
+                                    <h5 class="card-title">{{ $reservation['court']['title'] }}</h5>
+                                    <p class="card-text text-muted">{{ $reservation['court']['sport_type']['title'] }} | {{ $reservation['date'] }}</p>
+                                    <p class="card-text">{{ $reservation['from_hour'] }} - {{ $reservation['to_hour'] }} | {{ $reservation['price'] }}</p>
                                 </div>
                                 <div class="card-footer text-center">
-                                    <a href="{{ route('reservation.show', $reservation->id) }}" class="btn btn-primary btn-sm">{{ __('messages.view_details') }}</a>
+                                    <a href="{{ route('reservation.show', $reservation['court']['id']) }}" class="btn btn-primary btn-sm">{{ __('messages.view_details') }}</a>
                                 </div>
                             </div>
                         </div>

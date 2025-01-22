@@ -23,20 +23,22 @@
             </div>
         </div>
         <div class="separator my-2"></div>
+        @auth
         <div class="menu-item px-5">
             <a href="{{ route('profile.edit') }}" class="menu-link px-5">{{ __('messages.my_profile') }}</a>
         </div>
+        @endauth
         @auth
         <div class="menu-item px-5">
-            <a href="{{ route('reservations.index') }}" class="menu-link px-5">
+            <a href="{{ route('reservations.me') }}" class="menu-link px-5">
                 <span class="menu-text">{{ __('messages.my_reservations') }}</span>
                 <span class="menu-badge">
                     <span class="badge badge-light-danger badge-circle fw-bold fs-7">3</span>
                 </span>
             </a>
         </div>
-        @endauth
         <div class="separator my-2"></div>
+        @endauth
         <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
             <a href="#" class="menu-link px-5">
                 <span class="menu-title position-relative">Mode
@@ -148,12 +150,20 @@
             <a href="../dist/account/settings.html" class="menu-link px-5">Account Settings</a>
         </div>
         <div class="menu-item px-5">
-            <form action="{{ route('logout') }}" method="post">
-                @csrf
-                <button type="submit" class="menu-link px-5" style="border: none; background: none; color: inherit;">
-                    {{ __('messages.logout') }}
-                </button>
-            </form>
+            @auth
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button type="submit" class="menu-link px-5" style="border: none; background: none; color: inherit;">
+                        {{ __('messages.logout') }}
+                    </button>
+                </form>
+            @endauth
+
+            @guest
+                <a href="{{ route('login') }}" class="menu-link px-5">
+                    {{ __('messages.login') }}
+                </a>
+            @endguest
         </div>
     </div>
 </div>

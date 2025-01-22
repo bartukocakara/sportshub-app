@@ -151,9 +151,12 @@ return [
     'complete_payment' => 'Ödemeyi Tamamla',
     'make_payment' => 'Ödeme Yap',
     'payment_successfull' => 'Ödeme Başarılı',
+    'payment_failed' => 'Ödeme Başarısız',
     'payment_success_message' => 'Ödemeniz başarıyla işlenmiştir.',
     'back_to_home' => 'Anasayfaya Dön',
     'court' => 'Saha',
     'sport_type' => 'Spor Türü',
     'time' => 'Zaman',
+    'try_again' => 'Yeniden deneyin',
+    'login' => 'Giriş yap'
 ];

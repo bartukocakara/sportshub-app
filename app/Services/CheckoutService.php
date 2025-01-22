@@ -195,6 +195,8 @@ class CheckoutService extends CrudService
                 return view('checkout.payment.completed', compact('reservation', 'checkoutData'));
             }
         } catch (\Throwable $th) {
+            return view('checkout.payment.failed');
+
             // Handle the exception (log or rethrow)
         }
     }

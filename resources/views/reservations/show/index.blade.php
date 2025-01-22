@@ -1,5 +1,5 @@
-@extends('layouts.app')
-@section('title', 'Ana Sayfa')
+@extends('layouts.no-sidebar')
+@section('title', __('messages.reservation_details'))
 
 @section('content')
 

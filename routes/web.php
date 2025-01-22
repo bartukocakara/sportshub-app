@@ -36,6 +36,9 @@ Route::post('reservation/customer', [CheckoutController::class, 'guestSaveCustom
 Route::get('reservation/guest/payment', [CheckoutController::class, 'guestPaymentIndex'])->name('reservation.guest.payment.index');
 Route::post('reservation/guest/payment', [CheckoutController::class, 'guestMakePayment'])->name('reservation.guest.make.payment');
 Route::get('reservation/payment/completed', [CheckoutController::class, 'paymentComplted'])->name('reservation.payment.completed');
+Route::get('reservation/payment/failed', function(){
+    return view('checkout.payment.failed');
+})->name('reservation.payment.failed');
 
 Route::middleware('auth')->group(function () {
     Route::post('checkout/user', [CheckoutController::class, 'userIndex'])->name('checkout.user.index');
@@ -52,8 +55,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('court-businesses', CourtBusinessController::class);
     Route::resource('courts', CourtController::class)->except(['index', 'show']);
 
-    Route::get('reservations', [ReservationController::class, 'index']);
-    Route::get('reservations/{id}', [ReservationController::class, 'show']);
+    Route::get('reservations', [ReservationController::class, 'index'])->name('reservations.index');
+    Route::get('reservations/me', [ReservationController::class, 'me'])->name('reservations.me');
+    Route::get('reservations/{id}', [ReservationController::class, 'show'])->name('reservation.show');
     Route::post('reservations', [ReservationController::class, 'store']);
     Route::resource('payments', PaymentController::class);
     Route::resource('refunds', RefundController::class);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ReservationRequest;
+use App\Http\Resources\ReservationResource;
 use App\Services\ReservationService;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
@@ -34,6 +35,21 @@ class ReservationController extends Controller
 
         $reservations = $this->reservationService->all($request);
         return view('reservations.index', compact('reservations'));
+    }
+
+    /**
+     * Son kullanıcı rezervasyonları listelemek için kullanılır.
+     *
+     * @param  Request $request
+     * @return \Illuminate\View\View
+     */
+    public function me(Request $request)
+    {
+        $request->merge(['user_id' => auth()->user()->id]);
+        $data = ReservationResource::collection($this->reservationService->me($request))
+                                ->response()
+                                ->getData(true);
+        return view('reservations.index', compact('data'));
     }
 
     /**
