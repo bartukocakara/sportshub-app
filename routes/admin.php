@@ -15,6 +15,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
         Route::resource('court-businesses', CourtBusinessController::class);
         Route::resource('commissions', CommissionController::class);
+        Route::resource('courts', CommissionController::class);
 
     });
 });

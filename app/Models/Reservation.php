@@ -19,6 +19,7 @@ class Reservation extends Model
         'court_id',
         'code',
         'payment_status',
+        'status',
         'from_hour',
         'to_hour',
         'date',

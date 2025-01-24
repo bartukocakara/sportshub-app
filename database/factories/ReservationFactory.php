@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\ReservationPaymentStatusEnum;
+use App\Enums\ReservationStatusEnum;
 use App\Models\Court;
 use App\Models\Reservation;
 use App\Models\User;
@@ -30,6 +31,14 @@ class ReservationFactory extends Factory
             'user_id' => $this->faker->randomElement(User::all()->pluck('id')),
             'court_id' => $this->faker->randomElement(Court::all()->pluck('id')),
             'code' => strtoupper($this->faker->bothify('??###')),
+            'status' => $this->faker->randomElement([
+                ReservationStatusEnum::WAITING_FOR_APPROVAL->value,
+                ReservationStatusEnum::APPROVED->value,
+                ReservationStatusEnum::PLAYING->value,
+                ReservationStatusEnum::REJECTED->value,
+                ReservationStatusEnum::CANCELED->value,
+                ReservationStatusEnum::ENDED->value,
+            ]),
             'payment_status' => $this->faker->randomElement([
                 ReservationPaymentStatusEnum::WAITING_FOR_PAYMENT->value,
                 ReservationPaymentStatusEnum::PAYMENT_APPROVED->value,

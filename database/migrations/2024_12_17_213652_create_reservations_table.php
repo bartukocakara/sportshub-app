@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\ReservationPaymentStatusEnum;
+use App\Enums\ReservationStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -23,6 +24,14 @@ return new class extends Migration
             $table->foreign('court_id')->references('id')->on('courts')->onDelete('cascade');
 
             $table->string('code', 10);
+            $table->enum('status', [
+                ReservationStatusEnum::WAITING_FOR_APPROVAL->value,
+                ReservationStatusEnum::APPROVED->value,
+                ReservationStatusEnum::PLAYING->value,
+                ReservationStatusEnum::REJECTED->value,
+                ReservationStatusEnum::CANCELED->value,
+                ReservationStatusEnum::ENDED->value,
+            ])->default(ReservationStatusEnum::WAITING_FOR_APPROVAL->value);
 
             // Payment status (currently commented out, but can be re-enabled if needed)
             $table->enum('payment_status', [
