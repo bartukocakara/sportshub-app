@@ -18,29 +18,65 @@
 
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div class="app-container container-fluid">
-                <div class="card">
-                    <div class="card-body">
-                    @include('components.pagination.default', ['data' => $data['data']])
+                @php
+                    $activeReservations = collect($data['data'])->filter(fn($reservation) => in_array($reservation['status'], [1, 2, 3]));
+                    $completedReservations = collect($data['data'])->filter(fn($reservation) => $reservation['status'] === 6);
+                    $canceledReservations = collect($data['data'])->filter(fn($reservation) => in_array($reservation['status'], [4, 5]));
+                @endphp
 
-                    @foreach ($data['data'] as $reservation)
-                        <div class="col-2">
-                            <div class="card shadow-sm border-1 rounded-3">
-                                <div class="card-img-top position-relative">
-                                    <img src="{{ asset('storage/courts/' . $reservation['court']['court_images'][0]['file_path']) }}" class="img-fluid rounded-top" alt="{{ $reservation['court']['title'] }}">
-                                    <div class="badge bg-success position-absolute top-0 end-0 m-3">{{ $reservation['payment_status'] }}</div>
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $reservation['court']['title'] }}</h5>
-                                    <p class="card-text text-muted">{{ $reservation['court']['sport_type']['title'] }} | {{ $reservation['date'] }}</p>
-                                    <p class="card-text">{{ $reservation['from_hour'] }} - {{ $reservation['to_hour'] }} | {{ $reservation['price'] }}</p>
-                                </div>
-                                <div class="card-footer text-center">
-                                    <a href="{{ route('reservation.show', $reservation['court']['id']) }}" class="btn btn-primary btn-sm">{{ __('messages.view_details') }}</a>
-                                </div>
+                @if($activeReservations->isNotEmpty())
+                    <div class="card mb-5">
+                        <div class="card-header">
+                            <h3 class="card-title">{{ __('messages.active_reservations') }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex flex-wrap gap-4">
+                                @foreach ($activeReservations as $reservation)
+                                    @include('components.reservation.card', ['reservation' => $reservation])
+                                @endforeach
                             </div>
                         </div>
-                    @endforeach
-                </div>
+                    </div>
+                @endif
+
+                <!-- Completed Reservations -->
+                @if($completedReservations->isNotEmpty())
+                    <div class="card mb-5">
+                        <div class="card-header">
+                            <h3 class="card-title">{{ __('messages.completed_reservations') }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex flex-wrap gap-4">
+                                @foreach ($completedReservations as $reservation)
+                                    @include('components.reservation.card', ['reservation' => $reservation])
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                @if($canceledReservations->isNotEmpty())
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">{{ __('messages.canceled_reservations') }}</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex flex-wrap gap-4">
+                                @foreach ($canceledReservations as $reservation)
+                                    @include('components.reservation.card', ['reservation' => $reservation])
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                @if($activeReservations->isEmpty() && $completedReservations->isEmpty() && $canceledReservations->isEmpty())
+                    <div class="card">
+                        <div class="card-body text-center py-15">
+                            <h3 class="text-muted">{{ __('messages.no_reservations_found') }}</h3>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
