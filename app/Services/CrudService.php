@@ -22,11 +22,12 @@ class CrudService
 
     /**
      * @param Request $request
+     * @param array $with
      * @return LengthAwarePaginator|Collection
     */
-    public function all(Request $request) : LengthAwarePaginator|Collection
+    public function all(Request $request, array $with = []) : LengthAwarePaginator|Collection
     {
-        return $this->repository->all($request);
+        return $this->repository->all($request, $with);
     }
 
     /**
@@ -40,11 +41,12 @@ class CrudService
 
     /**
      * @param string $id
+     * @param array $with
      * @return Model
     */
-    public function show(string $id) : Model
+    public function show(string $id, array $with = []) : Model
     {
-        return $this->repository->find($id);
+        return $this->repository->find($id, $with);
     }
 
     /**

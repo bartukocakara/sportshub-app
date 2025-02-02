@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\CourtController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LoginController;
-use App\Http\Controllers\CommissionController;
-use App\Http\Controllers\CourtBusinessController;
+use App\Http\Controllers\Admin\CommissionController;
+use App\Http\Controllers\Admin\CourtBusinessController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function () {
@@ -13,9 +14,8 @@ Route::prefix('admin')->group(function () {
 
     Route::middleware('auth:admin')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
-        Route::resource('court-businesses', CourtBusinessController::class);
-        Route::resource('commissions', CommissionController::class);
-        Route::resource('courts', CommissionController::class);
-
+        Route::resource('court-businesses', CourtBusinessController::class)->names('admin.court-businesses');
+        Route::resource('commissions', CommissionController::class)->names('admin.commissions');
+        Route::resource('courts', CourtController::class)->names('admin.courts');
     });
 });

@@ -69,11 +69,12 @@ class BaseRepository
      * Bir kaynağı görüntülemek için kullanılır.
      *
      * @param int|string $id
+     * @param array $with
      * @return Model
     */
-    public function find(int|string $id) : Model
+    public function find(int|string $id, array $with = []) : Model
     {
-        return $this->model->findOrFail($id);
+        return $this->model->with($with)->findOrFail($id);
     }
 
     /**

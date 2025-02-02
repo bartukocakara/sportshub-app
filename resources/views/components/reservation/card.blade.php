@@ -11,7 +11,7 @@
             <p class="card-text">{{ $reservation['from_hour'] }} - {{ $reservation['to_hour'] }} | {{ $reservation['price'] }}</p>
         </div>
         <div class="card-footer d-flex justify-content-center align-items-center">
-            <a href="{{ route('reservation.show', $reservation['court']['id']) }}" class="btn btn-primary btn-sm">{{ __('messages.view_details') }}</a>
+            <a href="{{ route('reservation.show', $reservation['id']) }}" class="btn btn-primary btn-sm">{{ __('messages.view_details') }}</a>
         </div>
     </div>
 </div>

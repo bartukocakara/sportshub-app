@@ -1,11 +1,6 @@
 @extends('layouts.no-sidebar')
 @section('title', __('messages.guest_checkout'))
-@section('custom-styles')
-.show-pricing-list {
-    position: relative;
-    z-index: 10;
-}
-@endsection
+
 @section('content')
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
     <div class="d-flex flex-column flex-column-fluid">

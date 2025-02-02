@@ -79,9 +79,9 @@ class ReservationController extends Controller
      * @param  string $id
      * @return \Illuminate\View\View
      */
-    public function show(string $id)
+    public function show(string $id, array $with = ['court', 'court.courtImages', 'court.courtBusiness'])
     {
-        $reservation = $this->reservationService->show($id);
+        $reservation = $this->reservationService->show($id, $with);
         return view('reservations.show.index', compact('reservation'));
     }
 

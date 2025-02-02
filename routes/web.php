@@ -53,7 +53,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('court-businesses', CourtBusinessController::class);
-    Route::resource('courts', CourtController::class)->except(['index', 'show']);
+    Route::resource('/courts', CourtController::class)->names('courts')->parameters([
+        'courts' => 'id'
+    ]);;
 
     Route::get('reservations', [ReservationController::class, 'index'])->name('reservations.index');
     Route::get('reservations/me', [ReservationController::class, 'me'])->name('reservations.me');
