@@ -83,25 +83,6 @@
             <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
                 <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
                     <div class="page-title d-flex flex-column gap-1 me-3 mb-2">
-                        <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-6">
-                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
-                                <a href="../dist/index.html" class="text-gray-500">
-                                    <i class="ki-duotone ki-home fs-3 text-gray-400 me-n1"></i>
-                                </a>
-                            </li>
-                            <li class="breadcrumb-item">
-                                <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
-                            </li>
-                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">Pages</li>
-                            <li class="breadcrumb-item">
-                                <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
-                            </li>
-                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">Account</li>
-                            <li class="breadcrumb-item">
-                                <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
-                            </li>
-                            <li class="breadcrumb-item text-gray-700">Overview</li>
-                        </ul>
                         <h1 class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-1 lh-0">{{ __('messages.reservation_details') }}</h1>
                     </div>
                 </div>
@@ -276,7 +257,6 @@
 @endsection
 @section('page-scripts')
     <script src="{{ asset('assets/plugins/custom/leaflet/leaflet.bundle.js') }}"></script>
-    <script src="{{ asset('assets/js/custom/utilities/modals/create-app.js') }}"></script>
 	<script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
