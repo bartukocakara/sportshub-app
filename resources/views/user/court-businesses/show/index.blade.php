@@ -9,10 +9,11 @@
                 <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
                     <div class="page-title d-flex flex-column m-2">
                         <h1 class="page-heading d-flex text-gray-900 fw-bolder fs-2">
-                            Business Name Here
+                            {{ $courtBusiness->name }}
                         </h1>
                         <span class="text-gray-600 fw-semibold fs-6">
-                            <i class="fas fa-map-marker-alt text-primary me-2"></i>Business Address Here
+                            <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                            {{ $courtBusiness->district->city->name }}, {{ $courtBusiness->district->name }}
                         </span>
                     </div>
                 </div>
@@ -30,9 +31,13 @@
                             <div class="card-body p-0">
                                 <div class="swiper images-swiper">
                                     <div class="swiper-wrapper">
-                                        <div class="swiper-slide">
-                                            <img src="placeholder.jpg" class="w-100 h-100 object-fit-cover" alt="Business Image">
-                                        </div>
+                                        @foreach($courtBusiness->courts as $court)
+                                            @foreach($court->courtImages as $image)
+                                                <div class="swiper-slide">
+                                                    <img src="{{ $image->url }}" class="w-100 h-100 object-fit-cover" alt="Court Image">
+                                                </div>
+                                            @endforeach
+                                        @endforeach
                                     </div>
                                     <div class="swiper-pagination"></div>
                                     <div class="swiper-button-next"></div>
@@ -69,19 +74,20 @@
                                     <div class="tab-pane fade show active" id="kt_tab_courts">
                                         <div class="row g-6">
                                             <!-- Court Card -->
+                                            @foreach($courtBusiness->courts as $court)
                                             <div class="col-md-6">
                                                 <div class="card h-100">
                                                     <div class="card-body d-flex flex-column">
                                                         <div class="mb-5">
-                                                            <img src="court-placeholder.jpg" class="w-100 h-200px object-fit-cover rounded" alt="Court Image">
+                                                            <img src="{{ $court->courtImages->first()?->url }}" class="w-100 h-200px object-fit-cover rounded" alt="Court Image">
                                                         </div>
-                                                        <h3 class="fs-4 text-gray-900 mb-3">Court Name</h3>
+                                                        <h3 class="fs-4 text-gray-900 mb-3">{{ $court->name }}</h3>
                                                         <div class="mb-3">
-                                                            <span class="badge badge-light-primary me-2">Indoor</span>
-                                                            <span class="badge badge-light-info">Tennis</span>
+                                                            <span class="badge badge-light-primary me-2">{{ $court->type }}</span>
+                                                            <span class="badge badge-light-info">{{ $court->sport_type }}</span>
                                                         </div>
                                                         <div class="fs-6 text-gray-600 mb-5">
-                                                            <i class="fas fa-dollar-sign text-primary me-2"></i>Price per hour
+                                                            <i class="fas fa-dollar-sign text-primary me-2"></i>{{ $court->price_per_hour }}
                                                         </div>
                                                         <div class="mt-auto">
                                                             <button class="btn btn-primary w-100">Book Now</button>
@@ -89,65 +95,33 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            @endforeach
                                         </div>
                                     </div>
 
                                     <!-- Details Tab -->
-                                    <div class="tab-pane fade" id="kt_tab_details">
-                                        <div class="row mb-7">
-                                            <div class="col-lg-12">
-                                                <h3 class="fs-5 fw-bold mb-5">About</h3>
-                                                <p class="text-gray-700">Business description and details here...</p>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-7">
-                                            <div class="col-lg-6">
-                                                <h3 class="fs-5 fw-bold mb-5">Working Hours</h3>
-                                                <div class="d-flex flex-column gap-3">
-                                                    <div class="d-flex justify-content-between">
-                                                        <span class="text-gray-600">Monday</span>
-                                                        <span class="text-gray-800">09:00 - 22:00</span>
-                                                    </div>
-                                                    <!-- Repeat for other days -->
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <h3 class="fs-5 fw-bold mb-5">Amenities</h3>
-                                                <div class="d-flex flex-wrap gap-3">
-                                                    <span class="badge badge-light-primary">Parking</span>
-                                                    <span class="badge badge-light-primary">Showers</span>
-                                                    <span class="badge badge-light-primary">Lockers</span>
-                                                    <span class="badge badge-light-primary">Cafe</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="tab-pane fade" id="kt_tab_reviews">
+
                                     </div>
 
                                     <!-- Reviews Tab -->
                                     <div class="tab-pane fade" id="kt_tab_reviews">
                                         <div class="d-flex flex-column gap-6">
                                             <!-- Review Item -->
+                                            @foreach($courtBusiness->comments as $comment)
                                             <div class="border rounded p-6">
                                                 <div class="d-flex align-items-center mb-3">
                                                     <div class="symbol symbol-35px me-3">
-                                                        <img src="avatar.jpg" alt="User">
+                                                        <img src="{{ $comment->user->profile_photo_url }}" alt="{{ $comment->user->name }}">
                                                     </div>
                                                     <div class="d-flex flex-column">
-                                                        <span class="fs-5 fw-bold">User Name</span>
-                                                        <span class="text-gray-600">2 days ago</span>
-                                                    </div>
-                                                    <div class="ms-auto">
-                                                        <div class="rating">
-                                                            <i class="fas fa-star text-warning"></i>
-                                                            <i class="fas fa-star text-warning"></i>
-                                                            <i class="fas fa-star text-warning"></i>
-                                                            <i class="fas fa-star text-warning"></i>
-                                                            <i class="fas fa-star text-warning"></i>
-                                                        </div>
+                                                        <span class="fs-5 fw-bold">{{ $comment->user->name }}</span>
+                                                        <span class="text-gray-600">{{ $comment->created_at->diffForHumans() }}</span>
                                                     </div>
                                                 </div>
-                                                <p class="text-gray-700 mb-0">Review content here...</p>
+                                                <p class="text-gray-700 mb-0">{{ $comment->comment }}</p>
                                             </div>
+                                        @endforeach
                                         </div>
                                     </div>
                                 </div>
@@ -166,21 +140,32 @@
                                         <i class="fas fa-user fs-4 text-primary"></i>
                                         <div>
                                             <span class="d-block fw-bold text-gray-900">Owner</span>
-                                            <span class="text-gray-600">Owner Name</span>
+                                            <span class="text-gray-600">{{ $courtBusiness->owner_name }}</span>
                                         </div>
                                     </div>
                                     <div class="d-flex gap-3">
                                         <i class="fas fa-phone fs-4 text-primary"></i>
                                         <div>
                                             <span class="d-block fw-bold text-gray-900">Phone</span>
-                                            <span class="text-gray-600">+1234567890</span>
+                                            <span class="text-gray-600">{{ $courtBusiness->phone }}</span>
                                         </div>
                                     </div>
                                     <div class="d-flex gap-3">
                                         <i class="fas fa-envelope fs-4 text-primary"></i>
                                         <div>
                                             <span class="d-block fw-bold text-gray-900">Email</span>
-                                            <span class="text-gray-600">business@email.com</span>
+                                            <span class="text-gray-600">{{ $courtBusiness->email }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex gap-3">
+                                        <i class="fas fa-map-marker-alt fs-4 text-primary"></i>
+                                        <div>
+                                            <span class="d-block fw-bold text-gray-900">Location</span>
+                                            <span class="text-gray-600">
+                                                {{ $courtBusiness->district->city->country->name }},
+                                                {{ $courtBusiness->district->city->name }},
+                                                {{ $courtBusiness->district->name }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

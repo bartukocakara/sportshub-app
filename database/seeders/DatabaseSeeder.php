@@ -33,8 +33,8 @@ class DatabaseSeeder extends Seeder
             InvoiceSeeder::class,
             CourtReservationPricingSeeder::class,
             AnnouncementSeeder::class,
+            CommentSeeder::class,
             // CourtAddressSeeder::class
-
         ]);
     }
 }

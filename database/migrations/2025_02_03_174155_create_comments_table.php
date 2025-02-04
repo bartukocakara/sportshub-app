@@ -14,8 +14,12 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->text('comment');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->morphs('commentable');
+            $table->uuid('user_id');
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users')
+                  ->onDelete('cascade');
+            $table->uuidMorphs('commentable');  // This creates commentable_id as UUID and commentable_type as string
             $table->timestamps();
         });
     }

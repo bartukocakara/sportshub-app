@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CourtAddress extends Model
 {
@@ -23,4 +24,15 @@ class CourtAddress extends Model
         'neighborhood',
         'building_number',
     ];
+
+    public function court() : BelongsTo
+    {
+        return $this->belongsTo(Court::class);
+    }
+
+    public function district() : BelongsTo
+    {
+        return $this->belongsTo(District::class);
+    }
+
 }

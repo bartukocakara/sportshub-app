@@ -29,7 +29,7 @@ class ReservationFactory extends Factory
         return [
             'title' => $this->faker->sentence(3),
             'user_id' => $this->faker->randomElement(User::all()->pluck('id')),
-            'court_id' => $this->faker->randomElement(Court::all()->pluck('id')),
+            'court_id' => $this->faker->randomElement(Court::whereNotNull('court_business_id')->pluck('id')),
             'code' => strtoupper($this->faker->bothify('??###')),
             'status' => $this->faker->randomElement([
                 ReservationStatusEnum::WAITING_FOR_APPROVAL->value,

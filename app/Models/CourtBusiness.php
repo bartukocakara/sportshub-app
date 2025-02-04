@@ -6,6 +6,8 @@ use App\Filters\FilterBuilder;
 use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable; // Import Authenticatable
 
 class CourtBusiness extends Authenticatable
@@ -36,5 +38,19 @@ class CourtBusiness extends Authenticatable
     {
         return $this->belongsTo(District::class);
     }
+
+    /**
+     * Get all comments for the court.
+     */
+    public function comments(): MorphMany
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    public function courts(): HasMany
+    {
+        return $this->hasMany(Court::class);
+    }
+    
 
 }
