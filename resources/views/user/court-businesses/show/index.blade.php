@@ -1,5 +1,11 @@
 @extends('layouts.no-sidebar')
 @section('title', __('messages.court_business'))
+
+@section('custom-styles')
+<link rel="stylesheet" href="{{ asset(path: 'assets/css/swiper-bundle.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('assets/plugins/custom/leaflet/leaflet.bundle.css') }}">
+@endsection
+
 @section(section: 'content')
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
     <div class="d-flex flex-column flex-column-fluid">
@@ -13,7 +19,7 @@
                         </h1>
                         <span class="text-gray-600 fw-semibold fs-6">
                             <i class="fas fa-map-marker-alt text-primary me-2"></i>
-                            {{ $courtBusiness->district->city->name }}, {{ $courtBusiness->district->name }}
+                            {{ $courtBusiness->district->city->title }}, {{ $courtBusiness->district->title }}
                         </span>
                     </div>
                 </div>
@@ -34,7 +40,7 @@
                                         @foreach($courtBusiness->courts as $court)
                                             @foreach($court->courtImages as $image)
                                                 <div class="swiper-slide">
-                                                    <img src="{{ $image->url }}" class="w-100 h-100 object-fit-cover" alt="Court Image">
+                                                    <img src="{{ asset('storage/courts/' . $image->file_path) }}" class="w-100 h-100 object-fit-cover" alt="Court Image">
                                                 </div>
                                             @endforeach
                                         @endforeach
@@ -112,10 +118,10 @@
                                             <div class="border rounded p-6">
                                                 <div class="d-flex align-items-center mb-3">
                                                     <div class="symbol symbol-35px me-3">
-                                                        <img src="{{ $comment->user->profile_photo_url }}" alt="{{ $comment->user->name }}">
+                                                        <img src="{{ $comment->user->avatar }}" alt="{{ $comment->user->first_name">
                                                     </div>
                                                     <div class="d-flex flex-column">
-                                                        <span class="fs-5 fw-bold">{{ $comment->user->name }}</span>
+                                                        <span class="fs-5 fw-bold">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</span>
                                                         <span class="text-gray-600">{{ $comment->created_at->diffForHumans() }}</span>
                                                     </div>
                                                 </div>
@@ -129,38 +135,37 @@
                         </div>
                     </div>
 
-                    <!-- Right Column -->
                     <div class="col-xl-4">
                         <!-- Business Info Card -->
                         <div class="card mb-5 mb-xl-8">
                             <div class="card-body">
-                                <h3 class="fs-4 fw-bold mb-5">Business Information</h3>
+                                <h3 class="fs-4 fw-bold mb-5">{{ __('messages.business_info') }}</h3>
                                 <div class="d-flex flex-column gap-5">
                                     <div class="d-flex gap-3">
                                         <i class="fas fa-user fs-4 text-primary"></i>
                                         <div>
-                                            <span class="d-block fw-bold text-gray-900">Owner</span>
+                                            <span class="d-block fw-bold text-gray-900">{{ __('messages.name') }}</span>
                                             <span class="text-gray-600">{{ $courtBusiness->owner_name }}</span>
                                         </div>
                                     </div>
                                     <div class="d-flex gap-3">
                                         <i class="fas fa-phone fs-4 text-primary"></i>
                                         <div>
-                                            <span class="d-block fw-bold text-gray-900">Phone</span>
+                                            <span class="d-block fw-bold text-gray-900">{{ __('messages.phone') }}</span>
                                             <span class="text-gray-600">{{ $courtBusiness->phone }}</span>
                                         </div>
                                     </div>
                                     <div class="d-flex gap-3">
                                         <i class="fas fa-envelope fs-4 text-primary"></i>
                                         <div>
-                                            <span class="d-block fw-bold text-gray-900">Email</span>
+                                            <span class="d-block fw-bold text-gray-900">{{ __('messages.email') }}</span>
                                             <span class="text-gray-600">{{ $courtBusiness->email }}</span>
                                         </div>
                                     </div>
                                     <div class="d-flex gap-3">
                                         <i class="fas fa-map-marker-alt fs-4 text-primary"></i>
                                         <div>
-                                            <span class="d-block fw-bold text-gray-900">Location</span>
+                                            <span class="d-block fw-bold text-gray-900">{{ __('messages.location') }}</span>
                                             <span class="text-gray-600">
                                                 {{ $courtBusiness->district->city->country->name }},
                                                 {{ $courtBusiness->district->city->name }},
@@ -183,4 +188,20 @@
         </div>
     </div>
 </div>
+@endsection
+@section('page-scripts')
+<script src="{{ asset('assets/plugins/custom/leaflet/leaflet.bundle.js') }}"></script>
+<script src="{{ asset('assets/js/swiper-bundle.min.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Leaflet map
+        var map = L.map('location_map').setView([{{ $courtBusiness->latitude }}, {{ $courtBusiness->longitude }}], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([{{ $courtBusiness->latitude }}, {{ $courtBusiness->longitude }}]).addTo(map);
+    });
+</script>
 @endsection
