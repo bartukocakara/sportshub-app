@@ -63,7 +63,7 @@ class CourtBusinessController extends Controller
      * @param  string $id
      * @return \Illuminate\View\View
      */
-    public function show(string $id, array $with = ['courts', 'courts.courtImages', 'comments.user', 'district.city.country'])
+    public function show(string $id, array $with = ['courts.sportType', 'courts.courtImages', 'courts.courtReservationPricings', 'comments.user', 'district.city.country'])
     {
         $courtBusiness = $this->courtBusinessService->show($id);
         return view('user.court-businesses.show.index', compact('courtBusiness'));

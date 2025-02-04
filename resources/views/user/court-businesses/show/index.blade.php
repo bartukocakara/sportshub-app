@@ -2,6 +2,7 @@
 @section('title', __('messages.court_business'))
 
 @section('custom-styles')
+<link href="{{ asset('assets/css/no-sidebar.css') }}" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="{{ asset(path: 'assets/css/swiper-bundle.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/plugins/custom/leaflet/leaflet.bundle.css') }}">
 @endsection
@@ -26,32 +27,10 @@
             </div>
         </div>
 
-        <!-- Content -->
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div class="app-container container-fluid">
                 <div class="row g-5 g-xl-8">
-                    <!-- Left Column -->
                     <div class="col-xl-8">
-                        <!-- Image Slider Card -->
-                        <div class="card mb-5 mb-xl-8">
-                            <div class="card-body p-0">
-                                <div class="swiper images-swiper">
-                                    <div class="swiper-wrapper">
-                                        @foreach($courtBusiness->courts as $court)
-                                            @foreach($court->courtImages as $image)
-                                                <div class="swiper-slide">
-                                                    <img src="{{ asset('storage/courts/' . $image->file_path) }}" class="w-100 h-100 object-fit-cover" alt="Court Image">
-                                                </div>
-                                            @endforeach
-                                        @endforeach
-                                    </div>
-                                    <div class="swiper-pagination"></div>
-                                    <div class="swiper-button-next"></div>
-                                    <div class="swiper-button-prev"></div>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- Tabs -->
                         <div class="card mb-5 mb-xl-8">
                             <div class="card-body p-0">
@@ -85,12 +64,12 @@
                                                 <div class="card h-100">
                                                     <div class="card-body d-flex flex-column">
                                                         <div class="mb-5">
-                                                            <img src="{{ $court->courtImages->first()?->url }}" class="w-100 h-200px object-fit-cover rounded" alt="Court Image">
+                                                            <img src="{{ asset('storage/courts/' . $court->courtImages->first()?->file_path) }}" class="w-100 h-200px object-fit-cover rounded" alt="Court Image">
                                                         </div>
                                                         <h3 class="fs-4 text-gray-900 mb-3">{{ $court->name }}</h3>
                                                         <div class="mb-3">
                                                             <span class="badge badge-light-primary me-2">{{ $court->type }}</span>
-                                                            <span class="badge badge-light-info">{{ $court->sport_type }}</span>
+                                                            <span class="badge badge-light-info">{{ $court->sportType->title }}</span>
                                                         </div>
                                                         <div class="fs-6 text-gray-600 mb-5">
                                                             <i class="fas fa-dollar-sign text-primary me-2"></i>{{ $court->price_per_hour }}
@@ -118,7 +97,7 @@
                                             <div class="border rounded p-6">
                                                 <div class="d-flex align-items-center mb-3">
                                                     <div class="symbol symbol-35px me-3">
-                                                        <img src="{{ $comment->user->avatar }}" alt="{{ $comment->user->first_name">
+                                                        <img src="{{ asset('storage/users/' . $comment->user->avatar) }}" alt="{{ $comment->user->first_name }}">
                                                     </div>
                                                     <div class="d-flex flex-column">
                                                         <span class="fs-5 fw-bold">{{ $comment->user->first_name }} {{ $comment->user->last_name }}</span>
