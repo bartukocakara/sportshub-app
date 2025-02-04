@@ -7,29 +7,29 @@
 <link rel="stylesheet" href="{{ asset('assets/plugins/custom/leaflet/leaflet.bundle.css') }}">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
-    .court-images-swiper {
+    .images-swiper {
         width: 100%;
         height: 300px;
         position: relative;
     }
-    .court-images-swiper .swiper-button-next,
-    .court-images-swiper .swiper-button-prev {
+    .images-swiper .swiper-button-next,
+    .images-swiper .swiper-button-prev {
         color: #ffffff;
         background: rgba(0, 0, 0, 0.3);
         padding: 30px 20px;
         border-radius: 5px;
     }
-    .court-images-swiper .swiper-button-next:hover,
-    .court-images-swiper .swiper-button-prev:hover {
+    .images-swiper .swiper-button-next:hover,
+    .images-swiper .swiper-button-prev:hover {
         background: rgba(0, 0, 0, 0.5);
     }
-    .court-images-swiper .swiper-pagination-bullet {
+    .images-swiper .swiper-pagination-bullet {
         width: 10px;
         height: 10px;
         background: #ffffff;
         opacity: 0.5;
     }
-    .court-images-swiper .swiper-pagination-bullet-active {
+    .images-swiper .swiper-pagination-bullet-active {
         opacity: 1;
         background: #009ef7;
     }
@@ -38,7 +38,7 @@
         align-items: center;
         justify-content: center;
     }
-    #court_location_map {
+    #location_map {
         width: 100%;
         border-radius: 0.625rem;
     }
@@ -57,18 +57,18 @@
         margin: 0;
         color: #7E8299;
     }
-    .court-thumbnail-slider {
+    .thumbnail-slider {
         width: 150px;
         height: 100px;
         position: relative;
     }
-    .court-thumbnail-slider .swiper-pagination-bullet {
+    .thumbnail-slider .swiper-pagination-bullet {
         width: 6px;
         height: 6px;
         background: #ffffff;
         opacity: 0.7;
     }
-    .court-thumbnail-slider .swiper-pagination-bullet-active {
+    .thumbnail-slider .swiper-pagination-bullet-active {
         opacity: 1;
         background: #009ef7;
     }
@@ -176,7 +176,7 @@
                         </div>
 
                         <div class="card-body p-0">
-                            <div class="swiper court-images-swiper">
+                            <div class="swiper images-swiper">
                                 <div class="swiper-wrapper">
                                     @foreach($reservation->court->courtImages as $image)
                                         <div class="swiper-slide">
@@ -203,7 +203,11 @@
                             <div class="row mb-7">
                                 <label class="col-lg-4 fw-semibold text-muted">{{ __('messages.business_name') }}</label>
                                 <div class="col-lg-8">
-                                    <span class="fw-bold fs-6 text-gray-800">{{ $reservation->court->courtBusiness?->name }}</span>
+                                    <span class="fw-bold fs-6 text-gray-800">
+                                        <a href="{{ route('court-businesses.show', $reservation->court->courtBusiness->id) }}" class="text-gray-800 text-hover-primary">
+                                            {{ $reservation->court->courtBusiness?->name }}
+                                        </a>
+                                    </span>
                                 </div>
                             </div>
                             <div class="row mb-7">
@@ -223,7 +227,7 @@
                         </div>
                     </div>
                     <div class="card-body p-0">
-                        <div id="court_location_map" style="height: 400px;">
+                        <div id="location_map" style="height: 400px;">
                             <div id="kt_contact_map" class="w-100 rounded mb-2 mb-lg-0 mt-2" style="height: 486px; width: 100%;" tabindex="0">
                                 <div class="leaflet-control-container">
                                     <div class="leaflet-top leaflet-left">
@@ -264,7 +268,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Swiper for the court images in the Court Details card
-            new Swiper('.court-images-swiper', {
+            new Swiper('.images-swiper', {
                 slidesPerView: 1,
                 spaceBetween: 30,
                 loop: true,
@@ -292,7 +296,7 @@
             });
 
             // New Swiper for the small court thumbnail in the Reservation Details card
-            new Swiper('.court-thumbnail-swiper', {
+            new Swiper('.thumbnail-swiper', {
                 slidesPerView: 1,
                 loop: true,
                 autoplay: {
@@ -300,7 +304,7 @@
                     disableOnInteraction: false,
                 },
                 pagination: {
-                    el: '.court-thumbnail-swiper .swiper-pagination',
+                    el: '.thumbnail-swiper .swiper-pagination',
                     clickable: true,
                 },
                 keyboard: {
@@ -309,26 +313,26 @@
             });
 
             // Initialize Leaflet map
-            const courtLat = {{ $reservation->court->courtBusiness->latitude ?? 'null' }};
-            const courtLng = {{ $reservation->court->courtBusiness->longitude ?? 'null' }};
+            const lat = {{ $reservation->court->courtBusiness->latitude ?? 'null' }};
+            const lng = {{ $reservation->court->courtBusiness->longitude ?? 'null' }};
 
-            if (courtLat && courtLng) {
-                const map = L.map('court_location_map').setView([courtLat, courtLng], 15);
+            if (lat && lng) {
+                const map = L.map('location_map').setView([lat, lng], 15);
 
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '© OpenStreetMap contributors'
                 }).addTo(map);
 
                 // Custom icon for the marker
-                const courtIcon = L.icon({
-                    iconUrl: '{{ asset("assets/media/icons/court-marker.png") }}',
+                const locationIcon = L.icon({
+                    iconUrl: '{{ asset("assets/media/icons/location-marker.png") }}',
                     iconSize: [32, 32],
                     iconAnchor: [16, 32],
                     popupAnchor: [0, -32]
                 });
 
                 // Add marker with custom popup
-                const marker = L.marker([courtLat, courtLng], { icon: courtIcon }).addTo(map);
+                const marker = L.marker([lat, lng], { icon: locationIcon }).addTo(map);
 
                 const popupContent = `
                     <div class="map-popup">
@@ -345,7 +349,7 @@
                 // Refresh map when it becomes visible
                 map.invalidateSize();
             } else {
-                document.getElementById('court_location_map').innerHTML = `
+                document.getElementById('location_map').innerHTML = `
                     <div class="d-flex align-items-center justify-content-center h-100">
                         <div class="text-center text-gray-600">
                             <i class="ki-duotone ki-geolocation fs-3x mb-3"></i>

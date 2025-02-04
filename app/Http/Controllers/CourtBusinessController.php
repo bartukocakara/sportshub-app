@@ -32,7 +32,7 @@ class CourtBusinessController extends Controller
     public function index(Request $request)
     {
         $courtBusinesses = $this->courtBusinessService->all($request);
-        return view('courtBusinesses.index', compact('courtBusinesses'));
+        return view('user.court-businesses.index', compact('courtBusinesses'));
     }
 
     /**
@@ -42,7 +42,7 @@ class CourtBusinessController extends Controller
      */
     public function create()
     {
-        return view('courtBusinesses.create');
+        return view('user.court-businesses.create');
     }
 
     /**
@@ -54,7 +54,7 @@ class CourtBusinessController extends Controller
     public function store(CourtBusinessRequest $request): RedirectResponse
     {
         $this->courtBusinessService->store($request->validated());
-        return redirect()->route('courtBusinesses.index')->with('success', 'Court Business created successfully.');
+        return redirect()->route('user.court-businesses.index')->with('success', 'Court Business created successfully.');
     }
 
     /**
@@ -66,7 +66,7 @@ class CourtBusinessController extends Controller
     public function show(string $id)
     {
         $courtBusiness = $this->courtBusinessService->show($id);
-        return view('courtBusinesses.show.index', compact('courtBusiness'));
+        return view('user.court-businesses.show.index', compact('courtBusiness'));
     }
 
     /**
@@ -78,7 +78,7 @@ class CourtBusinessController extends Controller
     public function edit(string $id)
     {
         $courtBusiness = $this->courtBusinessService->show($id);
-        return view('courtBusinesses.edit', compact('courtBusiness'));
+        return view('court-businesses.edit', compact('courtBusiness'));
     }
 
     /**
@@ -91,7 +91,7 @@ class CourtBusinessController extends Controller
     public function update(CourtBusinessRequest $request, string $id): RedirectResponse
     {
         $this->courtBusinessService->update($request->validated(), $id);
-        return redirect()->route('courtBusinesses.index')->with('success', 'Court Business updated successfully.');
+        return redirect()->route('court-businesses.index')->with('success', 'Court Business updated successfully.');
     }
 
     /**
@@ -103,6 +103,6 @@ class CourtBusinessController extends Controller
     public function destroy(string $id): RedirectResponse
     {
         $this->courtBusinessService->destroy($id);
-        return redirect()->route('courtBusinesses.index')->with('success', 'Court Business deleted successfully.');
+        return redirect()->route('court-businesses.index')->with('success', 'Court Business deleted successfully.');
     }
 }
