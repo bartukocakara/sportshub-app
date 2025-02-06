@@ -18,6 +18,8 @@ class CourtBusiness extends Authenticatable
 
     protected $fillable = [
         'name',
+        'owner_first_name',
+        'owner_last_name',
         'tax_no',
         'phone',
         'email',
@@ -51,6 +53,6 @@ class CourtBusiness extends Authenticatable
     {
         return $this->hasMany(Court::class);
     }
-    
+
 
 }

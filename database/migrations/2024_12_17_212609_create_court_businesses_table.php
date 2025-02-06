@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('court_businesses', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name', 255);
+            $table->string('owner_first_name', 255);
+            $table->string('owner_last_name', 255);
             $table->string('tax_no', 255);
             $table->string('phone', 20)->nullable();
             $table->string('email', 255)->nullable();

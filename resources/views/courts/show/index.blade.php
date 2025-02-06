@@ -925,7 +925,6 @@ crossorigin=""/>
 @endsection
 
 @section('page-scripts')
-    <script src="{{ asset('assets/js/custom/utilities/modals/create-app.js') }}"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {

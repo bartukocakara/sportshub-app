@@ -38,17 +38,12 @@
                                 <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
                                     <li class="nav-item">
                                         <a class="nav-link active" data-bs-toggle="tab" href="#kt_tab_courts">
-                                            <i class="fas fa-volleyball-ball me-2"></i>Courts
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_details">
-                                            <i class="fas fa-info-circle me-2"></i>Details
+                                            <i class="fas fa-volleyball-ball me-2"></i>{{ __('messages.courts') }}
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_reviews">
-                                            <i class="fas fa-star me-2"></i>Reviews
+                                            <i class="fas fa-star me-2"></i>{{ __('messages.reviews') }}
                                         </a>
                                     </li>
                                 </ul>
@@ -84,12 +79,6 @@
                                         </div>
                                     </div>
 
-                                    <!-- Details Tab -->
-                                    <div class="tab-pane fade" id="kt_tab_reviews">
-
-                                    </div>
-
-                                    <!-- Reviews Tab -->
                                     <div class="tab-pane fade" id="kt_tab_reviews">
                                         <div class="d-flex flex-column gap-6">
                                             <!-- Review Item -->
@@ -123,8 +112,8 @@
                                     <div class="d-flex gap-3">
                                         <i class="fas fa-user fs-4 text-primary"></i>
                                         <div>
-                                            <span class="d-block fw-bold text-gray-900">{{ __('messages.name') }}</span>
-                                            <span class="text-gray-600">{{ $courtBusiness->owner_name }}</span>
+                                            <span class="d-block fw-bold text-gray-900">{{ __('messages.full_name') }}</span>
+                                            <span class="text-gray-600">{{ $courtBusiness->owner_first_name }} {{ $courtBusiness->owner_last_name }}</span>
                                         </div>
                                     </div>
                                     <div class="d-flex gap-3">
@@ -173,7 +162,6 @@
 <script src="{{ asset('assets/js/swiper-bundle.min.js') }}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Initialize Leaflet map
         var map = L.map('location_map').setView([{{ $courtBusiness->latitude }}, {{ $courtBusiness->longitude }}], 13);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

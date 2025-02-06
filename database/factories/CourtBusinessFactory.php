@@ -19,6 +19,8 @@ class CourtBusinessFactory extends Factory
     {
         return [
             'name' => fake()->name . ' Business',
+            'owner_first_name' => fake()->firstName,
+            'owner_last_name' => fake()->lastName,
             'tax_no' => $this->faker->numerify('##########'),
             'phone' => $this->faker->phoneNumber,
             'email' => $this->faker->unique()->safeEmail,

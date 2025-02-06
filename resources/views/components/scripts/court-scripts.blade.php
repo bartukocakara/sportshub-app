@@ -85,7 +85,6 @@
             const courtTitle = $(this).data('court-title');
             const courtAddress = $(this).data('court-address');
             checkoutRoute = $(this).data('route');
-            console.log(checkoutRoute);
 
             $('#pricingModalLabel').text(courtTitle + ' - ' + courtAddress);
 
