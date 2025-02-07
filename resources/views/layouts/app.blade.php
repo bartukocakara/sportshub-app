@@ -17,6 +17,8 @@
         </div>
     </div>
 </div>
+@include('components.modals.auth-modal')
+
 <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
 <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
 <script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>
