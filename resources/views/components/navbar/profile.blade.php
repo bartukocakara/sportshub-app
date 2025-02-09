@@ -130,7 +130,7 @@
 
             @guest
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authModal">
-                {{ __('messages.open_modal') }}
+                {{ __('messages.login') }}
             </button>
             @endguest
         </div>

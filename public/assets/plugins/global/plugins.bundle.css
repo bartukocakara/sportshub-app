@@ -49307,3 +49307,22 @@ body {
   font-size: 1rem;
   color: var(--bs-text-muted);
 }
+/* Fixed height modal with a stable body height */
+.fixed-height-modal .modal-dialog {
+    height: 600px; /* Overall fixed height (adjust as needed) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fixed-height-modal .modal-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.fixed-height-modal .modal-body {
+    flex: 1;                /* Fill remaining space */
+    overflow-y: auto;       /* Add vertical scrolling if content overflows */
+    padding: 2rem;          /* Increased padding */
+}
