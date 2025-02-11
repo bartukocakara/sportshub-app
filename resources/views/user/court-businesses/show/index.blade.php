@@ -168,7 +168,15 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        L.marker([{{ $courtBusiness->latitude }}, {{ $courtBusiness->longitude }}]).addTo(map);
+        // Create a marker using the FontAwesome location icon with increased font size (fs-1)
+        var locationIcon = L.divIcon({
+            html: `<i class="fas fa-map-marker-alt fs-1 text-primary"></i>`,
+            className: '', // Remove default styling if needed
+            iconSize: [64, 64],      // Adjusted to match the increased icon size
+            iconAnchor: [32, 64]     // Anchor so the bottom center points to the correct location
+        });
+
+        L.marker([{{ $courtBusiness->latitude }}, {{ $courtBusiness->longitude }}], { icon: locationIcon }).addTo(map);
     });
 </script>
 @endsection
