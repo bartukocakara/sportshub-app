@@ -14,7 +14,10 @@ class CommissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'comment' => 'required|string',
+            'rating' => 'nullable|integer|min:1|max:5',
+            'commentable_id' => 'required|integer',
+            'commentable_type' => 'required|string',
         ];
     }
 }

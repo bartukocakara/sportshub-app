@@ -48,7 +48,7 @@ class ReservationController extends Controller
         $data = ReservationResource::collection($this->reservationService->me($request))
                                 ->response()
                                 ->getData(true);
-        return view('reservations.index', compact('data'));
+        return view('user.reservations.index', compact('data'));
     }
 
     /**
@@ -58,7 +58,7 @@ class ReservationController extends Controller
      */
     public function create()
     {
-        return view('reservations.create');
+        return view('user.reservations.create');
     }
 
     /**
@@ -82,7 +82,7 @@ class ReservationController extends Controller
     public function show(string $id, array $with = ['court', 'court.courtImages', 'court.courtBusiness'])
     {
         $reservation = $this->reservationService->show($id, $with);
-        return view('reservations.show.index', compact('reservation'));
+        return view('user.reservations.show.index', compact('reservation'));
     }
 
     /**
@@ -94,7 +94,7 @@ class ReservationController extends Controller
     public function edit(string $id)
     {
         $reservation = $this->reservationService->show($id);
-        return view('reservations.edit', compact('reservation'));
+        return view('user.reservations.edit', compact('reservation'));
     }
 
     /**
@@ -107,7 +107,7 @@ class ReservationController extends Controller
     public function update(ReservationRequest $request, string $id): RedirectResponse
     {
         $this->reservationService->update($request->validated(), $id);
-        return redirect()->route('reservations.index')->with('success', 'Reservation updated successfully.');
+        return redirect()->route('user.reservations.index')->with('success', 'Reservation updated successfully.');
     }
 
     /**
@@ -119,6 +119,6 @@ class ReservationController extends Controller
     public function destroy(string $id): RedirectResponse
     {
         $this->reservationService->destroy($id);
-        return redirect()->route('reservations.index')->with('success', 'Reservation deleted successfully.');
+        return redirect()->route('user.reservations.index')->with('success', 'Reservation deleted successfully.');
     }
 }

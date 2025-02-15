@@ -10,8 +10,18 @@
             <p>{{ $reservation['date'] }}</p>
             <p class="card-text">{{ $reservation['from_hour'] }} - {{ $reservation['to_hour'] }} | {{ $reservation['price'] }}</p>
         </div>
-        <div class="card-footer d-flex justify-content-center align-items-center">
-            <a href="{{ route('reservation.show', $reservation['id']) }}" class="btn btn-primary btn-sm">{{ __('messages.view_details') }}</a>
+        <div class="card-footer d-flex justify-content-center align-items-center p-3 gap-2">
+            <!-- View Details Button -->
+            <a href="{{ route('reservation.show', $reservation['id']) }}" class="btn btn-primary btn-sm">
+                {{ __('messages.view_details') }}
+            </a>
+
+            <!-- Conditionally show "Make Comment" button for completed reservations -->
+            @if($reservation['status'] == 6)
+                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#createCommentModal" data-reservation-id="{{ $reservation['id'] }}">
+                    {{ __('messages.make_comment') }}
+                </button>
+            @endif
         </div>
     </div>
 </div>

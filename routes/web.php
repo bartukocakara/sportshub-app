@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommissionController;
 use App\Http\Controllers\CourtBusinessController;
 use App\Http\Controllers\CourtController;
@@ -64,6 +65,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('payments', PaymentController::class);
     Route::resource('refunds', RefundController::class);
     Route::resource('commissions', CommissionController::class);
+    Route::resource('comments', CommentController::class);
+
 });
 
 

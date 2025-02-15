@@ -174,4 +174,13 @@ return [
     'language' => 'Dil',
     'dark' => 'Koyu',
     'light' => 'Açık',
+    'view_details' => 'Detay görüntüle',
+    'make_comment' => 'Yorum yap',
+    'canceled_reservations' => 'Iptal edilen rezervasyonlar',
+    'complete_reservations' => 'Tamamlanan rezervasyonlar',
+    'cancel_reservation' => 'Rezervasyon iptal et',
+    'cancel_reservation_confirmation' => 'Rezervasyon iptal etmek istediğinizden emin misiniz?',
+    'cancel_reservation_confirmation_message' => 'Rezervasyon iptal edildi.',
+    'completed_reservations' => 'Tamamlanan rezervasyonlar',
+    'active_reservations' => 'Aktif rezervasyonlar',
 ];

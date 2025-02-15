@@ -173,5 +173,9 @@ return [
     'language' => 'Language',
     'dark' => 'Dark',
     'light' => 'Light',
-
+    'view_details' => 'View Details',
+    'canceled_reservations' => 'Canceled Reservations',
+    'cancel_reservation' => 'Cancel Reservation',
+    'completed_reservations' => 'Completed Reservations',
+    'active_reservations' => 'Active Reservations',
 ];

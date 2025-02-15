@@ -29,6 +29,7 @@ class CommentFactory extends Factory
         $commentable = $commentableType::factory()->create();
 
         return [
+            'rating' => $this->faker->numberBetween(1, 5),
             'comment' => $this->faker->paragraph(),
             'user_id' => \App\Models\User::factory(),
             'commentable_type' => $commentableType,

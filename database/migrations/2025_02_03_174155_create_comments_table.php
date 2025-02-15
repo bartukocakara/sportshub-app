@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->text('comment');
+            $table->unsignedTinyInteger('rating')->nullable(); // Add this line for star rating (1 to 5)
             $table->uuid('user_id');
             $table->foreign('user_id')
                   ->references('id')
