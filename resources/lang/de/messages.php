@@ -178,4 +178,13 @@ return [
     'cancel_reservation' => 'Cancel Reservation',
     'completed_reservations' => 'Completed Reservations',
     'active_reservations' => 'Active Reservations',
+    'payment_status_list' => [
+        1 => 'Ödeme Bekleniyor',  // WAITING_FOR_PAYMENT
+        2 => 'Ödeme Onaylandı',   // PAYMENT_APPROVED
+        3 => 'Ödeme İptal Edildi', // PAYMENT_CANCELED
+        4 => 'Ödeme İade Edildi'  // PAYMENT_REFUNDED
+    ],
+    'code' => 'Code',
+    'location_map' => 'Location Map',
+    'business_name' => 'Business Name',
 ];

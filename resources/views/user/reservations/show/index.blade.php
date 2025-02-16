@@ -4,75 +4,10 @@
 @section('custom-styles')
 <link href="{{ asset('assets/css/no-sidebar.css') }}" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="{{ asset('assets/css/swiper-bundle.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('assets/css/swiper.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/plugins/custom/leaflet/leaflet.bundle.css') }}">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<style>
-    .images-swiper {
-        width: 100%;
-        height: 300px;
-        position: relative;
-    }
-    .images-swiper .swiper-button-next,
-    .images-swiper .swiper-button-prev {
-        color: #ffffff;
-        background: rgba(0, 0, 0, 0.3);
-        padding: 30px 20px;
-        border-radius: 5px;
-    }
-    .images-swiper .swiper-button-next:hover,
-    .images-swiper .swiper-button-prev:hover {
-        background: rgba(0, 0, 0, 0.5);
-    }
-    .images-swiper .swiper-pagination-bullet {
-        width: 10px;
-        height: 10px;
-        background: #ffffff;
-        opacity: 0.5;
-    }
-    .images-swiper .swiper-pagination-bullet-active {
-        opacity: 1;
-        background: #009ef7;
-    }
-    .swiper-slide {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    #location_map {
-        width: 100%;
-        border-radius: 0.625rem;
-    }
-    .leaflet-popup-content-wrapper {
-        border-radius: 8px;
-    }
-    .map-popup {
-        padding: 10px;
-    }
-    .map-popup h4 {
-        margin: 0 0 5px 0;
-        color: #181C32;
-        font-weight: 600;
-    }
-    .map-popup p {
-        margin: 0;
-        color: #7E8299;
-    }
-    .thumbnail-slider {
-        width: 150px;
-        height: 100px;
-        position: relative;
-    }
-    .thumbnail-slider .swiper-pagination-bullet {
-        width: 6px;
-        height: 6px;
-        background: #ffffff;
-        opacity: 0.7;
-    }
-    .thumbnail-slider .swiper-pagination-bullet-active {
-        opacity: 1;
-        background: #009ef7;
-    }
-</style>
+
 @endsection
 
 @section('content')
@@ -92,132 +27,10 @@
             <div id="kt_app_content_container d-flex" class="app-container container-fluid">
                 <div class="d-flex flex-row gap-5">
                     <!-- Reservation Details Card -->
-                    <div class="card w-50" id="kt_reservation_details_view">
-                        <div class="card-header cursor-pointer">
-                            <!-- Flex container: left side shows title/status, right side shows the small slider -->
-                            <div class="d-flex w-100 justify-content-between align-items-start">
-                                <div>
-                                    <h3 class="fw-bold m-0">{{ $reservation->title }}</h3>
-                                    <span class="badge badge-light-{{ $reservation->status === 'active' ? 'success' : 'warning' }} px-2 py-1">
-                                        {{ $reservation->status }}
-                                    </span>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="card-body p-9">
-                            <div class="row mb-7">
-                                <label class="col-lg-4 fw-semibold text-muted">{{ __('messages.date') }}</label>
-                                <div class="col-lg-8">
-                                    <span class="fw-bold fs-6 text-gray-800">
-                                        {{ \Carbon\Carbon::parse($reservation->date)->format('d M Y') }}
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="row mb-7">
-                                <label class="col-lg-4 fw-semibold text-muted">{{ __('messages.time') }}</label>
-                                <div class="col-lg-8">
-                                    <span class="fw-bold fs-6 text-gray-800">
-                                        {{ \Carbon\Carbon::parse($reservation->from_hour)->format('H:i') }} -
-                                        {{ \Carbon\Carbon::parse($reservation->to_hour)->format('H:i') }}
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="row mb-7">
-                                <label class="col-lg-4 fw-semibold text-muted">{{ __('messages.customer_name') }}</label>
-                                <div class="col-lg-8">
-                                    <span class="fw-bold fs-6 text-gray-800">{{ $reservation->customer_name }}</span>
-                                </div>
-                            </div>
-                            <div class="row mb-7">
-                                <label class="col-lg-4 fw-semibold text-muted">{{ __('messages.customer_email') }}</label>
-                                <div class="col-lg-8">
-                                    <span class="fw-bold fs-6 text-gray-800">{{ $reservation->customer_email }}</span>
-                                </div>
-                            </div>
-                            <div class="row mb-7">
-                                <label class="col-lg-4 fw-semibold text-muted">{{ __('messages.customer_phone') }}</label>
-                                <div class="col-lg-8">
-                                    <span class="fw-bold fs-6 text-gray-800">{{ $reservation->customer_phone }}</span>
-                                </div>
-                            </div>
-
-                            <div class="row mb-7">
-                                <label class="col-lg-4 fw-semibold text-muted">{{ __('messages.confirmation_code') }}</label>
-                                <div class="col-lg-8">
-                                    <span class="fw-bold fs-6 text-gray-800">{{ $reservation->code }}</span>
-                                </div>
-                            </div>
-                            <div class="row mb-7">
-                                <label class="col-lg-4 fw-semibold text-muted">{{ __('messages.payment_status') }}</label>
-                                <div class="col-lg-8">
-                                    <span class="badge badge-light-{{ $reservation->payment_status === 'paid' ? 'success' : 'warning' }}">
-                                        {{ $reservation->payment_status }}
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="row mb-7">
-                                <label class="col-lg-4 fw-semibold text-muted">{{ __('messages.price') }}</label>
-                                <div class="col-lg-8">
-                                    <span class="fw-bold fs-6 text-gray-800">₺{{ number_format($reservation->price, 2) }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @include('components.reservation.show.court-business-detail-card', ['reservation' => $reservation])
 
                     <!-- Court Details Card -->
-                    <div class="card w-50" id="kt_court_details_view">
-                        <div class="card-header cursor-pointer">
-                            <div class="card-title m-0">
-                                <h3 class="fw-bold m-0">{{ $reservation->court->name }}</h3>
-                            </div>
-                        </div>
-
-                        <div class="card-body p-0">
-                            <div class="swiper images-swiper">
-                                <div class="swiper-wrapper">
-                                    @foreach($reservation->court->courtImages as $image)
-                                        <div class="swiper-slide">
-                                            <img src="{{ asset('storage/courts/' . $image->file_path) }}"
-                                                 class="w-100 rounded"
-                                                 style="height: 300px; object-fit: cover;"
-                                                 alt="Court image">
-                                        </div>
-                                    @endforeach
-                                </div>
-                                <div class="swiper-button-next"></div>
-                                <div class="swiper-button-prev"></div>
-                                <div class="swiper-pagination"></div>
-                            </div>
-                        </div>
-
-                        <div class="card-body p-9">
-                            <div class="row mb-7">
-                                <label class="col-lg-4 fw-semibold text-muted">{{ __('messages.court_type') }}</label>
-                                <div class="col-lg-8">
-                                    <span class="fw-bold fs-6 text-gray-800">{{ $reservation->court->type }}</span>
-                                </div>
-                            </div>
-                            <div class="row mb-7">
-                                <label class="col-lg-4 fw-semibold text-muted">{{ __('messages.business_name') }}</label>
-                                <div class="col-lg-8">
-                                    <span class="fw-bold fs-6 text-gray-800">
-                                        <a href="{{ route('court-businesses.show', $reservation->court->courtBusiness->id) }}" class="text-gray-800 text-hover-primary">
-                                            {{ $reservation->court->courtBusiness?->name }}
-                                        </a>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="row mb-7">
-                                <label class="col-lg-4 fw-semibold text-muted">{{ __('messages.location') }}</label>
-                                <div class="col-lg-8">
-                                    <span class="fw-bold fs-6 text-gray-800">{{ $reservation->court->address }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @include('components.reservation.show.court-detail-card', ['reservation' => $reservation])
                 </div>
 
                 <div class="card mb-5">
@@ -257,14 +70,11 @@
         </div>
     </div>
 </div>
-
 @endsection
 @section('page-scripts')
     <script src="{{ asset('assets/plugins/custom/leaflet/leaflet.bundle.js') }}"></script>
 	<script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Swiper for the court images in the Court Details card
@@ -313,51 +123,53 @@
             });
 
             // Initialize Leaflet map
+            // Initialize Leaflet map
             const lat = {{ $reservation->court->courtBusiness->latitude ?? 'null' }};
             const lng = {{ $reservation->court->courtBusiness->longitude ?? 'null' }};
 
             if (lat && lng) {
+                // Initialize map with provided coordinates
                 const map = L.map('location_map').setView([lat, lng], 15);
 
+                // Tile layer for the map
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '© OpenStreetMap contributors'
                 }).addTo(map);
 
-                // Custom icon for the marker
-                const locationIcon = L.icon({
-                    iconUrl: '{{ asset("assets/media/icons/location-marker.png") }}',
-                    iconSize: [32, 32],
-                    iconAnchor: [16, 32],
-                    popupAnchor: [0, -32]
-                });
+                // Add a marker without custom icon (using default marker)
+                const marker = L.marker([lat, lng]).addTo(map);
 
-                // Add marker with custom popup
-                const marker = L.marker([lat, lng], { icon: locationIcon }).addTo(map);
-
+                // Popup content
                 const popupContent = `
                     <div class="map-popup">
-                        <h4>${@json($reservation->court->name)}</h4>
-                        <p>${@json($reservation->court->address)}</p>
+                        <h4>{{ json_encode($reservation->court->courtBusiness->name) }}</h4>
+                        <p>{{ json_encode($reservation->court->courtBusiness->address) }}</p>
                     </div>
                 `;
 
+                // Bind popup to the marker
                 marker.bindPopup(popupContent).openPopup();
 
-                // Add zoom controls
+                // Adjust the map zoom control position
                 map.zoomControl.setPosition('bottomright');
 
-                // Refresh map when it becomes visible
+                // Ensure the map properly resizes when visible
                 map.invalidateSize();
             } else {
+                // If no coordinates available, show a fallback message
                 document.getElementById('location_map').innerHTML = `
                     <div class="d-flex align-items-center justify-content-center h-100">
                         <div class="text-center text-gray-600">
                             <i class="ki-duotone ki-geolocation fs-3x mb-3"></i>
-                            <p class="mb-0">${@json(__('messages.location_not_available'))}</p>
+                            <p class="mb-0">${{ __('messages.location_not_available') }}</p>
                         </div>
                     </div>
                 `;
             }
+
+
+
         });
     </script>
+
 @endsection

@@ -27,8 +27,8 @@ class CourtBusinessFactory extends Factory
             'standard_price' => $this->faker->numerify('####'),
             'address' => $this->faker->address,
             'district_id' => fake()->randomElement(District::all()->pluck('id')),
-            'latitude' => fake()->numberBetween(37.500, 39.200),
-            'longitude' => fake()->numberBetween(26.500, 30.200),
+            'latitude' => fake()->numberBetween(36000000, 42000000) / 1000000,  // Latitude between 36.0 and 42.0
+            'longitude' => fake()->numberBetween(26000000, 45000000) / 1000000, // Longitude between 26.0 and 45.0
             'postal_code' => $this->faker->postcode,
         ];
     }

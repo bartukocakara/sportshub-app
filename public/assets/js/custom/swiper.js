@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Swiper for the court images in the Court Details card
-    new Swiper('.court-images-swiper', {
+    new Swiper('.images-swiper', {
         slidesPerView: 1,
         spaceBetween: 30,
         loop: true,

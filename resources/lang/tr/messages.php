@@ -183,4 +183,14 @@ return [
     'cancel_reservation_confirmation_message' => 'Rezervasyon iptal edildi.',
     'completed_reservations' => 'Tamamlanan rezervasyonlar',
     'active_reservations' => 'Aktif rezervasyonlar',
+    'payment_status_list' => [
+        1 => 'Ödeme Bekleniyor',  // WAITING_FOR_PAYMENT
+        2 => 'Ödeme Onaylandı',   // PAYMENT_APPROVED
+        3 => 'Ödeme İptal Edildi', // PAYMENT_CANCELED
+        4 => 'Ödeme İade Edildi'  // PAYMENT_REFUNDED
+    ],
+    'code' => 'Kod',
+    'location_map' => 'Konum Haritası',
+    'business_name' => 'Işletme Adı',
+
 ];

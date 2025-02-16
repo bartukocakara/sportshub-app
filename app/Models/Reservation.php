@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ReservationPaymentStatusEnum;
 use App\Filters\FilterBuilder;
 use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -32,6 +33,11 @@ class Reservation extends Model
     public function scopeFilterBy($query, $filters)
     {
         return  (new FilterBuilder($query, $filters, 'ReservationFilters'))->apply();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function court()

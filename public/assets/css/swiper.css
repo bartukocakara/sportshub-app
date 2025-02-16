@@ -1,26 +1,26 @@
-.court-images-swiper {
+.images-swiper {
     width: 100%;
     height: 300px;
     position: relative;
 }
-.court-images-swiper .swiper-button-next,
-.court-images-swiper .swiper-button-prev {
+.images-swiper .swiper-button-next,
+.images-swiper .swiper-button-prev {
     color: #ffffff;
     background: rgba(0, 0, 0, 0.3);
     padding: 30px 20px;
     border-radius: 5px;
 }
-.court-images-swiper .swiper-button-next:hover,
-.court-images-swiper .swiper-button-prev:hover {
+.images-swiper .swiper-button-next:hover,
+.images-swiper .swiper-button-prev:hover {
     background: rgba(0, 0, 0, 0.5);
 }
-.court-images-swiper .swiper-pagination-bullet {
+.images-swiper .swiper-pagination-bullet {
     width: 10px;
     height: 10px;
     background: #ffffff;
     opacity: 0.5;
 }
-.court-images-swiper .swiper-pagination-bullet-active {
+.images-swiper .swiper-pagination-bullet-active {
     opacity: 1;
     background: #009ef7;
 }

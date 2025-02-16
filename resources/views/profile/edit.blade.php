@@ -1,3 +1,6 @@
+@extends('layouts.app')
+
+@section('content')
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
     <div class="d-flex flex-column flex-column-fluid">
         <div id="kt_app_toolbar" class="app-toolbar pt-5">
@@ -1913,3 +1916,4 @@
         </div>
     </div>
 </div>
+@endsection
