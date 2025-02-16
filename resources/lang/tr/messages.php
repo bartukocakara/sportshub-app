@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'password' => 'Şifre',
     'forgot_password' => 'Şifremi unuttum',
     'reset_password' => 'Şifremi yenile',
     'forgot_password_link' => 'Şifremi unuttum linki',
@@ -10,6 +11,7 @@ return [
     'forget_password_time_limitation' => 'Bu kod 15 dakika için geçerlidir.',
     'navigate_in_app' => "Sportshub'ta gezin",
     'contact_with_us' => 'Bizimle iletişime geçin',
+    'mode' => 'Mod',
     'PHYSICAL' => 'Fiziksel',
     'DESK' => 'Masa',
     'ONLINE' => 'Çevrimiçi',
@@ -192,5 +194,12 @@ return [
     'code' => 'Kod',
     'location_map' => 'Konum Haritası',
     'business_name' => 'Işletme Adı',
-
+    'your_rating' => 'Puanınız',
+    'commented' => 'Yorumlandı',
+    'comment' => 'Yorum',
+    'rating' => 'Puan',
+    'show_comment' => 'Yorumu göster',
+    'close' => 'Kapat',
+    'create_comment' => 'Yorum yap',
+    'submit' => 'Gönder',
 ];

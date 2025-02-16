@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'password' => 'Passwort',
     'forgot_password' => 'Forgot Password',
     'forgot_password_link' => 'Forgot Password Link',
     'reset_password' => 'Reset Password',
@@ -8,7 +9,8 @@ return [
     'click_for_reset_password' => 'Click to reset your password.',
     'forget_password_time_limitation' => 'This code is valid for 15 minutes.',
     'navigate_in_app' => "Sporstshub'te gezin",
-    'contact_with_us' => 'Bizimle iletişime geçin',
+    'contact_with_us' => 'Bizimle iletişime geçin',,
+    'mode' => 'Mod',
     'PHYSICAL' => 'Fiziksel',
     'DESK' => 'Masa',
     'ONLINE' => 'Çevrimiçi',
@@ -187,4 +189,12 @@ return [
     'code' => 'Code',
     'location_map' => 'Location Map',
     'business_name' => 'Business Name',
+    'your_rating' => 'Your Rating',
+    'commented' => 'Commented',
+    'rating' => 'Rating',
+    'comment' => 'Comment',
+    'show_comment' => 'Show Comment',
+    'close' => 'Close',
+    'create_comment' => 'Create Comment',
+    'submit' => 'Submit',
 ];

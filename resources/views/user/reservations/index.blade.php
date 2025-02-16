@@ -2,9 +2,23 @@
 @section('title', __('messages.reservations'))
 @section('custom-styles')
 <link href="{{ asset('assets/css/no-sidebar.css') }}" rel="stylesheet" type="text/css" />
-
-<link rel="stylesheet" href="{{ asset(path: 'assets/css/star.css') }}">
+<link href="{{ asset('assets/css/star.css') }}" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+    .star-rating {
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .star-rating .star {
+        color: #ccc; /* Default star color */
+        transition: color 0.2s;
+    }
+
+    .star-rating .star.selected {
+        color: #ffcc00; /* Yellow color for selected stars */
+    }
+</style>
 @endsection
 @section(section: 'content')
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
@@ -85,7 +99,8 @@
         </div>
     </div>
 </div>
-@include('components.reservation.comment-modal')
+@include('components.reservation.create-comment-modal')
+@include('components.reservation.show-comment-modal')
 
 @endsection
 @section('page-scripts')

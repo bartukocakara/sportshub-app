@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'password' => 'Password',
     'forgot_password' => 'Forgot Password',
     'forgot_password_link' => 'Forgot Password Link',
     'reset_password' => 'Reset Password',
@@ -10,6 +11,7 @@ return [
     'forget_password_time_limitation' => 'This code is valid for 15 minutes.',
     'navigate_in_app' => "Go to sportshub",
     'contact_with_us' => 'Contact with us',
+    'mode' => 'Mode',
     'PHYSICAL' => 'Fiziksel',
     'DESK' => 'Masa',
     'ONLINE' => 'Çevrimiçi',
@@ -176,14 +178,20 @@ return [
     'canceled_reservations' => 'Canceled Reservations',
     'active_reservations' => 'Active Reservations',
     'payment_status_list' => [
-        1 => 'Ödeme Bekleniyor',  // WAITING_FOR_PAYMENT
-        2 => 'Ödeme Onaylandı',   // PAYMENT_APPROVED
-        3 => 'Ödeme İptal Edildi', // PAYMENT_CANCELED
-        4 => 'Ödeme İade Edildi'  // PAYMENT_REFUNDED
+        1 => 'Ödeme Bekleniyor',
+        2 => 'Ödeme Onaylandı',
+        3 => 'Ödeme İptal Edildi',
+        4 => 'Ödeme İade Edildi'
     ],
     'code' => 'Code',
     'location_map' => 'Location Map',
     'business_name' => 'Business Name',
-
-
+    'your_rating' => 'Your Rating',
+    'commented' => 'Commented',
+    'rating' => 'Rating',
+    'comment' => 'Comment',
+    'show_comment' => 'Show Comment',
+    'close' => 'Close',
+    'create_comment' => 'Create Comment',
+    'submit' => 'Submit',
 ];

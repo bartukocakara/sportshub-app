@@ -23,7 +23,7 @@ class ReservationRepository extends BaseRepository
 
     public function me(Request $request) : LengthAwarePaginator|Collection
     {
-        return $this->reservation->with(['court.courtImages', 'court.sportType'])->filterBy($request->all());
+        return $this->reservation->with(['court.courtImages', 'court.sportType', 'comment'])->filterBy($request->all());
     }
 
     public function checkAvailability(array $data) : ?Reservation

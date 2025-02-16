@@ -49,4 +49,9 @@ class Reservation extends Model
     {
         return $this->belongsTo(SportType::class);
     }
+
+    public function comment()
+    {
+        return $this->morphOne(Comment::class, 'commentable');
+    }
 }

@@ -30,10 +30,20 @@
         </div>
     </div>
 </div>
+<script src="{{ asset('assets/plugins/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
 <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
 <script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>
 <script src="{{ asset('assets/js/custom/widgets.js') }}"></script>
+<script>
+    toastr.options = {
+        closeButton: true, // Show close button
+        progressBar: true, // Show progress bar
+        positionClass: 'toast-top-right', // Position of the toast
+        timeOut: 3000, // Auto-close after 3 seconds
+        extendedTimeOut: 1000, // Additional time if hovered
+    };
+</script>
 @yield('page-scripts')
 </body>
 </html>

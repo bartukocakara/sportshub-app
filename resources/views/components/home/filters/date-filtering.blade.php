@@ -19,7 +19,6 @@
            name="date"
            class="form-control text-dark"
            placeholder="Select a date"
-           required
            value="{{ old('date', request()->get('date')) }}">
 </div>
 
@@ -29,7 +28,7 @@
         <select id="from_hour"
                 name="from_hour"
                 class="form-select form-control me-2 text-dark"
-                required>
+                >
             <option value="" disabled selected>{{ __('messages.start_time') }}</option>
             @foreach(generateTimeOptions() as $time)
                 <option value="{{ $time }}"
@@ -42,7 +41,7 @@
         <select id="to_hour"
                 name="to_hour"
                 class="form-select form-control ms-2 text-dark"
-                required>
+                >
             <option value="" disabled selected>{{ __('messages.end_time') }}</option>
             @foreach(generateTimeOptions() as $time)
                 <option value="{{ $time }}"

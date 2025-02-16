@@ -1,38 +1,19 @@
-.star-rating {
-    display: flex;
-    justify-content: center; /* Center the stars horizontally */
-    gap: 8px; /* Add spacing between stars */
-}
-.star-rating input {
-    display: none;
-}
-.star-rating label {
-    position: relative;
-    cursor: pointer;
-    font-size: 3rem; /* Increase star size */
-    color: #ddd;
-    transition: color 0.2s;
-}
-.star-rating label i.fas {
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-    transition: opacity 0.2s;
-}
-/* Hover effect: Fill stars to the right */
-.star-rating label:hover i.fas,
-.star-rating label:hover ~ label i.fas {
-    opacity: 1;
-    color: gold;
-}
-/* Selected stars: Fill stars to the right */
-.star-rating input:checked ~ label i.fas {
-    opacity: 1;
-    color: gold;
-}
-/* Hide empty stars on hover */
-.star-rating label:hover i.far,
-.star-rating label:hover ~ label i.far {
-    opacity: 0;
-}
+ /* Common styles for all stars */
+ .show-comment-stars .star,
+ .create-comment-stars .star {
+     font-size: 24px;
+     color: #ccc; /* Default star color */
+     transition: color 0.2s;
+ }
+
+ /* Yellow color for selected stars */
+ .show-comment-stars .star.selected,
+ .create-comment-stars .star.selected {
+     color: #ffcc00;
+ }
+
+ /* Hover effect only for create-comment-stars */
+ .create-comment-stars .star:hover {
+     cursor: pointer;
+     color: #ffcc00;
+ }

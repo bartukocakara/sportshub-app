@@ -34,7 +34,7 @@
             </div>
             <div class="d-flex justify-content-end">
                 <button type="reset" class="btn btn-light btn-active-light-primary fw-semibold me-2 px-6" data-kt-menu-dismiss="true" data-kt-user-table-filter="reset">Reset</button>
-                <button class="btn btn-primary fw-semibold px-6"></button>
+                <button type="submit" class="btn btn-primary fw-semibold px-6">{{ __('messages.apply') }}</button>
             </div>
         </div>
     </div>

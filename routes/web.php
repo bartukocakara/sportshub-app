@@ -65,7 +65,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('payments', PaymentController::class);
     Route::resource('refunds', RefundController::class);
     Route::resource('commissions', CommissionController::class);
-    Route::resource('comments', CommentController::class);
 
 });
 

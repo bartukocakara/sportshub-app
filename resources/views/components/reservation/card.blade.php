@@ -36,17 +36,25 @@
             <p>{{ $reservation['date'] }}</p>
             <p class="card-text">{{ $reservation['from_hour'] }} - {{ $reservation['to_hour'] }} | {{ $reservation['price'] }}</p>
         </div>
-        <div class="card-footer d-flex justify-content-center align-items-center p-3 gap-2">
+        <div class="card-footer d-block p-3">
             <!-- View Details Button -->
-            <a href="{{ route('reservation.show', $reservation['id']) }}" class="btn btn-primary btn-sm">
+            <a href="{{ route('reservation.show', $reservation['id']) }}" class="btn btn-primary btn-sm w-100 mb-2">
                 {{ __('messages.view_details') }}
             </a>
 
-            <!-- Conditionally show "Make Comment" button for completed reservations -->
+            <!-- Conditionally show "Make Comment" or "Show Comment" button for completed reservations -->
             @if($reservation['status'] == 6)
-                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#createCommentModal" data-reservation-id="{{ $reservation['id'] }}">
-                    {{ __('messages.make_comment') }}
-                </button>
+                @if($reservation['comment'])
+                    <!-- If the reservation has a comment, show the "Show Comment" button -->
+                    <button type="button" class="btn btn-info btn-sm w-100" data-bs-toggle="modal" data-bs-target="#showCommentModal" data-comment="{{ json_encode($reservation['comment']) }}">
+                        {{ __('messages.show_comment') }}
+                    </button>
+                @else
+                    <!-- If the reservation does not have a comment, show the "Make Comment" button -->
+                    <button type="button" class="btn btn-success btn-sm w-100" data-bs-toggle="modal" data-bs-target="#createCommentModal" data-reservation-id="{{ $reservation['id'] }}">
+                        {{ __('messages.make_comment') }}
+                    </button>
+                @endif
             @endif
         </div>
     </div>

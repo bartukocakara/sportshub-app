@@ -29,24 +29,30 @@ class FilterBuilder
     }
 
     /**
-     * Filtreleri uygular
+     * Apply filters.
      *
      * @return LengthAwarePaginator
      */
     public function apply(): LengthAwarePaginator
     {
         foreach ($this->filters as $name => $value) {
+            // Skip if the value is null or an empty string
+            if ($value === null || $value === '') {
+                continue;
+            }
+
             $normalizedName = ucfirst(Str::camel($name));
             $class = "App\Filters\\" . $this->namespace . "\\{$normalizedName}";
 
-            if (!class_exists($class))
+            if (!class_exists($class)) {
                 continue;
+            }
 
-            (new $class($this->query))->handle($value ?? '');
+            (new $class($this->query))->handle($value);
         }
 
-        if(isset($this->filters['order_by']))
-        {
+        // Apply sorting if order_by is provided
+        if (isset($this->filters['order_by'])) {
             $this->query->orderBy($this->filters['order_by'], $this->filters['order_sort'] ?? $this->defaultSortOrder);
         }
 
@@ -54,7 +60,7 @@ class FilterBuilder
     }
 
     /**
-     * Sayfalama işlemi yapar
+     * Handle pagination.
      *
      * @param $query
      * @param $filters
