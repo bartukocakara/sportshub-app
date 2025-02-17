@@ -3,9 +3,18 @@
         <div class="card-img-top position-relative">
             <!-- Check if there is an image available, otherwise use the placeholder -->
             @if($reservation['court']['court_images'] && count($reservation['court']['court_images']) > 0)
-                <img src="{{ asset('storage/courts/' . $reservation['court']['court_images'][0]['file_path']) }}" class="img-fluid rounded-top" alt="{{ $reservation['court']['title'] }}">
+                <img src="{{ asset('storage/courts/' . $reservation['court']['court_images'][0]['file_path']) }}"
+                     class="img-fluid rounded-top"
+                     alt="{{ $reservation['court']['title'] }}"
+                     style="height: 150px; object-fit: cover; width: 100%;">
             @else
-                <div class="img-fluid rounded-top" style="background-image: url('{{ asset('storage/courts/placeholder-court.webp') }}'); background-size: cover; background-position: center; height: 150px;"></div>
+                <div class="img-fluid rounded-top"
+                     style="background-image: url('{{ asset('storage/courts/placeholder-court.webp') }}');
+                            background-size: cover;
+                            background-position: center;
+                            height: 150px;
+                            width: 100%;">
+                </div>
             @endif
 
             <!-- Payment Status Badge -->

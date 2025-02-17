@@ -194,4 +194,5 @@ return [
     'close' => 'Close',
     'create_comment' => 'Create Comment',
     'submit' => 'Submit',
+    'apply' => 'Apply',
 ];

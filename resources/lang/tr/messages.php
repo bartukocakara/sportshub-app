@@ -202,4 +202,5 @@ return [
     'close' => 'Kapat',
     'create_comment' => 'Yorum yap',
     'submit' => 'Gönder',
+    'apply' => 'Başlat',
 ];
