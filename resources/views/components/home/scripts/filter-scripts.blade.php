@@ -83,4 +83,29 @@
             this.submit();
         });
     });
+    $(document).ready(function() {
+    // Get the values from the URL query string
+    let minPrice = {{ request()->get('minimum_price') ?? 0 }};
+    let maxPrice = {{ request()->get('maximum_price') ?? 1000 }};
+
+    // Initialize the slider with the min and max values from the query
+    $("#price-slider").slider({
+        min: 0,
+        max: 1000,
+        values: [minPrice, maxPrice],
+        range: true,
+        slide: function(event, ui) {
+            // Update the hidden input fields as the slider is adjusted
+            $("#price_min_input").val(ui.values[0]);
+            $("#price_max_input").val(ui.values[1]);
+            $("#price-min").text("₺" + ui.values[0]);
+            $("#price-max").text("₺" + ui.values[1]);
+        }
+    });
+
+    // Update the price range display on page load
+    $("#price-min").text("₺" + minPrice);
+    $("#price-max").text("₺" + maxPrice);
+});
+
 </script>

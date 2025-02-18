@@ -3,12 +3,13 @@
 namespace App\Filters\CourtFilters;
 
 use App\Filters\FilterInterface;
+use Illuminate\Database\Eloquent\Builder;
 
-class PriceRange implements FilterInterface
+class MinimumPrice implements FilterInterface
 {
     protected $query;
 
-    public function __construct($query)
+    public function __construct(Builder $query)
     {
         $this->query = $query;
     }
@@ -16,18 +17,25 @@ class PriceRange implements FilterInterface
     /**
      * Apply the filter for price range.
      *
-     * @param array $value
+     * @param array|string $value
      * @return void
      */
     public function handle($value): void
     {
-        $minimumPrice = $value['minimum_price'] ?? null;
-        $maximumPrice = $value['maximum_price'] ?? null;
+        $minimumPrice = $value ?? null;
+        $maximumPrice = request()->query('maximum_price', null);
 
-        $this->query->whereHas('courtReservationPricings', function ($query) use ($minimumPrice, $maximumPrice) {
-            $query->whereJsonContains('hours', function ($hour) use ($minimumPrice, $maximumPrice) {
-                return $hour['price'] >= $minimumPrice && $hour['price'] <= $maximumPrice;
+        if ($minimumPrice !== null && $maximumPrice !== null) {
+            $this->query->whereHas('courtReservationPricings', function ($query) use ($minimumPrice, $maximumPrice) {
+                $query->whereRaw(
+                    'EXISTS (
+                        SELECT 1
+                        FROM jsonb_array_elements(hours) AS hour
+                        WHERE (hour->>\'price\')::numeric BETWEEN ? AND ?
+                    )',
+                    [$minimumPrice, $maximumPrice]
+                );
             });
-        });
+        }
     }
 }

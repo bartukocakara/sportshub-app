@@ -11,7 +11,6 @@
 
 @endsection
 @section('content')
-@include('components.home.modals.price-filter-modal')
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
     <div class="d-flex flex-column flex-column-fluid">
         <div id="kt_app_toolbar" class="app-toolbar pt-5">
@@ -34,16 +33,18 @@
                                 @include('components.home.filters.sport-type-filter')
                             </div>
                             <div class="col-md-2 mt-4 d-flex justify-content-center align-items-center">
-                                <a href="#" class="btn btn-lg btn-success px-4 py-3"
-                                data-bs-toggle="modal"
-                                data-bs-target="#kt_modal_create_app">
-                                {{ __('messages.pricing_filter') }}
-                                </a>
+                                <button id="start-filter-btn" class="btn btn-lg btn-success px-4 py-3">
+                                    {{ __('messages.pricing_filter') }}
+                                </button>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center mt-5">
                             <button type="submit" class="m-4 btn btn-primary">{{ __('messages.start_filter') }}</button>
                         </div>
+
+                        <!-- Hidden Inputs for Price Range -->
+                        <input type="hidden" name="minimum_price" id="main_min_price" value="{{ request()->get('minimum_price', 0) }}">
+                        <input type="hidden" name="maximum_price" id="main_max_price" value="{{ request()->get('maximum_price', 1000) }}">
                     </form>
                 </div>
 
@@ -69,6 +70,7 @@
         </div>
     </div>
 </div>
+@include('components.home.modals.price-filter-modal')
 @endsection
 @section('page-scripts')
 @include('components.home.scripts.leaflet-scripts')
@@ -77,5 +79,7 @@
 @include('components.checkout.scripts.slider-scripts')
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
+@include('components.home.scripts.price-slider-scripts')
+
 
 @endsection
