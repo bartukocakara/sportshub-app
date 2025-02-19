@@ -20,7 +20,7 @@
                 <!-- Spinner (Initially hidden) -->
                 <div id="loadingSpinner" class="text-center mb-3" style="display:none;">
                     <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                        <span class="visually-hidden">{{ __('messages.loading') }}...</span>
                     </div>
                 </div>
 

@@ -203,4 +203,7 @@ return [
     'create_comment' => 'Yorum yap',
     'submit' => 'Gönder',
     'apply' => 'Başlat',
+    'select_month' => 'Ay Seç',
+    'select_year' => 'Yıl Seç',
+    'court_name' => 'Saha Adı',
 ];

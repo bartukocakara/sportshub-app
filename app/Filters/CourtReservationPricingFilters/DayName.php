@@ -4,7 +4,7 @@ namespace App\Filters\CourtReservationPricingFilters;
 
 use App\Filters\FilterInterface;
 
-class DayOfWeek implements FilterInterface
+class DayName implements FilterInterface
 {
     protected $query;
 

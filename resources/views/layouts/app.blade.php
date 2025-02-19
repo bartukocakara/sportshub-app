@@ -19,9 +19,7 @@
 </div>
 @include('components.modals.auth-modal')
 
-<!-- Global functions for modal actions -->
 <script>
-    // Define the functions as properties on window for global access
     window.showKVKK = function() {
         $('#authContainer').addClass('d-none');
         $('#kvkkContainer').removeClass('d-none');
@@ -38,7 +36,7 @@
     };
 </script>
 <script src="{{ asset('assets/plugins/jquery.min.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="{{ asset('assets/js/toaster.min.js') }}"></script>
 <script>
     toastr.options = {
         closeButton: true, // Show close button

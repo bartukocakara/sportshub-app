@@ -59,7 +59,7 @@
                         url: apiRoute,
                         method: 'GET',
                         data: {
-                            court_id: courtId, // Include courtId in the request
+                            court_id: courtId,
                             day_name: dayName,
                             date: date
                         },
@@ -85,7 +85,6 @@
             const courtTitle = $(this).data('court-title');
             const courtAddress = $(this).data('court-address');
             checkoutRoute = $(this).data('route');
-            console.log(checkoutRoute);
 
             $('#pricingModalLabel').text(courtTitle + ' - ' + courtAddress);
 

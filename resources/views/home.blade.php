@@ -42,7 +42,6 @@
                             <button type="submit" class="m-4 btn btn-primary">{{ __('messages.start_filter') }}</button>
                         </div>
 
-                        <!-- Hidden Inputs for Price Range -->
                         <input type="hidden" name="minimum_price" id="main_min_price" value="{{ request()->get('minimum_price', 0) }}">
                         <input type="hidden" name="maximum_price" id="main_max_price" value="{{ request()->get('maximum_price', 1000) }}">
                     </form>

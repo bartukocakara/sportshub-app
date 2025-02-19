@@ -1,14 +1,19 @@
 @extends('layouts.no-sidebar')
 @section('title', __('messages.guest_checkout'))
 @section('custom-styles')
-.show-pricing-list {
-    position: relative;
-    z-index: 10;
-}
+<link href="{{ asset('assets/css/no-sidebar.css') }}" rel="stylesheet" type="text/css" />
+<style>
+    @media (max-width: 768px) {
+        .detail-container {
+            height: auto;
+            min-height: 150vh;
+        }
+    }
+</style>
 @endsection
 @section('content')
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
-    <div class="d-flex flex-column flex-column-fluid">
+    <div class="d-flex flex-column flex-column-fluid detail-container" >
         <div id="kt_app_toolbar" class="app-toolbar pt-5">
             <div id="kt_app_toolbar_container"
                 class="app-container container-fluid d-flex align-items-stretch">
@@ -23,23 +28,9 @@
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div class="app-container container-fluid">
-                <div class="row" >
-                    <div class="col-6 mb-10 mb-lg-0">
-                        <div class="card card-flush pt-3 mb-5 mb-lg-10">
-                            <div class="card-header">
-                                <div class="card-title">
-                                    <h2 class="fw-bold">{{ __('messages.customer_details') }}</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card card-flush pt-3 mb-5 mb-lg-10">
-                            <div class="card-body pt-0">
-                                @include('components.checkout.user.customer-info')
-                            </div>
-                        </div>
-                    </div>
+                <div class="row">
+                    @include('components.checkout.user.customer-info')
                     @include('components.checkout.summary')
-                    </div>
                 </div>
             </div>
         </div>

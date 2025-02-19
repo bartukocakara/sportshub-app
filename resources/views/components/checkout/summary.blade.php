@@ -1,12 +1,12 @@
-<div class="col-6">
-    <div class="card card-flush pt-3 mb-0">
-        <div class="card-header">
+<div class="col-lg-6 col-sm-12 col-md-12">
+    <div class=" mb-0">
+        <div class="card-header p-3">
             <div class="card-title">
                 <h2>{{ __('messages.court_details') }}</h2>
             </div>
         </div>
-        <div class="row">
-            <img class="col-6"
+        <div class="row p-4">
+            <img class="col-lg-6 col-md-12 col-sm-12"
                 src="{{ asset('storage/courts/' . (($court['court_images'][0]['file_path'] ?? 'placeholder-court.webp'))) }}"
                 alt="Court Image"
                 id="courtImage"
@@ -14,27 +14,10 @@
                 style="cursor: pointer;"
                 data-bs-toggle="modal"
                 data-bs-target="#imageModal">
-            <div class="col-6 separator separator-dashed mb-7">
-            @include('components.checkout.court-details')
+            <div class="col-6 separator mb-7">
+                @include('components.checkout.court-details')
             </div>
-            <div class="col-12 p-4">
-            @if (Auth::check())
-                <a href="{{ route('reservation.user.payment.index') }}"class="btn btn-primary">
-                    <span class="indicator-label">{{ __('messages.make_payment') }}</span>
-                    <span class="indicator-progress">
-                        Please wait...
-                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                    </span>
-                </a>
-                @else
-                <button type="submit" class="btn btn-primary" id="kt_subscriptions_create_button">
-                    <span class="indicator-label">{{ __('messages.make_payment') }}</span>
-                    <span class="indicator-progress">
-                        Please wait...
-                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                    </span>
-                </button>
-                @endif
+            <div class="col-lg-6 col-md-12 col-sm-12 p-4">
 
             </div>
         </div>

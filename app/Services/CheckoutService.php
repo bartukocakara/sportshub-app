@@ -124,7 +124,9 @@ class CheckoutService extends CrudService
             'from_hour' => $request->from_hour,
             'to_hour' => $request->to_hour,
         ];
+
         $priceCheck = $this->courtReservationPricingRepository->priceCheck($priceCheckParams);
+
         $reservation = $this->reservationRepository->checkAvailability($request->all());
         if($reservation) {
             return redirect()->route('home')->with('error', 'Reservation is not available.');

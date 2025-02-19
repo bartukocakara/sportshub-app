@@ -1,6 +1,5 @@
 <script>
 $(document).ready(function () {
-    // Initialize noUiSlider
     var priceSlider = document.getElementById("price-slider");
 
     noUiSlider.create(priceSlider, {

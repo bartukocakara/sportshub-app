@@ -195,4 +195,7 @@ return [
     'create_comment' => 'Create Comment',
     'submit' => 'Submit',
     'apply' => 'Apply',
+    'select_month' => 'Select Month',
+    'select_year' => 'Select Year',
+    'court_name' => 'Court Name',
 ];

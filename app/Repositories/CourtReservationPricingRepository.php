@@ -47,7 +47,7 @@ class CourtReservationPricingRepository extends BaseRepository
     }
 
     public function priceCheck(array $params)
-{
+    {
     // Get the reservation based on court_id and day_of_week
     $reservation = $this->courtReservationPricing
         ->where('court_id', $params['court_id'])

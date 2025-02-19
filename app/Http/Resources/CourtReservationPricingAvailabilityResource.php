@@ -15,7 +15,6 @@ class CourtReservationPricingAvailabilityResource extends JsonResource
     public function toArray(Request $request): array
     {
         $date = $request->get('date');
-
         return [
             'id' => $this->id,
             'court_id' => $this->court_id,
