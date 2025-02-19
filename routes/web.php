@@ -41,6 +41,9 @@ Route::get('reservation/payment/failed', function(){
     return view('checkout.payment.failed');
 })->name('reservation.payment.failed');
 
+Route::resource('/courts', CourtController::class)->names('courts')->parameters([
+    'courts' => 'id'
+])->except(['store', 'update', 'destroy']);
 Route::middleware('auth')->group(function () {
     Route::post('checkout/user', [CheckoutController::class, 'userIndex'])->name('checkout.user.index');
     Route::get('checkout/user/reservation', [CheckoutController::class, 'userReservation'])->name('reservation.user.index');
@@ -56,7 +59,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('court-businesses', CourtBusinessController::class);
     Route::resource('/courts', CourtController::class)->names('courts')->parameters([
         'courts' => 'id'
-    ]);;
+    ])->except(['index', 'show']);
 
     Route::get('reservations', [ReservationController::class, 'index'])->name('reservations.index');
     Route::get('reservations/me', [ReservationController::class, 'me'])->name('reservations.me');

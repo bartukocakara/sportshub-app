@@ -28,26 +28,27 @@
                     @endif
                 </div>
                 @if(isset($value['court_reservation_pricings']) && count($value['court_reservation_pricings']) > 0 && !isset($value['court_address']))
-                    <div class="fs-6 fw-bold mt-5 d-flex flex-stack">
+                    <div class="fs-6 fw-bold mt-5">
                         <span class="badge border border-dashed fs-2 fw-bold text-dark p-2">
                             <span class="fs-6 fw-semibold text-gray-400">₺</span>
                             {{ $value['court_reservation_pricing_average_price'] }}
                         </span>
-                        <button class="btn btn-sm btn-info show-pricing-list"
-                            data-bs-toggle="modal"
-                            data-bs-target="#pricingModal"
-                            data-id="{{ $value['id'] }}"
-                            data-pricings="{{ json_encode($value['court_reservation_pricings']) }}"
-                            data-route="{{ Auth::check() ? route('checkout.user.index') : route('checkout.guest.index') }}"
-                            data-court-title="{{ $value['title'] }}"
-                            data-court-address="{{ isset($value['court_business']['address']) ? $value['court_business']['address'] : (isset($value['court_address']['address_detail']) ? $value['court_address']['address_detail'] : '') }}">
-                            {{ __('messages.show_pricing_list') }}
-                        </button>
-
+                        <div class="d-flex justify-content-center mt-3">
+                            <button class="btn btn-sm btn-info show-pricing-list"
+                                data-bs-toggle="modal"
+                                data-bs-target="#pricingModal"
+                                data-id="{{ $value['id'] }}"
+                                data-pricings="{{ json_encode($value['court_reservation_pricings']) }}"
+                                data-route="{{ Auth::check() ? route('checkout.user.index') : route('checkout.guest.index') }}"
+                                data-court-title="{{ $value['title'] }}"
+                                data-court-address="{{ isset($value['court_business']['address']) ? $value['court_business']['address'] : (isset($value['court_address']['address_detail']) ? $value['court_address']['address_detail'] : '') }}">
+                                {{ __('messages.show_pricing_list') }}
+                            </button>
+                        </div>
                     </div>
                 @else
                     <!-- If it's a public court, redirect to the court detail page -->
-                    <div class="fs-6 fw-bold mt-5 d-flex flex-stack">
+                    <div class="fs-6 fw-bold mt-5 d-flex justify-content-center">
                         <a href="{{ route('courts.show', ['id' => $value['id']]) }}" class="btn btn-primary">
                             {{ __('messages.view_court_details') }}
                         </a>
