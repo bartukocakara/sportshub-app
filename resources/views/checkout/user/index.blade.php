@@ -2,14 +2,6 @@
 @section('title', __('messages.guest_checkout'))
 @section('custom-styles')
 <link href="{{ asset('assets/css/no-sidebar.css') }}" rel="stylesheet" type="text/css" />
-<style>
-    @media (max-width: 768px) {
-        .detail-container {
-            height: auto;
-            min-height: 150vh;
-        }
-    }
-</style>
 @endsection
 @section('content')
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
