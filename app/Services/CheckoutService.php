@@ -59,6 +59,7 @@ class CheckoutService extends CrudService
             'price' => $priceCheck,
             'court_id' => $court->id,
             'court_reservation_pricings' => $court->courtReservationPricings,
+            'day_of_week' => $request->day_of_week,
             'court_location' => [
                 'city' => $court->courtBusiness->district->city->title,
                 'district' => $court->courtBusiness->district->title,
@@ -144,6 +145,7 @@ class CheckoutService extends CrudService
             'price' => $priceCheck,
             'court_id' => $court->id,
             'court_reservation_pricings' => $court->courtReservationPricings,
+            'day_of_week' => $request->day_of_week,
             'court_location' => [
                 'city' => $court->courtBusiness->district->city->title,
                 'district' => $court->courtBusiness->district->title,
