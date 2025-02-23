@@ -25,9 +25,14 @@
         <div class="separator my-2"></div>
         @auth
         <div class="menu-item px-5">
-            <a href="{{ route('profile.edit') }}" class="menu-link px-5">{{ __('messages.my_profile') }}</a>
+            <a href="{{ route('account.settings') }}" class="menu-link px-5">{{ __('messages.account') }}</a>
         </div>
+
+
         @endauth
+        <div class="menu-item px-5">
+            <a href="{{ route('court-business.auth.login') }}" class="menu-link px-5">{{ __('Court Business Login') }}</a>
+        </div>
         @auth
         <div class="menu-item px-5">
             <a href="{{ route('reservations.me') }}" class="menu-link px-5">
@@ -114,9 +119,6 @@
                     </span>{{ __('messages.turkish') }}</a>
                 </div>
             </div>
-        </div>
-        <div class="menu-item px-5 my-1">
-            <a href="../dist/account/settings.html" class="menu-link px-5">Account Settings</a>
         </div>
         <div class="menu-item px-5">
             @auth

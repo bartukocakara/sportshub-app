@@ -29,6 +29,7 @@ return new class extends Migration
             $table->decimal('latitude', 10, 6);
             $table->string('postal_code', 20);
             $table->decimal('standard_price')->nullable();
+            $table->string('password');
             $table->timestamps();
         });
     }

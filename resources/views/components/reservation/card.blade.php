@@ -16,8 +16,7 @@
                             width: 100%;">
                 </div>
             @endif
-
-            <!-- Payment Status Badge -->
+            @if($reservation['status'] != 6)
             <div class="badge position-absolute top-0 end-0 m-3
                     @switch($reservation['payment_status'])
                         @case(1)
@@ -38,6 +37,7 @@
                 ">
                     {{ __('messages.payment_status_list.' . $reservation['payment_status']) }}
             </div>
+            @endif
         </div>
         <div class="card-body">
             <h5 class="card-title">{{ $reservation['court']['title'] }}</h5>

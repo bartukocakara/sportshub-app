@@ -198,4 +198,5 @@ return [
     'select_month' => 'Select Month',
     'select_year' => 'Select Year',
     'court_name' => 'Court Name',
+    'account' => 'Account',
 ];

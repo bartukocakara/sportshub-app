@@ -2,85 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\AccountRequest;
-use App\Http\Resources\AccountResource;
 use App\Services\AccountService;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
-    private AccountService $accountService;
+    protected $accountService;
 
-    /**
-     * Service interface tanımlanıyor.
-     *
-     * @param  AccountService $accountService
-     * @return void
-    */
     public function __construct(AccountService $accountService)
     {
         $this->accountService = $accountService;
     }
 
-    /**
-     * Kaynakları listelemek için kullanılır.
-     *
-     * @param  Request  $request
-     * @return JsonResponse
-    */
-    public function index(Request $request) : JsonResponse
+    public function index()
     {
-        return $this->okApiResponse(
-            AccountResource::collection($this->accountService->all($request))
-                ->response()
-                ->getData(true)
-        );
+        return $this->accountService->getAccountSettings();
     }
 
-    /**
-     * Yeni bir kaynağı kaydetmek için kullanılır.
-     *
-     * @param  AccountRequest $request
-     * @return JsonResponse
-    */
-    public function store(AccountRequest $request) : JsonResponse
+    public function personalInfo()
     {
-        return $this->createdApiResponse($this->accountService->store($request->validated()));
+        return $this->accountService->getPersonalInfo();
     }
 
-    /**
-     * Kaynağı görüntülemek için kullanılır.
-     *
-     * @param  string $id
-     * @return JsonResponse
-    */
-    public function show(string $id) : JsonResponse
+    public function security()
     {
-        return $this->okApiResponse(new AccountResource($this->accountService->show($id)));
+        return $this->accountService->getSecurityInfo();
     }
 
-    /**
-     * Kaynağı güncellemek için kullanılır.
-     *
-     * @param  AccountRequest $request
-     * @param  string $id
-     * @return JsonResponse
-    */
-    public function update(AccountRequest $request, string $id) : JsonResponse
+    public function payments()
     {
-        return $this->noContentApiResponse($this->accountService->update($request->validated(), $id));
+        return $this->accountService->getPaymentsInfo();
     }
 
-    /**
-     * Kaynağı kaldırmak için kullanılır.
-     *
-     * @param  string $id
-     * @return JsonResponse
-     */
-    public function destroy(string $id) : JsonResponse
+    public function notifications()
     {
-        return $this->noContentApiResponse($this->accountService->destroy($id));
+        return $this->accountService->getNotificationsInfo();
+    }
+
+    public function privacy()
+    {
+        return $this->accountService->getPrivacyInfo();
     }
 }

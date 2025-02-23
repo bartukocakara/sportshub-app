@@ -42,4 +42,15 @@ class CourtRepository extends BaseRepository
                                    'reservations'
                                    ])->findOrFail($id);
     }
+
+    public function getByCourtBusiness(Request $request) : LengthAwarePaginator|Collection
+    {
+        return $this->court->where('court_business_id', $request->user()->id)
+                            ->with(['sportType',
+                                   'courtAddress',
+                                   'courtImages',
+                                   'courtReservationPricings',
+                                   'reservations'
+                                   ])->filterBy($request->all());
+    }
 }

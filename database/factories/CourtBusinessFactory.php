@@ -30,6 +30,7 @@ class CourtBusinessFactory extends Factory
             'latitude' => fake()->numberBetween(36000000, 42000000) / 1000000,  // Latitude between 36.0 and 42.0
             'longitude' => fake()->numberBetween(26000000, 45000000) / 1000000, // Longitude between 26.0 and 45.0
             'postal_code' => $this->faker->postcode,
+            'password' => 'password',
         ];
     }
 }

@@ -31,6 +31,29 @@ class CourtBusiness extends Authenticatable
         'standard_price',
     ];
 
+     /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var list<string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+     /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'password' => 'hashed',
+        ];
+    }
+
+
     public function scopeFilterBy($query, $filters)
     {
         return  (new FilterBuilder($query, $filters, 'CourtBusinessFilters'))->apply();

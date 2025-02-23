@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\CheckoutController;
@@ -51,10 +52,17 @@ Route::middleware('auth')->group(function () {
     Route::get('reservation/user/payment', [CheckoutController::class, 'userPaymentIndex'])->name('reservation.user.payment.index');
     Route::post('reservation/user/payment', [CheckoutController::class, 'userMakePayment'])->name('reservation.user.make.payment');
 
+    Route::get('/account-settings', [AccountController::class, 'index'])->name('account.settings');
+    Route::get('/account-settings/personal-info', [AccountController::class, 'personalInfo'])->name('account.personal-info');
+    Route::get('/account-settings/security', [AccountController::class, 'security'])->name('account.security');
+    Route::get('/account-settings/payments', [AccountController::class, 'payments'])->name('account.payments');
+    Route::get('/account-settings/notifications', [AccountController::class, 'notifications'])->name('account.notifications');
+    Route::get('/account-settings/privacy', [AccountController::class, 'privacy'])->name('account.privacy');
+    Route::get('/account-settings/taxes', [AccountController::class, 'taxes'])->name('account.taxes');
+    Route::get('/account-settings/travel-preferences', [AccountController::class, 'travelPreferences'])->name('account.travel-preferences');
+    Route::get('/account-settings/credits-coupons', [AccountController::class, 'creditsCoupons'])->name('account.credits-coupons');
+    Route::get('/account-settings/professional-tools', [AccountController::class, 'professionalTools'])->name('account.professional-tools');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('court-businesses', CourtBusinessController::class);
     Route::resource('/courts', CourtController::class)->names('courts')->parameters([

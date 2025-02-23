@@ -3,16 +3,25 @@
 namespace App\Http\Controllers\CourtBusiness;
 
 use App\Http\Controllers\Controller;
+use App\Services\CourtBusiness\CourtService;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 class CourtController extends Controller
 {
+    public CourtService $courtService;
+
+    public function __construct(CourtService $courtService)
+    {
+        $this->courtService = $courtService;
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request) : View
     {
-        //
+        $homeData = $this->courtService->all($request);
+        return view('court-business.courts.index', compact('homeData'));
     }
 
     /**

@@ -206,4 +206,5 @@ return [
     'select_month' => 'Ay Seç',
     'select_year' => 'Yıl Seç',
     'court_name' => 'Saha Adı',
+    'account' => 'Hesap',
 ];

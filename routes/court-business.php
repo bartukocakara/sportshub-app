@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\CourtBusiness\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\CourtController;
+use App\Http\Controllers\CourtBusiness\CourtController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('court-business')->group(function () {

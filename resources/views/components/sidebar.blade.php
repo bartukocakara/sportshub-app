@@ -3,16 +3,6 @@
         <div id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false" class="flex-column-fluid menu -indention menu-column menu-rounded menu-active-bg mb-7">
             <div class="">
                 <div class="menu-item">
-                    <a class="menu-link" href="{{ route('courts.index') }}">
-                        <span class="menu-bullet">
-                            <span class="bullet bullet-dot"></span>
-                        </span>
-                        <span class="menu-title">{{ __('messages.courts') }}</span>
-                    </a>
-                </div>
-            </div>
-            <div class="">
-                <div class="menu-item">
                     <a class="menu-link" href="{{ route('announcements.index') }}">
                         <span class="menu-bullet">
                             <span class="bullet bullet-dot"></span>

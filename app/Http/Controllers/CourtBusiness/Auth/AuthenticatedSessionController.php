@@ -24,11 +24,15 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        // Use the court_business guard to authenticate the user
+        if (Auth::guard('court_business')->attempt($request->only('email', 'password'))) {
+            $request->session()->regenerate();
 
-        $request->session()->regenerate();
+            // Redirect to intended page or dashboard
+            return redirect()->intended(route('court_business.courts.index', absolute: false));
+        }
 
-        return redirect()->intended(route('court-business.dashboard', absolute: false));
+        return back()->withErrors(['email' => 'Invalid credentials.']);
     }
 
     /**
@@ -36,10 +40,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
+        // Logout using the court_business guard
+        Auth::guard('court_business')->logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
         return redirect()->route('court-business.login');
