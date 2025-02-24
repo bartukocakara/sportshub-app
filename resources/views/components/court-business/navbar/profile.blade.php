@@ -22,13 +22,11 @@
         <div class="separator my-2"></div>
         @auth
         <div class="menu-item px-5">
-            <a href="{{ route('account.settings') }}" class="menu-link px-5">{{ __('messages.account') }}</a>
+            <a href="{{ route('court_business.account.settings') }}" class="menu-link px-5">{{ __('messages.account') }}</a>
         </div>
-
-
         @endauth
         <div class="menu-item px-5">
-            <a href="{{ route('court-business.auth.login') }}" class="menu-link px-5">{{ __('messages.court_business_login') }}</a>
+            <a href="{{ route('login') }}" class="menu-link px-5">{{ __('messages.user_login') }}</a>
         </div>
         @auth
         <div class="menu-item px-5">

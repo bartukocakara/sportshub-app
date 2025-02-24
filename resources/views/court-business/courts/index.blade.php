@@ -1,5 +1,5 @@
 @extends('layouts.court-business')
-@section('title', 'Ana Sayfa')
+@section('title', 'Saha Listesi')
 @section('custom-styles')
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
