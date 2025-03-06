@@ -4,7 +4,7 @@
         <div class="card-xl-stretch me-md-6 shadow-sm border border-grey rounded p-4">
             <a class="d-block overlay" id="courtImage-{{ $value['id'] }}" data-court-images="{{ json_encode($value['court_images']) }}">
                 <div class="overlay-wrapper bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-175px"
-                     style="background-image: url('{{ asset('storage/courts/' . (($value['court_images'][0]['file_path'] ?? 'placeholder-court.webp'))) }}')">
+                     style="background-image: url('{{ asset('storage/' . (($value['court_images'][0]['file_path'] ?? 'placeholder-court.webp'))) }}')">
                 </div>
                 <div class="overlay-layer card-rounded bg-dark bg-opacity-25">
                     <i class="ki-duotone ki-eye fs-2x text-white">

@@ -2,6 +2,7 @@
 namespace Database\Factories;
 
 use App\Models\Court;
+use App\Models\SportType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,14 +18,20 @@ class CourtImageFactory extends Factory
      */
     public function definition(): array
     {
-        // Fetch files from the 'courts' directory within the 'public' disk
-        $files = Storage::disk('public')->files('courts');
-        // If no files are found, set a default value or handle accordingly
-        $courtList = array_map('basename', $files);
+        $sportType = SportType::inRandomOrder()->first();
+        $court = Court::where('sport_type_id', $sportType->id)->inRandomOrder()->first();
+
+        // Fetch files from the sport-specific directory within courts
+        $files = Storage::disk('public')->files('courts/' . $sportType->path);
+
+        // Fallback to default images if no sport-specific images found
+        if (empty($files)) {
+            $files = Storage::disk('public')->files('courts');
+        }
         return [
-            'court_id' => Court::inRandomOrder()->first()->id,
+            'court_id' => $court->id,
             'order' => fake()->numberBetween(1, 100),
-            'file_path' => fake()->randomElement($courtList),
+            'file_path' => 'courts/' . $sportType->path . '/' . basename(fake()->randomElement($files)),
         ];
     }
 }
