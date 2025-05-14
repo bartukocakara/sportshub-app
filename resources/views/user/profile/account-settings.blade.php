@@ -2,7 +2,7 @@
 
 @section('title', __('messages.profile'))
 @section('custom-styles')
-<link rel="stylesheet" href="{{ assets('assets/css/account-settings.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/account-settings.css') }}">
 @endsection
 @section('content')
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
