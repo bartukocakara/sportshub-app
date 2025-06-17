@@ -222,4 +222,5 @@ return [
     'professional_tools' => 'Profesyonel Araçlar',
     'access_tools_for_professionals' => 'Profesyoneller için araçlara eriş',
     'privacy' => 'Gizlilik',
+    'price_range' => 'Fiyat Aralığı',
 ];

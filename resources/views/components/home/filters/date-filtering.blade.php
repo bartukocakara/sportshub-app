@@ -12,7 +12,7 @@
     return $options;
 }
 @endphp
-<div class="col-6">
+<div class="mb-4 text-center">
     <h4 for="date">{{ __('messages.date') }}</h4>
     <input type="date"
            id="date"
@@ -22,7 +22,7 @@
            value="{{ old('date', request()->get('date')) }}">
 </div>
 
-<div class="col-6">
+<div class="mb-4">
     <h4 for="time_range">{{ __('messages.time_range') }}</h4>
     <div class="d-flex align-items-center">
         <select id="from_hour"
@@ -40,8 +40,7 @@
         <span class="mx-2">-</span>
         <select id="to_hour"
                 name="to_hour"
-                class="form-select form-control ms-2 text-dark"
-                >
+                class="form-select form-control ms-2 text-dark">
             <option value="" disabled selected>{{ __('messages.end_time') }}</option>
             @foreach(generateTimeOptions() as $time)
                 <option value="{{ $time }}"

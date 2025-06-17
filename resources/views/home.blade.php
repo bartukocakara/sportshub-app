@@ -21,30 +21,18 @@
                             {{ __('messages.courts') }}
                         </h1>
                     </div>
-                    <form class="mt-5" id="filters-form" method="GET" action="{{ route('home') }}">
+                    <div class="mt-5" id="filters-form" method="GET" action="{{ route('home') }}">
                         <div class="row mt-4">
-                            <div class="col-md-3 text-center">
-                                @include('components.home.filters.location-filtering')
-                            </div>
-                            <div class="col-md-5 row">
-                                @include('components.home.filters.date-filtering')
-                            </div>
-                            <div class="col-md-2">
+                            <div class="col-md-5">
                                 @include('components.home.filters.sport-type-filter')
                             </div>
                             <div class="col-md-2 mt-4 d-flex justify-content-center align-items-center">
                                 <button id="start-filter-btn" class="btn btn-lg btn-success px-4 py-3">
-                                    {{ __('messages.pricing_filter') }}
+                                    {{ __('messages.filters') }}
                                 </button>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-center mt-5">
-                            <button type="submit" class="m-4 btn btn-primary">{{ __('messages.start_filter') }}</button>
-                        </div>
-
-                        <input type="hidden" name="minimum_price" id="main_min_price" value="{{ request()->get('minimum_price', 0) }}">
-                        <input type="hidden" name="maximum_price" id="main_max_price" value="{{ request()->get('maximum_price', 1000) }}">
-                    </form>
+                    </div>
                 </div>
 
             </div>
@@ -69,7 +57,7 @@
         </div>
     </div>
 </div>
-@include('components.home.modals.price-filter-modal')
+@include('components.home.modals.filters-modal')
 @endsection
 @section('page-scripts')
 @include('components.home.scripts.leaflet-scripts')
