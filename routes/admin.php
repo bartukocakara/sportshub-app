@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\CourtBusinessController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function () {
-    Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('adminlogin');
+    Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('admin.login');
     Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('admin.login.store');
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('admin.logout');
 

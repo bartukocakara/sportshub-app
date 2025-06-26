@@ -1,3 +1,5 @@
+CHATGPT ID = https://chatgpt.com/c/6853f850-419c-8000-a248-c67e7be687ba
+
 <a name="readme-top"></a>
 
 <!-- PROJECT LOGO -->
@@ -9,13 +11,13 @@
   <p align="center">
     <br />
     <br />
-    <a href="https://islergucler.tardigrad.com.tr/sixt/skeleton"><strong>Dökümantasyon »</strong></a>
+    <a href=""><strong>Dökümantasyon »</strong></a>
     <br />
     <br />
     ·
-    <a href="https://islergucler.tardigrad.com.tr/sixt/skeleton/issues">Bug Bildir</a>
+    <a href="">Bug Bildir</a>
     ·
-    <a href="https://islergucler.tardigrad.com.tr/sixt/skeleton/issues">Feature Talebi</a>
+    <a href="">Feature Talebi</a>
   </p>
 </div>
 
@@ -248,5 +250,3 @@ php artisan test --filter=UserControllerTest
 ```
 
 <div align="right"><b><a href="#readme-top">↥ back to top</a></b></div>
-
-

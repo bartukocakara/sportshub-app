@@ -14,9 +14,18 @@ class Invoice extends Model
     protected $fillable = [
         'court_business_id',
         'admin_id',
-        'amount',
+        'total',
+        'invoice_number',
+        'issue_date',
         'due_date',
         'status',
+        'lines'
+    ];
+
+    protected $casts = [
+        'lines' => 'array',
+        'issue_date' => 'date',
+        'due_date' => 'date',
     ];
 
     public function scopeFilterBy($query, $filters)

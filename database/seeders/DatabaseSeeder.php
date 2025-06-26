@@ -34,6 +34,9 @@ class DatabaseSeeder extends Seeder
             CourtReservationPricingSeeder::class,
             AnnouncementSeeder::class,
             CommentSeeder::class,
+            SubscriptionPlanSeeder::class,
+            SubscriptionPromotionSeeder::class,
+            SubscriptionSeeder::class,
             // CourtAddressSeeder::class
         ]);
     }
