@@ -13,11 +13,13 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RefundController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\SubscriptionPlanController;
 use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index']);
+Route::get('/subscription-plans', [SubscriptionPlanController::class, 'index']);
 
 // Google Login
 Route::get('auth/google', [SocialLoginController::class, 'redirectToGoogle'])->name('auth.google');

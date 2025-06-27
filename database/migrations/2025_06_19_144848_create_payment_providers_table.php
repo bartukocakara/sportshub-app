@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('payment_providers', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('key')->unique(); // 'iyzico', 'sipay', etc.
             $table->string('name'); // Display name
             $table->json('credentials'); // api_key, secret, etc.

@@ -12,12 +12,23 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('subscriptions', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
 
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('subscription_plan_id')->constrained()->cascadeOnDelete();
-
-            $table->foreignId('integrated_channel_id')->nullable()->constrained('integrated_channels'); // Ödeme kanalı referansı
+            $table->uuid('user_id');
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users')
+                  ->onDelete('cascade');
+            $table->uuid('subscription_plan_id');
+            $table->foreign('subscription_plan_id')
+                  ->references('id')
+                  ->on('subscription_plans')
+                  ->onDelete('cascade');
+            $table->uuid('integrated_channel_id')->nullable();
+            $table->foreign('integrated_channel_id')
+                  ->references('id')
+                  ->on('integrated_channels')
+                  ->onDelete('cascade');
 
             $table->string('status')->default('active'); // active, cancelled, expired vb.
             $table->string('promotion_code')->nullable();

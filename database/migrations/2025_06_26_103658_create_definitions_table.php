@@ -12,7 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('definitions', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
+            $table->string('group_key');
+            $table->string('value');
+            $table->string('description_tr');
+            $table->string('description_en');
+            $table->boolean('status');
+
             $table->timestamps();
         });
     }

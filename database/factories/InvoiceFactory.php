@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\Admin;
-use App\Models\CourtBusiness;
 use App\Models\User;
+use App\Models\Admin;
+use Illuminate\Support\Str;
+use App\Models\CourtBusiness;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,11 +21,26 @@ class InvoiceFactory extends Factory
     public function definition(): array
     {
         return [
-            'court_business_id' => CourtBusiness::factory(),  // Generate a related CourtBusiness entry
-            'admin_id' => Admin::factory(),  // Generate a related User entry for the payer
-            'amount' => $this->faker->randomFloat(2, 100, 1000),  // Random amount between 100 and 1000
-            'due_date' => $this->faker->dateTimeBetween('now', '+30 days'),  // Due date within 30 days
-            'status' => $this->faker->randomElement(['unpaid', 'paid', 'overdue']),  // Random status
+            'id' => $this->faker->uuid(),
+            'court_business_id' => CourtBusiness::factory(),
+            'admin_id' => Admin::factory(),
+            'invoice_number' => strtoupper(Str::random(10)),
+            'amount' => $this->faker->randomFloat(2, 100, 1000),
+            'issue_date' => $this->faker->date(),
+            'due_date' => $this->faker->dateTimeBetween('+1 day', '+30 days')->format('Y-m-d'),
+            'status' => $this->faker->randomElement(['draft', 'issued', 'paid', 'cancelled']),
+            'lines' => json_encode([
+                [
+                    'description' => $this->faker->sentence(3),
+                    'quantity' => $this->faker->numberBetween(1, 5),
+                    'unit_price' => $this->faker->randomFloat(2, 10, 100),
+                ],
+                [
+                    'description' => $this->faker->sentence(3),
+                    'quantity' => $this->faker->numberBetween(1, 5),
+                    'unit_price' => $this->faker->randomFloat(2, 10, 100),
+                ],
+            ]),
         ];
     }
 }

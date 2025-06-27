@@ -8,14 +8,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('payment_transactions', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
 
-            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
-
-            // ✅ Foreign relation to integrated_channels (only for type = 'payment')
-            $table->foreignId('integrated_channel_id')
-                  ->constrained('integrated_channels')
+            $table->uuid('user_id');
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users')
                   ->onDelete('cascade');
+            $table->uuid('payment_provider_id');
+            $table->foreign('payment_provider_id')
+                  ->references('id')
+                  ->on('payment_providers')
+                  ->onDelete('cascade');
+            // ✅ Foreign relation to integrated_channels (only for type = 'payment')
 
             $table->string('transaction_id')->nullable();
             $table->bigInteger('amount_minor'); // store in cents, kurus, etc.

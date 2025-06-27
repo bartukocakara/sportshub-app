@@ -20,7 +20,7 @@ return new class extends Migration
                   ->constrained('admins') // Ensure it points to the 'users' table
                   ->onDelete('cascade'); // Handle cascading delete if the related admin is deleted
             $table->string('invoice_number')->unique();
-            $table->decimal('total', 12, 2);
+            $table->decimal('amount', 12, 2);
             $table->date('issue_date');
             $table->date('due_date'); // Due date of the invoice
             $table->enum('status', ['draft', 'issued', 'paid', 'cancelled'])->default('draft');

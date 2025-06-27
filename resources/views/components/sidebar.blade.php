@@ -10,6 +10,14 @@
                         <span class="menu-title">{{ __('messages.announcements') }}</span>
                     </a>
                 </div>
+                <div class="menu-item">
+                    <a class="menu-link" href="{{ route('home') }}">
+                        <span class="menu-bullet">
+                            <span class="bullet bullet-dot"></span>
+                        </span>
+                        <span class="menu-title">{{ __('messages.courts') }}</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

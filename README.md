@@ -1,5 +1,7 @@
 CHATGPT ID = https://chatgpt.com/c/6853f850-419c-8000-a248-c67e7be687ba
-
+HTML TEMPLATE = 
+https://preview.keenthemes.com/saul-html-pro/pages/social/activity.html
+https://preview.keenthemes.com/saul-html-pro/apps/chat/group.html
 <a name="readme-top"></a>
 
 <!-- PROJECT LOGO -->

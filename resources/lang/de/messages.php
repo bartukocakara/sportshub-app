@@ -218,4 +218,5 @@ return [
     'control_data_sharing_and_visibility' => 'Control data sharing and visibility',
     'professional_tools' => 'Professional Tools',
     'access_tools_for_professionals' => 'Access tools for professionals',
+    'subscription_plans' => 'Subscription Plans',
 ];

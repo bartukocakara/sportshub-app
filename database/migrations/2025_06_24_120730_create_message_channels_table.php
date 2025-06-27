@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('message_channels', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('key')->unique(); // 'mail', 'sms'
             $table->string('name'); // 'Email', 'SMS'
             $table->json('config')->nullable(); // API keys, sender ID, etc.

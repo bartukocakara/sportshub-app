@@ -12,13 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('subscription_plans', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('name');                       // Plan adı (örneğin: "Aylık Gold")
             $table->string('interval');                   // weekly, monthly, yearly
             $table->string('currency', 3)->default('USD');// Para birimi, ISO Kodu
             $table->unsignedBigInteger('amount_minor');  // Para biriminin en küçük birimi (ör: 1000 = 10.00 USD)
             $table->text('description')->nullable();     // Plan açıklaması
             $table->boolean('active')->default(true);    // Plan aktif mi?
+            $table->json('features')->nullable(); // Add features column
             $table->timestamps();
         });
     }

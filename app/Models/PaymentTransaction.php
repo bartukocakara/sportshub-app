@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\UUID;
 use App\ValueObjects\Money;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class PaymentTransaction extends Model
 {
     /** @use HasFactory<\Database\Factories\PaymentTransactionFactory> */
-    use HasFactory;
+    use HasFactory, UUID;
 
     /**
      * getMoneyAttribute
