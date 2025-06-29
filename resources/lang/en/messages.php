@@ -214,5 +214,5 @@ return [
     'professional_tools' => 'Professional Tools',
     'access_tools_for_professionals' => 'Access tools for professionals',
     'subscription_plans' => 'Subscription Plans',
-
+    'court_images' => 'Court Images',
 ];

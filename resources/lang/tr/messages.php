@@ -224,5 +224,6 @@ return [
     'privacy' => 'Gizlilik',
     'price_range' => 'Fiyat Aralığı',
     'subscription_plans' => 'Abonelik Planları',
+    'court_images' => 'Saha Resimleri',
 
 ];

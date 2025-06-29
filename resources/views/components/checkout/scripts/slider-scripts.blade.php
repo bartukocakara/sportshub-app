@@ -13,7 +13,7 @@
             // Loop through each image and add it to the carousel
             $.each(courtImages, function(index, image) {
                 var isActive = index === 0 ? 'active' : '';  // Set the first image as active
-                var imgSrc = '{{ asset("storage/courts/") }}/' + image.file_path;
+                var imgSrc = '{{ asset("storage/") }}/' + image.file_path;
 
                 var slide = $('<div>').addClass('carousel-item ' + isActive);
                 var img = $('<img>').addClass('d-block w-100').attr('src', imgSrc).attr('alt', 'Court Image ' + (index + 1));
@@ -36,7 +36,7 @@
             // Loop through the courtImages array and add slides
             courtImages.forEach((image, index) => {
                 var isActive = index === 0 ? 'active' : ''; // Set the first image as active
-                var imgSrc = '/storage/courts/' + image.file_path; // Construct the image source URL
+                var imgSrc = '/storage/' + image.file_path; // Construct the image source URL
 
                 // Create carousel item
                 var slide = `
