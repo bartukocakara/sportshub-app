@@ -33,8 +33,8 @@ class AnnouncementController extends Controller
      */
     public function index(Request $request)
     {
-        $announcements = $this->announcementService->all($request);
-        return view('announcements.index', compact('announcements'));
+        $datas = $this->announcementService->index($request, ['user']);
+        return view('announcements.index', compact('datas'));
     }
 
     /**

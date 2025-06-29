@@ -26,7 +26,7 @@ class SubscriptionFactory extends Factory
         return [
             'user_id' => $user->id,
             'subscription_plan_id' => $plan->id,
-            'integrated_channel_id' => null, // isteğe bağlı, ekleyebilirsin
+            // 'integrated_channel_id' => null, // isteğe bağlı, ekleyebilirsin
             'status' => 'active',
             'promotion_code' => null,
             'started_at' => $startedAt,

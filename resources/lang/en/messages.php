@@ -215,4 +215,18 @@ return [
     'access_tools_for_professionals' => 'Access tools for professionals',
     'subscription_plans' => 'Subscription Plans',
     'court_images' => 'Court Images',
+    'create_announcement' => 'Create Announcement',
+    'matches' => 'Matches',
+    'teams' => 'Teams',
+    'players' => 'Players',
+    'matches_list' => 'Matches List',
+    'teams_list' => 'Teams List',
+    'players_list' => 'Players List',
+    'match_details' => 'Match Details',
+    'team_details' => 'Team Details',
+    'player_details' => 'Player Details',
+    'match' => 'Match',
+    'team' => 'Team',
+    'player' => 'Player',
+
 ];

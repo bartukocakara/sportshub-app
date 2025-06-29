@@ -1,4 +1,4 @@
-@extends('layouts.app') @section('title', __('messages.announcements')) @section('custom-styles')
+@extends('layouts.app') @section('title', __('messages.teams')) @section('custom-styles')
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
 <link href="{{ asset('assets/css/pagination.css') }}" rel="stylesheet" type="text/css" />
@@ -16,9 +16,9 @@
                             <i class="ki-duotone ki-home fs-3 text-gray-500 me-n1"></i>
                         </a>
                     </li>
-                    <li class="breadcrumb-item text-gray-700">{{ __('messages.announcements') }}</li>
+                    <li class="breadcrumb-item text-gray-700">{{ __('messages.teams') }}</li>
                 </ul>
-                <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bolder fs-1 lh-0">{{ __('messages.announcements') }}</h1>
+                <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bolder fs-1 lh-0">{{ __('messages.teams') }}</h1>
             </div>
             <a href="#" class="btn btn-sm btn-success ms-3 px-4 py-3" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app"> {{ __('messages.create_announcement') }} </a>
         </div>
@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div class="mb-10" id="kt_social_feeds_posts">
-                    @foreach ($datas['announcements']['data'] as $key => $announcement)
+                    @foreach ($datas['teams']['data'] as $key => $team)
                     <div class="card card-flush mb-10">
                         <div class="card-header pt-9">
                             <div class="d-flex align-items-center">
@@ -138,7 +138,7 @@
 
                         <div class="card-body">
                             <div class="fs-6 fw-normal text-gray-700 mb-5">
-                                {{ $announcement['message'] }}
+                                {{ $team['title'] }}
                             </div>
                         </div>
                         <div class="card-footer pt-0">

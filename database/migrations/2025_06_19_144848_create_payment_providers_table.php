@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payment_providers', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('key')->unique(); // 'iyzico', 'sipay', etc.
-            $table->string('name'); // Display name
-            $table->json('credentials'); // api_key, secret, etc.
-            $table->boolean('active')->default(true);
-            $table->timestamps();
-        });
+        // Schema::create('payment_providers', function (Blueprint $table) {
+        //     $table->uuid('id')->primary();
+        //     $table->string('key')->unique(); // 'iyzico', 'sipay', etc.
+        //     $table->string('name'); // Display name
+        //     $table->json('credentials'); // api_key, secret, etc.
+        //     $table->boolean('active')->default(true);
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payment_providers');
+        // Schema::dropIfExists('payment_providers');
     }
 };

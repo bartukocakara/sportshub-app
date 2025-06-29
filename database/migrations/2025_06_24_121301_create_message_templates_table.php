@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('message_templates', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('code')->unique(); // 'RESERVATION_CONFIRMED'
-            $table->string('type'); // 'mail', 'sms', etc.
-            $table->string('subject')->nullable(); // for emails
-            $table->text('body'); // template text with variables
-            $table->timestamps();
-        });
+        // Schema::create('message_templates', function (Blueprint $table) {
+        //     $table->uuid('id')->primary();
+        //     $table->string('code')->unique(); // 'RESERVATION_CONFIRMED'
+        //     $table->string('type'); // 'mail', 'sms', etc.
+        //     $table->string('subject')->nullable(); // for emails
+        //     $table->text('body'); // template text with variables
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('message_templates');
+        // Schema::dropIfExists('message_templates');
     }
 };

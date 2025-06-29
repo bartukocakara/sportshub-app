@@ -24,11 +24,11 @@ return new class extends Migration
                   ->references('id')
                   ->on('subscription_plans')
                   ->onDelete('cascade');
-            $table->uuid('integrated_channel_id')->nullable();
-            $table->foreign('integrated_channel_id')
-                  ->references('id')
-                  ->on('integrated_channels')
-                  ->onDelete('cascade');
+            // $table->uuid('integrated_channel_id')->nullable();
+            // $table->foreign('integrated_channel_id')
+            //       ->references('id')
+            //       ->on('integrated_channels')
+            //       ->onDelete('cascade');
 
             $table->string('status')->default('active'); // active, cancelled, expired vb.
             $table->string('promotion_code')->nullable();

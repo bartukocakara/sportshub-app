@@ -225,5 +225,16 @@ return [
     'price_range' => 'Fiyat Aralığı',
     'subscription_plans' => 'Abonelik Planları',
     'court_images' => 'Saha Resimleri',
+    'create_announcement' => 'Duyuru Olustur',
+    'matches' => 'Maçlar',
+    'teams' => 'Takımlar',
+    'players' => 'Oyuncular',
+    'matches_list' => 'Maç Listesi',
+    'teams_list' => 'Takım Listesi',
+    'players_list' => 'Oyuncu Listesi',
+    'match_details' => 'Maç Detayları',
+    'team_details' => 'Takım Detayları',
+    'player_details' => 'Oyuncu Detayları',
+    'match' => 'Maç',
 
 ];

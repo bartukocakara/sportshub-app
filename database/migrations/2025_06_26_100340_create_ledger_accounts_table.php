@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ledger_accounts', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('code')->unique();
-            $table->string('name');
-            $table->enum('type', ['asset', 'liability', 'equity', 'income', 'expense']);
-            $table->timestamps();
-        });
+        // Schema::create('ledger_accounts', function (Blueprint $table) {
+        //     $table->uuid('id')->primary();
+        //     $table->string('code')->unique();
+        //     $table->string('name');
+        //     $table->enum('type', ['asset', 'liability', 'equity', 'income', 'expense']);
+        //     $table->timestamps();
+        // });
     }
 
     /**

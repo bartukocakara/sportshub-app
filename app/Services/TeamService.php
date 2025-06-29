@@ -2,31 +2,31 @@
 
 namespace App\Services;
 
-use App\Http\Resources\AnnouncementResource;
+use App\Http\Resources\TeamResource;
 use App\Models\City;
 use App\Models\SportType;
-use App\Repositories\AnnouncementRepository;
 use App\Repositories\CityRepository;
 use App\Repositories\SportTypeRepository;
+use App\Repositories\TeamRepository;
 use Illuminate\Http\Request;
 
-class AnnouncementService extends CrudService
+class TeamService extends CrudService
 {
-    protected AnnouncementRepository $announcementRepository;
+    protected TeamRepository $teamRepository;
 
     /**
-     * @param AnnouncementRepository $announcementRepository
+     * @param TeamRepository $teamRepository
      * @return void
     */
-    public function __construct(AnnouncementRepository $announcementRepository)
+    public function __construct(TeamRepository $teamRepository)
     {
-        $this->announcementRepository = $announcementRepository;
-        parent::__construct($this->announcementRepository); // Crud işlemleri yoksa kaldırınız.
+        $this->teamRepository = $teamRepository;
+        parent::__construct($this->teamRepository); // Crud işlemleri yoksa kaldırınız.
     }
 
     public function index(Request $request, array $with = []) : array
     {
-        $homeData['announcements'] = AnnouncementResource::collection($this->announcementRepository->all($request, $with))
+        $homeData['teams'] = TeamResource::collection($this->teamRepository->all($request, $with))
                                             ->response()
                                             ->getData(true);
 

@@ -2,31 +2,31 @@
 
 namespace App\Services;
 
-use App\Http\Resources\AnnouncementResource;
+use App\Http\Resources\MatchResource;
 use App\Models\City;
 use App\Models\SportType;
-use App\Repositories\AnnouncementRepository;
 use App\Repositories\CityRepository;
+use App\Repositories\MatchRepository;
 use App\Repositories\SportTypeRepository;
 use Illuminate\Http\Request;
 
-class AnnouncementService extends CrudService
+class MatchService extends CrudService
 {
-    protected AnnouncementRepository $announcementRepository;
+    protected MatchRepository $matchRepository;
 
     /**
-     * @param AnnouncementRepository $announcementRepository
+     * @param MatchRepository $matchRepository
      * @return void
     */
-    public function __construct(AnnouncementRepository $announcementRepository)
+    public function __construct(MatchRepository $matchRepository)
     {
-        $this->announcementRepository = $announcementRepository;
-        parent::__construct($this->announcementRepository); // Crud işlemleri yoksa kaldırınız.
+        $this->matchRepository = $matchRepository;
+        parent::__construct($this->matchRepository); // Crud işlemleri yoksa kaldırınız.
     }
 
     public function index(Request $request, array $with = []) : array
     {
-        $homeData['announcements'] = AnnouncementResource::collection($this->announcementRepository->all($request, $with))
+        $homeData['matches'] = MatchResource::collection($this->matchRepository->all($request, $with))
                                             ->response()
                                             ->getData(true);
 

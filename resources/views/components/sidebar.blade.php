@@ -3,19 +3,27 @@
         <div id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false" class="flex-column-fluid menu -indention menu-column menu-rounded menu-active-bg mb-7">
             <div class="">
                 <div class="menu-item">
-                    <a class="menu-link" href="{{ route('announcements.index') }}">
-                        <span class="menu-bullet">
-                            <span class="bullet bullet-dot"></span>
-                        </span>
+                    <a class="menu-link" style="font-size: 20px; color:black" href="{{ route('announcements.index') }}">
+                        <span class="menu-icon">🔔</span>
                         <span class="menu-title">{{ __('messages.announcements') }}</span>
                     </a>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link" href="{{ route('home') }}">
-                        <span class="menu-bullet">
-                            <span class="bullet bullet-dot"></span>
-                        </span>
+                    <a class="menu-link" style="font-size: 20px; color:black" href="{{ route('home') }}">
+                        <span class="menu-icon">🏟️</span>
                         <span class="menu-title">{{ __('messages.courts') }}</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a class="menu-link" style="font-size: 20px; color:black" href="{{ route('matches.index') }}">
+                        <span class="menu-icon">🤝</span>
+                        <span class="menu-title">{{ __('messages.matches') }}</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a class="menu-link" style="font-size: 20px; color:black" href="{{ route('teams.index') }}">
+                        <span class="menu-icon">👥</span>
+                        <span class="menu-title">{{ __('messages.teams') }}</span>
                     </a>
                 </div>
             </div>

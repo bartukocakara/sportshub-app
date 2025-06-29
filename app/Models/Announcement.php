@@ -29,6 +29,11 @@ class Announcement extends Model
         return  (new FilterBuilder($query, $filters, 'AnnouncementFilters'))->apply();
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_user_id', 'id');
+    }
+
     public function court()
     {
         return $this->belongsTo(Court::class);

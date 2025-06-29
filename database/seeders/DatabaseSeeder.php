@@ -6,6 +6,8 @@ use Database\Seeders\Address\CitySeeder;
 use Database\Seeders\Address\CountrySeeder;
 use Database\Seeders\Address\DistrictSeeder;
 use Database\Seeders\CourtReservationPricingSeeder;
+use Database\Seeders\Matches\MatchesSeeder;
+use Database\Seeders\Team\TeamSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -30,13 +32,15 @@ class DatabaseSeeder extends Seeder
             RefundSeeder::class,
             CommissionSeeder::class,
             AccountSeeder::class,
-            InvoiceSeeder::class,
+            // InvoiceSeeder::class,
             CourtReservationPricingSeeder::class,
             AnnouncementSeeder::class,
             CommentSeeder::class,
             SubscriptionPlanSeeder::class,
             SubscriptionPromotionSeeder::class,
             SubscriptionSeeder::class,
+            MatchesSeeder::class,
+            TeamSeeder::class
             // CourtAddressSeeder::class
         ]);
     }
