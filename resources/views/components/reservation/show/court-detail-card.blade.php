@@ -10,7 +10,7 @@
             <div class="swiper-wrapper">
                 @foreach($reservation->court->courtImages as $image)
                     <div class="swiper-slide">
-                        <img src="{{ asset('storage/courts/' . $image->file_path) }}"
+                        <img src="{{ asset('storage/' . $image->file_path) }}"
                              class="w-100 rounded"
                              style="height: 300px; object-fit: cover;"
                              alt="Court image">
