@@ -26,6 +26,12 @@
                         <span class="menu-title">{{ __('messages.teams') }}</span>
                     </a>
                 </div>
+                <div class="menu-item">
+                    <a class="menu-link text-dark" style="font-size: 20px;" href="{{ route('users.index') }}">
+                        <span class="menu-icon">👥</span>
+                        <span class="menu-title">{{ __('messages.players') }}</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

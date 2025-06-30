@@ -24,13 +24,13 @@ class MatchService extends CrudService
         parent::__construct($this->matchRepository); // Crud işlemleri yoksa kaldırınız.
     }
 
-    public function index(Request $request, array $with = []) : array
+    public function index(Request $request, array $with = [], bool $useCache = false) : array
     {
-        $homeData['matches'] = MatchResource::collection($this->matchRepository->all($request, $with))
+        $homeData['matches'] = MatchResource::collection($this->matchRepository->all($request, $with, $useCache))
                                             ->response()
                                             ->getData(true);
 
-        $homeData['sport_types'] = (new SportTypeRepository(new SportType()))->home();
+        $homeData['sport_types'] = (new SportTypeRepository(new SportType()))->home([], $useCache);
         $language = $request->server('HTTP_ACCEPT_LANGUAGE');
         $countryCode = substr($language, 3, 2); // Extract country code (e.g., 'US' for 'en-US')
         $homeData['cities'] = (new CityRepository(new City()))->getByCountryCode($countryCode);

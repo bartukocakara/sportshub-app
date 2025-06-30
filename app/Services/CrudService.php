@@ -23,11 +23,12 @@ class CrudService
     /**
      * @param Request $request
      * @param array $with
+     * @param bool $useCache = false
      * @return LengthAwarePaginator|Collection
     */
-    public function all(Request $request, array $with = []) : LengthAwarePaginator|Collection
+    public function all(Request $request, array $with = [], bool $useCache = false) : LengthAwarePaginator|Collection
     {
-        return $this->repository->all($request, $with);
+        return $this->repository->all($request, $with, $useCache);
     }
 
     /**

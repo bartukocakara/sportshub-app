@@ -16,6 +16,7 @@ use App\Http\Controllers\RefundController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\SubscriptionPlanController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -47,6 +48,7 @@ Route::get('reservation/payment/failed', function(){
 })->name('reservation.payment.failed');
 Route::resource('matches', MatchController::class);
 Route::resource('teams', TeamController::class);
+Route::resource('users', UserController::class);
 
 Route::resource('/courts', CourtController::class)->names('courts')->parameters([
     'courts' => 'id'

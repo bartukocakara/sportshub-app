@@ -33,7 +33,7 @@ class FilterBuilder
      *
      * @return LengthAwarePaginator
      */
-    public function apply(): LengthAwarePaginator
+    public function apply(array $with, $useCache = false): LengthAwarePaginator
     {
         foreach ($this->filters as $name => $value) {
             // Skip if the value is null or an empty string

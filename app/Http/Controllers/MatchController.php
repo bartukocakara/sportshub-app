@@ -12,6 +12,8 @@ class MatchController extends Controller
 {
     private MatchService $matchService;
 
+    private array $relations = [];
+
     /**
      * Service interface tanımlanıyor.
      *
@@ -31,7 +33,7 @@ class MatchController extends Controller
      */
     public function index(Request $request)
     {
-        $datas = $this->matchService->index($request, ['user']);
+        $datas = $this->matchService->index($request, $this->relations, false);
         return view('matches.index', compact('datas'));
     }
 

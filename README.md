@@ -4,6 +4,8 @@ https://preview.keenthemes.com/saul-html-pro/pages/social/activity.html
 https://preview.keenthemes.com/saul-html-pro/apps/chat/group.html
 
 9pX#BljgzTKEZULM.Uoq
+
+https://spatie.be/docs/laravel-permission/v6/basic-usage/teams-permissions
 <a name="readme-top"></a>
 
 <!-- PROJECT LOGO -->

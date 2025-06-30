@@ -19,7 +19,7 @@ class SportTypeRepository extends BaseRepository
         $this->sportType = $sportType;
     }
 
-    public function home(): Collection
+    public function home(array $with = [], bool $useCache = false): Collection
     {
         return $this->sportType->all();
     }

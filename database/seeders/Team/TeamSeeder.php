@@ -19,6 +19,7 @@ use App\Enums\TypeEnums\RequestTypeEnum;
 use App\Models\ChatChannel;
 use App\Models\ChatMessage;
 use App\Models\ChatUser;
+use App\Models\Definition;
 use Illuminate\Database\Seeder;
 use Illuminate\Container\Container;
 use App\Models\RequestPlayerTeam;
@@ -63,7 +64,7 @@ class TeamSeeder extends Seeder
                         'title' => $teamTitle,
                         'city_id' => $this->faker->randomElement(City::all()->pluck('id')),
                         'sport_type_id' => $this->faker->randomElement(SportType::all()->pluck('id')),
-                        'gender' => $this->faker->randomElement(['MAN', 'WOMAN', 'MIX']),
+                        'gender' => Definition::where('gender', ),
                         'team_status' => $this->faker->randomElement(['LOOKING_FOR_PLAYERS', 'LOOKING_FOR_MATCHES', 'PLAYERS_COMPLETED', 'ONLINE', 'SILENT', 'SUSPENDED']),
                         'player_count' => $this->faker->numberBetween(1, 20),
                         'min_player' => $this->faker->numberBetween(0, 4),

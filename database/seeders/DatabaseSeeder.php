@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             CitySeeder::class,
             DistrictSeeder::class,
             UserSeeder::class,
+            RolePermissionSeeder::class,
             AdminSeeder::class,
             SportTypeSeeder::class,
             CourtBusinessSeeder::class,

@@ -25,17 +25,15 @@ class UserController extends Controller
     }
 
     /**
-     * Kullanıcıları listelemek için kullanılır.
+     * Kaynakları listelemek için kullanılır.
      *
-     * @param  Request $request
-     * @return View
+     * @param  Request  $request
+     * @return \Illuminate\View\View
      */
-    public function index(Request $request): View
+    public function index(Request $request)
     {
-        $users = $this->userService->all($request);
-
-        // Return the view with the users data
-        return view('users.index', compact('users'));
+        $datas = $this->userService->index($request, ['user'], false);
+        return view('users.index', compact('datas'));
     }
 
     /**

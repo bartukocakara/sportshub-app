@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class BaseRepository
 {
     protected Model $model;
+    protected string $cachePrefix = 'repository_';
 
     /**
      * @param Model $model
@@ -24,11 +26,24 @@ class BaseRepository
      * Kaynaktan bir liste görüntüler.
      *
      * @param Request $request
+     * @param array $with = []
      * @return LengthAwarePaginator|Collection
     */
-    public function all(Request $request) : LengthAwarePaginator|Collection
+    public function all(Request $request, array $with = [], bool $useCache = false): LengthAwarePaginator|Collection
     {
-        return $this->model->filterBy($request->all());
+        if (!method_exists($this->model, 'scopeFilterBy')) {
+            throw new \Exception("Model " . get_class($this->model) . " must have a scopeFilterBy() method.");
+        }
+
+        $cacheKey = $this->getCacheKey('all', $request->all());
+
+        if ($useCache) {
+            return Cache::remember($cacheKey, now()->addMinutes(10), function () use ($request, $with, $useCache) {
+                return $this->model->filterBy($request->all(), $with, $useCache);
+            });
+        }
+
+        return $this->model->filterBy($request->all(), $with, $useCache);
     }
 
     /**
@@ -72,8 +87,16 @@ class BaseRepository
      * @param array $with
      * @return Model
     */
-    public function find(int|string $id, array $with = []) : Model
+    public function find(int|string $id, array $with = [], bool $useCache = false): Model
     {
+        $cacheKey = $this->getCacheKey('find_' . $id);
+
+        if ($useCache) {
+            return Cache::remember($cacheKey, now()->addMinutes(10), function () use ($id, $with) {
+                return $this->model->with($with)->findOrFail($id);
+            });
+        }
+
         return $this->model->with($with)->findOrFail($id);
     }
 
@@ -110,5 +133,22 @@ class BaseRepository
     public function delete(string $id) : bool
     {
         return $this->model->findOrFail($id)->delete();
+    }
+
+    public function clearCache(string $suffix = '*'): void
+    {
+        // Redis üzerinden tüm cache key'leri silmek için
+        if (Cache::getStore() instanceof \Illuminate\Cache\RedisStore) {
+            $pattern = $this->cachePrefix . $this->model->getTable() . ':' . $suffix;
+            $redis = Cache::getRedis();
+            foreach ($redis->keys($pattern) as $key) {
+                $redis->del($key);
+            }
+        }
+    }
+
+    protected function getCacheKey(string $method, array $params = []): string
+    {
+        return $this->cachePrefix . $this->model->getTable() . ':' . $method . ':' . md5(json_encode($params));
     }
 }
