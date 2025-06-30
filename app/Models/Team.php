@@ -23,10 +23,11 @@ class Team extends Model
         'max_player'
     ];
 
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy($query, $filters, array $with = [], bool $useCache = false)
     {
-        return  (new FilterBuilder($query, $filters, 'TeamFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, 'TeamFilters'))->apply($with, $useCache);
     }
+
 
     const DEFAULT_PLAYER_COUNT = 1;
 }

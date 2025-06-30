@@ -9,10 +9,11 @@ use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, UUID;
+    use HasFactory, Notifiable, UUID, HasRoles;
 
     protected $guard = 'web';
 
@@ -55,8 +56,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy($query, $filters, array $with = [], bool $useCache = false)
     {
-        return  (new FilterBuilder($query, $filters, 'UserFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, 'PlayerFilters'))->apply($with, $useCache);
     }
 }

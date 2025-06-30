@@ -22,9 +22,9 @@ class Court extends Model
         'court_business_id',
     ];
 
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy($query, $filters, array $with = [], bool $useCache = false)
     {
-        return  (new FilterBuilder($query, $filters, 'CourtFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, 'CourtFilters'))->apply($with, $useCache);
     }
 
     public function sportType() : BelongsTo

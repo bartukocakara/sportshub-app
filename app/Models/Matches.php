@@ -38,9 +38,9 @@ class Matches extends Model
         'to_hour'
     ];
 
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy($query, $filters, array $with = [], bool $useCache = false)
     {
-        return  (new FilterBuilder($query, $filters, 'MatchFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, 'MatchFilters'))->apply($with, $useCache);
     }
 
 }
