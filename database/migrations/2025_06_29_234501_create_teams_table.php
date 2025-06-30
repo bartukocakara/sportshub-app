@@ -21,7 +21,7 @@ return new class extends Migration
                   ->on('sport_types')
                   ->onDelete('cascade');
 
-            $table->enum('team_status', ['LOOKING_FOR_PLAYERS', 'LOOKING_FOR_MATCHES', 'PLAYERS_COMPLETED', 'ONLINE', 'SILENT', 'SUSPENDED'])->default('LOOKING_FOR_PLAYERS');
+            $table->string('team_status');
             $table->unsignedBigInteger('city_id')
                   ->nullable(true);
             $table->foreign('city_id')
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->integer('player_count')
                   ->nullable();
             $table->string('title');
-            $table->enum('gender', ['MAN', 'WOMAN', 'MIX'])->nullable(true);
+            $table->string('gender');
             $table->integer('max_player')->default(20);
             $table->integer('min_player')->default(4);
             // v2 de eklencek

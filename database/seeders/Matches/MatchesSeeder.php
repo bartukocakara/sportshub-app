@@ -3,6 +3,7 @@
 namespace Database\Seeders\Matches;
 
 use App\Models\Court;
+use App\Models\Definition;
 use App\Models\Matches;
 use App\Models\SportType;
 use App\Models\User;
@@ -376,13 +377,13 @@ class MatchesSeeder extends Seeder
                 $playerMatchRows[] = [
                     'id' => $id,
                     'court_id' => $courtId,
-                    'match_status' => $this->faker->randomElement(['PENDING','ACTIVE', 'CANCELLED', 'COMPLETED']),
+                    'match_status' => $this->faker->randomElement(Definition::where('group_key', 'match_status')->get()->pluck('value')),
                     'sport_type_id' => $sportTypeId,
                     // 'reservation_id' => $reservationId,
                     'type' => 1,
                     'is_court_private' => $this->faker->boolean(),
                     // 'field_usage_type' => $this->faker->randomElement([FieldUsageTypeEnum::HALF->value, FieldUsageTypeEnum::FULL->value]),
-                    'gender' => $this->faker->randomElement(['MAN', 'WOMAN', 'MIX']),
+                    'gender' => $this->faker->randomElement(Definition::where('group_key', 'gender')->get()->pluck('value')),
                     'price' => $this->faker->randomFloat(2, 100, 500),
                     'title' => $matchTitle,
                     'max_player' => $this->faker->numberBetween(8, 12),

@@ -36,7 +36,7 @@ return new class extends Migration
             //       ->on('reservations')
             //       ->onDelete('cascade');
 
-            $table->enum('match_status', ['PENDING','ACTIVE', 'CANCELLED', 'COMPLETED'])->default('PENDING');
+            $table->string('match_status');
 
 
             $table->foreignUuid('sport_type_id')
@@ -45,7 +45,7 @@ return new class extends Migration
                   ->onDelete('cascade');
 
             $table->smallInteger('type')->nullable(false)->comment('PLAYER = 1, TEAM = 2');
-            $table->enum('gender', ['MAN', 'WOMAN', 'MIX'])->nullable(true);
+            $table->string('gender')->nullable(true);
 
             $table->decimal('price', 8, 2)->nullable(true);
             $table->string('title');
