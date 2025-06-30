@@ -228,5 +228,5 @@ return [
     'match' => 'Match',
     'team' => 'Team',
     'player' => 'Player',
-
+    'activities' => 'Activities',
 ];

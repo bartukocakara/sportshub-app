@@ -1,4 +1,4 @@
-@extends('layouts.app') @section('title', __('messages.matches')) @section('custom-styles')
+@extends('layouts.app') @section('title', __('messages.teams')) @section('custom-styles')
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
 <link href="{{ asset('assets/css/pagination.css') }}" rel="stylesheet" type="text/css" />
@@ -6,760 +6,153 @@
 
 @endsection @section('content')
 
-<div id="kt_app_toolbar" class="app-toolbar pt-5">
-    <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
-        <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
-            <div class="page-title d-flex flex-column gap-1 me-3 mb-2">
-                <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-6">
-                    <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
-                        <a href="/index.html" class="text-gray-500 text-hover-primary">
-                            <i class="ki-duotone ki-home fs-3 text-gray-500 me-n1"></i>
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item text-gray-700">{{ __('messages.matches') }}</li>
-                </ul>
-                <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bolder fs-1 lh-0">{{ __('messages.matches') }}</h1>
+<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+    <div class="d-flex flex-column flex-column-fluid">
+        <div id="kt_app_toolbar" class="app-toolbar pt-5">
+            <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+                <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+                    <div class="page-title d-flex flex-column gap-1 me-3 mb-2">
+                        <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-6">
+                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
+                                <a href="/index.html" class="text-gray-500 text-hover-primary">
+                                    <i class="ki-duotone ki-home fs-3 text-gray-500 me-n1"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
+                            </li>
+                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">Pages</li>
+                            <li class="breadcrumb-item">
+                                <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
+                            </li>
+                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">User Profile</li>
+                            <li class="breadcrumb-item">
+                                <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
+                            </li>
+                            <li class="breadcrumb-item text-gray-700">Projects</li>
+                        </ul>
+                    </div>
+                    <a href="#" class="btn btn-sm btn-success ms-3 px-4 py-3" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app"> Create Project </a>
+                </div>
             </div>
-            <a href="#" class="btn btn-sm btn-success ms-3 px-4 py-3" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app"> {{ __('messages.create_announcement') }} </a>
         </div>
-    </div>
-</div>
 
-<div id="kt_app_content" class="app-content flex-column-fluid">
-    <div id="kt_app_content_container" class="app-container container-fluid">
-        <div class="d-flex flex-row">
-            <div class="w-100 flex-lg-row-fluid mx-lg-13">
-                <div class="card card-flush mb-10">
-                    <div class="card-header justify-content-start align-items-center pt-4">
-                        <div class="symbol symbol-45px me-5">
-                            <img src="/assets/media/avatars/300-3.jpg" class="" alt="" />
+        <div id="kt_app_content" class="app-content flex-column-fluid">
+            <div id="kt_app_content_container" class="app-container container-fluid">
+
+                <div class="d-flex flex-wrap flex-stack mb-6">
+                    <h3 class="fw-bold my-2">
+                        {{ __('messages.teams') }}
+                        <span class="fs-6 text-gray-500 fw-semibold ms-1">Active</span>
+                    </h3>
+                    <div class="d-flex flex-wrap my-2">
+                        <div class="me-4">
+                            <select name="status" data-control="select2" data-hide-search="true" class="form-select form-select-sm form-select-solid w-125px select2-hidden-accessible" data-select2-id="select2-data-7-5t51" tabindex="-1" aria-hidden="true" data-kt-initialized="1">
+                                <option value="Active" selected="" data-select2-id="select2-data-9-oi9w">Active</option>
+                                <option value="Approved">In Progress</option>
+                                <option value="Declined">To Do</option>
+                                <option value="In Progress">Completed</option>
+                            </select>
+                            <span class="select2 select2-container select2-container--bootstrap5" dir="ltr" data-select2-id="select2-data-8-6k30" style="width: 100%">
+                                <span class="selection"
+                                    ><span class="select2-selection select2-selection--single form-select form-select-sm form-select-solid w-125px" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-status-wy-container" aria-controls="select2-status-wy-container"
+                                        ><span class="select2-selection__rendered" id="select2-status-wy-container" role="textbox" aria-readonly="true" title="Active">Active</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span
+                                ><span class="dropdown-wrapper" aria-hidden="true"></span
+                            ></span>
                         </div>
-                        <span class="text-gray-500 fw-semibold fs-6">What's on your mind, Jerry?</span>
-                    </div>
-                    <div class="card-body pt-2 pb-0 border">
-                        <textarea
-                            class="form-control bg-transparent border-0 px-0"
-                            id="kt_social_feeds_post_input"
-                            name="message"
-                            data-kt-autosize="true"
-                            rows="1"
-                            placeholder="Type your message..."
-                            data-kt-initialized="1"
-                            style="overflow: hidden; overflow-wrap: break-word; resize: none; text-align: start; height: 63px"
-                        >
-                        </textarea>
-                    </div>
-                    <div class="card-footer d-flex justify-content-end pt-0">
-                        <a href="/pages/blog/post.html" class="btn btn-sm btn-primary" id="kt_social_feeds_post_btn">
-                            <span class="indicator-label"> Post</span>
-
-                            <span class="indicator-progress"> Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span> </span>
-                        </a>
                     </div>
                 </div>
-                <div class="mb-10" id="kt_social_feeds_posts">
+                <div class="row g-6 g-xl-9">
                     @foreach ($datas['matches']['data'] as $key => $match)
-                    <div class="card card-flush mb-10">
-                        <div class="card-header pt-9">
-                            <div class="d-flex align-items-center">
-                                <div class="symbol symbol-50px me-5">
-                                    <img src="/assets/media/avatars/300-4.jpg" class="" alt="" />
+                    <div class="col-md-6 col-xl-4">
+                        <a href="/apps/projects/project.html" class="card border-hover-primary">
+                            <div class="card-header border-0 pt-9">
+                                <div class="card-title m-0">
+                                    <div class="symbol symbol-50px w-50px bg-light">
+                                        <img src="/assets/media/svg/brand-logos/xing-icon.svg" alt="image" class="p-3" />
+                                    </div>
                                 </div>
 
-                                <div class="flex-grow-1">
-                                    <a href="#" class="text-gray-800 text-hover-primary fs-4 fw-bold">Grace Logan</a>
-
-                                    <span class="text-gray-500 fw-semibold d-block">Yestarday at 5:06 PM</span>
+                                <div class="card-toolbar">
+                                    <span class="badge badge-light-primary fw-bold me-auto px-4 py-3">In Progress</span>
                                 </div>
                             </div>
+                            <div class="card-body p-9">
+                                <div class="fs-3 fw-bold text-gray-900">9 Degree</div>
+                                <p class="text-gray-500 fw-semibold fs-5 mt-1 mb-7">CRM App application to HR efficiency</p>
 
-                            <div class="card-toolbar">
-                                <div class="m-0">
-                                    <button
-                                        class="btn btn-icon btn-color-gray-500 btn-active-color-primary me-n4"
-                                        data-kt-menu-trigger="click"
-                                        data-kt-menu-placement="bottom-end"
-                                        data-kt-menu-overflow="true"
-                                    >
-                                        <i class="ki-duotone ki-dots-square fs-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
-                                    </button>
+                                <div class="d-flex flex-wrap mb-5">
+                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
+                                        <div class="fs-6 text-gray-800 fw-bold">Feb 21, 2025</div>
+                                        <div class="fw-semibold text-gray-500">Due Date</div>
+                                    </div>
 
-                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px" data-kt-menu="true">
-                                        <div class="menu-item px-3">
-                                            <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">Quick Actions</div>
-                                        </div>
+                                    <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
+                                        <div class="fs-6 text-gray-800 fw-bold">$284,900.00</div>
+                                        <div class="fw-semibold text-gray-500">Budget</div>
+                                    </div>
+                                </div>
 
-                                        <div class="separator mb-3 opacity-75"></div>
+                                <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip" aria-label="This project 40% completed" data-bs-original-title="This project 40% completed" data-kt-initialized="1">
+                                    <div class="bg-primary rounded h-4px" role="progressbar" style="width: 40%" aria-valuenow=" 40" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
 
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3"> New Ticket </a>
-                                        </div>
+                                <div class="symbol-group symbol-hover">
+                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" aria-label="Francis Mitcham" data-bs-original-title="Francis Mitcham" data-kt-initialized="1">
+                                        <img alt="Pic" src="/assets/media/avatars/300-20.jpg" />
+                                    </div>
+                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" aria-label="Michelle Swanston" data-bs-original-title="Michelle Swanston" data-kt-initialized="1">
+                                        <img alt="Pic" src="/assets/media/avatars/300-7.jpg" />
+                                    </div>
 
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3"> New Customer </a>
-                                        </div>
-
-                                        <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
-                                            <a href="#" class="menu-link px-3">
-                                                <span class="menu-title">New Group</span>
-                                                <span class="menu-arrow"></span>
-                                            </a>
-
-                                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3"> Admin Group </a>
-                                                </div>
-
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3"> Staff Group </a>
-                                                </div>
-
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3"> Member Group </a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3"> New Contact </a>
-                                        </div>
-
-                                        <div class="separator mt-3 opacity-75"></div>
-
-                                        <div class="menu-item px-3">
-                                            <div class="menu-content px-3 py-3">
-                                                <a class="btn btn-primary btn-sm px-4" href="#"> Generate Reports </a>
-                                            </div>
-                                        </div>
+                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="Susan Redwood" data-kt-initialized="1">
+                                        <span class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="card-body">
-                            <div class="fs-6 fw-normal text-gray-700 mb-5">
-                                {{ $match['title'] }}
-                            </div>
-                        </div>
-                        <div class="card-footer pt-0">
-                            <div class="mb-6">
-                                <div class="separator separator-solid"></div>
-
-                                <ul class="nav py-3">
-                                    <li class="nav-item">
-                                        <a class="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary btn-active-light-primary fw-bold px-4 me-1 collapsible active"
-                                            data-bs-toggle="collapse"
-                                            href="#kt_social_feeds_comments_1">
-                                            <i class="ki-duotone ki-message-text-2 fs-2 me-1">
-                                                <span class="path1"></span>
-                                                <span class="path2"></span>
-                                                <span class="path3"></span>
-                                            </i>
-                                            2 Comments
-                                        </a>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-4 me-1">
-                                            <i class="ki-duotone ki-heart fs-2 me-1"><span class="path1"></span><span class="path2"></span></i>
-                                            47k Likes
-                                        </a>
-                                    </li>
-                                </ul>
-
-                                <div class="separator separator-solid mb-1"></div>
-
-                                <div class="collapse show" id="kt_social_feeds_comments_1">
-
-                                    <div class="d-flex pt-6">
-                                        <div class="symbol symbol-45px me-5">
-                                            <img src="/assets/media/avatars/300-2.jpg" alt="" />
-                                        </div>
-
-                                        <div class="d-flex flex-column flex-row-fluid">
-                                            <div class="d-flex align-items-center flex-wrap mb-0">
-                                                <a href="#" class="text-gray-800 text-hover-primary fw-bold me-6">Mrs. Anderson</a>
-
-                                                <span class="text-gray-500 fw-semibold fs-7 me-5">2 Days ago</span>
-
-                                                <a href="#" class="ms-auto text-gray-500 text-hover-primary fw-semibold fs-7">Reply</a>
-                                            </div>
-
-                                            <span class="text-gray-800 fs-7 fw-normal pt-1">Long before you sit dow to put digital pen to paper</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-flex align-items-center">
-                                <div class="symbol symbol-35px me-3">
-                                    <img src="/assets/media/avatars/300-3.jpg" alt="" />
-                                </div>
-
-                                <div class="position-relative w-100">
-                                    <textarea
-                                        type="text"
-                                        class="form-control form-control-solid border ps-5"
-                                        rows="1"
-                                        name="search"
-                                        value=""
-                                        data-kt-autosize="true"
-                                        placeholder="Write your comment.."
-                                        data-kt-initialized="1"
-                                        style="overflow: hidden; overflow-wrap: break-word; resize: none; text-align: start; height: 44px"
-                                    >
-                                    </textarea>
-
-                                    <div class="position-absolute top-0 end-0 translate-middle-x mt-1 me-n14">
-                                        <button class="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
-                                            <i class="ki-duotone ki-paper-clip fs-2"></i>
-                                        </button>
-
-                                        <button class="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
-                                            <i class="ki-duotone ki-like fs-2"><span class="path1"></span><span class="path2"></span></i>
-                                        </button>
-
-                                        <button class="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
-                                            <i class="ki-duotone ki-badge fs-2"
-                                                ><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span>
-                                            </i>
-                                        </button>
-
-                                        <button class="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
-                                            <i class="ki-duotone ki-geolocation fs-2"><span class="path1"></span><span class="path2"></span></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                     @endforeach
-
-                    <div class="d-none" id="kt_social_feeds_more_posts">
-                        <div class="card card-flush mb-10">
-                            <div class="card-header pt-9">
-                                <div class="d-flex align-items-center">
-                                    <div class="symbol symbol-50px me-5">
-                                        <img src="/assets/media/avatars/300-11.jpg" class="" alt="" />
-                                    </div>
-
-                                    <div class="flex-grow-1">
-                                        <a href="#" class="text-gray-800 text-hover-primary fs-4 fw-bold">Stive Strong</a>
-
-                                        <span class="text-gray-500 fw-semibold d-block">Yestarday at 3:30 PM</span>
-                                    </div>
-                                </div>
-                                <div class="card-toolbar">
-                                    <div class="m-0">
-                                        <button
-                                            class="btn btn-icon btn-color-gray-500 btn-active-color-primary me-n4"
-                                            data-kt-menu-trigger="click"
-                                            data-kt-menu-placement="bottom-end"
-                                            data-kt-menu-overflow="true"
-                                        >
-                                            <i class="ki-duotone ki-dots-square fs-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
-                                        </button>
-
-                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px" data-kt-menu="true">
-                                            <div class="menu-item px-3">
-                                                <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">Quick Actions</div>
-                                            </div>
-
-                                            <div class="separator mb-3 opacity-75"></div>
-
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3"> New Ticket </a>
-                                            </div>
-
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3"> New Customer </a>
-                                            </div>
-
-                                            <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
-                                                <a href="#" class="menu-link px-3">
-                                                    <span class="menu-title">New Group</span>
-                                                    <span class="menu-arrow"></span>
-                                                </a>
-
-                                                <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                    <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link px-3"> Admin Group </a>
-                                                    </div>
-
-                                                    <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link px-3"> Staff Group </a>
-                                                    </div>
-
-                                                    <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link px-3"> Member Group </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3"> New Contact </a>
-                                            </div>
-
-                                            <div class="separator mt-3 opacity-75"></div>
-
-                                            <div class="menu-item px-3">
-                                                <div class="menu-content px-3 py-3">
-                                                    <a class="btn btn-primary btn-sm px-4" href="#"> Generate Reports </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card-body">
-                                <div class="fs-6 fw-normal text-gray-700 mb-5">You can either decide on your final headline before outstanding.</div>
-                                <!--end::Post content-->
-
-                                <!--begin::Post media-->
-                                <div class="row g-3 g-lg-6">
-                                    <div class="col-md-6 col-lg-4">
-                                        <a href="">
-                                            <img src="/assets/media/stock/600x600/img-14.jpg" class="rounded w-100" alt="" />
-                                        </a>
-                                    </div>
-                                    <div class="col-md-6 col-lg-4">
-                                        <a href="">
-                                            <img src="/assets/media/stock/600x600/img-10.jpg" class="rounded w-100" alt="" />
-                                        </a>
-                                    </div>
-                                    <div class="col-md-6 col-lg-4">
-                                        <a href="">
-                                            <img src="/assets/media/stock/600x600/img-18.jpg" class="rounded w-100" alt="" />
-                                        </a>
-                                    </div>
-                                    <div class="col-md-6 col-lg-4">
-                                        <a href="">
-                                            <img src="/assets/media/stock/600x600/img-30.jpg" class="rounded w-100" alt="" />
-                                        </a>
-                                    </div>
-                                    <div class="col-md-6 col-lg-4">
-                                        <a href="">
-                                            <img src="/assets/media/stock/600x600/img-31.jpg" class="rounded w-100" alt="" />
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card-footer pt-0">
-                                <div class="mb-6">
-                                    <div class="separator separator-solid"></div>
-
-                                    <ul class="nav py-3">
-                                        <li class="nav-item">
-                                            <a
-                                                class="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary btn-active-light-primary fw-bold px-4 me-1 collapsible"
-                                                data-bs-toggle="collapse"
-                                                href="#kt_social_feeds_comments_5"
-                                            >
-                                                <i class="ki-duotone ki-message-text-2 fs-2 me-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
-                                                3 Comments
-                                            </a>
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-4 me-1">
-                                                <i class="ki-duotone ki-heart fs-2 me-1"><span class="path1"></span><span class="path2"></span></i>
-                                                15k Likes
-                                            </a>
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-4">
-                                                <i class="ki-duotone ki-bookmark fs-2 me-1"><span class="path1"></span><span class="path2"></span></i>
-                                                3.8k Saves
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <div class="separator separator-solid mb-1"></div>
-                                    <div class="collapse" id="kt_social_feeds_comments_5">
-                                        <div class="d-flex pt-6">
-                                            <div class="symbol symbol-45px me-5">
-                                                <img src="/assets/media/avatars/300-13.jpg" alt="" />
-                                            </div>
-
-                                            <div class="d-flex flex-column flex-row-fluid">
-                                                <div class="d-flex align-items-center flex-wrap mb-0">
-                                                    <a href="#" class="text-gray-800 text-hover-primary fw-bold me-6">Mr. Anderson</a>
-
-                                                    <span class="text-gray-500 fw-semibold fs-7 me-5">1 Day ago</span>
-
-                                                    <a href="#" class="ms-auto text-gray-500 text-hover-primary fw-semibold fs-7">Reply</a>
-                                                </div>
-                                                <span class="text-gray-800 fs-7 fw-normal pt-1"
-                                                    >Long before you sit dow to put digital pen to paper you need to make sure you have to sit down and write.
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex pt-6">
-                                            <div class="symbol symbol-45px me-5">
-                                                <img src="/assets/media/avatars/300-2.jpg" alt="" />
-                                            </div>
-
-                                            <div class="d-flex flex-column flex-row-fluid">
-                                                <div class="d-flex align-items-center flex-wrap mb-0">
-                                                    <a href="#" class="text-gray-800 text-hover-primary fw-bold me-6">Mrs. Anderson</a>
-
-                                                    <span class="text-gray-500 fw-semibold fs-7 me-5">2 Days ago</span>
-
-                                                    <a href="#" class="ms-auto text-gray-500 text-hover-primary fw-semibold fs-7">Reply</a>
-                                                </div>
-
-                                                <span class="text-gray-800 fs-7 fw-normal pt-1">Long before you sit dow to put digital pen to paper</span>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex pt-6">
-                                            <div class="symbol symbol-45px me-5">
-                                                <img src="/assets/media/avatars/300-20.jpg" alt="" />
-                                            </div>
-
-                                            <div class="d-flex flex-column flex-row-fluid">
-                                                <div class="d-flex align-items-center flex-wrap mb-0">
-                                                    <a href="#" class="text-gray-800 text-hover-primary fw-bold me-6">Alice Danchik</a>
-
-                                                    <span class="text-gray-500 fw-semibold fs-7 me-5">3 Days ago</span>
-
-                                                    <a href="#" class="ms-auto text-gray-500 text-hover-primary fw-semibold fs-7">Reply</a>
-                                                </div>
-
-                                                <span class="text-gray-800 fs-7 fw-normal pt-1"
-                                                    >Long before you sit dow to put digital pen to paper you need to make sure you have to sit down and write.
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex align-items-center">
-                                    <div class="symbol symbol-35px me-3">
-                                        <img src="/assets/media/avatars/300-3.jpg" alt="" />
-                                    </div>
-
-                                    <div class="position-relative w-100">
-                                        <textarea
-                                            type="text"
-                                            class="form-control form-control-solid border ps-5"
-                                            rows="1"
-                                            name="search"
-                                            value=""
-                                            data-kt-autosize="true"
-                                            placeholder="Write your comment.."
-                                            data-kt-initialized="1"
-                                            style="overflow-x: hidden; overflow-wrap: break-word"
-                                        >
-                                        </textarea>
-
-                                        <div class="position-absolute top-0 end-0 translate-middle-x mt-1 me-n14">
-                                            <button class="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
-                                                <i class="ki-duotone ki-paper-clip fs-2"></i>
-                                            </button>
-
-                                            <button class="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
-                                                <i class="ki-duotone ki-like fs-2"><span class="path1"></span><span class="path2"></span></i>
-                                            </button>
-
-                                            <button class="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
-                                                <i class="ki-duotone ki-badge fs-2"
-                                                    ><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span
-                                                ></i>
-                                            </button>
-
-                                            <button class="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
-                                                <i class="ki-duotone ki-geolocation fs-2"><span class="path1"></span><span class="path2"></span></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                <div class="d-none" id="kt_social_feeds_new_post">
-                    <div class="card card-flush mb-10">
-                        <div class="card-header pt-9">
-                            <div class="d-flex align-items-center">
-                                <div class="symbol symbol-50px me-5">
-                                    <img src="/assets/media/avatars/300-3.jpg" class="" alt="" />
-                                </div>
+                <div class="d-flex flex-stack flex-wrap pt-10">
+                    <div class="fs-6 fw-semibold text-gray-700">Showing 1 to 10 of 50 entries</div>
 
-                                <div class="flex-grow-1">
-                                    <a href="#" class="text-gray-800 text-hover-primary fs-4 fw-bold">Jerry Kane</a>
+                    <ul class="pagination">
+                        <li class="page-item previous">
+                            <a href="#" class="page-link"><i class="previous"></i></a>
+                        </li>
 
-                                    <span class="text-gray-500 fw-semibold d-block">Yestarday at 5:06 PM</span>
-                                </div>
-                            </div>
-                            <div class="card-toolbar">
-                                <div class="m-0">
-                                    <button
-                                        class="btn btn-icon btn-color-gray-500 btn-active-color-primary me-n4"
-                                        data-kt-menu-trigger="click"
-                                        data-kt-menu-placement="bottom-end"
-                                        data-kt-menu-overflow="true"
-                                    >
-                                        <i class="ki-duotone ki-dots-square fs-1"> <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span> </i>
-                                    </button>
+                        <li class="page-item active">
+                            <a href="#" class="page-link">1</a>
+                        </li>
 
-                                    <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px" data-kt-menu="true">
-                                        <div class="menu-item px-3">
-                                            <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">Quick Actions</div>
-                                        </div>
+                        <li class="page-item">
+                            <a href="#" class="page-link">2</a>
+                        </li>
 
-                                        <div class="separator mb-3 opacity-75"></div>
+                        <li class="page-item">
+                            <a href="#" class="page-link">3</a>
+                        </li>
 
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3"> New Ticket </a>
-                                        </div>
+                        <li class="page-item">
+                            <a href="#" class="page-link">4</a>
+                        </li>
 
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3"> New Customer </a>
-                                        </div>
+                        <li class="page-item">
+                            <a href="#" class="page-link">5</a>
+                        </li>
 
-                                        <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
-                                            <a href="#" class="menu-link px-3">
-                                                <span class="menu-title">New Group</span>
-                                                <span class="menu-arrow"></span>
-                                            </a>
+                        <li class="page-item">
+                            <a href="#" class="page-link">6</a>
+                        </li>
 
-                                            <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3"> Admin Group </a>
-                                                </div>
-
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3"> Staff Group </a>
-                                                </div>
-
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3"> Member Group </a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3"> New Contact </a>
-                                        </div>
-
-                                        <div class="separator mt-3 opacity-75"></div>
-
-                                        <div class="menu-item px-3">
-                                            <div class="menu-content px-3 py-3">
-                                                <a class="btn btn-primary btn-sm px-4" href="#"> Generate Reports </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="fs-6 fw-normal text-gray-700" data-kt-post-element="content">
-                                You can either decide on your final headline before outstanding you write the most of the rest of your creative post
-                            </div>
-                        </div>
-                        <div class="card-footer pt-0">
-                            <div class="mb-6">
-                                <div class="separator separator-solid"></div>
-
-                                <ul class="nav py-3">
-                                    <li class="nav-item">
-                                        <a
-                                            class="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary btn-active-light-primary fw-bold px-4 me-1 collapsible"
-                                            data-bs-toggle="collapse"
-                                            href="#kt_social_feeds_comments_2"
-                                        >
-                                            <i class="ki-duotone ki-message-text-2 fs-2 me-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span> </i>
-                                            0 Comment
-                                        </a>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-4 me-1">
-                                            <i class="ki-duotone ki-heart fs-2 me-1"><span class="path1"></span><span class="path2"></span></i>
-                                            0 Like
-                                        </a>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary fw-bold px-4">
-                                            <i class="ki-duotone ki-bookmark fs-2 me-1"><span class="path1"></span><span class="path2"></span></i>
-                                            0 Saves
-                                        </a>
-                                    </li>
-                                </ul>
-
-                                <div class="separator separator-solid mb-1"></div>
-                            </div>
-
-                            <div class="d-flex align-items-center">
-                                <div class="symbol symbol-35px me-3">
-                                    <img src="/assets/media/avatars/300-3.jpg" alt="" />
-                                </div>
-
-                                <div class="position-relative w-100">
-                                    <textarea
-                                        type="text"
-                                        class="form-control form-control-solid border ps-5"
-                                        rows="1"
-                                        name="search"
-                                        value=""
-                                        data-kt-autosize="true"
-                                        placeholder="Write your comment.."
-                                        data-kt-initialized="1"
-                                        style="overflow-x: hidden; overflow-wrap: break-word"
-                                    >
-                                    </textarea>
-
-                                    <div class="position-absolute top-0 end-0 translate-middle-x mt-1 me-n14">
-                                        <button class="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
-                                            <i class="ki-duotone ki-paper-clip fs-2"></i>
-                                        </button>
-
-                                        <button class="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
-                                            <i class="ki-duotone ki-like fs-2"><span class="path1"></span><span class="path2"></span></i>
-                                        </button>
-
-                                        <button class="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
-                                            <i class="ki-duotone ki-badge fs-2"
-                                                ><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span
-                                            ></i>
-                                        </button>
-
-                                        <button class="btn btn-icon btn-sm btn-color-gray-500 btn-active-color-primary w-25px p-0">
-                                            <i class="ki-duotone ki-geolocation fs-2"><span class="path1"></span><span class="path2"></span></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-flex flex-center">
-                    <a href="#" class="btn btn-primary fw-bold px-6" id="kt_social_feeds_more_posts_btn">
-                        <span class="indicator-label"> Show more</span>
-                        <span class="indicator-progress"> Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span> </span>
-                    </a>
-                </div>
-            </div>
-            <div
-                class="d-lg-flex flex-column flex-lg-row-auto w-lg-325px"
-                data-kt-drawer="true"
-                data-kt-drawer-name="end-sidebar"
-                data-kt-drawer-activate="{default: true, lg: false}"
-                data-kt-drawer-overlay="true"
-                data-kt-drawer-width="{default:'200px', '250px': '300px'}"
-                data-kt-drawer-direction="end"
-                data-kt-drawer-toggle="#kt_social_end_sidebar_toggle"
-            >
-                <div class="card mb-5 mb-xl-8">
-                    <div class="card-header border-0 pt-5">
-                        <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bold text-gray-900">Suggestions for you</span>
-
-                            <span class="text-muted mt-1 fw-semibold fs-7">8k social visitors</span>
-                        </h3>
-
-                        <div class="card-toolbar">
-                            <button
-                                class="btn btn-icon btn-color-gray-500 btn-active-color-primary justify-content-end"
-                                data-kt-menu-trigger="click"
-                                data-kt-menu-placement="bottom-end"
-                                data-kt-menu-overflow="true"
-                            >
-                                <i class="ki-duotone ki-dots-square fs-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
-                            </button>
-
-                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px" data-kt-menu="true">
-                                <div class="menu-item px-3">
-                                    <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">Quick Actions</div>
-                                </div>
-
-                                <div class="separator mb-3 opacity-75"></div>
-
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3"> New Ticket </a>
-                                </div>
-
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3"> New Customer </a>
-                                </div>
-
-                                <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
-                                    <a href="#" class="menu-link px-3">
-                                        <span class="menu-title">New Group</span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-
-                                    <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3"> Admin Group </a>
-                                        </div>
-
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3"> Staff Group </a>
-                                        </div>
-
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3"> Member Group </a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3"> New Contact </a>
-                                </div>
-
-                                <div class="separator mt-3 opacity-75"></div>
-
-                                <div class="menu-item px-3">
-                                    <div class="menu-content px-3 py-3">
-                                        <a class="btn btn-primary btn-sm px-4" href="#"> Generate Reports </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body pt-5">
-                        <div class="d-flex flex-stack">
-                            <div class="symbol symbol-40px me-5">
-                                <img src="/assets/media/avatars/300-11.jpg" class="h-50 align-self-center" alt="" />
-                            </div>
-
-                            <div class="d-flex align-items-center flex-row-fluid flex-wrap">
-                                <!--begin:Author-->
-                                <div class="flex-grow-1 me-2">
-                                    <a href="/pages/user-profile/overview.html" class="text-gray-800 text-hover-primary fs-6 fw-bold">Jacob Jones </a>
-
-                                    <span class="text-muted fw-semibold d-block fs-7">Barone LLC.</span>
-                                </div>
-                                <a href="/pages/user-profile/overview.html" class="btn btn-sm btn-light fs-8 fw-bold">Follow</a>
-                            </div>
-                        </div>
-
-                        <div class="separator separator-dashed my-4"></div>
-
-                        <div class="d-flex flex-stack">
-                            <div class="symbol symbol-40px me-5">
-                                <img src="/assets/media/avatars/300-9.jpg" class="h-50 align-self-center" alt="" />
-                            </div>
-
-                            <div class="d-flex align-items-center flex-row-fluid flex-wrap">
-                                <div class="flex-grow-1 me-2">
-                                    <a href="/pages/user-profile/overview.html" class="text-gray-800 text-hover-primary fs-6 fw-bold"> Kristin Watson </a>
-
-                                    <span class="text-muted fw-semibold d-block fs-7">Biffco Enterprises Ltd.</span>
-                                </div>
-                                <a href="/pages/user-profile/overview.html" class="btn btn-sm btn-light fs-8 fw-bold">Follow</a>
-                            </div>
-                        </div>
-                    </div>
+                        <li class="page-item next">
+                            <a href="#" class="page-link"><i class="next"></i></a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </div>
-@endsection
-@section('page-scripts') @endsection
+@endsection @section('page-scripts') @endsection

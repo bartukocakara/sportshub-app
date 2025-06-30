@@ -236,5 +236,5 @@ return [
     'team_details' => 'Takım Detayları',
     'player_details' => 'Oyuncu Detayları',
     'match' => 'Maç',
-
+    'activities' => 'Aktiviteler',
 ];

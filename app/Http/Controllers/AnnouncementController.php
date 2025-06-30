@@ -31,7 +31,7 @@ class AnnouncementController extends Controller
      * @param  Request  $request
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index(Request $request) : View
     {
         $datas = $this->announcementService->index($request, ['user'], false);
         return view('announcements.index', compact('datas'));

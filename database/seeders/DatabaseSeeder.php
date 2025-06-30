@@ -42,7 +42,8 @@ class DatabaseSeeder extends Seeder
             SubscriptionPromotionSeeder::class,
             SubscriptionSeeder::class,
             MatchesSeeder::class,
-            TeamSeeder::class
+            TeamSeeder::class,
+            ActivitySeeder::class
             // CourtAddressSeeder::class
         ]);
     }

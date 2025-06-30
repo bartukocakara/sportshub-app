@@ -3,6 +3,12 @@
         <div id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false" class="flex-column-fluid menu -indention menu-column menu-rounded menu-active-bg mb-7">
             <div class="">
                 <div class="menu-item">
+                    <a class="menu-link text-dark" style="font-size: 20px;" href="{{ route('activities.index') }}">
+                        <span class="menu-icon">📍</span>
+                        <span class="menu-title">{{ __('messages.activities') }}</span>
+                    </a>
+                </div>
+                <div class="menu-item">
                     <a class="menu-link text-dark" style="font-size: 20px;" href="{{ route('announcements.index') }}">
                         <span class="menu-icon">🔔</span>
                         <span class="menu-title">{{ __('messages.announcements') }}</span>

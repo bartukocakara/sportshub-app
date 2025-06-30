@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\CheckoutController;
@@ -33,6 +34,7 @@ Route::get('auth/facebook', [SocialLoginController::class, 'redirectToFacebook']
 Route::get('auth/facebook/callback', [SocialLoginController::class, 'handleFacebookCallback']);
 
 Route::resource('announcements', AnnouncementController::class);
+Route::resource('activities', ActivityController::class);
 Route::get('courts', [CourtController::class, 'index'])->name('courts.index');
 Route::get('courts/{id}', [CourtController::class, 'show'])->name('courts.show');
 
