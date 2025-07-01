@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Subscription;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -14,12 +15,14 @@ class SubscriptionCancelled
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public Subscription $subscription;
+
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(Subscription $subscription)
     {
-        //
+        $this->subscription = $subscription;
     }
 
     /**

@@ -229,4 +229,6 @@ return [
     'team' => 'Team',
     'player' => 'Player',
     'activities' => 'Activities',
+    'no_address_available' => 'No address available.',
+    'create_team' => 'Create Team',
 ];

@@ -15,7 +15,7 @@ class SubscriptionCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $subscription;
+    public Subscription $subscription;
 
     /**
      * Create a new event instance.

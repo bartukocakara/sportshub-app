@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filters\CourtbusinessFilters;
+namespace App\Filters\CourtBusinessFilters;
 
 use App\Filters\FilterInterface;
 

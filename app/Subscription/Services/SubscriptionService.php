@@ -2,6 +2,7 @@
 
 namespace App\Subscription\Services;
 
+use App\Events\SubscriptionCancelled;
 use App\Events\SubscriptionCreated;
 use App\Exceptions\SubscriptionException;
 use App\Models\Subscription;

@@ -237,4 +237,6 @@ return [
     'player_details' => 'Oyuncu Detayları',
     'match' => 'Maç',
     'activities' => 'Aktiviteler',
+    'no_address_available' => 'Adres bulunamadı',
+    'create_team' => 'Takım oluştur',
 ];

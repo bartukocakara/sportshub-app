@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Actions;
+namespace App\Subscription\Actions;
 
 use App\Models\User;
 use App\Models\SubscriptionPlan;
-use App\Services\SubscriptionService; // Still uses the service for core logic
+use App\Subscription\Services\SubscriptionService; // Still uses the service for core logic
 use App\Exceptions\SubscriptionException;
 
 class SubscribeUserAction

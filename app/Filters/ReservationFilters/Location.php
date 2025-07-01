@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filters\PlayerMatchFilters;
+namespace App\Filters\ReservationFilters;
 
 use App\Filters\FilterInterface;
 
