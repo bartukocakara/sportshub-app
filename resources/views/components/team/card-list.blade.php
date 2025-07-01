@@ -8,7 +8,7 @@
                         @foreach ($team['users'] as $key2 => $user)
                             @if ($user['avatar'])
                             <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" aria-label="{{ $user['first_name'] }}" data-bs-original-title="{{ $user['first_name'] }}" data-kt-initialized="1">
-                                <img alt="Pic" src="/avatar/{{ $user['avatar'] }}" />
+                                <img alt="Pic" src="/storage/avatar/{{ $user['avatar'] }}" />
                             </div>
                             @else
                             <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="{{ $user['first_name'] }}" data-kt-initialized="1">
