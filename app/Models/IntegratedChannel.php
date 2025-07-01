@@ -12,8 +12,8 @@ class IntegratedChannel extends Model
     /** @use HasFactory<\Database\Factories\IntegratedChannelFactory> */
     use HasFactory, UUID;
 
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, 'IntegratedChannelFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, $with, 'IntegratedChannelFilters'))->apply();
     }
 }

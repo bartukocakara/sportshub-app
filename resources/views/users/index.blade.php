@@ -29,6 +29,7 @@
         <div class="d-flex flex-row">
             <div class="w-100 flex-lg-row-fluid mx-lg-13">
                 <div class="row g-6 mb-6 g-xl-9 mb-xl-9">
+                    @include('components.pagination.default', ['data' => $datas['users']])
                     @foreach ($datas['users']['data'] as $key => $user)
                         <div class="col-md-6 col-xxl-4">
                         <div class="card">

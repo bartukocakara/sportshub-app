@@ -58,8 +58,9 @@
                     </div>
                 </div>
                 <div class="mb-10" id="kt_social_feeds_posts">
+                    @include('components.pagination.default', ['data' => $datas['announcements']])
                     @foreach ($datas['announcements']['data'] as $key => $announcement)
-                    <div class="card card-flush mb-10">
+                    <div class="card card-flush mb-10 mt-5">
                         <div class="card-header pt-9">
                             <div class="d-flex align-items-center">
                                 <div class="symbol symbol-50px me-5">

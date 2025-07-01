@@ -5,6 +5,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\ApiLocale;
 use App\Http\Middleware\HandleNotFound;
+use App\Http\Middleware\SetDefaultPerPage;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -21,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web( // Add HandleNotFound middleware to web routes
             append: [
                 HandleNotFound::class,
+                SetDefaultPerPage::class
             ]
         );
         $middleware->api(

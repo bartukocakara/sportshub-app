@@ -112,38 +112,30 @@
                         </div>
                         <!--end::Toolbar-->
                     </div>
-                    <!--end::Card head-->
 
-                    <!--begin::Card body-->
                     <div class="card-body">
-                        <!--begin::Tab Content-->
+
                         <div class="tab-content">
                             <!--begin::Tab panel-->
                             <div id="kt_activity_today" class="card-body p-0 tab-pane fade show active" role="tabpanel" aria-labelledby="kt_activity_today_tab">
+                                @include('components.pagination.default', ['data' => $datas['activities']])
 
-                                <div class="timeline timeline-border-dashed">
+                                <div class="timeline timeline-border-dashed mt-5">
+
                                     @foreach ($datas['activities']['data'] as $key => $activity)
-                                        <div class="timeline-item">
+                                        <div class="timeline-item mt-5">
                                         <!--begin::Timeline line-->
                                         <div class="timeline-line"></div>
-                                        <!--end::Timeline line-->
 
-                                        <!--begin::Timeline icon-->
                                         <div class="timeline-icon">
                                             <i class="ki-duotone ki-message-text-2 fs-2 text-gray-500"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
                                         </div>
-                                        <!--end::Timeline icon-->
-
-                                        <!--begin::Timeline content-->
                                         <div class="timeline-content mb-10 mt-n1">
                                             <!--begin::Timeline heading-->
 
                                             <div class="pe-3 mb-5">
 
                                                 <div class="fs-5 fw-semibold mb-2">There are 2 new tasks for you in “AirPlus Mobile App” project:</div>
-                                                <!--end::Title-->
-
-                                                <!--begin::Description-->
                                                 <div class="d-flex align-items-center mt-1 fs-6">
 
                                                     <div class="text-muted me-2 fs-7">Added at 4:23 PM by</div>

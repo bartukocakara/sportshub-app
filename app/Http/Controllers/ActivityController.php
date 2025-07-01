@@ -28,7 +28,7 @@ class ActivityController extends Controller
      */
     public function index(Request $request) : View
     {
-        $datas = $this->activityService->index($request, ['user'], false);
+        $datas = $this->activityService->index($request, [], false);
         return view('activities.index', compact('datas'));
     }
 

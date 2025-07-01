@@ -24,9 +24,9 @@ class UserService extends CrudService
         parent::__construct($this->userRepository); // Crud işlemleri yoksa kaldırınız.
     }
 
-    public function index(Request $request, array $with = []) : array
+    public function index(Request $request, array $with = [], bool $useCache = false) : array
     {
-        $homeData['users'] = UserResource::collection($this->userRepository->all($request, $with, false))
+        $homeData['users'] = UserResource::collection($this->userRepository->all($request, $with, $useCache))
                                             ->response()
                                             ->getData(true);
 

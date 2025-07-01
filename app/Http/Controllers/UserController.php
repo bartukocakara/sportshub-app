@@ -32,7 +32,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $datas = $this->userService->index($request, ['user'], false);
+        $datas = $this->userService->index($request, [], false);
         return view('users.index', compact('datas'));
     }
 
