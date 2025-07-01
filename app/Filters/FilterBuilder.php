@@ -59,7 +59,7 @@ class FilterBuilder
             $normalizedName = ucfirst(Str::camel($name));
             $class = "App\Filters\\{$this->namespace}\\{$normalizedName}";
 
-            if (class_exists($class)) {
+            if ($value && class_exists($class)) {
                 (new $class($this->query))->handle($value ?? '');
             }
         }

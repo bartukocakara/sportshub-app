@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filters\TeamFilters;
+namespace App\Filters\PlayerFilters;
 
 use App\Filters\FilterInterface;
 
-class Title implements FilterInterface
+class FullName implements FilterInterface
 {
     protected $query;
 
@@ -21,6 +21,6 @@ class Title implements FilterInterface
     */
     public function handle($value): void
     {
-        $this->query->where('title', "ilike", "%$value%");
+        $this->query->where('full_name', 'ilike', "%$value%");
     }
 }
