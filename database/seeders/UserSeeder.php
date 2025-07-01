@@ -21,6 +21,15 @@ class UserSeeder extends Seeder
         $users = [
             [
                 'id' => Str::uuid()->toString(),
+                'first_name' => 'Bartu',
+                'last_name' => 'Kocakara',
+                'email' => 'kocakarabartu@gmail.com',
+                'phone_number' => '5309101193',
+                'birth_date' => '1993-06-06',
+                'password' => 'password',
+            ],
+            [
+                'id' => Str::uuid()->toString(),
                 'first_name' => 'Admin',
                 'last_name' => 'User',
                 'email' => 'admin@example.com',

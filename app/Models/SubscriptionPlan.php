@@ -27,8 +27,8 @@ class SubscriptionPlan extends Model
         'active' => 'boolean',
         'features' => 'array', // Automatically decode JSON features
     ];
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy($query, $filters, $with = [] )
     {
-        return  (new FilterBuilder($query, $filters, 'SubscriptionPlanFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, $with, 'SubscriptionPlanFilters'))->apply($with);
     }
 }

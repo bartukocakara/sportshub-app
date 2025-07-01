@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Team;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,8 @@ class PlayerTeamFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => fake()->randomElement(User::all()->pluck('id')),
+            'team_id' => fake()->randomElement(Team::all()->pluck('id')),
         ];
     }
 }

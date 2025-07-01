@@ -42,7 +42,6 @@ class BaseRepository
                 return $this->model->filterBy($request->all(), $with, $useCache);
             });
         }
-
         return $this->model->filterBy($request->all(), $with, $useCache);
     }
 

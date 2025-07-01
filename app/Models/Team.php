@@ -11,6 +11,7 @@ class Team extends Model
 {
     /** @use HasFactory<\Database\Factories\TeamFactory> */
     use HasFactory, UUID;
+    protected const DEFAULT_PLAYER_COUNT = 1;
 
     protected $fillable = [
         'sport_type_id',
@@ -23,11 +24,12 @@ class Team extends Model
         'max_player'
     ];
 
-    public function scopeFilterBy($query, $filters, array $with = [], bool $useCache = false)
+    public function scopeFilterBy($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, 'TeamFilters'))->apply($with, $useCache);
+        return  (new FilterBuilder($query, $filters, $with, 'TeamFilters'))->apply();
     }
-
-
-    const DEFAULT_PLAYER_COUNT = 1;
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'player_teams', 'team_id', 'user_id');
+    }
 }

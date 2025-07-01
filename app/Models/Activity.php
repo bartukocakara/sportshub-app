@@ -40,8 +40,8 @@ class Activity extends Model
     }
 
 
-    public function scopeFilterBy($query, $filters, array $with = [], bool $useCache = false)
+    public function scopeFilterBy($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, 'ActivityFilters'))->apply($with, $useCache);
+        return  (new FilterBuilder($query, $filters, $with,'ActivityFilters'))->apply();
     }
 }

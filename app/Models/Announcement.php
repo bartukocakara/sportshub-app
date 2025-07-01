@@ -24,9 +24,9 @@ class Announcement extends Model
         'message',
     ];
 
-    public function scopeFilterBy($query, $filters, array $with = [], bool $useCache = false)
+    public function scopeFilterBy($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, 'AnnouncementFilters'))->apply($with, $useCache);
+        return  (new FilterBuilder($query, $filters, $with, 'AnnouncementFilters'))->apply();
     }
 
     public function user()

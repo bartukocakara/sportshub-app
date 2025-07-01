@@ -30,9 +30,9 @@ class Reservation extends Model
         'customer_phone'
     ];
 
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, 'ReservationFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, $with, 'ReservationFilters'))->apply($with);
     }
 
     public function user()

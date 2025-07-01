@@ -5,15 +5,17 @@
             <div class="card-header border-0 pt-9">
                 <div class="card-title m-0">
                     <div class="symbol-group symbol-hover">
-                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" aria-label="Francis Mitcham" data-bs-original-title="Francis Mitcham" data-kt-initialized="1">
-                            <img alt="Pic" src="/assets/media/avatars/300-20.jpg" />
-                        </div>
-                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" aria-label="Michelle Swanston" data-bs-original-title="Michelle Swanston" data-kt-initialized="1">
-                            <img alt="Pic" src="/assets/media/avatars/300-7.jpg" />
-                        </div>
-                        <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="Susan Redwood" data-kt-initialized="1">
-                            <span class="symbol-label bg-primary text-inverse-primary fw-bold">S</span>
-                        </div>
+                        @foreach ($team['users'] as $key2 => $user)
+                            @if ($user['avatar'])
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" aria-label="{{ $user['first_name'] }}" data-bs-original-title="{{ $user['first_name'] }}" data-kt-initialized="1">
+                                <img alt="Pic" src="/avatar/{{ $user['avatar'] }}" />
+                            </div>
+                            @else
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="{{ $user['first_name'] }}" data-kt-initialized="1">
+                                <span span class="symbol-label bg-primary text-inverse-primary fw-bold">{{ strtoupper(Str::substr($user['first_name'], 0, 1)) }}</span>
+                            </div>
+                            @endif
+                        @endforeach
                     </div>
                 </div>
                 <div class="card-toolbar">
@@ -21,7 +23,7 @@
                 </div>
             </div>
             <div class="card-body p-9">
-                <div class="fs-3 fw-bold text-gray-900">9 Degree</div>
+                <div class="fs-3 fw-bold text-gray-900">{{ $team['title'] }}</div>
                 <p class="text-gray-500 fw-semibold fs-5 mt-1 mb-7">CRM App application to HR efficiency</p>
                 <div class="d-flex flex-wrap mb-5">
                     <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">

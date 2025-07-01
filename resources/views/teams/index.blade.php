@@ -35,63 +35,25 @@
 
                     <div class="d-flex flex-wrap my-2">
                         <div class="me-4">
-                            <select name="status" data-control="select2" data-hide-search="true" class="form-select form-select-sm form-select-solid w-125px select2-hidden-accessible" data-select2-id="select2-data-7-5t51" tabindex="-1" aria-hidden="true" data-kt-initialized="1">
-                                <option value="Active" selected="" data-select2-id="select2-data-9-oi9w">Active</option>
-                                <option value="Approved">In Progress</option>
-                                <option value="Declined">To Do</option>
-                                <option value="In Progress">Completed</option>
-                            </select>
-                            <span class="select2 select2-container select2-container--bootstrap5" dir="ltr" data-select2-id="select2-data-8-6k30" style="width: 100%">
-                                <span class="selection"
-                                    ><span class="select2-selection select2-selection--single form-select form-select-sm form-select-solid w-125px" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-status-wy-container" aria-controls="select2-status-wy-container"
-                                        ><span class="select2-selection__rendered" id="select2-status-wy-container" role="textbox" aria-readonly="true" title="Active">Active</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span
-                                ><span class="dropdown-wrapper" aria-hidden="true"></span
-                            ></span>
+                            <a href="#" class="btn btn-sm btn-light-primary px-4 py-3" data-bs-toggle="modal" data-bs-target="#kt_filter_modal">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="me-2" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M3 5h18v2H3V5zm4 6h10v2H7v-2zm-2 6h14v2H5v-2z"/>
+                                </svg>
+                                {{ __('messages.filter') }}
+                            </a>
+
+
                         </div>
                     </div>
                 </div>
+                @include('components.pagination.default', ['data' => $datas['teams']])
                 @include('components.team.card-list')
-                <div class="d-flex flex-stack flex-wrap pt-10">
-                    <div class="fs-6 fw-semibold text-gray-700">Showing 1 to 10 of 50 entries</div>
-
-                    <ul class="pagination">
-                        <li class="page-item previous">
-                            <a href="#" class="page-link"><i class="previous"></i></a>
-                        </li>
-
-                        <li class="page-item active">
-                            <a href="#" class="page-link">1</a>
-                        </li>
-
-                        <li class="page-item">
-                            <a href="#" class="page-link">2</a>
-                        </li>
-
-                        <li class="page-item">
-                            <a href="#" class="page-link">3</a>
-                        </li>
-
-                        <li class="page-item">
-                            <a href="#" class="page-link">4</a>
-                        </li>
-
-                        <li class="page-item">
-                            <a href="#" class="page-link">5</a>
-                        </li>
-
-                        <li class="page-item">
-                            <a href="#" class="page-link">6</a>
-                        </li>
-
-                        <li class="page-item next">
-                            <a href="#" class="page-link"><i class="next"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
         </div>
     </div>
 </div>
+@include('components.team.modals.filter-modal')
+
 @endsection
 @section('page-scripts')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
 @endsection

@@ -2,7 +2,6 @@
 
 namespace App\Filters;
 
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 
 class FilterBuilder
@@ -10,69 +9,131 @@ class FilterBuilder
     protected $query;
     protected array $filters;
     protected string $namespace;
-    public int $defaultPerPage = 10;
-    public string $defaultSortField = 'created_at';
-    public string $defaultSortOrder = 'desc';
+    protected int $defaultPerPage = 10;
+    protected string $defaultSortField = 'created_at';
+    protected string $defaultSortOrder = 'desc';
+    protected array $relations;
 
     /**
      * FilterBuilder constructor.
      *
      * @param $query
      * @param $filters
+     * @param $relations
      * @param $namespace
      */
-    public function __construct($query, $filters, $namespace)
+    public function __construct($query, $filters, $relations, $namespace)
     {
         $this->query = $query;
         $this->filters = $filters;
+        $this->relations = $relations;
         $this->namespace = $namespace;
     }
 
     /**
-     * Apply filters.
+     * Apply filters and return the result.
      *
-     * @return LengthAwarePaginator
+     * @return mixed
      */
-    public function apply(array $with, $useCache = false): LengthAwarePaginator
+    public function apply(): mixed
     {
-        foreach ($this->filters as $name => $value) {
-            // Skip if the value is null or an empty string
-            if ($value === null || $value === '') {
-                continue;
-            }
+        $this->applyFilters();
 
-            $normalizedName = ucfirst(Str::camel($name));
-            $class = "App\Filters\\" . $this->namespace . "\\{$normalizedName}";
-
-            if (!class_exists($class)) {
-                continue;
-            }
-
-            (new $class($this->query))->handle($value);
+        if ($this->isCountable()) {
+            return $this->query->count();
         }
 
-        // Apply sorting if order_by is provided
-        if (isset($this->filters['order_by'])) {
-            $this->query->orderBy($this->filters['order_by'], $this->filters['order_sort'] ?? $this->defaultSortOrder);
-        }
+        $this->applyOrdering();
 
-        return $this->paginating($this->query, $this->filters);
+        return $this->isPaginated()
+            ? $this->paginateQuery()
+            : $this->query->get()->loadMissing($this->relations);
     }
 
     /**
-     * Handle pagination.
-     *
-     * @param $query
-     * @param $filters
-     * @return LengthAwarePaginator
+     * Apply individual filters using dynamically resolved filter classes.
      */
-    public function paginating($query, $filters): LengthAwarePaginator
+    protected function applyFilters(): void
     {
-        $searchArray['order_by'] = $filters['order_by'] ?? $this->defaultSortField;
-        $searchArray['order_sort'] = $filters['order_sort'] ?? $this->defaultSortOrder;
-        $searchArray['per_page'] = $filters['per_page'] ?? $this->defaultPerPage;
+        foreach ($this->filters as $name => $value) {
+            $normalizedName = ucfirst(Str::camel($name));
+            $class = "App\Filters\\{$this->namespace}\\{$normalizedName}";
 
-        return $query->orderBy($searchArray['order_by'], $searchArray['order_sort'])
-            ->paginate($searchArray["per_page"]);
+            if (class_exists($class)) {
+                (new $class($this->query))->handle($value ?? '');
+            }
+        }
+    }
+
+    /**
+     * Check if the result should be a count of the query.
+     *
+     * @return bool
+     */
+    protected function isCountable(): bool
+    {
+        return isset($this->filters['countable']);
+    }
+
+    /**
+     * Apply ordering to the query based on the filters.
+     */
+    protected function applyOrdering(): void
+    {
+        if (!isset($this->filters['order_by'])) {
+            return;
+        }
+
+        $orderByColumns = $this->getOrderByColumns();
+        $orderSort = $this->filters['order_sort'] ?? $this->defaultSortOrder;
+
+        foreach ($orderByColumns as $column) {
+            $this->query->orderBy($column, $orderSort);
+        }
+    }
+
+    /**
+     * Retrieve columns for ordering.
+     *
+     * @return array
+     */
+    protected function getOrderByColumns(): array
+    {
+        if (isset($this->filters['order_by']) && str_contains($this->filters['order_by'], ',')) {
+            return array_map('trim', explode(',', $this->filters['order_by']));
+        }
+
+        return [$this->filters['order_by'] ?? $this->defaultSortField];
+    }
+
+    /**
+     * Check if the query result should be paginated.
+     *
+     * @return bool
+     */
+    protected function isPaginated(): bool
+    {
+        return !empty($this->filters['per_page']);
+    }
+
+    /**
+     * Paginate the query and load missing relations.
+     *
+     * @return mixed
+     */
+    protected function paginateQuery(): mixed
+    {
+        $perPage = $this->filters['per_page'] ?? $this->defaultPerPage;
+        $orderByColumns = $this->getOrderByColumns();
+        $orderSort = $this->filters['order_sort'] ?? $this->defaultSortOrder;
+
+        foreach ($orderByColumns as $column) {
+            $this->query->orderBy($column, $orderSort);
+        }
+
+        $result = $this->query->paginate($perPage);
+        $result->loadMissing($this->relations);
+
+        return $result;
     }
 }

@@ -18,9 +18,9 @@ class PlayerTeam extends Model
         'team_id',
     ];
 
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, 'PlayerTeamFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, $with, 'PlayerTeamFilters'))->apply($with);
     }
 
     public function player()
