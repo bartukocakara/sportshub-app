@@ -1,7 +1,7 @@
 <div class="row g-6 g-xl-9 mt-1">
     @foreach ($datas['teams']['data'] as $key => $team)
     <div class="col-md-6 col-xl-4">
-        <a href="/apps/projects/project.html" class="card border-hover-primary">
+        <a href="{{ route('teams.show', $team) }}" class="card border-hover-primary">
             <div class="card-header border-0 pt-9">
                 <div class="card-title m-0">
                     <div class="symbol-group symbol-hover">

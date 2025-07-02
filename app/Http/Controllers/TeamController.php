@@ -66,7 +66,7 @@ class TeamController extends Controller
     public function show(string $id) : View
     {
         $data = $this->teamService->show($id);
-        return view('teams.show', compact('data'));
+        return view('teams.profile.index', compact('data'));
     }
 
     /**
