@@ -43,4 +43,30 @@ class Matches extends Model
         return  (new FilterBuilder($query, $filters, $with, 'MatchFilters'))->apply($with);
     }
 
+    public function statusDefinition()
+    {
+        return $this->belongsTo(Definition::class, 'match_status', 'value')
+            ->where('group_key', 'match_status');
+    }
+
+    public function getMatchStatusTextAttribute(): string
+    {
+        return $this->statusDefinition->description_tr ?? 'Bilinmiyor';
+    }
+
+    public function getCityTitleAttribute(): string
+    {
+        return $this->city->title ?? 'Bilinmiyor';
+    }
+
+    public function getStatusBadgeAttribute(): string
+    {
+        return match ($this->match_status) {
+            'pending'   => 'badge-light-warning',
+            'confirmed' => 'badge-light-success',
+            'completed' => 'badge-light-info',
+            'canceled'   => 'badge-light-danger',
+            default    => 'badge-light-secondary',
+        };
+    }
 }

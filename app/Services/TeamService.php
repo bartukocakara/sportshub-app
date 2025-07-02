@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Resources\TeamResource;
 use App\Models\City;
 use App\Models\SportType;
+use App\Models\Team;
 use App\Repositories\CityRepository;
 use App\Repositories\SportTypeRepository;
 use App\Repositories\TeamRepository;
@@ -35,5 +36,10 @@ class TeamService extends CrudService
         $countryCode = substr($language, 3, 2); // Extract country code (e.g., 'US' for 'en-US')
         $datas['cities'] = (new CityRepository(new City()))->getByCountryCode($countryCode);
         return $datas;
+    }
+
+    public function show(string $id, array $with = []) : Team
+    {
+        return $this->teamRepository->find($id, $with);
     }
 }

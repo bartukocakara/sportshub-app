@@ -255,10 +255,13 @@ return [
     'min_player' => 'Minimum Oyuncu',
     'cancel' => 'İptal',
     'save' => 'Kaydet',
+    'filter_matches' => 'Maçları Filtrele',
     'apply_filters' => 'Filtreleri Uygula',
     'reset_filters' => 'Filtreleri Sıfırla',
     'search' => 'Ara',
     'no_results_found' => 'Sonuç bulunamadı',
     'search_team_title' => 'Takım Başlığı Ara',
     'clear_filter' => 'Filtre Temizle',
+    'new_player' => 'Yeni Oyuncu',
+    'search_match_title' => 'Maç Başlığı Ara',
 ];

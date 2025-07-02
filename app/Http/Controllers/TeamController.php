@@ -32,6 +32,7 @@ class TeamController extends Controller
     public function index(Request $request)
     {
         $datas = $this->teamService->index($request, ['users', 'city', 'sportType', 'statusDefinition']);
+
         return view('teams.index', compact('datas'));
     }
 
@@ -65,7 +66,7 @@ class TeamController extends Controller
      */
     public function show(string $id) : View
     {
-        $data = $this->teamService->show($id);
+        $data = $this->teamService->show($id, ['users', 'sportType', 'city', 'statusDefinition']);
         return view('teams.profile.index', compact('data'));
     }
 

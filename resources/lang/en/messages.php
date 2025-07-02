@@ -242,6 +242,7 @@ return [
     'min_player' => 'Min Player',
     'cancel' => 'Cancel',
     'save' => 'Save',
+    'filter_matches' => 'Filter Matches',
     'apply_filters' => 'Apply Filters',
     'reset_filters' => 'Reset Filters',
     'search' => 'Search',
@@ -249,4 +250,6 @@ return [
     'search_team_title' => 'Search Team Title',
     'clear_filter' => 'Clear Filter',
     'city_id' => 'City',
+    'new_player' => 'New Player',
+    'search_match_title' => 'Search Match Title',
 ];

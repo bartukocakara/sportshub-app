@@ -1,7 +1,56 @@
+@php
+    $totalPages = $data['meta']['last_page'] ?? 20; // toplam sayfa
+    $currentPage = $data['meta']['current_page'] ?? 1;
+    $pageLinks = [];
+
+    // Başlangıç sayfaları
+    for ($i = 1; $i <= min(3, $totalPages); $i++) {
+        $pageLinks[] = $i;
+    }
+
+    // Aktif sayfa çevresi
+    for ($i = max(4, $currentPage - 2); $i <= min($totalPages - 3, $currentPage + 2); $i++) {
+        $pageLinks[] = $i;
+    }
+
+    // Son sayfalar
+    for ($i = max($totalPages - 2, 4); $i <= $totalPages; $i++) {
+        $pageLinks[] = $i;
+    }
+
+    // Unique ve sort
+    $pageLinks = array_unique($pageLinks);
+    sort($pageLinks);
+
+    // Fonksiyon ellipsis kontrolü için
+    function renderPageLink($page, $currentPage) {
+        $isActive = ($page == $currentPage);
+        return '<li class="paginate_button page-item '.($isActive ? "active" : "").'">
+                    <button type="submit" name="page" value="'.$page.'" class="page-link">'.$page.'</button>
+                </li>';
+    }
+@endphp
 @if (isset($data['meta']['links']) && count($data['meta']['links']) > 1)
     <form method="GET" class="d-flex justify-content-between align-items-center flex-wrap gap-3 mt-4">
 
-        {{-- Preserve existing query parameters except pagination --}}
+        <ul class="pagination mb-0">
+    @php
+        $prevPage = 0;
+        foreach ($pageLinks as $page):
+            if ($prevPage && $page - $prevPage > 1) {
+                // arada boşluk varsa ... ekle
+                echo '<li class="paginate_button page-item disabled"><span class="page-link">...</span></li>';
+            }
+            echo renderPageLink($page, $currentPage);
+            $prevPage = $page;
+        endforeach;
+    @endphp
+</ul>
+
+        {{-- Total Entries --}}
+        <div class="total-entries">
+            <span>Toplam: {{ $data['meta']['total'] }} kayıt</span>
+        </div>
         @foreach (request()->except(['page', 'per_page']) as $param => $value)
             @if (is_array($value))
                 @foreach ($value as $v)
@@ -11,7 +60,6 @@
                 <input type="hidden" name="{{ $param }}" value="{{ $value }}">
             @endif
         @endforeach
-
         {{-- Per Page Selector --}}
         <div class="d-flex align-items-center">
             <label for="per_page" class="me-2 fw-semibold">Göster:</label>
@@ -23,43 +71,6 @@
                 @endforeach
             </select>
             <span class="ms-2">takım / sayfa</span>
-        </div>
-
-        {{-- Pagination Buttons --}}
-        <ul class="pagination mb-0">
-            @foreach ($data['meta']['links'] as $key => $link)
-                @php
-                    $label = strip_tags($link['label']);
-                    $isActive = $link['active'];
-                    $isDisabled = is_null($link['url']);
-                    $pageNum = null;
-
-                    if (!empty($link['url'])) {
-                        $parsed = parse_url($link['url']);
-                        if (isset($parsed['query'])) {
-                            parse_str($parsed['query'], $query);
-                            $pageNum = $query['page'] ?? null;
-                        }
-                    }
-                @endphp
-
-                @if ($pageNum)
-                    <li class="paginate_button page-item {{ $isActive ? 'active' : '' }}">
-                        <button type="submit" name="page" value="{{ $pageNum }}" class="page-link">
-                            {!! $label !!}
-                        </button>
-                    </li>
-                @else
-                    <li class="paginate_button page-item {{ $isDisabled ? 'disabled' : '' }}">
-                        <span class="page-link">{!! $label !!}</span>
-                    </li>
-                @endif
-            @endforeach
-        </ul>
-
-        {{-- Total Entries --}}
-        <div class="total-entries">
-            <span>Toplam: {{ $data['meta']['total'] }} kayıt</span>
         </div>
     </form>
 @endif

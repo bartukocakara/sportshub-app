@@ -22,7 +22,7 @@
                         @endforeach
 
                         @if (count($team['users']) > 3)
-                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="{{ count($team['users']) - 5 }} kişi daha">
+                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="{{ count($team['users']) - 3 }} kişi daha">
                                 <span class="symbol-label bg-light text-gray-600 fw-bold">
                                     +{{ count($team['users']) - 3 }}
                                 </span>

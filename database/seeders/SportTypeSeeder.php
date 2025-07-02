@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\SportType;
-use Illuminate\Support\Str;
 
 class SportTypeSeeder extends Seeder
 {
@@ -17,48 +16,84 @@ class SportTypeSeeder extends Seeder
             [
                 'path' => 'tennis',
                 'title' => 'Tennis',
-                'description' => 'A racket sport that can be played individually against a single opponent or between two teams of two players each.',
+                'description' => 'A racket sport that can be played individually or between two teams of two players.',
                 'active' => true,
-                'img' => 'images/sports/tennis.png',
+                'img' => 'sport-types/tennis.png',
             ],
             [
                 'path' => 'basketball',
                 'title' => 'Basketball',
-                'description' => 'A team sport where two teams of five players each try to score by shooting a ball through a hoop.',
+                'description' => 'Two teams of five players try to score by shooting a ball through a hoop.',
                 'active' => true,
-                'img' => 'images/sports/basketball.png',
+                'img' => 'sport-types/Basketball.png',
             ],
             [
                 'path' => 'football',
                 'title' => 'Football',
-                'description' => 'A popular team sport played by two teams of 11 players with a spherical ball.',
+                'description' => 'A popular team sport played by two teams with a spherical ball.',
                 'active' => true,
-                'img' => 'images/sports/football.png',
+                'img' => 'sport-types/football.webp',
             ],
             [
                 'path' => 'volleyball',
                 'title' => 'Volleyball',
-                'description' => 'A team sport in which two teams of six players are separated by a net and try to score points by grounding the ball on the opponent\'s side.',
+                'description' => 'Two teams of six players separated by a net try to score points.',
                 'active' => true,
-                'img' => 'images/sports/volleyball.png',
+                'img' => 'sport-types/volleyball.png',
             ],
             [
                 'path' => 'badminton',
                 'title' => 'Badminton',
-                'description' => 'A racket sport played using rackets to hit a shuttlecock across a net.',
+                'description' => 'A racket sport played using a shuttlecock and rackets.',
                 'active' => true,
-                'img' => 'images/sports/badminton.png',
+                'img' => 'sport-types/badminton.avif',
+            ],
+            [
+                'path' => 'bowling',
+                'title' => 'Bowling',
+                'description' => 'Players roll a ball to knock down pins.',
+                'active' => true,
+                'img' => 'sport-types/bowling.png',
+            ],
+            [
+                'path' => 'counter-strike',
+                'title' => 'Counter Strike',
+                'description' => 'A tactical first-person shooter video game.',
+                'active' => true,
+                'img' => 'sport-types/counter-strike.png',
+            ],
+            [
+                'path' => 'gokart',
+                'title' => 'Go Kart',
+                'description' => 'A motorsport with small, open-wheel vehicles.',
+                'active' => true,
+                'img' => 'sport-types/gokart.png',
+            ],
+            [
+                'path' => 'lol',
+                'title' => 'League of Legends',
+                'description' => 'A competitive online game of strategy and teamplay.',
+                'active' => true,
+                'img' => 'sport-types/lol.avif',
+            ],
+            [
+                'path' => 'paintball',
+                'title' => 'Paintball',
+                'description' => 'A team shooting sport using paint-filled pellets.',
+                'active' => true,
+                'img' => 'sport-types/paintball.jpeg',
+            ],
+            [
+                'path' => 'rugby',
+                'title' => 'Rugby',
+                'description' => 'A contact sport involving two teams competing to carry or kick a ball.',
+                'active' => true,
+                'img' => 'sport-types/rugby.avif',
             ],
         ];
 
         foreach ($sportTypes as $sportType) {
-            SportType::create([
-                'path' => $sportType['path'],
-                'title' => $sportType['title'],
-                'description' => $sportType['description'],
-                'active' => $sportType['active'],
-                'img' => $sportType['img'],
-            ]);
+            SportType::create($sportType);
         }
     }
 }

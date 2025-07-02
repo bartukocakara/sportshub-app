@@ -12,7 +12,7 @@ class MatchController extends Controller
 {
     private MatchService $matchService;
 
-    private array $relations = [];
+    private array $relations = ['statusDefinition'];
 
     /**
      * Service interface tanımlanıyor.
@@ -68,7 +68,7 @@ class MatchController extends Controller
     public function show(string $id) : View
     {
         $data = $this->matchService->show($id);
-        return view('matches.show', compact('data'));
+        return view('matches.show.index', compact('data'));
     }
 
     /**

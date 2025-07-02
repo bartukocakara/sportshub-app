@@ -9,7 +9,6 @@
         <div id="kt_app_toolbar" class="app-toolbar pt-5">
             <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
                 <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
-
                     <div class="page-title d-flex flex-column gap-1 me-3 mb-2">
                         <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-6">
                             <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
@@ -26,55 +25,25 @@
                             </li>
                             <li class="breadcrumb-item text-gray-700">{{ __('messages.team_details') }}</li>
                         </ul>
-                        <!--end::Breadcrumb-->
-
-                        <!--begin::Title-->
                         <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bolder fs-1 lh-0">{{ __('messages.team_details') }}</h1>
-                        <!--end::Title-->
                     </div>
-                    <!--end::Page title-->
-
-                    <!--begin::Actions-->
                     <a href="#" class="btn btn-sm btn-success ms-3 px-4 py-3" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app"> Create Project </a>
-                    <!--end::Actions-->
                 </div>
-                <!--end::Toolbar wrapper-->
             </div>
-            <!--end::Toolbar container-->
         </div>
-        <!--end::Toolbar-->
-
-        <!--begin::Content-->
         <div id="kt_app_content" class="app-content flex-column-fluid">
-            <!--begin::Content container-->
             <div id="kt_app_content_container" class="app-container container-fluid">
-                <!--begin::Layout-->
                 <div class="d-flex flex-column flex-xl-row">
-                    <!--begin::Sidebar-->
                     <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
-                        <!--begin::Card-->
                         <div class="card mb-5 mb-xl-8">
-                            <!--begin::Card body-->
                             <div class="card-body pt-15">
-                                <!--begin::Summary-->
                                 <div class="d-flex flex-center flex-column mb-5">
-                                    <!--begin::Avatar-->
                                     <div class="symbol symbol-100px symbol-circle mb-7">
                                         <img src="/assets/media/avatars/300-1.jpg" alt="image" />
                                     </div>
-                                    <!--end::Avatar-->
-
-                                    <!--begin::Name-->
-                                    <a href="#" class="fs-3 text-gray-800 text-hover-primary fw-bold mb-1"> Max Smith </a>
-                                    <!--end::Name-->
-
-                                    <!--begin::Position-->
-                                    <div class="fs-5 fw-semibold text-muted mb-6">Software Enginer</div>
-                                    <!--end::Position-->
-
-                                    <!--begin::Info-->
-                                    <div class="d-flex flex-wrap flex-center">
-                                        <!--begin::Stats-->
+                                    <a href="#" class="fs-3 text-gray-800 text-hover-primary fw-bold mb-1"> {{ $data->title }} </a>
+                                    <div class="fs-5 fw-semibold text-muted mb-6">{{ $data->team_status_text }}</div>
+                                    <!-- <div class="d-flex flex-wrap flex-center">
                                         <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
                                             <div class="fs-4 fw-bold text-gray-700">
                                                 <span class="w-75px">6,900</span>
@@ -82,9 +51,7 @@
                                             </div>
                                             <div class="fw-semibold text-muted">Earnings</div>
                                         </div>
-                                        <!--end::Stats-->
 
-                                        <!--begin::Stats-->
                                         <div class="border border-gray-300 border-dashed rounded py-3 px-3 mx-4 mb-3">
                                             <div class="fs-4 fw-bold text-gray-700">
                                                 <span class="w-50px">130</span>
@@ -92,9 +59,7 @@
                                             </div>
                                             <div class="fw-semibold text-muted">Tasks</div>
                                         </div>
-                                        <!--end::Stats-->
 
-                                        <!--begin::Stats-->
                                         <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
                                             <div class="fs-4 fw-bold text-gray-700">
                                                 <span class="w-50px">500</span>
@@ -102,8 +67,7 @@
                                             </div>
                                             <div class="fw-semibold text-muted">Hours</div>
                                         </div>
-                                        <!--end::Stats-->
-                                    </div>
+                                    </div> -->
                                     <!--end::Info-->
                                 </div>
                                 <!--end::Summary-->
@@ -131,16 +95,25 @@
                                         <!--begin::Badge-->
 
                                         <!--begin::Details item-->
-                                        <div class="fw-bold mt-5">Account ID</div>
-                                        <div class="text-gray-600">ID-45453423</div>
+                                        <div class="fw-bold mt-5">{{ __('messages.account_id') }}</div>
+                                        <div class="text-gray-600">{{ $data->id }}</div>
                                         <!--begin::Details item-->
                                         <!--begin::Details item-->
-                                        <div class="fw-bold mt-5">Billing Email</div>
-                                        <div class="text-gray-600"><a href="#" class="text-gray-600 text-hover-primary">info@keenthemes.com</a></div>
+                                        <div class="fw-bold mt-5">{{ __('messages.city') }}</div>
+                                        <div class="text-gray-600">
+                                            <a href="#" class="text-gray-600 text-hover-primary">
+                                            {{ $data->city->title }}
+                                            </a>
+                                        </div>
                                         <!--begin::Details item-->
                                         <!--begin::Details item-->
-                                        <div class="fw-bold mt-5">Billing Address</div>
-                                        <div class="text-gray-600">101 Collin Street, <br />Melbourne 3000 VIC<br />Australia</div>
+                                        <div class="fw-bold mt-5">{{ __('messages.sport_type') }}</div>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="symbol symbol-75px symbol-square">
+                                                <img src="{{ '/storage/'.$data->sportType->img }}" alt="{{ $data->sportType->title }} icon" width="25">
+                                            </div>
+                                            <span class="text-gray-600">{{ $data->sportType->title }}</span>
+                                        </div>
                                         <!--begin::Details item-->
                                         <!--begin::Details item-->
                                         <div class="fw-bold mt-5">Language</div>
@@ -148,57 +121,33 @@
                                         <!--begin::Details item-->
                                     </div>
                                 </div>
-                                <!--end::Details content-->
                             </div>
-
                         </div>
                     </div>
-                    <!--end::Sidebar-->
-
-                    <!--begin::Content-->
                     <div class="flex-lg-row-fluid ms-lg-15">
-                        <!--begin:::Tabs-->
                         <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-8" role="tablist">
-                            <!--begin:::Tab item-->
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#kt_customer_view_overview_tab" aria-selected="true" role="tab">Overview</a>
                             </li>
-                            <!--end:::Tab item-->
-
-                            <!--begin:::Tab item-->
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#kt_customer_view_overview_events_and_logs_tab" aria-selected="false" role="tab" tabindex="-1">Events &amp; Logs</a>
                             </li>
-                            <!--end:::Tab item-->
-
-                            <!--begin:::Tab item-->
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true" data-bs-toggle="tab" href="#kt_customer_view_overview_statements" data-kt-initialized="1" aria-selected="false" role="tab" tabindex="-1">Statements</a>
                             </li>
-                            <!--end:::Tab item-->
-
-                            <!--begin:::Tab item-->
                             <li class="nav-item ms-auto">
-                                <!--begin::Action menu-->
                                 <a href="#" class="btn btn-primary ps-7" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
                                     Actions
                                     <i class="ki-duotone ki-down fs-2 me-0"></i>
                                 </a>
-                                <!--begin::Menu-->
                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold py-4 w-250px fs-6" data-kt-menu="true">
-                                    <!--begin::Menu item-->
                                     <div class="menu-item px-5">
                                         <div class="menu-content text-muted pb-2 px-5 fs-7 text-uppercase">Payments</div>
                                     </div>
-                                    <!--end::Menu item-->
 
-                                    <!--begin::Menu item-->
                                     <div class="menu-item px-5">
                                         <a href="#" class="menu-link px-5"> Create invoice </a>
                                     </div>
-                                    <!--end::Menu item-->
-
-                                    <!--begin::Menu item-->
                                     <div class="menu-item px-5">
                                         <a href="#" class="menu-link flex-stack px-5">
                                             Create payments
@@ -208,40 +157,22 @@
                                             </span>
                                         </a>
                                     </div>
-                                    <!--end::Menu item-->
-
-                                    <!--begin::Menu item-->
                                     <div class="menu-item px-5" data-kt-menu-trigger="hover" data-kt-menu-placement="left-start">
                                         <a href="#" class="menu-link px-5">
                                             <span class="menu-title">Subscription</span>
                                             <span class="menu-arrow"></span>
                                         </a>
-
-                                        <!--begin::Menu sub-->
                                         <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                            <!--begin::Menu item-->
                                             <div class="menu-item px-3">
                                                 <a href="#" class="menu-link px-5"> Apps </a>
                                             </div>
-                                            <!--end::Menu item-->
-
-                                            <!--begin::Menu item-->
                                             <div class="menu-item px-3">
                                                 <a href="#" class="menu-link px-5"> Billing </a>
                                             </div>
-                                            <!--end::Menu item-->
-
-                                            <!--begin::Menu item-->
                                             <div class="menu-item px-3">
                                                 <a href="#" class="menu-link px-5"> Statements </a>
                                             </div>
-                                            <!--end::Menu item-->
-
-                                            <!--begin::Menu separator-->
                                             <div class="separator my-2"></div>
-                                            <!--end::Menu separator-->
-
-                                            <!--begin::Menu item-->
                                             <div class="menu-item px-3">
                                                 <div class="menu-content px-3">
                                                     <label class="form-check form-switch form-check-custom form-check-solid">
@@ -250,281 +181,27 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                            <!--end::Menu item-->
                                         </div>
-                                        <!--end::Menu sub-->
                                     </div>
-                                    <!--end::Menu item-->
-
-                                    <!--begin::Menu separator-->
                                     <div class="separator my-3"></div>
-                                    <!--end::Menu separator-->
-
-                                    <!--begin::Menu item-->
                                     <div class="menu-item px-5">
                                         <div class="menu-content text-muted pb-2 px-5 fs-7 text-uppercase">Account</div>
                                     </div>
-                                    <!--end::Menu item-->
-
-                                    <!--begin::Menu item-->
                                     <div class="menu-item px-5">
                                         <a href="#" class="menu-link px-5"> Reports </a>
                                     </div>
-                                    <!--end::Menu item-->
-
-                                    <!--begin::Menu item-->
                                     <div class="menu-item px-5 my-1">
                                         <a href="#" class="menu-link px-5"> Account Settings </a>
                                     </div>
-                                    <!--end::Menu item-->
-
-                                    <!--begin::Menu item-->
                                     <div class="menu-item px-5">
                                         <a href="#" class="menu-link text-danger px-5"> Delete customer </a>
                                     </div>
-                                    <!--end::Menu item-->
                                 </div>
-                                <!--end::Menu-->
-                                <!--end::Menu-->
                             </li>
-                            <!--end:::Tab item-->
                         </ul>
-                        <!--end:::Tabs-->
-
-                        <!--begin:::Tab content-->
                         <div class="tab-content" id="myTabContent">
-                            <!--begin:::Tab pane-->
                             <div class="tab-pane fade active show" id="kt_customer_view_overview_tab" role="tabpanel">
-                                <!--begin::Card-->
-                                <div class="card pt-4 mb-6 mb-xl-9">
-                                    <!--begin::Card header-->
-                                    <div class="card-header border-0">
-                                        <!--begin::Card title-->
-                                        <div class="card-title">
-                                            <h2>Payment Records</h2>
-                                        </div>
-                                        <!--end::Card title-->
-
-                                        <!--begin::Card toolbar-->
-                                        <div class="card-toolbar">
-                                            <!--begin::Filter-->
-                                            <button type="button" class="btn btn-sm btn-flex btn-light-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment">
-                                                <i class="ki-duotone ki-plus-square fs-3"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
-                                                Add payment
-                                            </button>
-                                            <!--end::Filter-->
-                                        </div>
-                                        <!--end::Card toolbar-->
-                                    </div>
-                                    <!--end::Card header-->
-
-                                    <!--begin::Card body-->
-                                    <div class="card-body pt-0 pb-5">
-                                        <!--begin::Table-->
-                                        <div id="kt_table_customers_payment_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer">
-                                            <div id="" class="table-responsive">
-                                                <table class="table align-middle table-row-dashed gy-5 dataTable" id="kt_table_customers_payment" style="width: 100%">
-                                                    <colgroup>
-                                                        <col data-dt-column="0" style="width: 100px" />
-                                                        <col data-dt-column="1" style="width: 91.9688px" />
-                                                        <col data-dt-column="2" style="width: 80.7031px" />
-                                                        <col data-dt-column="3" style="width: 100px" />
-                                                        <col data-dt-column="4" style="width: 100px" />
-                                                    </colgroup>
-                                                    <thead class="border-bottom border-gray-200 fs-7 fw-bold">
-                                                        <tr class="text-start text-muted text-uppercase gs-0" role="row">
-                                                            <th class="min-w-100px dt-orderable-asc dt-orderable-desc" data-dt-column="0" rowspan="1" colspan="1" aria-label="Invoice No.: Activate to sort" tabindex="0"><span class="dt-column-title" role="button">Invoice No.</span><span class="dt-column-order"></span></th>
-                                                            <th data-dt-column="1" rowspan="1" colspan="1" class="dt-orderable-asc dt-orderable-desc" aria-label="Status: Activate to sort" tabindex="0"><span class="dt-column-title" role="button">Status</span><span class="dt-column-order"></span></th>
-                                                            <th data-dt-column="2" rowspan="1" colspan="1" class="dt-type-numeric dt-orderable-asc dt-orderable-desc" aria-label="Amount: Activate to sort" tabindex="0"><span class="dt-column-title" role="button">Amount</span><span class="dt-column-order"></span></th>
-                                                            <th class="min-w-100px dt-orderable-asc dt-orderable-desc" data-dt-column="3" rowspan="1" colspan="1" aria-label="Date: Activate to sort" tabindex="0"><span class="dt-column-title" role="button">Date</span><span class="dt-column-order"></span></th>
-                                                            <th class="text-end min-w-100px pe-4 dt-orderable-none" data-dt-column="4" rowspan="1" colspan="1" aria-label="Actions"><span class="dt-column-title">Actions</span><span class="dt-column-order"></span></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody class="fs-6 fw-semibold text-gray-600">
-                                                        <tr>
-                                                            <td>
-                                                                <a href="#" class="text-gray-600 text-hover-primary mb-1">4718-9652</a>
-                                                            </td>
-                                                            <td>
-                                                                <span class="badge badge-light-success">Successful</span>
-                                                            </td>
-                                                            <td class="dt-type-numeric">$1,200.00</td>
-                                                            <td data-order="2020-12-14T20:43:00+03:00">14 Dec 2020, 8:43 pm</td>
-                                                            <td class="pe-0 text-end">
-                                                                <a href="#" class="btn btn-sm btn-light image.png btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                                                    Actions
-                                                                    <i class="ki-duotone ki-down fs-5 ms-1"></i>
-                                                                </a>
-                                                                <!--begin::Menu-->
-                                                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                                                    <!--begin::Menu item-->
-                                                                    <div class="menu-item px-3">
-                                                                        <a href="/apps/customers/view.html" class="menu-link px-3"> View </a>
-                                                                    </div>
-                                                                    <!--end::Menu item-->
-
-                                                                    <!--begin::Menu item-->
-                                                                    <div class="menu-item px-3">
-                                                                        <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row"> Delete </a>
-                                                                    </div>
-                                                                    <!--end::Menu item-->
-                                                                </div>
-                                                                <!--end::Menu-->
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <a href="#" class="text-gray-600 text-hover-primary mb-1">3890-5988</a>
-                                                            </td>
-                                                            <td>
-                                                                <span class="badge badge-light-success">Successful</span>
-                                                            </td>
-                                                            <td class="dt-type-numeric">$79.00</td>
-                                                            <td data-order="2020-12-01T10:12:00+03:00">01 Dec 2020, 10:12 am</td>
-                                                            <td class="pe-0 text-end">
-                                                                <a href="#" class="btn btn-sm btn-light image.png btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                                                    Actions
-                                                                    <i class="ki-duotone ki-down fs-5 ms-1"></i>
-                                                                </a>
-                                                                <!--begin::Menu-->
-                                                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                                                    <!--begin::Menu item-->
-                                                                    <div class="menu-item px-3">
-                                                                        <a href="/apps/customers/view.html" class="menu-link px-3"> View </a>
-                                                                    </div>
-                                                                    <!--end::Menu item-->
-
-                                                                    <!--begin::Menu item-->
-                                                                    <div class="menu-item px-3">
-                                                                        <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row"> Delete </a>
-                                                                    </div>
-                                                                    <!--end::Menu item-->
-                                                                </div>
-                                                                <!--end::Menu-->
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <a href="#" class="text-gray-600 text-hover-primary mb-1">3600-1283</a>
-                                                            </td>
-                                                            <td>
-                                                                <span class="badge badge-light-success">Successful</span>
-                                                            </td>
-                                                            <td class="dt-type-numeric">$5,500.00</td>
-                                                            <td data-order="2020-11-12T14:01:00+03:00">12 Nov 2020, 2:01 pm</td>
-                                                            <td class="pe-0 text-end">
-                                                                <a href="#" class="btn btn-sm btn-light image.png btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                                                    Actions
-                                                                    <i class="ki-duotone ki-down fs-5 ms-1"></i>
-                                                                </a>
-                                                                <!--begin::Menu-->
-                                                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                                                    <!--begin::Menu item-->
-                                                                    <div class="menu-item px-3">
-                                                                        <a href="/apps/customers/view.html" class="menu-link px-3"> View </a>
-                                                                    </div>
-                                                                    <!--end::Menu item-->
-
-                                                                    <!--begin::Menu item-->
-                                                                    <div class="menu-item px-3">
-                                                                        <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row"> Delete </a>
-                                                                    </div>
-                                                                    <!--end::Menu item-->
-                                                                </div>
-                                                                <!--end::Menu-->
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <a href="#" class="text-gray-600 text-hover-primary mb-1">5431-6878</a>
-                                                            </td>
-                                                            <td>
-                                                                <span class="badge badge-light-warning">Pending</span>
-                                                            </td>
-                                                            <td class="dt-type-numeric">$880.00</td>
-                                                            <td data-order="2020-10-21T17:54:00+03:00">21 Oct 2020, 5:54 pm</td>
-                                                            <td class="pe-0 text-end">
-                                                                <a href="#" class="btn btn-sm btn-light image.png btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                                                    Actions
-                                                                    <i class="ki-duotone ki-down fs-5 ms-1"></i>
-                                                                </a>
-                                                                <!--begin::Menu-->
-                                                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                                                    <!--begin::Menu item-->
-                                                                    <div class="menu-item px-3">
-                                                                        <a href="/apps/customers/view.html" class="menu-link px-3"> View </a>
-                                                                    </div>
-                                                                    <!--end::Menu item-->
-
-                                                                    <!--begin::Menu item-->
-                                                                    <div class="menu-item px-3">
-                                                                        <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row"> Delete </a>
-                                                                    </div>
-                                                                    <!--end::Menu item-->
-                                                                </div>
-                                                                <!--end::Menu-->
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <a href="#" class="text-gray-600 text-hover-primary mb-1">3165-5269</a>
-                                                            </td>
-                                                            <td>
-                                                                <span class="badge badge-light-success">Successful</span>
-                                                            </td>
-                                                            <td class="dt-type-numeric">$7,650.00</td>
-                                                            <td data-order="2020-10-19T07:32:00+03:00">19 Oct 2020, 7:32 am</td>
-                                                            <td class="pe-0 text-end">
-                                                                <a href="#" class="btn btn-sm btn-light image.png btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                                                    Actions
-                                                                    <i class="ki-duotone ki-down fs-5 ms-1"></i>
-                                                                </a>
-                                                                <!--begin::Menu-->
-                                                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                                                    <!--begin::Menu item-->
-                                                                    <div class="menu-item px-3">
-                                                                        <a href="/apps/customers/view.html" class="menu-link px-3"> View </a>
-                                                                    </div>
-                                                                    <!--end::Menu item-->
-
-                                                                    <!--begin::Menu item-->
-                                                                    <div class="menu-item px-3">
-                                                                        <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row"> Delete </a>
-                                                                    </div>
-                                                                    <!--end::Menu item-->
-                                                                </div>
-                                                                <!--end::Menu-->
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                    <!--end::Table body-->
-                                                    <tfoot></tfoot>
-                                                </table>
-                                            </div>
-                                            <div id="" class="row">
-                                                <div id="" class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start dt-toolbar"></div>
-                                                <div id="" class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end">
-                                                    <div class="dt-paging paging_simple_numbers">
-                                                        <nav>
-                                                            <ul class="pagination">
-                                                                <li class="dt-paging-button page-item disabled">
-                                                                    <button class="page-link previous" role="link" type="button" aria-controls="kt_table_customers_payment" aria-disabled="true" aria-label="Previous" data-dt-idx="previous" tabindex="-1"><i class="previous"></i></button>
-                                                                </li>
-                                                                <li class="dt-paging-button page-item active"><button class="page-link" role="link" type="button" aria-controls="kt_table_customers_payment" aria-current="page" data-dt-idx="0">1</button></li>
-                                                                <li class="dt-paging-button page-item"><button class="page-link" role="link" type="button" aria-controls="kt_table_customers_payment" data-dt-idx="1">2</button></li>
-                                                                <li class="dt-paging-button page-item">
-                                                                    <button class="page-link next" role="link" type="button" aria-controls="kt_table_customers_payment" aria-label="Next" data-dt-idx="next"><i class="next"></i></button>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--end::Table-->
-                                    </div>
-
-                                </div>
+                                @include('components.team.profile.player-list')
                             </div>
 
                             <div class="tab-pane fade" id="kt_customer_view_overview_events_and_logs_tab" role="tabpanel">
@@ -1251,7 +928,7 @@
 
             <li class="menu-item"><a href="https://keenthemes.com/products" target="_blank" class="menu-link px-2">Purchase</a></li>
         </ul>
-        <!--end::Menu-->
+
     </div>
     <!--end::Footer-->
 </div>
