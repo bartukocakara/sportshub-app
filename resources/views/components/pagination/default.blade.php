@@ -1,64 +1,65 @@
 @if (isset($data['meta']['links']) && count($data['meta']['links']) > 1)
-    <div class="d-flex justify-content-between align-items-center">
-        <ul class="pagination">
-            {{-- Pagination Elements --}}
+    <form method="GET" class="d-flex justify-content-between align-items-center flex-wrap gap-3 mt-4">
+
+        {{-- Preserve existing query parameters except pagination --}}
+        @foreach (request()->except(['page', 'per_page']) as $param => $value)
+            @if (is_array($value))
+                @foreach ($value as $v)
+                    <input type="hidden" name="{{ $param }}[]" value="{{ $v }}">
+                @endforeach
+            @else
+                <input type="hidden" name="{{ $param }}" value="{{ $value }}">
+            @endif
+        @endforeach
+
+        {{-- Per Page Selector --}}
+        <div class="d-flex align-items-center">
+            <label for="per_page" class="me-2 fw-semibold">Göster:</label>
+            <select name="per_page" id="per_page" class="form-select form-select-sm w-auto" onchange="this.form.submit()">
+                @foreach ([5, 10, 25] as $option)
+                    <option value="{{ $option }}" {{ request('per_page', 10) == $option ? 'selected' : '' }}>
+                        {{ $option }}
+                    </option>
+                @endforeach
+            </select>
+            <span class="ms-2">takım / sayfa</span>
+        </div>
+
+        {{-- Pagination Buttons --}}
+        <ul class="pagination mb-0">
             @foreach ($data['meta']['links'] as $key => $link)
                 @php
-                    // Preserve existing query parameters
-                    $url = $link['url'];
-                    if ($url) {
-                        $parsed = parse_url($url);
-                        $path = $parsed['path'] ?? '';
-                        $linkQuery = [];
+                    $label = strip_tags($link['label']);
+                    $isActive = $link['active'];
+                    $isDisabled = is_null($link['url']);
+                    $pageNum = null;
 
-                        // Parse the link's query parameters
+                    if (!empty($link['url'])) {
+                        $parsed = parse_url($link['url']);
                         if (isset($parsed['query'])) {
-                            parse_str($parsed['query'], $linkQuery);
+                            parse_str($parsed['query'], $query);
+                            $pageNum = $query['page'] ?? null;
                         }
-
-                        // Get current query parameters except page
-                        $currentQuery = request()->except('page');
-
-                        // Merge current query with the link's page parameter
-                        $mergedQuery = array_merge($currentQuery, $linkQuery);
-
-                        // Build the final URL
-                        $url = $path . '?' . http_build_query($mergedQuery);
                     }
                 @endphp
 
-                {{-- Handle "Previous" Link --}}
-                @if ($key === 0)
-                    <li class="paginate_button page-item {{ $link['url'] ? '' : 'disabled' }}" aria-disabled="{{ $link['url'] ? 'false' : 'true' }}">
-                        <a href="{{ $url ?: '#' }}" class="page-link" aria-label="@lang('pagination.previous')">
-                            {!! $link['label'] !!}
-                        </a>
+                @if ($pageNum)
+                    <li class="paginate_button page-item {{ $isActive ? 'active' : '' }}">
+                        <button type="submit" name="page" value="{{ $pageNum }}" class="page-link">
+                            {!! $label !!}
+                        </button>
                     </li>
-                {{-- Handle "Next" Link --}}
-                @elseif ($key === count($data['meta']['links']) - 1)
-                    <li class="paginate_button page-item {{ $link['url'] ? '' : 'disabled' }}" aria-disabled="{{ $link['url'] ? 'false' : 'true' }}">
-                        <a href="{{ $url ?: '#' }}" class="page-link" aria-label="@lang('pagination.next')">
-                            {!! $link['label'] !!}
-                        </a>
-                    </li>
-                {{-- Handle Numbered Links --}}
                 @else
-                    @if ($link['label'] == '...')
-                        <li class="paginate_button page-item disabled" aria-disabled="true">
-                            <span>{{ $link['label'] }}</span>
-                        </li>
-                    @else
-                        <li class="paginate_button page-item {{ $link['active'] ? 'active' : '' }}">
-                            <a href="{{ $url }}" class="page-link">{{ $link['label'] }}</a>
-                        </li>
-                    @endif
+                    <li class="paginate_button page-item {{ $isDisabled ? 'disabled' : '' }}">
+                        <span class="page-link">{!! $label !!}</span>
+                    </li>
                 @endif
             @endforeach
         </ul>
 
-        {{-- Display Total Entries --}}
+        {{-- Total Entries --}}
         <div class="total-entries">
-            <span>Total Entries: {{ $data['meta']['total'] }}</span>
+            <span>Toplam: {{ $data['meta']['total'] }} kayıt</span>
         </div>
-    </div>
+    </form>
 @endif

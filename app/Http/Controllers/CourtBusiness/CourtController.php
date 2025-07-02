@@ -20,8 +20,8 @@ class CourtController extends Controller
      */
     public function index(Request $request) : View
     {
-        $homeData = $this->courtService->all($request);
-        return view('court-business.courts.index', compact('homeData'));
+        $datas = $this->courtService->all($request);
+        return view('court-business.courts.index', compact('datas'));
     }
 
     /**

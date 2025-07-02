@@ -41,11 +41,66 @@
                                 </svg>
                                 {{ __('messages.filter') }}
                             </a>
-
-
+                            @if (request()->query())
+                            <a href="{{ route('teams.index') }}" class="btn btn-sm btn-light-danger px-4 py-3">
+                                <i class="bi bi-x-circle me-2"></i>
+                                {{ __('messages.clear_filter') }}
+                            </a>
+                        @endif
                         </div>
+
+
                     </div>
+
                 </div>
+                @php
+                    $excludedFilters = ['page', 'per_page'];  // pagination filtreleri hariç tutuluyor
+                    $cityTitles = collect($datas['cities'] ?? [])->pluck('title', 'id')->toArray();
+                    $sportTypeTitles = collect($datas['sport_types'] ?? [])->pluck('title', 'id')->toArray();
+                @endphp
+
+                @if (request()->query())
+                    <div class="d-flex flex-wrap gap-2 align-items-center mt-3">
+                        @foreach (request()->except($excludedFilters) as $key => $value)
+                            @php
+                                $values = is_array($value) ? $value : [$value];
+                            @endphp
+                            @foreach ($values as $v)
+                                <form method="GET" action="{{ url()->current() }}" class="d-inline">
+                                    @foreach (request()->except(array_merge([$key], $excludedFilters)) as $k => $val)
+                                        @if (is_array($val))
+                                            @foreach ($val as $multi)
+                                                @if (!($k === $key && $multi == $v))
+                                                    <input type="hidden" name="{{ $k }}[]" value="{{ $multi }}">
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            <input type="hidden" name="{{ $k }}" value="{{ $val }}">
+                                        @endif
+                                    @endforeach
+
+                                    @php
+                                        if ($key === 'city_id') {
+                                            $labelValue = $cityTitles[$v] ?? $v;
+                                        } elseif ($key === 'sport_type_id') {
+                                            $labelValue = $sportTypeTitles[$v] ?? $v;
+                                        } else {
+                                            $labelValue = $v;
+                                        }
+                                    @endphp
+
+                                    <button type="submit" class="btn btn-sm btn-light-primary rounded-pill d-flex align-items-center gap-2">
+                                        <span >
+                                            {{ __("messages.".$key) }}: {{ $labelValue }}
+                                        </span>
+                                        <i class="bi bi-x fs-6"></i>
+                                    </button>
+                                </form>
+                            @endforeach
+                        @endforeach
+                    </div>
+                @endif
+
                 @include('components.pagination.default', ['data' => $datas['teams']])
                 @include('components.team.card-list')
         </div>
@@ -56,4 +111,18 @@
 @endsection
 @section('page-scripts')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
+<script>
+    document.querySelector('#kt_filter_modal form').addEventListener('submit', function(e) {
+    const form = e.target;
+    [...form.elements].forEach(el => {
+        if ((el.tagName === 'INPUT' || el.tagName === 'SELECT') && !el.disabled) {
+            if (el.type === 'checkbox' || el.type === 'radio') {
+                if (!el.checked) el.name = ''; // unchecked checkbox/radio gönderilmez
+            } else if (!el.value) {
+                el.name = ''; // boş input gönderilmez
+            }
+        }
+    });
+});
+</script>
 @endsection

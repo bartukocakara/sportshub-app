@@ -157,7 +157,8 @@ return [
     'payment_success_message' => 'Ödemeniz başarıyla işlenmiştir.',
     'back_to_home' => 'Anasayfaya Dön',
     'court' => 'Saha',
-    'sport_type' => 'Spor Türü',
+    'sport_type_id' => 'Spor Türü',
+    'city_id' => 'İl',
     'time' => 'Zaman',
     'try_again' => 'Yeniden deneyin',
     'login' => 'Giriş yap',
@@ -259,4 +260,5 @@ return [
     'search' => 'Ara',
     'no_results_found' => 'Sonuç bulunamadı',
     'search_team_title' => 'Takım Başlığı Ara',
+    'clear_filter' => 'Filtre Temizle',
 ];

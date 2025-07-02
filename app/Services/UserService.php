@@ -26,14 +26,14 @@ class UserService extends CrudService
 
     public function index(Request $request, array $with = [], bool $useCache = false) : array
     {
-        $homeData['users'] = UserResource::collection($this->userRepository->all($request, $with, $useCache))
+        $datas['users'] = UserResource::collection($this->userRepository->all($request, $with, $useCache))
                                             ->response()
                                             ->getData(true);
 
-        $homeData['sport_types'] = (new SportTypeRepository(new SportType()))->home();
+        $datas['sport_types'] = (new SportTypeRepository(new SportType()))->home();
         $language = $request->server('HTTP_ACCEPT_LANGUAGE');
         $countryCode = substr($language, 3, 2); // Extract country code (e.g., 'US' for 'en-US')
-        $homeData['cities'] = (new CityRepository(new City()))->getByCountryCode($countryCode, ['districts.courtAddresses', 'districts.courtBusinesses'], false);
-        return $homeData;
+        $datas['cities'] = (new CityRepository(new City()))->getByCountryCode($countryCode, ['districts.courtAddresses', 'districts.courtBusinesses'], false);
+        return $datas;
     }
 }

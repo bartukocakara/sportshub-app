@@ -43,7 +43,7 @@
                 <div class="card">
                     <div class="p-2">
                         <div class="row mb-3">
-                            @include('components.pagination.default', ['data' => $homeData['courts']])
+                            @include('components.pagination.default', ['data' => $datas['courts']])
                             <div class="col-md-6 pe-lg-10" style="max-height: calc(100vh - 200px); overflow-y: auto;">
                                 @include('components.home.card-list')
                             </div>

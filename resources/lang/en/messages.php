@@ -247,4 +247,6 @@ return [
     'search' => 'Search',
     'no_results_found' => 'No results found',
     'search_team_title' => 'Search Team Title',
+    'clear_filter' => 'Clear Filter',
+    'city_id' => 'City',
 ];

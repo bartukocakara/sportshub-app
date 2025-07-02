@@ -16,7 +16,7 @@
                         name="city_id"
                         data-allow-clear="true">
                     <option value="">{{ __('messages.select_city') }}</option>
-                    @foreach ($homeData['cities'] as $city)
+                    @foreach ($datas['cities'] as $city)
                         <option value="{{ $city->id }}" style="text-transform: capitalize; font-size: 16px;">{{ $city->title }}</option>
                     @endforeach
                 </select>

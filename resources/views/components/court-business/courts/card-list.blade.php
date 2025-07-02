@@ -1,5 +1,5 @@
 <div class="row g-10">
-    @foreach($homeData['courts']['data'] as $key => $value)
+    @foreach($datas['courts']['data'] as $key => $value)
     <div class="col-md-6">
         <div class="card-xl-stretch me-md-6 shadow-sm border border-grey rounded p-4">
             <a class="d-block overlay" id="courtImage-{{ $value['id'] }}" data-court-images="{{ json_encode($value['court_images']) }}">

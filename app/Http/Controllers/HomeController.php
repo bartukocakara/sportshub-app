@@ -27,9 +27,9 @@ class HomeController extends Controller
 
     public function index(Request $request) : View
     {
-        $homeData = $this->homeService->index($request);
+        $datas = $this->homeService->index($request);
 
-        return view('home', compact('homeData'));
+        return view('home', compact('datas'));
     }
 
 

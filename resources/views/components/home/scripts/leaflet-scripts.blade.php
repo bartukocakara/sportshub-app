@@ -12,7 +12,7 @@
         }).addTo(map);
 
         // Court data from backend
-        const courts = @json($homeData['courts']['data']);
+        const courts = @json($datas['courts']['data']);
 
         $.each(courts, function (index, court) {
             let latitude = null;

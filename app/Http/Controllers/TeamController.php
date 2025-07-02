@@ -31,7 +31,7 @@ class TeamController extends Controller
      */
     public function index(Request $request)
     {
-        $datas = $this->teamService->index($request, ['users']);
+        $datas = $this->teamService->index($request, ['users', 'city', 'sportType', 'statusDefinition']);
         return view('teams.index', compact('datas'));
     }
 

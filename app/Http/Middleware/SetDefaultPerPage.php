@@ -11,7 +11,7 @@ class SetDefaultPerPage
     {
         // Eğer per_page query parametresi yoksa 15 olarak set et
         if (!$request->has('per_page')) {
-            $request->merge(['per_page' => 15]);
+            $request->merge(['per_page' => 10]);
         } else {
             // İstersen maksimum sınır koyabilirsin
             $perPage = (int) $request->input('per_page');

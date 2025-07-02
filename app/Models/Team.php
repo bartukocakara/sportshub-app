@@ -32,4 +32,40 @@ class Team extends Model
     {
         return $this->belongsToMany(User::class, 'player_teams', 'team_id', 'user_id');
     }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function sportType()
+    {
+        return $this->belongsTo(SportType::class);
+    }
+
+    public function statusDefinition()
+    {
+        return $this->belongsTo(Definition::class, 'team_status', 'value')
+            ->where('group_key', 'team_status');
+    }
+
+    public function getTeamStatusTextAttribute(): string
+    {
+        return $this->statusDefinition->description_tr ?? 'Bilinmiyor';
+    }
+
+    public function getCityTitleAttribute(): string
+    {
+        return $this->city->title ?? 'Bilinmiyor';
+    }
+
+    public function getStatusBadgeAttribute(): string
+    {
+        return match ($this->team_status) {
+            'active'   => 'badge-light-success',
+            'inactive' => 'badge-light-warning',
+            'banned'   => 'badge-light-danger',
+            default    => 'badge-light-secondary',
+        };
+    }
 }

@@ -26,14 +26,14 @@ class HomeService extends CrudService
 
     public function index(Request $request) : array
     {
-        $homeData['courts'] = CourtResource::collection($this->courtRepository->home($request))
+        $datas['courts'] = CourtResource::collection($this->courtRepository->home($request))
                                             ->response()
                                             ->getData(true);
 
-        $homeData['sport_types'] = (new SportTypeRepository(new SportType()))->home();
+        $datas['sport_types'] = (new SportTypeRepository(new SportType()))->home();
         $language = $request->server('HTTP_ACCEPT_LANGUAGE');
         $countryCode = substr($language, 3, 2); // Extract country code (e.g., 'US' for 'en-US')
-        $homeData['cities'] = (new CityRepository(new City()))->getByCountryCode($countryCode);
-        return $homeData;
+        $datas['cities'] = (new CityRepository(new City()))->getByCountryCode($countryCode);
+        return $datas;
     }
 }
