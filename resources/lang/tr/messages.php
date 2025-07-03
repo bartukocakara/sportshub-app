@@ -264,4 +264,8 @@ return [
     'clear_filter' => 'Filtre Temizle',
     'new_player' => 'Yeni Oyuncu',
     'search_match_title' => 'Maç Başlığı Ara',
+    'delete_team' => 'Takımı Sil',
+    'actions' => 'İşlemler',
+    'edit' => 'Düzenle',
+    'details' => 'Detaylar',
 ];

@@ -252,4 +252,8 @@ return [
     'city_id' => 'City',
     'new_player' => 'New Player',
     'search_match_title' => 'Search Match Title',
+    'delete_team' => 'Delete Team',
+    'actions' => 'Actions',
+    'edit' => 'Edit',
+    'details' => 'Details',
 ];

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MatchRequest;
+use App\Http\Requests\TeamRequest;
 use App\Services\TeamService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -49,10 +49,10 @@ class TeamController extends Controller
     /**
      * Yeni bir kaynağı kaydetmek için kullanılır.
      *
-     * @param  MatchRequest $request
+     * @param  TeamRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(MatchRequest $request)
+    public function store(TeamRequest $request)
     {
         $this->teamService->store($request->validated());
         return redirect()->route('teams.index')->with('success', 'Team created successfully.');
@@ -64,31 +64,20 @@ class TeamController extends Controller
      * @param  string $id
      * @return \Illuminate\View\View
      */
-    public function show(string $id) : View
+    public function show(Request $request, string $id) : View
     {
-        $data = $this->teamService->show($id, ['users', 'sportType', 'city', 'statusDefinition']);
+        $data = $this->teamService->profile($request, $id, ['users', 'sportType', 'city', 'statusDefinition']);
         return view('teams.profile.index', compact('data'));
-    }
-
-    /**
-     * Belirli bir kaynağı düzenleme formunu görüntülemek için kullanılır.
-     * @param  string $id
-     * @return \Illuminate\View\View
-     */
-    public function edit(string $id) : View
-    {
-        $data = $this->teamService->show($id);
-        return view('teams.edit', compact('data'));
     }
 
     /**
      * Belirli bir kaynağı güncellemek için kullanılır.
      *
-     * @param  MatchRequest $request
+     * @param  TeamRequest $request
      * @param  string $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(MatchRequest $request, string $id) : RedirectResponse
+    public function update(TeamRequest $request, string $id) : RedirectResponse
     {
         $this->teamService->update($request->validated(), $id);
         return redirect()->route('teams.index')->with('success', 'Team updated successfully.');

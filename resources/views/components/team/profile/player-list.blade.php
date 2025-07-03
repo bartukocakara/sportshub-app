@@ -31,7 +31,7 @@
                         </tr>
                     </thead>
                     <tbody class="fs-6 fw-semibold text-gray-600">
-                        @foreach ($data->users as $key => $user)
+                        @foreach ($data['team']->users as $key => $user)
                         <tr>
                             <td>
                                 <a href="{{ route('users.show', ['user' => $user['id']]) }}">{{ $user['first_name'] }}</a>

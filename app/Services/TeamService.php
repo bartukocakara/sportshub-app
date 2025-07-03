@@ -35,11 +35,18 @@ class TeamService extends CrudService
         $language = $request->server('HTTP_ACCEPT_LANGUAGE');
         $countryCode = substr($language, 3, 2); // Extract country code (e.g., 'US' for 'en-US')
         $datas['cities'] = (new CityRepository(new City()))->getByCountryCode($countryCode);
+
         return $datas;
     }
 
-    public function show(string $id, array $with = []) : Team
+    public function profile(Request $request, string $id, array $with = []) : array
     {
-        return $this->teamRepository->find($id, $with);
+        $datas['team'] = $this->teamRepository->find($id, $with);
+        $datas['sport_types'] = (new SportTypeRepository(new SportType()))->home();
+        $language = $request->server('HTTP_ACCEPT_LANGUAGE');
+        $countryCode = substr($language, 3, 2); // Extract country code (e.g., 'US' for 'en-US')
+        $datas['cities'] = (new CityRepository(new City()))->getByCountryCode($countryCode);
+
+        return $datas;
     }
 }
