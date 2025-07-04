@@ -24,7 +24,7 @@
                             <li class="breadcrumb-item text-gray-700 fw-bold lh-1"></li>
                         </ul>
                     </div>
-                    <a href="#" class="btn btn-sm btn-success ms-3 px-4 py-3" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app"> {{ __('messages.create_team') }} </a>
+                    <a href="{{ route('teams.create') }}" class="btn btn-sm btn-success ms-3 px-4 py-3"> {{ __('messages.create_team') }} </a>
                 </div>
             </div>
         </div>
