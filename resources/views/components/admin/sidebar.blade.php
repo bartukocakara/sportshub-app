@@ -11,7 +11,7 @@
                 <div class="menu-item">
                     <a class="menu-link text-dark" style="font-size: 20px;" href="{{ route('admin.court-businesses.index') }}">
                         <span class="menu-icon">🏟️</span>
-                        <span class="menu-title">{{ __('messages.courts') }}</span>
+                        <span class="menu-title">{{ __('messages.court_businesses') }}</span>
                     </a>
                 </div>
             </div>

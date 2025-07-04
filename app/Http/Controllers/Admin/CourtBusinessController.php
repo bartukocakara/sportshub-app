@@ -21,7 +21,7 @@ class CourtBusinessController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.court-businesses.create.index');
     }
 
     /**

@@ -3,8 +3,8 @@
 @section('custom-styles')
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
-		<link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-		<link href="{{ asset('assets/css/toaster.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/css/toaster.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
@@ -4280,7 +4280,6 @@
 
 @endsection
 @section('page-scripts')
-<script src="{{ asset('js/custom/widgets.js') }}"></script>
 <script src="{{ asset('plugins/custom/vis-timeline/vis-timeline.bundle.js') }}"></script>
 <script src="{{ asset('assets/js/custom/auth-modal.js') }}"></script>
 <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>

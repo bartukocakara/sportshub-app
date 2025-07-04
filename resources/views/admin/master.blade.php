@@ -29,6 +29,10 @@
         extendedTimeOut: 1000, // Additional time if hovered
     };
 </script>
+<script src="{{ asset('plugins/custom/vis-timeline/vis-timeline.bundle.js') }}"></script>
+<script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
+<script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
+<script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>
 @yield('page-scripts')
 </body>
 </html>
