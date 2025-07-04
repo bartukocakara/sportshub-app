@@ -9,6 +9,7 @@ class AdminMiddleware
 {
     public function handle($request, Closure $next)
     {
+        dd(Auth::guard('admin')->check());
         if (Auth::guard('admin')->check()) {
             return $next($request);
         }

@@ -10,9 +10,7 @@
                 @csrf
                 <div class="text-center mb-10">
                     <h1 class="text-dark mb-3">Sportshub'a Giriş Yapın</h1>
-                    <div class="text-gray-400 fw-semibold fs-4">
-                        <a href="{{ route('register') }}" class="link-primary fw-bold">Hesap oluştur</a>
-                    </div>
+
                 </div>
 
                 <div class="fv-row mb-10">
