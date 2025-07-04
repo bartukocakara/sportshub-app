@@ -41,7 +41,7 @@
                        @include('components.team.profile.tabs')
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade active show" id="kt_customer_view_overview_tab" role="tabpanel">
-                                @include('components.team.profile.player-list')
+                                <x-player-list :players="$data['team']->users" />
                             </div>
 
                             <div class="tab-pane fade" id="kt_customer_view_overview_events_and_logs_tab" role="tabpanel">

@@ -43,7 +43,8 @@ class TeamController extends Controller
      */
     public function create()
     {
-        return view('teams.create.index');
+        $datas = $this->teamService->create();
+        return view('teams.create.index', compact('datas'));
     }
 
     /**

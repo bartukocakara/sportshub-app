@@ -13,40 +13,46 @@ use Illuminate\Http\Request;
 
 class TeamService extends CrudService
 {
-    protected TeamRepository $teamRepository;
 
     /**
      * @param TeamRepository $teamRepository
      * @return void
     */
-    public function __construct(TeamRepository $teamRepository)
-    {
-        $this->teamRepository = $teamRepository;
-        parent::__construct($this->teamRepository); // Crud işlemleri yoksa kaldırınız.
-    }
+    public function __construct(
+        protected TeamRepository $teamRepository,
+        protected MetaDataService $metaDataService
+    ) {}
 
     public function index(Request $request, array $with = []) : array
     {
-        $datas['teams'] = TeamResource::collection($this->teamRepository->all($request, $with))
-                                            ->response()
-                                            ->getData(true);
+        return [
+            'teams'       => TeamResource::collection(
+                                $this->teamRepository->all($request, $with)
+                            )->response()->getData(true),
 
-        $datas['sport_types'] = (new SportTypeRepository(new SportType()))->home();
-        $language = $request->server('HTTP_ACCEPT_LANGUAGE');
-        $countryCode = substr($language, 3, 2); // Extract country code (e.g., 'US' for 'en-US')
-        $datas['cities'] = (new CityRepository(new City()))->getByCountryCode($countryCode);
-
-        return $datas;
+            'sport_types' => $this->metaDataService->getSportTypes(),
+            'cities'      => $this->metaDataService->getCitiesByRequest($request),
+        ];
     }
 
     public function profile(Request $request, string $id, array $with = []) : array
     {
-        $datas['team'] = $this->teamRepository->find($id, $with);
-        $datas['sport_types'] = (new SportTypeRepository(new SportType()))->home();
-        $language = $request->server('HTTP_ACCEPT_LANGUAGE');
-        $countryCode = substr($language, 3, 2); // Extract country code (e.g., 'US' for 'en-US')
-        $datas['cities'] = (new CityRepository(new City()))->getByCountryCode($countryCode);
+        return [
+            'team'        => $this->teamRepository->find($id, $with),
+            'sport_types' => $this->metaDataService->getSportTypes(),
+            'cities'      => $this->metaDataService->getCitiesByRequest($request),
+        ];
+    }
 
-        return $datas;
+    /**
+     * @return array
+    */
+    public function create() : array
+    {
+         return [
+            'players' => [],
+            'sport_types' => $this->metaDataService->getSportTypes(),
+            'cities'      => $this->metaDataService->getCitiesByRequest(),
+        ];
     }
 }
