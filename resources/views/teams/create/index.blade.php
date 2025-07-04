@@ -4,177 +4,195 @@
 <link href="{{ asset('assets/css/no-sidebar.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section( 'content')
-<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
-    <!--begin::Content wrapper-->
+<div class="app-main flex-column flex-row-fluid" id="kt_app_main" data-select2-id="select2-data-kt_app_main">
     <div class="d-flex flex-column flex-column-fluid">
-        <!--begin::Toolbar-->
         <div id="kt_app_toolbar" class="app-toolbar pt-5">
-            <!--begin::Toolbar container-->
             <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
-                <!--begin::Toolbar wrapper-->
                 <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
-                    <!--begin::Page title-->
                     <div class="page-title d-flex flex-column gap-1 me-3 mb-2">
-                        <!--begin::Breadcrumb-->
                         <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-6">
                             <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
-                                <a href="/index.html" class="text-gray-500 text-hover-primary">
+                                <a href="/saul-html-pro/index.html" class="text-gray-500 text-hover-primary">
                                     <i class="ki-duotone ki-home fs-3 text-gray-500 me-n1"></i>
                                 </a>
                             </li>
-
                             <li class="breadcrumb-item">
                                 <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
                             </li>
-
                             <li class="breadcrumb-item text-gray-700 fw-bold lh-1">{{ __('messages.teams') }}</li>
-
                             <li class="breadcrumb-item">
                                 <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
                             </li>
-
                             <li class="breadcrumb-item text-gray-700">{{ __('messages.create_team') }}</li>
                         </ul>
+                        <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bolder fs-1 lh-0">{{ __('messages.create_team') }}</h1>
                     </div>
+                    <a href="#" class="btn btn-sm btn-success ms-3 px-4 py-3" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app"> Create Project </a>
                 </div>
             </div>
         </div>
+        <div id="kt_app_content" class="app-content flex-column-fluid" data-select2-id="select2-data-kt_app_content">
+            <div id="kt_app_content_container" class="app-container container-fluid" data-select2-id="select2-data-kt_app_content_container">
+                <div class="d-flex flex-column flex-lg-row" data-select2-id="select2-data-129-bxdx">
+                    <div class="flex-lg-row-fluid mb-10 mb-lg-0 me-lg-7 me-xl-10">
+                        <div class="card">
+                            <div class="card-body p-12">
+                                <form action="" id="kt_invoice_form">
+                                    <div class="mb-0">
+                                        <div class="table-responsive mb-10">
+                                            <table class="table g-5 gs-0 mb-0 fw-bold text-gray-700" data-kt-element="items">
+                                                <thead>
+                                                    <tr class="border-bottom fs-7 fw-bold text-gray-700 text-uppercase">
+                                                        <th class="min-w-300px w-475px">Item</th>
+                                                        <th class="min-w-100px w-100px">QTY</th>
+                                                        <th class="min-w-150px w-150px">Price</th>
+                                                        <th class="min-w-100px w-150px text-end">Total</th>
+                                                        <th class="min-w-75px w-75px text-end">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="border-bottom border-bottom-dashed" data-kt-element="item">
+                                                        <td class="pe-7">
+                                                            <input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Item name" />
 
-        <div id="kt_app_content" class="app-content flex-column-fluid">
-            <div id="kt_app_content_container" class="app-container container-fluid">
-                <div class="d-flex flex-column flex-lg-row">
-                    <div class="flex-lg-row-fluid me-lg-15 order-2 order-lg-1 mb-10 mb-lg-0">
-                        <div class="card card-flush pt-3 mb-5 mb-lg-10">
-                            <div class="card-body p-lg-15">
-                                <div class="d-flex flex-column flex-lg-row">
-                                    <div class="flex-lg-row-fluid">
-                                        <div class="mb-13">
-                                            <div class="mb-15">
-                                                <h4 class="fs-2x text-gray-800 w-bolder mb-6">{{ __('messages.create_team') }}</h4>
-                                                <p class="fw-semibold fs-4 text-gray-600 mb-2">First, a disclaimer - the entire process of writing a blog post often</p>
+                                                            <input type="text" class="form-control form-control-solid" name="description[]" placeholder="Description" />
+                                                        </td>
 
-                                            </div>
+                                                        <td class="ps-0">
+                                                            <input type="text" class="form-control form-control-solid" min="1" name="quantity[]" placeholder="1" value="1" data-kt-element="quantity" />
+                                                        </td>
 
-                                            <div class="mb-15">
+                                                        <td>
+                                                            <input type="text" class="form-control form-control-solid text-end" name="price[]" placeholder="0.00" value="0.00" data-kt-element="price" />
+                                                        </td>
 
-                                                <h3 class="text-gray-800 w-bolder mb-4">Buying Product</h3>
+                                                        <td class="pt-8 text-end text-nowrap">$<span data-kt-element="total">0.00</span></td>
 
-                                                <div class="m-0">
-                                                    <div class="d-flex align-items-center collapsible py-3 toggle mb-0" data-bs-toggle="collapse" data-bs-target="#kt_job_8_1">
-                                                        <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
-                                                            <i class="ki-duotone ki-minus-square toggle-on text-primary fs-1"><span class="path1"></span><span class="path2"></span></i>
-                                                            <i class="ki-duotone ki-plus-square toggle-off fs-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
-                                                        </div>
+                                                        <td class="pt-5 text-end">
+                                                            <button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-kt-element="remove-item">
+                                                                <i class="ki-duotone ki-trash fs-3"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr class="border-top border-top-dashed align-top fs-6 fw-bold text-gray-700">
+                                                        <th class="text-primary">
+                                                            <button class="btn btn-link py-1" data-kt-element="add-item">Add item</button>
+                                                        </th>
 
+                                                        <th colspan="2" class="border-bottom border-bottom-dashed ps-0">
+                                                            <div class="d-flex flex-column align-items-start">
+                                                                <div class="fs-5">Subtotal</div>
 
-                                                        <h4 class="text-gray-700 fw-bold cursor-pointer mb-0">{{ __('messages.profile') }}</h4>
-                                                    </div>
+                                                                <button class="btn btn-link py-1" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-original-title="Coming soon" data-kt-initialized="1">Add tax</button>
 
-                                                    <div id="kt_job_8_1" class="collapse show fs-6 ms-1">
-                                                        <div class="row gx-10 mb-5">
-                                                            <div class="col-12">
-                                                                <label class="form-label fs-6 fw-bold text-gray-700 mb-3">Bill From</label>
-                                                                <div class="mb-5">
-                                                                    <input type="text" class="form-control form-control-solid" placeholder="Name">
-                                                                </div>
-                                                                <div class="mb-5">
-                                                                    <input type="text" class="form-control form-control-solid" placeholder="Email">
-                                                                </div>
-                                                                <div class="mb-5">
-                                                                    <textarea name="notes" class="form-control form-control-solid" rows="3" placeholder="Who is this invoice from?"></textarea>
-                                                                </div>
+                                                                <button class="btn btn-link py-1" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-original-title="Coming soon" data-kt-initialized="1">Add discount</button>
                                                             </div>
-                                                        </div>
+                                                        </th>
 
-                                                    </div>
+                                                        <th colspan="2" class="border-bottom border-bottom-dashed text-end">$<span data-kt-element="sub-total">0.00</span></th>
+                                                    </tr>
 
-                                                    <div class="separator separator-dashed"></div>
+                                                    <tr class="align-top fw-bold text-gray-700">
+                                                        <th></th>
 
-                                                </div>
+                                                        <th colspan="2" class="fs-4 ps-0">Total</th>
 
+                                                        <th colspan="2" class="text-end fs-4 text-nowrap">$<span data-kt-element="grand-total">0.00</span></th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
 
-                                                <div class="m-0">
-                                                    <div class="d-flex align-items-center collapsible py-3 toggle collapsed mb-0" data-bs-toggle="collapse" data-bs-target="#kt_job_8_2">
-                                                        <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
-                                                            <i class="ki-duotone ki-minus-square toggle-on text-primary fs-1"><span class="path1"></span><span class="path2"></span></i>
-                                                            <i class="ki-duotone ki-plus-square toggle-off fs-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
-                                                        </div>
+                                        <table class="table d-none" data-kt-element="item-template">
+                                            <tbody>
+                                                <tr class="border-bottom border-bottom-dashed" data-kt-element="item">
+                                                    <td class="pe-7">
+                                                        <input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Item name" />
 
+                                                        <input type="text" class="form-control form-control-solid" name="description[]" placeholder="Description" />
+                                                    </td>
 
-                                                        <h4 class="text-gray-700 fw-bold cursor-pointer mb-0">{{ __('messages.players') }}</h4>
-                                                    </div>
-                                                    <div id="kt_job_8_2" class="collapse fs-6 ms-1">
+                                                    <td class="ps-0">
+                                                        <input type="text" class="form-control form-control-solid" min="1" name="quantity[]" placeholder="1" data-kt-element="quantity" />
+                                                    </td>
 
-                                                        <div class="mb-4 text-gray-600 fw-semibold fs-6 ps-10">First, a disclaimer – the entire process of writing a blog post often takes more than a couple of hours, even if you can type eighty words as per minute and your writing skills are sharp.</div>
+                                                    <td>
+                                                        <input type="text" class="form-control form-control-solid text-end" name="price[]" placeholder="0.00" data-kt-element="price" />
+                                                    </td>
 
-                                                    </div>
+                                                    <td class="pt-8 text-end">$<span data-kt-element="total">0.00</span></td>
 
-                                                    <div class="separator separator-dashed"></div>
+                                                    <td class="pt-5 text-end">
+                                                        <button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-kt-element="remove-item">
+                                                            <i class="ki-duotone ki-trash fs-3"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
 
-                                                </div>
-                                            </div>
+                                        <table class="table d-none" data-kt-element="empty-template">
+                                            <tbody>
+                                                <tr data-kt-element="empty">
+                                                    <th colspan="5" class="text-muted text-center py-10">No items</th>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <div class="mb-0">
+                                            <label class="form-label fs-6 fw-bold text-gray-700">Notes</label>
+
+                                            <textarea name="notes" class="form-control form-control-solid" rows="3" placeholder="Thanks for your business"></textarea>
                                         </div>
                                     </div>
-                                    <div class="flex-column flex-lg-row-auto w-100 w-lg-250px w-xl-300px mb-10 order-1 order-lg-2">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 
-                                        <div
-                                            class="card card-flush pt-3 mb-0"
-                                            data-kt-sticky="true"
-                                            data-kt-sticky-name="subscription-summary"
-                                            data-kt-sticky-offset="{default: false, lg: '200px'}"
-                                            data-kt-sticky-width="{lg: '250px', xl: '300px'}"
-                                            data-kt-sticky-left="auto"
-                                            data-kt-sticky-top="150px"
-                                            data-kt-sticky-animation="false"
-                                            data-kt-sticky-zindex="95"
-                                            style=""
-                                        >
-                                            <div class="card-header">
-                                                <div class="card-title">
-                                                    <h2>Summary</h2>
-                                                </div>
-                                            </div>
-                                            <div class="card-body pt-0 fs-6">
-                                                <div class="mb-7">
-                                                    <h5 class="mb-3">Customer details</h5>
+                    <div class="flex-lg-auto min-w-lg-300px" data-select2-id="select2-data-128-kom0">
+                        <div class="card" data-kt-sticky="true" data-kt-sticky-name="invoice" data-kt-sticky-offset="{default: false, lg: '200px'}" data-kt-sticky-width="{lg: '250px', lg: '300px'}" data-kt-sticky-left="auto" data-kt-sticky-top="150px" data-kt-sticky-animation="false" data-kt-sticky-zindex="95" style="">
+                            <div class="card-body p-10">
+                                <div class="mb-10">
+                            <label class="form-label fw-bold fs-6 text-gray-700">Currency</label>
 
-                                                    <div class="d-flex align-items-center mb-1">
-                                                        <a href="/apps/customers/view.html" class="fw-bold text-gray-800 text-hover-primary me-2"> Sean Bean </a>
-                                                        <span class="badge badge-light-success">Active</span>
-                                                    </div>
+                            <select name="currency" id="currency-select" class="form-select form-select-solid w-100">
+                                <option value="">Select currency</option>
+                                <option value="USD"><b>USD</b> - USA dollar</option>
+                                <option value="GBP"><b>GBP</b> - British pound</option>
+                                <option value="AUD"><b>AUD</b> - Australian dollar</option>
+                                <option value="JPY"><b>JPY</b> - Japanese yen</option>
+                            </select>
+                        </div>
+                                <div class="separator separator-dashed mb-8"></div>
 
-                                                    <a href="#" class="fw-semibold text-gray-600 text-hover-primary">sean@dellito.com</a>
-                                                </div>
-                                                <div class="separator separator-dashed mb-7"></div>
-                                                <div class="mb-7">
-                                                    <h5 class="mb-3">Product details</h5>
-                                                    <div class="mb-0">
-                                                        <span class="badge badge-light-info me-2">Basic Bundle</span>
+                                <div class="mb-8">
+                                    <label class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack mb-5">
+                                        <span class="form-check-label ms-0 fw-bold fs-6 text-gray-700"> Payment method </span>
+                                        <input class="form-check-input" type="checkbox" checked="checked" value="" />
+                                    </label>
 
-                                                        <span class="fw-semibold text-gray-600">$149.99 / Year</span>
-                                                    </div>
-                                                </div>
-                                                <div class="separator separator-dashed mb-7"></div>
-                                                <div class="mb-10">
-                                                    <h5 class="mb-3">Payment Details</h5>
-                                                    <div class="mb-0">
-                                                        <div class="fw-semibold text-gray-600 d-flex align-items-center">
-                                                            Mastercard
-                                                            <img src="/assets/media/svg/card-logos/mastercard.svg" class="w-35px ms-2" alt="" />
-                                                        </div>
-                                                        <div class="fw-semibold text-gray-600">Expires Dec 2024</div>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-0">
-                                                    <button type="submit" class="btn btn-primary" id="kt_subscriptions_create_button">
-                                                        <span class="indicator-label"> Create Subscription</span>
+                                    <label class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack mb-5">
+                                        <span class="form-check-label ms-0 fw-bold fs-6 text-gray-700"> Late fees </span>
 
-                                                        <span class="indicator-progress"> Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span> </span>
-                                                    </button>
-                                                </div>
-                                            </div>
+                                        <input class="form-check-input" type="checkbox" value="" />
+                                    </label>
+                                </div>
+                                <div class="separator separator-dashed mb-8"></div>
+                                <div class="mb-0">
+                                    <div class="row mb-5">
+                                        <div class="col">
+                                            <a href="#" class="btn btn-light btn-active-light-primary w-100">Preview</a>
+                                        </div>
+                                        <div class="col">
+                                            <a href="#" class="btn btn-light btn-active-light-primary w-100">Download</a>
                                         </div>
                                     </div>
+                                    <button type="submit" href="#" class="btn btn-primary w-100" id="kt_invoice_submit_button">
+                                        <i class="ki-duotone ki-triangle fs-3"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i> Send Invoice
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -184,6 +202,8 @@
         </div>
     </div>
 </div>
+
 @endsection
 @section('page-scripts')
+
 @endsection
