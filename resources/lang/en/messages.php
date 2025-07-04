@@ -256,4 +256,7 @@ return [
     'actions' => 'Actions',
     'edit' => 'Edit',
     'details' => 'Details',
+    'dashboard' => 'Dashboard',
+    'court_business_create' => 'Court Business Create',
+    'court_business_update' => 'Court Business Update',
 ];

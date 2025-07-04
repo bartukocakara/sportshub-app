@@ -268,4 +268,7 @@ return [
     'actions' => 'İşlemler',
     'edit' => 'Düzenle',
     'details' => 'Detaylar',
+    'dashboard' => 'Göstergeler',
+    'court_business_create' => 'Saha İşletmesi Oluştur',
+    'court_business_update' => 'Saha İşletmesi Güncelle',
 ];

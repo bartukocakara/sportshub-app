@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="{{ asset('assets/plugins/custom/leaflet/leaflet.bundle.css') }}">
 @endsection
 
-@section(section: 'content')
+@section('content')
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
     <div class="d-flex flex-column flex-column-fluid">
         <!-- Toolbar -->
