@@ -18,9 +18,9 @@ class Commission extends Model
         'percentage',
     ];
 
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, 'CommissionFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, $with, 'CommissionFilters'))->apply();
     }
 
     /**

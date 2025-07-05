@@ -20,8 +20,8 @@ class Refund extends Model
         'refunded_at',
     ];
 
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, 'RefundFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, $with, 'RefundFilters'))->apply();
     }
 }

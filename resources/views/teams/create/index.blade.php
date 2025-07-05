@@ -3,16 +3,17 @@
 @section('custom-styles')
 <link href="{{ asset('assets/css/no-sidebar.css') }}" rel="stylesheet" type="text/css" />
 @endsection
-@section( 'content')
-<div class="app-main flex-column flex-row-fluid" id="kt_app_main" data-select2-id="select2-data-kt_app_main">
+@section('content')
+
+<div class="app-main flex-column flex-row-fluid">
     <div class="d-flex flex-column flex-column-fluid">
         <div id="kt_app_toolbar" class="app-toolbar pt-5">
-            <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+            <div class="app-container container-fluid d-flex align-items-stretch">
                 <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
                     <div class="page-title d-flex flex-column gap-1 me-3 mb-2">
                         <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-6">
                             <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
-                                <a href="/saul-html-pro/index.html" class="text-gray-500 text-hover-primary">
+                                <a href="/" class="text-gray-500 text-hover-primary">
                                     <i class="ki-duotone ki-home fs-3 text-gray-500 me-n1"></i>
                                 </a>
                             </li>
@@ -25,66 +26,159 @@
                             </li>
                             <li class="breadcrumb-item text-gray-700">{{ __('messages.create_team') }}</li>
                         </ul>
-                        <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bolder fs-1 lh-0">{{ __('messages.create_team') }}</h1>
+                        <h1 class="page-heading text-gray-900 fw-bolder fs-1">{{ __('messages.create_team') }}</h1>
                     </div>
-                    <a href="#" class="btn btn-sm btn-success ms-3 px-4 py-3" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app"> Create Project </a>
                 </div>
             </div>
         </div>
-        <div id="kt_app_content" class="app-content flex-column-fluid" data-select2-id="select2-data-kt_app_content">
-            <div id="kt_app_content_container" class="app-container container-fluid" data-select2-id="select2-data-kt_app_content_container">
-                <div class="d-flex flex-column flex-lg-row" data-select2-id="select2-data-129-bxdx">
-                    <div class="flex-lg-row-fluid mb-10 mb-lg-0 me-lg-7 me-xl-10">
-                        <x-player-list :players="$datas['players']" />
-                    </div>
-                    <div class="flex-lg-auto min-w-lg-300px" data-select2-id="select2-data-128-kom0">
-                        <div class="card" data-kt-sticky="true" data-kt-sticky-name="invoice" data-kt-sticky-offset="{default: false, lg: '200px'}" data-kt-sticky-width="{lg: '250px', lg: '300px'}" data-kt-sticky-left="auto" data-kt-sticky-top="150px" data-kt-sticky-animation="false" data-kt-sticky-zindex="95" style="">
-                            <div class="card-body p-10">
-                                <div class="mb-10">
-                            <label class="form-label fw-bold fs-6 text-gray-700">{{ __('messages.city') }}</label>
-
-                            <select name="currency" id="currency-select" class="form-select form-select-solid w-100">
-                                <option value="">{{ __('messages.city') }}</option>
-                                @foreach ($datas['cities'] as $key => $value)
-                                    <option value="{{ $value->id }}">{{ $value->title }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                            <div class="separator separator-dashed mb-8"></div>
-                            <div class="mb-8">
-                                <label class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack mb-5">
-                                    <span class="form-check-label ms-0 fw-bold fs-6 text-gray-700"> Payment method </span>
-                                    <input class="form-check-input" type="checkbox" checked="checked" value="" />
-                                </label>
-                                <label class="form-check form-switch form-switch-sm form-check-custom form-check-solid flex-stack mb-5">
-                                    <span class="form-check-label ms-0 fw-bold fs-6 text-gray-700"> Late fees </span>
-                                    <input class="form-check-input" type="checkbox" value="" />
-                                </label>
-                            </div>
-                            <div class="separator separator-dashed mb-8"></div>
-                                <div class="mb-0">
-                                    <div class="row mb-5">
-                                        <div class="col">
-                                            <a href="#" class="btn btn-light btn-active-light-primary w-100">Preview</a>
-                                        </div>
-                                        <div class="col">
-                                            <a href="#" class="btn btn-light btn-active-light-primary w-100">Download</a>
-                                        </div>
+        <div id="kt_app_content" class="app-content flex-column-fluid">
+            <div class="app-container container-fluid">
+                <form method="POST" action="{{ route('teams.store') }}">
+                    @csrf
+                    <div class="d-flex flex-column flex-lg-row">
+                        <x-player-list :players="$datas['players']['data']" :meta="$datas['players']" :key="'team_create_selected_players'" />
+                        <div class="flex-lg-auto min-w-lg-300px">
+                            <div class="card" style="position: sticky; top: 150px;">
+                                <div class="card-body p-10">
+                                    <div class="mb-10">
+                                        <label class="form-label fw-bold fs-6 text-gray-700">{{ __('messages.city') }}</label>
+                                        <select name="city_id" class="form-select form-select-solid w-100">
+                                            <option value="">{{ __('messages.city') }}</option>
+                                            @foreach ($datas['cities'] as $city)
+                                                <option value="{{ $city->id }}">{{ $city->title }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    <button type="submit" href="#" class="btn btn-primary w-100" id="kt_invoice_submit_button">
-                                        <i class="ki-duotone ki-triangle fs-3"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i> Send Invoice
-                                    </button>
+                                    <div id="selected-player-ids"></div>
+                                    <div class="separator separator-dashed mb-8"></div>
+                                    <button type="submit" class="btn btn-primary w-100">{{ __('messages.create') }}</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-
 @endsection
 @section('page-scripts')
+<script>
+    let selectedUsers = @json($datas['team_create_selected_players'] ?? []);
+    document.addEventListener('DOMContentLoaded', () => {
+        const previewContainer = document.getElementById('selected-players-preview');
+        const hiddenInputsContainer = document.getElementById('selected-player-ids');
+        const noSelectedMessage = document.getElementById('no-selected-message');
+        const removeAllButton = document.getElementById('remove-all-players');
 
+        function updateCheckboxListeners() {
+            const checkboxes = document.querySelectorAll('.player-checkbox');
+            checkboxes.forEach(cb => {
+                cb.removeEventListener('change', handleCheckboxChange);
+                cb.addEventListener('change', handleCheckboxChange);
+            });
+        }
+
+        function handleCheckboxChange(e) {
+            const user = JSON.parse(e.target.dataset.user);
+            const exists = selectedUsers.find(u => u.id === user.id);
+
+            if (e.target.checked && !exists) {
+                selectedUsers.push(user);
+            } else if (!e.target.checked && exists) {
+                selectedUsers = selectedUsers.filter(u => u.id !== user.id);
+            }
+
+            renderSelectedPlayers();
+            syncWithServer();
+        }
+
+        function renderSelectedPlayers() {
+            previewContainer.innerHTML = '';
+            hiddenInputsContainer.innerHTML = '';
+
+            if (selectedUsers.length === 0 && noSelectedMessage) {
+                previewContainer.appendChild(noSelectedMessage);
+                removeAllButton.style.display = 'none'; // Hide button when no players are selected
+            } else {
+                removeAllButton.style.display = 'inline-block'; // Show button when players are selected
+            }
+            selectedUsers.slice(0, 3).forEach(user => {
+                const symbol = document.createElement('div');
+                symbol.className = 'symbol symbol-35px symbol-circle';
+                symbol.setAttribute('data-bs-toggle', 'tooltip');
+                symbol.setAttribute('title', user.first_name);
+
+                if (user.avatar) {
+                    symbol.innerHTML = `<img alt="Pic" src="/storage/avatar/${user.avatar}" />`;
+                } else {
+                    const letter = user.first_name.charAt(0).toUpperCase();
+                    symbol.innerHTML = `<span class="symbol-label bg-primary text-inverse-primary fw-bold">${letter}</span>`;
+                }
+
+                previewContainer.appendChild(symbol);
+            });
+
+            if (selectedUsers.length > 3) {
+                const extra = document.createElement('div');
+                extra.className = 'symbol symbol-35px symbol-circle';
+                extra.setAttribute('data-bs-toggle', 'tooltip');
+                extra.setAttribute('title', `${selectedUsers.length - 3} kişi daha`);
+                extra.innerHTML = `<span class="symbol-label bg-light text-gray-600 fw-bold">+${selectedUsers.length - 3}</span>`;
+                previewContainer.appendChild(extra);
+            }
+
+            selectedUsers.forEach(user => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'user_ids[]';
+                input.value = user.id;
+                hiddenInputsContainer.appendChild(input);
+            });
+        }
+
+        function removeAllSelectedPlayers() {
+            selectedUsers = []; // Clear the selectedUsers array
+            const checkboxes = document.querySelectorAll('.player-checkbox');
+            checkboxes.forEach(cb => {
+                cb.checked = false; // Uncheck all checkboxes
+            });
+            renderSelectedPlayers();
+            syncWithServer();
+        }
+
+        function syncWithServer() {
+            const selectedData = selectedUsers.map(user => ({
+                id: user.id,
+                first_name: user.first_name,
+                last_name: user.last_name,
+                avatar: user.avatar,
+            }));
+            fetch("{{ route('teams.selected-players') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                                        selected: selectedData,
+                                        key : 'team_create_selected_players'
+                                    })
+            })
+            .then(response => response.json())
+            .then(data => console.log('Server response:', data))
+            .catch(error => console.error('Error syncing with server:', error));
+        }
+
+        removeAllButton.addEventListener('click', removeAllSelectedPlayers);
+
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.forEach(tooltipTriggerEl => {
+            new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
+        updateCheckboxListeners();
+        renderSelectedPlayers();
+    });
+</script>
 @endsection

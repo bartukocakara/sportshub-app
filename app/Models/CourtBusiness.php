@@ -54,9 +54,9 @@ class CourtBusiness extends Authenticatable
     }
 
 
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, 'CourtBusinessFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, $with, 'CourtBusinessFilters'))->apply();
     }
 
     public function district() : BelongsTo

@@ -259,4 +259,12 @@ return [
     'dashboard' => 'Dashboard',
     'court_business_create' => 'Court Business Create',
     'court_business_update' => 'Court Business Update',
+    'create' => 'Create',
+    'no_players_selected' => 'No players selected',
+    'selected_players' => 'Selected Players',
+    'remove_all' => 'Remove All',
+    'messages' => 'Messages',
+    'created_at' => 'Created At',
+    'avatar' => 'Avatar',
+
 ];

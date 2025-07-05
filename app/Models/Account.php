@@ -19,9 +19,9 @@ class Account extends Model
         'balance', // The balance of the account
     ];
 
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, 'AccountFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, $with, 'AccountFilters'))->apply();
     }
 
     /**

@@ -20,8 +20,8 @@ class CourtImage extends Model
         'file_path'
     ];
 
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, 'CourtImageFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, $with, 'CourtImageFilters'))->apply();
     }
 }

@@ -56,6 +56,8 @@ Route::resource('/courts', CourtController::class)->names('courts')->parameters(
     'courts' => 'id'
 ])->except(['store', 'update', 'destroy']);
 Route::middleware('auth')->group(function () {
+    Route::post('/teams/selected-players', [TeamController::class, 'updateSelectedPlayers'])->name('teams.selected-players');
+
     Route::post('checkout/user', [CheckoutController::class, 'userIndex'])->name('checkout.user.index');
     Route::get('checkout/user/reservation', [CheckoutController::class, 'userReservation'])->name('reservation.user.index');
 

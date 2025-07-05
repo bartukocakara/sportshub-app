@@ -41,10 +41,29 @@ class TeamController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
-        $datas = $this->teamService->create();
+        $datas = $this->teamService->create($request);
         return view('teams.create.index', compact('datas'));
+    }
+
+    public function updateSelectedPlayers(Request $request)
+    {
+        $selected = $request->input('selected', []);
+        $key = $request->input('key', 'selected_players'); // Default session key
+
+        $validated = collect($selected)->map(function ($player) {
+            return [
+                'id' => $player['id'],
+                'first_name' => $player['first_name'],
+                'last_name' => $player['last_name'],
+                'avatar' => $player['avatar'] ?? null,
+            ];
+        })->all();
+
+        session()->put($key, $validated);
+
+        return response()->json(['status' => 'ok']);
     }
 
     /**
@@ -67,7 +86,7 @@ class TeamController extends Controller
      */
     public function show(Request $request, string $id) : View
     {
-        $data = $this->teamService->profile($request, $id, ['users', 'sportType', 'city', 'statusDefinition']);
+        $data = $this->teamService->profile($request, $id, ['sportType', 'city', 'statusDefinition']);
         return view('teams.profile.index', compact('data'));
     }
 

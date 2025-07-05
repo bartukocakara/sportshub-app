@@ -24,9 +24,9 @@ class Payment extends Model
         'paid_at',
     ];
 
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, 'PaymentFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, $with,'PaymentFilters'))->apply();
     }
 
     public function reservation() {

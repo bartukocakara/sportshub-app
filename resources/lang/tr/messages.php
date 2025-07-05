@@ -271,4 +271,11 @@ return [
     'dashboard' => 'Göstergeler',
     'court_business_create' => 'Saha İşletmesi Oluştur',
     'court_business_update' => 'Saha İşletmesi Güncelle',
+    'create' => 'Oluştur',
+    'no_players_selected' => 'Oyuncu seçilmedi',
+    'selected_players' => 'Seçilen Oyuncular',
+    'remove_all' => 'Hepsini Kaldır',
+    'messages' => 'Mesajlar',
+    'created_at' => 'Olusturulma Tarihi',
+    'avatar' => 'Avatar',
 ];

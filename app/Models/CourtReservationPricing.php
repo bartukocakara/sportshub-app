@@ -26,9 +26,10 @@ class CourtReservationPricing extends Model
         'day_of_week' => DayEnum::class,
         'hours' => 'array',
     ];
-    public function scopeFilterBy($query, $filters)
+    
+    public function scopeFilterBy($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, 'CourtReservationPricingFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, $with, 'CourtReservationPricingFilters'))->apply();
     }
 
     public function court()

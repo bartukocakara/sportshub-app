@@ -19,8 +19,8 @@ class Country extends Model
 
     public $timestamps = false;
 
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, 'CountryFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, $with, 'CountryFilters'))->apply();
     }
 }

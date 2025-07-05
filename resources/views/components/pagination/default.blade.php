@@ -32,22 +32,19 @@
 @endphp
 @if (isset($data['meta']['links']) && count($data['meta']['links']) > 1)
     <form method="GET" class="d-flex justify-content-between align-items-center flex-wrap gap-3 mt-4">
-
         <ul class="pagination mb-0">
-    @php
-        $prevPage = 0;
-        foreach ($pageLinks as $page):
-            if ($prevPage && $page - $prevPage > 1) {
-                // arada boşluk varsa ... ekle
-                echo '<li class="paginate_button page-item disabled"><span class="page-link">...</span></li>';
-            }
-            echo renderPageLink($page, $currentPage);
-            $prevPage = $page;
-        endforeach;
-    @endphp
-</ul>
-
-        {{-- Total Entries --}}
+            @php
+            $prevPage = 0;
+            foreach ($pageLinks as $page):
+                if ($prevPage && $page - $prevPage > 1) {
+                    // arada boşluk varsa ... ekle
+                    echo '<li class="paginate_button page-item disabled"><span class="page-link">...</span></li>';
+                }
+                echo renderPageLink($page, $currentPage);
+                $prevPage = $page;
+            endforeach;
+            @endphp
+        </ul>
         <div class="total-entries">
             <span>Toplam: {{ $data['meta']['total'] }} kayıt</span>
         </div>
@@ -60,7 +57,6 @@
                 <input type="hidden" name="{{ $param }}" value="{{ $value }}">
             @endif
         @endforeach
-        {{-- Per Page Selector --}}
         <div class="d-flex align-items-center">
             <label for="per_page" class="me-2 fw-semibold">Göster:</label>
             <select name="per_page" id="per_page" class="form-select form-select-sm w-auto" onchange="this.form.submit()">
@@ -70,7 +66,7 @@
                     </option>
                 @endforeach
             </select>
-            <span class="ms-2">takım / sayfa</span>
+            <span class="ms-2"> / sayfa</span>
         </div>
     </form>
 @endif

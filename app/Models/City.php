@@ -22,9 +22,9 @@ class City extends Model
 
     public $timestamps = false;
 
-    public function scopeFilterBy($query, $filters, array $with = [], bool $useCache = false)
+    public function scopeFilterBy($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, 'CityFilters'))->apply($with, $useCache);
+        return  (new FilterBuilder($query, $filters, $with, 'CityFilters'))->apply();
     }
 
     public function country()

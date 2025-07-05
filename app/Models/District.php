@@ -20,9 +20,9 @@ class District extends Model
         'title'
     ];
 
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, 'DistrictFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, $with, 'DistrictFilters'))->apply();
     }
 
     public function city()

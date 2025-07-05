@@ -20,8 +20,8 @@ class JournalEntry extends Model
         'entry_date' => 'date',
     ];
 
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, 'JournalEntryFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, $with, 'JournalEntryFilters'))->apply();
     }
 }
