@@ -15,6 +15,7 @@ class CourtReservationPricingService extends CrudService
         $this->courtReservationPricingRepository = $courtReservationPricingRepository;
         parent::__construct($this->courtReservationPricingRepository);
     }
+    
     public function checkAvailablitiy(Request $request)
     {
         return $this->courtReservationPricingRepository->checkAvailablitiy($request);

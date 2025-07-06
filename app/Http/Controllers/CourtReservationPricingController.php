@@ -33,7 +33,7 @@ class CourtReservationPricingController extends Controller
     public function index(Request $request) : JsonResponse
     {
         return $this->okApiResponse(
-            CourtReservationPricingResource::collection($this->courtReservationPricingService->all($request))
+            CourtReservationPricingResource::collection($this->courtReservationPricingService->all($request, [ 'court.courtBusiness']))
                 ->response()
                 ->getData(true)
         );

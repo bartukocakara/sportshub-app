@@ -278,4 +278,9 @@ return [
     'messages' => 'Mesajlar',
     'created_at' => 'Olusturulma Tarihi',
     'avatar' => 'Avatar',
+    'court_list' => 'Saha Listesi',
+    'create_court' => 'Saha Olustur',
+    'update_court' => 'Saha Guncelle',
+    'court_images' => 'Saha Resimleri',
+
 ];

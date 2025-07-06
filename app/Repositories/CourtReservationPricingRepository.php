@@ -26,9 +26,9 @@ class CourtReservationPricingRepository extends BaseRepository
         $this->courtReservationPricing = $courtReservationPricing;
     }
 
-    public function all(Request $request): LengthAwarePaginator|Collection
+    public function all(Request $request, array $with = [], bool $useCache = false): LengthAwarePaginator|Collection
     {
-        return $this->courtReservationPricing->with([ 'court.courtBusiness' ])->filterBy($request->all());
+        return $this->courtReservationPricing->with($with)->filterBy($request->all(), $with);
     }
 
     public function checkAvailablitiy(Request $request) : LengthAwarePaginator|Collection

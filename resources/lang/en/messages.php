@@ -266,5 +266,8 @@ return [
     'messages' => 'Messages',
     'created_at' => 'Created At',
     'avatar' => 'Avatar',
+    'court_list' => 'Court List',
+    'create_court' => 'Create Court',
+    'court_images' => 'Court Images',
 
 ];

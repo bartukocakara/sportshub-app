@@ -19,7 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->web( // Add HandleNotFound middleware to web routes
+        $middleware->web(
             append: [
                 HandleNotFound::class,
                 SetDefaultPerPage::class
