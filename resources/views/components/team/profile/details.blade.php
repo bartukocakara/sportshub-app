@@ -40,7 +40,6 @@
         </div>
     </div>
 </div>
-<!-- Modal -->
 <div class="modal fade" id="kt_modal_update_card_info" tabindex="-1" aria-labelledby="updateCardInfoLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">

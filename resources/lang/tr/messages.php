@@ -296,4 +296,13 @@ return [
     'address_detail' => 'Adres Detayı',
     'building_number' => 'Bina Numarası',
     'neighborhood' => 'Mahalle',
+    'failed_to_update_court' => 'Kort güncellenirken bir hata oluştu. Lütfen tekrar deneyiniz.',
+    'court_updated_successfully' => 'Kort başarıyla güncellendi.',
+    'confirm_delete' => 'Bu öğeyi silmek istediğinizden emin misiniz?',
+    'confirm_delete_title' => 'Silme Onayı',
+    'delete' => 'Sil',
+    'cancel' => 'İptal',
+    'close' => 'Kapat',
+    'view' => 'Görüntüle',
+    'no_data' => 'Veri bulunamadı',
 ];

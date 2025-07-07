@@ -7,10 +7,10 @@
         </div>
         <div class="row p-4">
             <img class="col-lg-6 col-md-12 col-sm-12"
-                src="{{ asset('storage/courts/' . (($court['court_images'][0]['file_path'] ?? 'placeholder-court.webp'))) }}"
+                src="{{ asset('storage/courts/' . (($court['images'][0]['file_path'] ?? 'placeholder-court.webp'))) }}"
                 alt="Court Image"
                 id="courtImage"
-                data-court-images="{{ json_encode($court['court_images']) }}"
+                data-court-images="{{ json_encode($court['images']) }}"
                 style="cursor: pointer;"
                 data-bs-toggle="modal"
                 data-bs-target="#imageModal">

@@ -88,8 +88,8 @@
                                                         <i class="ki-duotone ki-pencil fs-7">
                                                             <span class="path1"></span><span class="path2"></span>
                                                         </i>
-                                                        <input type="file" name="court_images[{{ $i }}]" accept=".png, .jpg, .jpeg" onchange="previewImage(this, {{ $i }})" />
-                                                        <input type="hidden" name="court_images_remove[{{ $i }}]" />
+                                                        <input type="file" name="images[{{ $i }}]" accept=".png, .jpg, .jpeg" onchange="previewImage(this, {{ $i }})" />
+                                                        <input type="hidden" name="images[{{ $i }}]" />
                                                     </label>
                                                     <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
                                                           data-kt-image-input-action="remove"
@@ -233,8 +233,6 @@
 
 @section('page-scripts')
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-    <script src="{{ asset('assets/js/custom/apps/ecommerce/catalog/save-product.js') }}"></script>
     <script>
         let imageBoxCounter = 3;
 
@@ -290,8 +288,8 @@
                 const removeSpan = box.querySelector('span[data-kt-image-input-action="remove"]');
 
                 if (preview) preview.id = `image-preview-${index}`;
-                if (fileInput) fileInput.name = `court_images[${index}]`;
-                if (removeInput) removeInput.name = `court_images_remove[${index}]`;
+                if (fileInput) fileInput.name = `images[${index}]`;
+                if (removeInput) removeInput.name = `images_remove[${index}]`;
                 if (removeButton) removeButton.onclick = () => removeImageBox(removeButton);
                 if (changeLabel) {
                     const fileInputNew = changeLabel.querySelector('input[type="file"]');
@@ -322,9 +320,9 @@
                            data-bs-toggle="tooltip"
                            title="Change image">
                         <i class="ki-duotone ki-pencil fs-7"><span class="path1"></span><span class="path2"></span></i>
-                        <input type="file" name="court_images[${imageBoxCounter}]" accept=".png, .jpg, .jpeg"
+                        <input type="file" name="images[${imageBoxCounter}]" accept=".png, .jpg, .jpeg"
                                onchange="previewImage(this, ${imageBoxCounter})" />
-                        <input type="hidden" name="court_images_remove[${imageBoxCounter}]" />
+                        <input type="hidden" name="images_remove[${imageBoxCounter}]" />
                     </label>
                     <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
                           data-kt-image-input-action="remove"

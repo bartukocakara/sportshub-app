@@ -283,4 +283,9 @@ return [
     'address_detail' => 'Address Detail',
     'building_number' => 'Building Number',
     'neighborhood' => 'Neighborhood',
+    'failed_to_update_court' => 'Court could not be updated. Please try again.',
+    'court_updated_successfully' => 'Court updated successfully.',
+    'confirm_delete' => 'Are you sure you want to delete this item?',
+    'no_data' => 'No data available.',
+
 ];

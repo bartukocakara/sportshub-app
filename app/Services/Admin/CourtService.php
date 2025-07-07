@@ -80,4 +80,54 @@ class CourtService extends CrudService
         });
     }
 
+    public function updateCourt(string $courtId, array $data, ?array $images = []): Court
+    {
+        return DB::transaction(function () use ($courtId, $data, $images) {
+            $court = $this->courtRepository->find($courtId);
+
+            // Court güncelle
+            $court->update($data);
+
+            // Adres güncelle
+            if (!empty($data['court_address'])) {
+                $court->courtAddress()->updateOrCreate(
+                    ['court_id' => $court->id],
+                    $data['court_address']
+                );
+            }
+
+            // Görselleri işle
+            $existingImages = $court->courtImages()->orderBy('order')->get()->keyBy('order');
+            $removeFlags = $data['images_remove'] ?? [];
+
+            foreach (range(0, 9) as $index) {
+                $remove = isset($removeFlags[$index]) && $removeFlags[$index] == '1';
+                $file = $images[$index] ?? null;
+
+                if ($remove && isset($existingImages[$index])) {
+                    // Kaldırılacak
+                    $existingImages[$index]->delete();
+                    continue;
+                }
+
+                if ($file && $file->isValid()) {
+                    // Dosya güncellenmişse, varsa eskisini sil
+                    if (isset($existingImages[$index])) {
+                        $existingImages[$index]->delete();
+                    }
+
+                    $path = $file->store('courts', 'public');
+                    $court->courtImages()->create([
+                        'order' => $index,
+                        'file_path' => $path,
+                    ]);
+                }
+            }
+
+            return $court;
+        });
+    }
+
+
+
 }

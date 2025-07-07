@@ -27,15 +27,14 @@
                         @endif
                     @endforeach
                     @php
-                        // Başlık eşlemesi varsa onu kullan, yoksa doğrudan değer
                         $labelValue = $titleMaps[$key][$v] ?? $v;
                     @endphp
-                    <button type="submit" class="btn btn-sm btn-light-primary rounded-pill d-flex align-items-center gap-2">
-                        <span>
-                            {{ __("messages.$key") }}: {{ $labelValue }}
-                        </span>
-                        <i class="bi bi-x fs-6"></i>
-                    </button>
+                    <form method="GET" action="{{ url()->current() }}" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-light-primary rounded-pill d-flex align-items-center gap-2">
+                            <span>{{ __("messages.$key") }}: {{ $labelValue }}</span>
+                            <i class="bi bi-x fs-6"></i>
+                        </button>
+                    </form>
                 </form>
             @endforeach
         @endforeach

@@ -4,7 +4,8 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('assets/css/toaster.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/css/carousel.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
@@ -39,55 +40,91 @@
                 </div>
             </div>
         </div>
-
         <div id="kt_app_content" class="app-content flex-column-fluid">
+
             <div id="kt_app_content_container" class="app-container container-fluid">
+                 <x-filter-buttons :datas="$datas" />
                 <div class="card card-flush">
-                    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
-                        <div class="card-title">
-                            <form method="GET" action="{{ route('admin.courts.index') }}" class="row mb-5 g-3">
-                                <div class="col-md-3">
-                                    <select name="sport_type_id" class="form-select">
-                                        <option value="">{{ __('messages.select_sport_type') }}</option>
-                                        @foreach($datas['sport_types'] as $type)
-                                            <option value="{{ $type->id }}" @selected(request('sport_type_id') == $type->id)>
-                                                {{ $type->title }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-md-3">
-                                    @include('components.home.filters.location-filtering')
-                                </div>
-                                <div class="col-md-3">
-                                    <select name="district_id" id="district-select" class="form-select">
-                                        <option value="">{{ __('messages.select_district') }}</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <input type="text" name="title" class="form-control" placeholder="{{ __('messages.title') }}" value="{{ request('title') }}">
-                                </div>
-
-                                <div class="col-md-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary">{{ __('messages.filter') }}</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
                     <div class="card-body pt-0">
-                        @include('components.admin.table')
+                        <x-admin.table
+                            :items="$datas['courts']"
+                            :imageKey="'images.0.file_path'"
+                            :columns="[
+                                'title' => 'messages.title',
+                                'court_address.city.title' => 'messages.city',
+                                'court_address.district.title' => 'messages.district',
+                                'created_at' => 'messages.created_at',
+                            ]"
+                            :actions="[
+                                ['label' => 'messages.view', 'url' => fn($item) => route('admin.courts.show', ['court' => $item['id']])],
+                                ['label' => 'messages.edit', 'url' => fn($item) => route('admin.courts.edit', ['court' => $item['id']])],
+                                ['label' => 'messages.delete', 'url' => fn($item) => route('admin.courts.destroy', ['court' => $item['id']]), 'method' => 'DELETE'],
+                            ]"
+                        />
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form method="POST" id="deleteConfirmForm">
+            @csrf
+            @method('DELETE')
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmModalLabel">{{ __('messages.confirm_delete_title') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ __('messages.close') }}"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ __('messages.confirm_delete') }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ __('messages.cancel') }}</button>
+                    <button type="submit" class="btn btn-danger">{{ __('messages.delete') }}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
+@include('components.admin.court.modals.filter-modal')
+@include('components.modals.court-images-modal')
 @endsection
 @section('page-scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        $('.court-image-modal-trigger').on('click', function () {
+            const images = $(this).data('images') || [];
+            const $carouselContent = $('#carouselImagesContent');
+
+            $carouselContent.empty();
+
+            images.forEach((src, index) => {
+                const isActive = index === 0 ? 'active' : '';
+                const slide = `
+                    <div class="carousel-item ${isActive}">
+                        <img src="${src}" class="d-block w-100" alt="Court Image ${index + 1}">
+                    </div>
+                `;
+                $carouselContent.append(slide);
+            });
+
+            new bootstrap.Carousel(document.getElementById('carouselImages'), {
+                interval: 5000,
+                wrap: true
+            });
+        });
+
+        $('#imageModal').on('hidden.bs.modal', function () {
+            $('#carouselImagesContent').empty();
+        });
+    });
+</script>
 <script src="{{ asset('assets/js/swiper-bundle.min.js') }}"></script>
+@include('components.scripts.filter-modal-scripts')
 
 @endsection

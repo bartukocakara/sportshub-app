@@ -36,7 +36,7 @@
                 <form method="POST" action="{{ route('teams.store') }}">
                     @csrf
                     <div class="d-flex flex-column flex-lg-row">
-                        <x-player-list :players="$datas['players']['data']" :meta="$datas['players']" :key="'team_create_selected_players'" />
+                        <x-player-list :players="$datas['players']['data']" :meta="$datas['players']['meta']" :key="'team_create_selected_players'" />
                         <div class="flex-lg-auto min-w-lg-300px">
                             <div class="card" style="position: sticky; top: 150px;">
                                 <div class="card-body p-10">
@@ -63,6 +63,8 @@
 </div>
 @endsection
 @section('page-scripts')
+@include('components.scripts.pagination-scripts')
+
 <script>
     let selectedUsers = @json($datas['team_create_selected_players'] ?? []);
     document.addEventListener('DOMContentLoaded', () => {

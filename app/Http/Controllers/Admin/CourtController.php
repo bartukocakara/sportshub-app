@@ -32,7 +32,7 @@ class CourtController extends Controller
      */
     public function index(Request $request) : View
     {
-        $datas = $this->courtService->index($request, ['courtReservationPricings', 'courtImages']);
+        $datas = $this->courtService->index($request, ['courtReservationPricings', 'courtImages', 'courtBusiness', 'courtAddress']);
         return view('admin.courts.index', compact('datas'));
     }
 
@@ -56,7 +56,7 @@ class CourtController extends Controller
     public function store(CourtRequest $request): RedirectResponse
     {
         try {
-            $this->courtService->createCourt($request->validated(), $request->file('court_images'));
+            $this->courtService->createCourt($request->validated(), $request->file('images'));
             return redirect()->route('admin.courts.index')
                 ->with('success', __('messages.court_created_successfully'));
         } catch (\Throwable $e) {
@@ -100,8 +100,18 @@ class CourtController extends Controller
      */
     public function update(CourtRequest $request, string $id): RedirectResponse
     {
-        $this->courtService->update($request->validated(), $id);
-        return redirect()->route('admin.courts.index')->with('success', 'Court updated successfully.');
+        try {
+            $this->courtService->updateCourt($id, $request->validated(), $request->file('images'));
+
+            return redirect()->route('admin.courts.index')
+                ->with('success', __('messages.court_updated_successfully'));
+        } catch (\Throwable $e) {
+            report($e);
+
+            return back()->withErrors([
+                'error' => __('messages.failed_to_update_court'), // mesaj güncellendi
+            ])->withInput();
+        }
     }
 
     /**

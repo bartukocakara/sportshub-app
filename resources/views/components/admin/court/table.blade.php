@@ -38,7 +38,7 @@
                         <div class="d-flex align-items-center">
                             <a href="{{ route('admin.courts.show', ['court' => $court['id']]) }}" class="symbol symbol-50px">
                                 <span class="symbol-label"
-                                    style="background-image: url('{{ asset($court['court_images'][0]['file_path'] ?? 'courts/placeholder-court.webp') }}');">
+                                    style="background-image: url('{{ asset($court['images'][0]['file_path'] ?? 'courts/placeholder-court.webp') }}');">
                                 </span>
                             </a>
                             <div class="ms-5">

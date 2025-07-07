@@ -29,10 +29,10 @@
             <div class="row mb-3">
                 <div class="col-12  mt-5">
                     <img class="col-lg-6 col-md-12 col-sm-12"
-                        src="{{ asset('storage/courts/' . (($checkout['court_images'][0]['file_path'] ?? 'placeholder-court.webp'))) }}"
+                        src="{{ asset('storage/courts/' . (($checkout['images'][0]['file_path'] ?? 'placeholder-court.webp'))) }}"
                         alt="Court Image"
                         id="courtImage"
-                        data-court-images="{{ json_encode($checkout['court_images']) }}"
+                        data-court-images="{{ json_encode($checkout['images']) }}"
                         style="cursor: pointer;"
                         data-bs-toggle="modal"
                         data-bs-target="#imageModal">

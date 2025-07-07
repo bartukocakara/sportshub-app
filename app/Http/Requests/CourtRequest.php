@@ -26,7 +26,7 @@ class CourtRequest extends FormRequest
             'court_address.building_number' => 'nullable|string|max:50',
             'court_address.city' => 'nullable|string|max:255',
             // Görseller
-            'court_images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:10240',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:10240',
         ];
     }
 }

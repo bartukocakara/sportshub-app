@@ -1,90 +1,102 @@
-<div id="kt_ecommerce_report_views_table_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer">
-    <div id="" class="table-responsive">
-        <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable" id="kt_ecommerce_report_views_table" style="width: 100%;">
-            <colgroup>
-                <col data-dt-column="0" style="width: 150px;" />
-                <col data-dt-column="1" style="width: 100px;" />
-                <col data-dt-column="2" style="width: 100px;" />
-                <col data-dt-column="3" style="width: 100px;" />
-                <col data-dt-column="4" style="width: 72.325px;" />
-                <col data-dt-column="5" style="width: 100px;" />
-            </colgroup>
-            <thead>
-                <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0" role="row">
-                    <th class="min-w-150px dt-orderable-asc dt-orderable-desc" data-dt-column="0" rowspan="1" colspan="1" aria-label="Product: Activate to sort" tabindex="0">
-                        <span class="dt-column-title" role="button">Product</span><span class="dt-column-order"></span>
+@props([
+    'items' => [],
+    'columns' => [],
+    'actions' => [],
+    'imageKey' => null,
+])
+
+<div class="table-responsive">
+    <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable w-100">
+        <thead>
+            <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                @foreach($columns as $key => $label)
+                    <th class="{{ $loop->first ? 'min-w-150px' : 'text-end min-w-100px' }}">
+                        <span class="dt-column-title" role="button">{{ __($label) }}</span>
+                        <span class="dt-column-order"></span>
                     </th>
-                    <th class="text-end min-w-100px dt-type-numeric dt-orderable-asc dt-orderable-desc" data-dt-column="1" rowspan="1" colspan="1" aria-label="SKU: Activate to sort" tabindex="0">
-                        <span class="dt-column-title" role="button">SKU</span><span class="dt-column-order"></span>
-                    </th>
-                    <th class="text-end min-w-100px dt-orderable-asc dt-orderable-desc" data-dt-column="2" rowspan="1" colspan="1" aria-label="Rating: Activate to sort" tabindex="0">
-                        <span class="dt-column-title" role="button">Rating</span><span class="dt-column-order"></span>
-                    </th>
-                    <th class="text-end min-w-100px dt-type-numeric dt-orderable-asc dt-orderable-desc" data-dt-column="3" rowspan="1" colspan="1" aria-label="Price: Activate to sort" tabindex="0">
-                        <span class="dt-column-title" role="button">Price</span><span class="dt-column-order"></span>
-                    </th>
-                    <th class="text-end min-w-70px dt-type-numeric dt-orderable-asc dt-orderable-desc" data-dt-column="4" rowspan="1" colspan="1" aria-label="Viewed: Activate to sort" tabindex="0">
-                        <span class="dt-column-title" role="button">Viewed</span><span class="dt-column-order"></span>
-                    </th>
-                    <th class="text-end min-w-100px dt-type-numeric dt-orderable-asc dt-orderable-desc" data-dt-column="5" rowspan="1" colspan="1" aria-label="Percent: Activate to sort" tabindex="0">
-                        <span class="dt-column-title" role="button">Percent</span><span class="dt-column-order"></span>
-                    </th>
-                </tr>
-            </thead>
-            <tbody class="fw-semibold text-gray-600">
-                @foreach ($datas['courts']['data'] as $key => $court )
-                <tr>
-                    <td>
-                        <div class="d-flex align-items-center">
-                            <a href="{{ route('admin.courts.show', ['court' => $court['id']]) }}" class="symbol symbol-50px">
-                                <span class="symbol-label"
-                                    style="background-image: url('{{ asset($court['court_images'][0]['file_path'] ?? 'courts/placeholder-court.webp') }}');">
-                                </span>
-                            </a>
-                            <div class="ms-5">
-                                <a href="{{ route('admin.courts.show', ['court' => $court['id']]) }}"
-                                class="text-gray-800 text-hover-primary fs-5 fw-bold"
-                                data-kt-ecommerce-product-filter="product_name">
-                                    {{ $court['title'] }}
-                                </a>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="text-end pe-0 dt-type-numeric">
-                        <span class="fw-bold">03920007</span>
-                    </td>
-                    <td class="text-end pe-0" data-order="rating-3" data-filter="rating-3">
-                        <div class="rating justify-content-end">
-                            <div class="rating-label checked">
-                                <i class="ki-duotone ki-star fs-6"></i>
-                            </div>
-                            <div class="rating-label checked">
-                                <i class="ki-duotone ki-star fs-6"></i>
-                            </div>
-                            <div class="rating-label checked">
-                                <i class="ki-duotone ki-star fs-6"></i>
-                            </div>
-                            <div class="rating-label">
-                                <i class="ki-duotone ki-star fs-6"></i>
-                            </div>
-                            <div class="rating-label">
-                                <i class="ki-duotone ki-star fs-6"></i>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="text-end pe-0 dt-type-numeric">
-                        <span>$77.00</span>
-                    </td>
-                    <td class="text-end pe-0 dt-type-numeric">
-                        <span>234400</span>
-                    </td>
-                    <td class="text-end pe-0 dt-type-numeric">
-                        23.44%
-                    </td>
-                </tr>
                 @endforeach
-            </tbody>
-        </table>
-    </div>
-    @include('components.pagination.default', ['data' => $datas['courts']])
+                @if(count($actions))
+                    <th class="text-end min-w-100px">{{ __('messages.actions') }}</th>
+                @endif
+            </tr>
+        </thead>
+        <tbody class="fw-semibold text-gray-600">
+            @forelse ($items['data'] as $item)
+                <tr>
+                    @foreach(array_keys($columns) as $key)
+                        <td class="{{ $loop->first ? '' : 'text-end pe-0' }}">
+                            @if ($loop->first && $imageKey)
+                                @php
+                                    $images = data_get($item, 'images', []);
+                                    $imageUrls = collect($images)->pluck('file_path')->map(fn($p) => asset($p))->toArray();
+                                    $hasImages = count($imageUrls) > 0;
+                                @endphp
+                                <div class="d-flex align-items-center">
+                                    <a
+                                        href="#"
+                                        class="symbol symbol-50px {{ $hasImages ? 'court-image-modal-trigger' : '' }}"
+                                        @if($hasImages)
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#imageModal"
+                                            data-images="{{ json_encode($imageUrls) }}"
+                                        @endif
+                                    >
+                                        <span class="symbol-label" style="background-image: url('{{ $imageUrls[0] ?? asset('courts/placeholder-court.webp') }}');"></span>
+                                    </a>
+                                    <div class="ms-5">
+                                        <a href="#" class="text-gray-800 text-hover-primary fs-5 fw-bold">
+                                            {{ data_get($item, $key) }}
+                                        </a>
+                                    </div>
+                                </div>
+                            @else
+                                {{ data_get($item, $key) }}
+                            @endif
+                        </td>
+                    @endforeach
+
+                    @if(count($actions))
+                        <td class="text-end">
+                            <div class="dropdown">
+                                <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary"
+                                   data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                    {{ __('messages.actions') }}
+                                    <i class="ki-duotone ki-down fs-5 ms-1"></i>
+                                </a>
+                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+                                    @foreach($actions as $action)
+                                        <div class="menu-item px-3">
+                                            @if(($action['method'] ?? 'GET') === 'DELETE')
+                                                <button
+                                                    type="button"
+                                                    class="menu-link px-3 btn w-100 text-start text-danger"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#deleteConfirmModal"
+                                                    data-delete-url="{{ $action['url']($item) }}"
+                                                >
+                                                    {{ __($action['label']) }}
+                                                </button>
+                                            @else
+                                                <a href="{{ $action['url']($item) }}" class="menu-link px-3">
+                                                    {{ __($action['label']) }}
+                                                </a>
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </td>
+                    @endif
+                </tr>
+            @empty
+                <tr><td colspan="{{ count($columns) + (count($actions) ? 1 : 0) }}">{{ __('messages.no_data') }}</td></tr>
+            @endforelse
+        </tbody>
+    </table>
 </div>
+
+@if (isset($items['links']) && isset($items['meta']))
+    <div class="mt-4">
+        @include('components.pagination.default', ['data' => $items])
+    </div>
+@endif

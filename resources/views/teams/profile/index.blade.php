@@ -61,6 +61,7 @@
 </div>
 @endsection
 @section('page-scripts')
+@include('components.scripts.pagination-scripts')
 <script>
     let selectedUsers = @json($datas['profile_selected_players'] ?? []);
 

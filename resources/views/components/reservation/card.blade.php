@@ -2,8 +2,8 @@
     <div class="card shadow-sm border-1 rounded-3 h-100">
         <div class="card-img-top position-relative">
             <!-- Check if there is an image available, otherwise use the placeholder -->
-            @if($reservation['court']['court_images'] && count($reservation['court']['court_images']) > 0)
-                <img src="{{ asset('storage/' . $reservation['court']['court_images'][0]['file_path']) }}"
+            @if($reservation['court']['images'] && count($reservation['court']['images']) > 0)
+                <img src="{{ asset('storage/' . $reservation['court']['images'][0]['file_path']) }}"
                      class="img-fluid rounded-top"
                      alt="{{ $reservation['court']['title'] }}"
                      style="height: 150px; object-fit: cover; width: 100%;">
