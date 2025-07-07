@@ -161,13 +161,21 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <a href="{{ route('admin.courts.show', ['court' => $court['id']]) }}" class="symbol symbol-50px">
-                                                        <span class="symbol-label" style="background-image: url(/assets/media/stock/ecommerce/23.gif);"></span>
+                                                        <span class="symbol-label"
+                                                            style="background-image: url('{{ asset($court['court_images'][0]['file_path'] ?? 'courts/placeholder-court.webp') }}');">
+                                                        </span>
                                                     </a>
-                                                <div class="ms-5">
-                                                    <a href="{{ route('admin.courts.show', ['court' => $court['id']]) }}" class="text-gray-800 text-hover-primary fs-5 fw-bold" data-kt-ecommerce-product-filter="product_name">{{ $court['title'] }}</a>
+                                                    <div class="ms-5">
+                                                        <a href="{{ route('admin.courts.show', ['court' => $court['id']]) }}"
+                                                        class="text-gray-800 text-hover-primary fs-5 fw-bold"
+                                                        data-kt-ecommerce-product-filter="product_name">
+                                                            {{ $court['title'] }}
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                            </div>
                                             </td>
+
+
                                             <td class="text-end pe-0 dt-type-numeric">
                                                 <span class="fw-bold">03920007</span>
                                             </td>

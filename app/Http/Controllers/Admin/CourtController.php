@@ -32,7 +32,7 @@ class CourtController extends Controller
      */
     public function index(Request $request) : View
     {
-        $datas = $this->courtService->index($request, ['courtReservationPricings']);
+        $datas = $this->courtService->index($request, ['courtReservationPricings', 'courtImages']);
         return view('admin.courts.index', compact('datas'));
     }
 
