@@ -3,10 +3,13 @@
 namespace App\Services\Admin;
 
 use App\Http\Resources\CourtResource;
+use App\Models\Court;
 use App\Repositories\CourtRepository;
 use App\Services\CrudService;
 use App\Services\MetaDataService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class CourtService extends CrudService
 {
@@ -32,4 +35,41 @@ class CourtService extends CrudService
             'cities'      => $this->metaDataService->getCitiesByRequest($request),
         ];
     }
+
+    public function create(Request $request) : array
+    {
+        return [
+            'sport_types' => $this->metaDataService->getSportTypes(),
+            'cities'      => $this->metaDataService->getCitiesByRequest($request),
+        ];
+    }
+
+    public function createCourt(array $data, ?array $images = []): Court
+    {
+        return DB::transaction(function () use ($data, $images) {
+            // 1. Court oluştur
+            $court = $this->courtRepository->create($data);
+
+            // 2. Adres varsa oluştur
+            if (!empty($data['court_address'])) {
+                $court->courtAddress()->create($data['court_address']);
+            }
+
+            // 3. Görselleri ekle
+            if ($images && is_array($images)) {
+                foreach ($images as $index => $image) {
+                    if ($image && $image->isValid()) {
+                        $path = $image->store('courts', 'public');
+                        $court->courtImages()->create([
+                            'order' => $index,
+                            'file_path' => $path,
+                        ]);
+                    }
+                }
+            }
+
+            return $court;
+        });
+    }
+
 }

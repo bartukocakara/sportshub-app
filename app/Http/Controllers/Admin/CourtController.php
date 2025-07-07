@@ -41,9 +41,10 @@ class CourtController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('admin.courts.create.index');
+        $datas = $this->courtService->create($request);
+        return view('admin.courts.create.index', compact('datas'));
     }
 
     /**
@@ -54,8 +55,16 @@ class CourtController extends Controller
      */
     public function store(CourtRequest $request): RedirectResponse
     {
-        $this->courtService->store($request->validated());
-        return redirect()->route('admin.courts.index')->with('success', 'Court created successfully.');
+        try {
+            $this->courtService->createCourt($request->validated(), $request->file('court_images'));
+            return redirect()->route('admin.courts.index')
+                ->with('success', __('messages.court_created_successfully'));
+        } catch (\Throwable $e) {
+            report($e);
+            return back()->withErrors([
+                'error' => __('messages.failed_to_create_court'),
+            ])->withInput();
+        }
     }
 
     /**

@@ -14,12 +14,19 @@ class CourtRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'court_business_id' => 'uuid|exists:court_businesses,id',
-            'title' => 'string|min:2|max:30|unique:courts,title',
-            'sport_type_id' => 'string|exists:sport_types,id',
-            'images' => 'array',
-            'images.*.order' => 'integer',
-            'images.*.file' => 'file|image|mimes:jpeg,png,jpg|max:2048',
+            'title' => 'required|string|max:255',
+            'sport_type_id' => 'required|uuid|exists:sport_types,id',
+            // Adres alanları
+            'court_address.street_name' => 'nullable|string|max:255',
+            'court_address.address_detail' => 'nullable|string|max:255',
+            'court_address.district_id' => 'nullable|uuid|exists:districts,id',
+            'court_address.longitude' => 'nullable|numeric',
+            'court_address.latitude' => 'nullable|numeric',
+            'court_address.neighborhood' => 'nullable|string|max:255',
+            'court_address.building_number' => 'nullable|string|max:50',
+            'court_address.city' => 'nullable|string|max:255',
+            // Görseller
+            'court_images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:10240',
         ];
     }
 }
