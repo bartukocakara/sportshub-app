@@ -9,7 +9,6 @@ use App\Services\CrudService;
 use App\Services\MetaDataService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\View\View;
 
 class CourtService extends CrudService
 {
@@ -33,6 +32,15 @@ class CourtService extends CrudService
                             )->response()->getData(true),
             'sport_types' => $this->metaDataService->getSportTypes(),
             'cities'      => $this->metaDataService->getCitiesByRequest($request),
+        ];
+    }
+
+    public function profile(string $id, array $with = []) : array
+    {
+        return [
+            'court'       => CourtResource::make($this->courtRepository->find($id, $with)),
+            'sport_types' => $this->metaDataService->getSportTypes(),
+            'cities'      => $this->metaDataService->getCitiesByRequest(),
         ];
     }
 

@@ -20,21 +20,13 @@
                                 </a>
                             </li>
 
-
                             <li class="breadcrumb-item">
                                 <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
                             </li>
                             <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
-                                Apps
-                            </li>
-                            <li class="breadcrumb-item">
-                                <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
-                            </li>
-                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
-                                eCommerce
+                                {{ __('messages.court_list') }}
                             </li>
                         </ul>
-                        <!--end::Breadcrumb-->
 
                         <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bolder fs-1 lh-0">
                             {{ __('messages.court_list') }}
@@ -68,7 +60,6 @@
                                 <div class="col-md-3">
                                     @include('components.home.filters.location-filtering')
                                 </div>
-
                                 <div class="col-md-3">
                                     <select name="district_id" id="district-select" class="form-select">
                                         <option value="">{{ __('messages.select_district') }}</option>

@@ -75,8 +75,8 @@ class CourtController extends Controller
      */
     public function show(string $id) : View
     {
-        $court = $this->courtService->show($id);
-        return view('admin.courts.show.index', compact('court'));
+        $datas = $this->courtService->profile($id, ['courtAddress', 'courtImages', 'courtReservationPricings']);
+        return view('admin.courts.show.index', compact('datas'));
     }
 
     /**
