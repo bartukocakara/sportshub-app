@@ -80,7 +80,7 @@
                                         @for ($i = 0; $i < 3; $i++)
                                             <div class="image-box mb-5" data-index="{{ $i }}">
                                                 <div class="image-input image-input-outline" data-kt-image-input="true">
-                                                    <div class="image-input-wrapper" id="image-preview-{{ $i }}" style="background-image: url('/assets/media/stock/ecommerce/78.gif');"></div>
+                                                    <div class="image-input-wrapper" id="image-preview-{{ $i }}" style="background-image: url('/courts/placeholder-court.webp');"></div>
                                                     <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
                                                            data-kt-image-input-action="change"
                                                            data-bs-toggle="tooltip"
@@ -257,7 +257,7 @@
         function removeImage(index) {
             const preview = document.getElementById(`image-preview-${index}`);
             if (preview) {
-                preview.style.backgroundImage = `url('/assets/media/stock/ecommerce/78.gif')`;
+                preview.style.backgroundImage = `url('/courts/placeholder-court.webp')`;
                 preview.style.backgroundSize = 'cover';
                 preview.style.backgroundPosition = 'center';
                 const input = preview.parentElement.querySelector('input[type="file"]');
@@ -316,7 +316,7 @@
             newBox.setAttribute('data-index', imageBoxCounter);
             newBox.innerHTML = `
                 <div class="image-input image-input-outline" data-kt-image-input="true">
-                    <div class="image-input-wrapper" id="image-preview-${imageBoxCounter}" style="background-image: url('/assets/media/stock/ecommerce/78.gif'); background-size: cover; background-position: center;"></div>
+                    <div class="image-input-wrapper" id="image-preview-${imageBoxCounter}" style="background-image: url('/courts/placeholder-court.webp'); background-size: cover; background-position: center;"></div>
                     <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
                            data-kt-image-input-action="change"
                            data-bs-toggle="tooltip"
