@@ -53,200 +53,46 @@
                 <div class="card card-flush">
                     <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                         <div class="card-title">
-                            <div class="d-flex align-items-center position-relative my-1">
-                                <i class="ki-duotone ki-magnifier fs-2 position-absolute ms-4"><span class="path1"></span><span class="path2"></span></i>
-                                <input type="text" data-kt-ecommerce-order-filter="search" class="form-control form-control-solid w-250px ps-12" placeholder="Search Report" />
-                            </div>
-                            <div id="kt_ecommerce_report_views_export" class="d-none">
-                                <div class="dt-buttons btn-group flex-wrap">
-                                    <button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="kt_ecommerce_report_views_table" type="button"><span>Copy</span></button>
-                                    <button class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="kt_ecommerce_report_views_table" type="button"><span>Excel</span></button>
-                                    <button class="btn btn-secondary buttons-csv buttons-html5" tabindex="0" aria-controls="kt_ecommerce_report_views_table" type="button"><span>CSV</span></button>
-                                    <button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="kt_ecommerce_report_views_table" type="button"><span>PDF</span></button>
+                            <form method="GET" action="{{ route('admin.courts.index') }}" class="row mb-5 g-3">
+                                <div class="col-md-3">
+                                    <select name="sport_type_id" class="form-select">
+                                        <option value="">{{ __('messages.select_sport_type') }}</option>
+                                        @foreach($datas['sport_types'] as $type)
+                                            <option value="{{ $type->id }}" @selected(request('sport_type_id') == $type->id)>
+                                                {{ $type->title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-                            <input class="form-control form-control-solid w-100 mw-250px" placeholder="Pick date range" id="kt_ecommerce_report_views_daterangepicker" />
-                            <div class="w-150px">
-                                <select
-                                    class="form-select form-select-solid select2-hidden-accessible"
-                                    data-control="select2"
-                                    data-hide-search="true"
-                                    data-placeholder="Rating"
-                                    data-kt-ecommerce-order-filter="rating"
-                                    data-select2-id="select2-data-7-qmdm"
-                                    tabindex="-1"
-                                    aria-hidden="true"
-                                    data-kt-initialized="1"
-                                >
-                                    <option data-select2-id="select2-data-9-dzvk"></option>
-                                    <option value="all">All</option>
-                                    <option value="rating-5">5 Stars</option>
-                                    <option value="rating-4">4 Stars</option>
-                                    <option value="rating-3">3 Stars</option>
-                                    <option value="rating-2">2 Stars</option>
-                                    <option value="rating-1">1 Stars</option>
-                                </select>
-                                <span class="select2 select2-container select2-container--bootstrap5" dir="ltr" data-select2-id="select2-data-8-ks43" style="width: 100%;">
-                                    <span class="selection">
-                                        <span
-                                            class="select2-selection select2-selection--single form-select form-select-solid"
-                                            role="combobox"
-                                            aria-haspopup="true"
-                                            aria-expanded="false"
-                                            tabindex="0"
-                                            aria-disabled="false"
-                                            aria-labelledby="select2-q2hz-container"
-                                            aria-controls="select2-q2hz-container"
-                                        >
-                                            <span class="select2-selection__rendered" id="select2-q2hz-container" role="textbox" aria-readonly="true" title="Rating"><span class="select2-selection__placeholder">Rating</span></span>
-                                            <span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
-                                        </span>
-                                    </span>
-                                    <span class="dropdown-wrapper" aria-hidden="true"></span>
-                                </span>
-                            </div>
-                            <button type="button" class="btn btn-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                                <i class="ki-duotone ki-exit-up fs-2"><span class="path1"></span><span class="path2"></span></i> Export Report
-                            </button>
-                            <div id="kt_ecommerce_report_views_export_menu" class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-200px py-4" data-kt-menu="true">
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" data-kt-ecommerce-export="copy">
-                                        Copy to clipboard
-                                    </a>
-                                </div>
-                            </div>
 
+                                <div class="col-md-3">
+                                    @include('components.home.filters.location-filtering')
+                                </div>
+
+                                <div class="col-md-3">
+                                    <select name="district_id" id="district-select" class="form-select">
+                                        <option value="">{{ __('messages.select_district') }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <input type="text" name="title" class="form-control" placeholder="{{ __('messages.title') }}" value="{{ request('title') }}">
+                                </div>
+
+                                <div class="col-md-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary">{{ __('messages.filter') }}</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
 
                     <div class="card-body pt-0">
-                        <div id="kt_ecommerce_report_views_table_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer">
-                            <div id="" class="table-responsive">
-                                <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable" id="kt_ecommerce_report_views_table" style="width: 100%;">
-                                    <colgroup>
-                                        <col data-dt-column="0" style="width: 150px;" />
-                                        <col data-dt-column="1" style="width: 100px;" />
-                                        <col data-dt-column="2" style="width: 100px;" />
-                                        <col data-dt-column="3" style="width: 100px;" />
-                                        <col data-dt-column="4" style="width: 72.325px;" />
-                                        <col data-dt-column="5" style="width: 100px;" />
-                                    </colgroup>
-                                    <thead>
-                                        <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0" role="row">
-                                            <th class="min-w-150px dt-orderable-asc dt-orderable-desc" data-dt-column="0" rowspan="1" colspan="1" aria-label="Product: Activate to sort" tabindex="0">
-                                                <span class="dt-column-title" role="button">Product</span><span class="dt-column-order"></span>
-                                            </th>
-                                            <th class="text-end min-w-100px dt-type-numeric dt-orderable-asc dt-orderable-desc" data-dt-column="1" rowspan="1" colspan="1" aria-label="SKU: Activate to sort" tabindex="0">
-                                                <span class="dt-column-title" role="button">SKU</span><span class="dt-column-order"></span>
-                                            </th>
-                                            <th class="text-end min-w-100px dt-orderable-asc dt-orderable-desc" data-dt-column="2" rowspan="1" colspan="1" aria-label="Rating: Activate to sort" tabindex="0">
-                                                <span class="dt-column-title" role="button">Rating</span><span class="dt-column-order"></span>
-                                            </th>
-                                            <th class="text-end min-w-100px dt-type-numeric dt-orderable-asc dt-orderable-desc" data-dt-column="3" rowspan="1" colspan="1" aria-label="Price: Activate to sort" tabindex="0">
-                                                <span class="dt-column-title" role="button">Price</span><span class="dt-column-order"></span>
-                                            </th>
-                                            <th class="text-end min-w-70px dt-type-numeric dt-orderable-asc dt-orderable-desc" data-dt-column="4" rowspan="1" colspan="1" aria-label="Viewed: Activate to sort" tabindex="0">
-                                                <span class="dt-column-title" role="button">Viewed</span><span class="dt-column-order"></span>
-                                            </th>
-                                            <th class="text-end min-w-100px dt-type-numeric dt-orderable-asc dt-orderable-desc" data-dt-column="5" rowspan="1" colspan="1" aria-label="Percent: Activate to sort" tabindex="0">
-                                                <span class="dt-column-title" role="button">Percent</span><span class="dt-column-order"></span>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="fw-semibold text-gray-600">
-                                        @foreach ($datas['courts']['data'] as $key => $court )
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <a href="{{ route('admin.courts.show', ['court' => $court['id']]) }}" class="symbol symbol-50px">
-                                                        <span class="symbol-label"
-                                                            style="background-image: url('{{ asset($court['court_images'][0]['file_path'] ?? 'courts/placeholder-court.webp') }}');">
-                                                        </span>
-                                                    </a>
-                                                    <div class="ms-5">
-                                                        <a href="{{ route('admin.courts.show', ['court' => $court['id']]) }}"
-                                                        class="text-gray-800 text-hover-primary fs-5 fw-bold"
-                                                        data-kt-ecommerce-product-filter="product_name">
-                                                            {{ $court['title'] }}
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-
-
-                                            <td class="text-end pe-0 dt-type-numeric">
-                                                <span class="fw-bold">03920007</span>
-                                            </td>
-                                            <td class="text-end pe-0" data-order="rating-3" data-filter="rating-3">
-                                                <div class="rating justify-content-end">
-                                                    <div class="rating-label checked">
-                                                        <i class="ki-duotone ki-star fs-6"></i>
-                                                    </div>
-                                                    <div class="rating-label checked">
-                                                        <i class="ki-duotone ki-star fs-6"></i>
-                                                    </div>
-                                                    <div class="rating-label checked">
-                                                        <i class="ki-duotone ki-star fs-6"></i>
-                                                    </div>
-                                                    <div class="rating-label">
-                                                        <i class="ki-duotone ki-star fs-6"></i>
-                                                    </div>
-                                                    <div class="rating-label">
-                                                        <i class="ki-duotone ki-star fs-6"></i>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-end pe-0 dt-type-numeric">
-                                                <span>$77.00</span>
-                                            </td>
-                                            <td class="text-end pe-0 dt-type-numeric">
-                                                <span>234400</span>
-                                            </td>
-                                            <td class="text-end pe-0 dt-type-numeric">
-                                                23.44%
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            @include('components.pagination.default', ['data' => $datas['courts']])
-
-                        </div>
-                        <!--end::Table-->
+                        @include('components.admin.table')
                     </div>
-                    <!--end::Card body-->
                 </div>
-                <!--end::Products-->
             </div>
-            <!--end::Content container-->
         </div>
-        <!--end::Content-->
     </div>
-    <!--end::Content wrapper-->
-
-    <!--begin::Footer-->
-    <div id="kt_app_footer" class="app-footer align-items-center justify-content-center justify-content-md-between flex-column flex-md-row py-3">
-        <!--begin::Copyright-->
-        <div class="text-gray-900 order-2 order-md-1">
-            <span class="text-muted fw-semibold me-1">2025©</span>
-            <a href="https://keenthemes.com" target="_blank" class="text-gray-800 text-hover-primary">Keenthemes</a>
-        </div>
-        <!--end::Copyright-->
-
-        <!--begin::Menu-->
-        <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
-            <li class="menu-item"><a href="https://keenthemes.com" target="_blank" class="menu-link px-2">About</a></li>
-
-            <li class="menu-item"><a href="https://devs.keenthemes.com" target="_blank" class="menu-link px-2">Support</a></li>
-
-            <li class="menu-item"><a href="https://keenthemes.com/products" target="_blank" class="menu-link px-2">Purchase</a></li>
-        </ul>
-
-    </div>
-    <!--end::Footer-->
 </div>
 
 @endsection

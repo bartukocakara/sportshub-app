@@ -54,7 +54,7 @@
                                 <i class="bi bi-x-circle me-2"></i>
                                 {{ __('messages.clear_filter') }}
                             </a>
-                        @endif
+                            @endif
                         </div>
                     </div>
                 </div>

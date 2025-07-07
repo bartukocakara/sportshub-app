@@ -19,7 +19,7 @@ class CourtRequest extends FormRequest
             // Adres alanları
             'court_address.street_name' => 'nullable|string|max:255',
             'court_address.address_detail' => 'nullable|string|max:255',
-            'court_address.district_id' => 'nullable|uuid|exists:districts,id',
+            'court_address.district_id' => 'nullable|exists:districts,id',
             'court_address.longitude' => 'nullable|numeric',
             'court_address.latitude' => 'nullable|numeric',
             'court_address.neighborhood' => 'nullable|string|max:255',
