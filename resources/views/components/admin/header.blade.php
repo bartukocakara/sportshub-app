@@ -11,6 +11,7 @@
 		<meta property="og:type" content="article" />
 		<meta property="og:title" content="Sportshub" />
 		<meta property="og:site_name" content="Sportshub" />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 		<link rel="shortcut icon" href="{{ asset('favicon.png') }}" />
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
 		<link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />

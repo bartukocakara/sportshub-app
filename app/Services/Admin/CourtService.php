@@ -9,6 +9,7 @@ use App\Services\CrudService;
 use App\Services\MetaDataService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class CourtService extends CrudService
 {
@@ -128,6 +129,30 @@ class CourtService extends CrudService
         });
     }
 
+    public function destroy(string $id): bool
+    {
+        try {
+            $court = $this->courtRepository->find($id);
+            dd($court->courtImages);
+            // Delete associated images from disk
+            foreach ($court->courtImages as $image) {
+                if ($image->file_path && Storage::exists($image->file_path)) {
+                    Storage::delete($image->file_path); // deletes from storage/app
+                }
+            }
+
+            // Delete DB relations
+            $court->courtImages()->delete();
+            $court->courtBusiness()->delete();
+            $court->courtAddress()->delete();
+
+            // Finally, delete the court itself
+            return $court->delete();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+
+    }
 
 
 }
