@@ -56,25 +56,38 @@ class CourtService extends CrudService
         ];
     }
 
+    /**
+     * Creates a new court and its associated data, including images.
+     *
+     * @param array $data The data for creating the court and its related models.
+     * @param array $images An array of uploaded image files.
+     * @return Court The newly created Court model instance.
+     * @throws Throwable If an error occurs during the creation process.
+     */
     public function createCourt(array $data, ?array $images = []): Court
     {
         return DB::transaction(function () use ($data, $images) {
-            // 1. Court oluştur
+            // 1. Create court
             $court = $this->courtRepository->create($data);
 
-            // 2. Adres varsa oluştur
+            // 2. Create address if provided
             if (!empty($data['court_address'])) {
                 $court->courtAddress()->create($data['court_address']);
             }
 
-            // 3. Görselleri ekle
+            // 3. Add images using FileUpload service
             if ($images && is_array($images)) {
+                $destinationPath = 'courts'; // Define your image storage path
                 foreach ($images as $index => $image) {
                     if ($image && $image->isValid()) {
-                        $path = $image->store('courts', 'public');
+                        // Upload file using FileUpload service
+                        // FileUpload::upload returns only the filename
+                        $uploadedFileName = FileUpload::upload($court->id, $image, $destinationPath);
+
+                        // Store the full path (destinationPath/filename) in the database
                         $court->courtImages()->create([
                             'order' => $index,
-                            'file_path' => $path,
+                            'file_path' => "$destinationPath/$uploadedFileName",
                         ]);
                     }
                 }
