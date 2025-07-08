@@ -5,7 +5,7 @@
         </div>
     </div>
     <div class="card-body pt-0">
-        <div id="image-upload-container">
+        <div id="image-upload-container" style="max-height: 500px;overflow-y: auto;padding-right: 15px;">
             @foreach ($images as $key => $image)
                 <div class="image-box mb-5" data-index="{{ $key }}">
                     <input type="hidden" name="image_ids[{{ $key }}]" value="{{ $image->id }}">

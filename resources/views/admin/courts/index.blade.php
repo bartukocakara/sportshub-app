@@ -6,6 +6,13 @@
 <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/css/carousel.css') }}" rel="stylesheet" type="text/css" />
+<style>
+    #image-upload-container {
+        max-height: 350px;
+        overflow-y: auto;
+        padding-right: 15px; /* Adjust as needed */
+    }
+</style>
 @endsection
 @section('content')
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
@@ -58,7 +65,7 @@
                             :actions="[
                                 ['label' => 'messages.view', 'url' => fn($item) => route('admin.courts.show', ['court' => $item['id']])],
                                 ['label' => 'messages.edit', 'url' => fn($item) => route('admin.courts.edit', ['court' => $item['id']])],
-                                ['label' => 'messages.delete', 'url' => fn($item) => route('admin.courts.destroy', ['id' => $item['id']]), 'method' => 'DELETE'],
+                                ['label' => 'messages.delete', 'url' => fn($item) => route('admin.courts.destroy', ['court' => $item['id']]), 'method' => 'DELETE'],
                             ]"
                         />
 
@@ -72,37 +79,11 @@
 @include('components.admin.court.modals.filter-modal')
 @include('components.modals.court-images-modal')
 @endsection
+
 @section('page-scripts')
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        $('.court-image-modal-trigger').on('click', function () {
-            const images = $(this).data('images') || [];
-            const $carouselContent = $('#carouselImagesContent');
 
-            $carouselContent.empty();
-
-            images.forEach((src, index) => {
-                const isActive = index === 0 ? 'active' : '';
-                const slide = `
-                    <div class="carousel-item ${isActive}">
-                        <img src="${src}" class="d-block w-100" alt="Court Image ${index + 1}">
-                    </div>
-                `;
-                $carouselContent.append(slide);
-            });
-
-            new bootstrap.Carousel(document.getElementById('carouselImages'), {
-                interval: 5000,
-                wrap: true
-            });
-        });
-
-        $('#imageModal').on('hidden.bs.modal', function () {
-            $('#carouselImagesContent').empty();
-        });
-    });
-</script>
+@include('components.admin.scripts.delete-item-scripts')
+@include('components.admin.scripts.modal-slider-scripts')
 <script src="{{ asset('assets/js/swiper-bundle.min.js') }}"></script>
 @include('components.scripts.filter-modal-scripts')
-
 @endsection

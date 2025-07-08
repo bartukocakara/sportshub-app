@@ -3,6 +3,8 @@
         <form method="POST" id="deleteConfirmForm">
             @csrf
             @method('DELETE')
+            <input type="hidden" name="_method" value="DELETE">
+
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteConfirmModalLabel">{{ __('messages.confirm_delete_title') }}</h5>
