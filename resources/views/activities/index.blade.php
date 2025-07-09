@@ -19,63 +19,51 @@
                     <div class="page-title d-flex flex-column gap-1 me-3 mb-2">
                         <!--begin::Breadcrumb-->
                         <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-6">
-                            <!--begin::Item-->
+
                             <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
                                 <a href="/index.html" class="text-gray-500 text-hover-primary">
                                     <i class="ki-duotone ki-home fs-3 text-gray-500 me-n1"></i>
                                 </a>
                             </li>
-                            <!--end::Item-->
 
-                            <!--begin::Item-->
+
                             <li class="breadcrumb-item">
                                 <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
                             </li>
-                            <!--end::Item-->
 
-                            <!--begin::Item-->
+
                             <li class="breadcrumb-item text-gray-700 fw-bold lh-1">Apps</li>
-                            <!--end::Item-->
 
-                            <!--begin::Item-->
+
                             <li class="breadcrumb-item">
                                 <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
                             </li>
-                            <!--end::Item-->
 
-                            <!--begin::Item-->
+
                             <li class="breadcrumb-item text-gray-700 fw-bold lh-1">Projects</li>
-                            <!--end::Item-->
 
-                            <!--begin::Item-->
+
                             <li class="breadcrumb-item">
                                 <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
                             </li>
-                            <!--end::Item-->
 
-                            <!--begin::Item-->
+
                             <li class="breadcrumb-item text-gray-700">Activity</li>
-                            <!--end::Item-->
                         </ul>
                         <!--end::Breadcrumb-->
 
 
                         <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bolder fs-1 lh-0">Project Activity</h1>
-                        <!--end::Title-->
                     </div>
                     <!--end::Page title-->
 
-                    <!--begin::Actions-->
-                    <a href="#" class="btn btn-sm btn-success ms-3 px-4 py-3" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app"> Create Project </a>
-                    <!--end::Actions-->
-                </div>
-                <!--end::Toolbar wrapper-->
-            </div>
-            <!--end::Toolbar container-->
-        </div>
-        <!--end::Toolbar-->
 
-        <!--begin::Content-->
+                    <a href="#" class="btn btn-sm btn-success ms-3 px-4 py-3" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app"> Create Project </a>
+
+                </div>
+            </div>
+        </div>
+
         <div id="kt_app_content" class="app-content flex-column-fluid">
 
             <div id="kt_app_content_container" class="app-container container-fluid">
@@ -89,11 +77,6 @@
 
                             <h3 class="fw-bold m-0 text-gray-800">Jan 23, 2025</h3>
                         </div>
-                        <!--end::Title-->
-
-                        <!--begin::Toolbar-->
-                        <div class="card-toolbar m-0">
-                            <!--begin::Tab nav-->
                             <ul class="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-0 fw-bold" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <a id="kt_activity_today_tab" class="nav-link justify-content-center text-active-gray-800 active" data-bs-toggle="tab" role="tab" href="#kt_activity_today" aria-selected="true"> Today </a>
@@ -108,15 +91,11 @@
                                     <a id="kt_activity_year_tab" class="nav-link justify-content-center text-active-gray-800 text-hover-gray-800" data-bs-toggle="tab" role="tab" href="#kt_activity_year" aria-selected="false" tabindex="-1"> 2025 </a>
                                 </li>
                             </ul>
-                            <!--end::Tab nav-->
+
                         </div>
-                        <!--end::Toolbar-->
                     </div>
-
                     <div class="card-body">
-
                         <div class="tab-content">
-                            <!--begin::Tab panel-->
                             <div id="kt_activity_today" class="card-body p-0 tab-pane fade show active" role="tabpanel" aria-labelledby="kt_activity_today_tab">
                                 @include('components.pagination.default', ['data' => $datas['activities']])
 
@@ -124,14 +103,12 @@
 
                                     @foreach ($datas['activities']['data'] as $key => $activity)
                                         <div class="timeline-item mt-5">
-                                        <!--begin::Timeline line-->
                                         <div class="timeline-line"></div>
 
                                         <div class="timeline-icon">
                                             <i class="ki-duotone ki-message-text-2 fs-2 text-gray-500"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
                                         </div>
                                         <div class="timeline-content mb-10 mt-n1">
-                                            <!--begin::Timeline heading-->
 
                                             <div class="pe-3 mb-5">
 
@@ -145,17 +122,15 @@
                                                     </div>
 
                                                 </div>
-                                                <!--end::Description-->
                                             </div>
 
 
-                                            <!--begin::Timeline details-->
+
                                             <div class="overflow-auto pb-5">
                                                 <!--begin::Record-->
                                                 <div class="d-flex align-items-center border border-dashed border-gray-300 rounded min-w-750px px-7 py-3 mb-5">
 
                                                     <a href="/apps/projects/project.html" class="fs-5 text-gray-900 text-hover-primary fw-semibold w-375px min-w-200px">Meeting with customer</a>
-                                                    <!--end::Title-->
 
                                                     <!--begin::Label-->
                                                     <div class="min-w-175px pe-2">
@@ -201,7 +176,6 @@
                                                 <div class="d-flex align-items-center border border-dashed border-gray-300 rounded min-w-750px px-7 py-3 mb-0">
 
                                                     <a href="/apps/projects/project.html" class="fs-5 text-gray-900 text-hover-primary fw-semibold w-375px min-w-200px">Project Delivery Preparation</a>
-                                                    <!--end::Title-->
 
                                                     <!--begin::Label-->
                                                     <div class="min-w-175px">
@@ -237,7 +211,6 @@
                                                 </div>
                                                 <!--end::Record-->
                                             </div>
-                                            <!--end::Timeline details-->
                                         </div>
 
                                     </div>
@@ -272,15 +245,11 @@
                                         <div class="timeline-icon">
                                             <i class="ki-duotone ki-disconnect fs-2 text-gray-500"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
                                         </div>
-                                        <!--end::Timeline icon-->
 
-                                        <!--begin::Timeline content-->
                                         <div class="timeline-content mb-10 mt-n1">
-                                            <!--begin::Timeline heading-->
                                             <div class="mb-5 pe-3">
 
                                                 <a href="#" class="fs-5 fw-semibold text-gray-800 text-hover-primary mb-2">3 New Incoming Project Files:</a>
-                                                <!--end::Title-->
 
                                                 <!--begin::Description-->
                                                 <div class="d-flex align-items-center mt-1 fs-6">
@@ -294,14 +263,13 @@
                                                     </div>
 
                                                 </div>
-                                                <!--end::Description-->
                                             </div>
 
 
-                                            <!--begin::Timeline details-->
+
                                             <div class="overflow-auto pb-5">
                                                 <div class="d-flex align-items-center border border-dashed border-gray-300 rounded min-w-700px p-5">
-                                                    <!--begin::Item-->
+
                                                     <div class="d-flex flex-aligns-center pe-10 pe-lg-20">
                                                         <!--begin::Icon-->
                                                         <img alt="" class="w-30px me-3" src="/assets/media/svg/files/pdf.svg" />
@@ -319,9 +287,8 @@
                                                         </div>
 
                                                     </div>
-                                                    <!--end::Item-->
 
-                                                    <!--begin::Item-->
+
                                                     <div class="d-flex flex-aligns-center pe-10 pe-lg-20">
                                                         <!--begin::Icon-->
                                                         <img alt="/apps/projects/project.html" class="w-30px me-3" src="/assets/media/svg/files/doc.svg" />
@@ -339,9 +306,8 @@
                                                         </div>
 
                                                     </div>
-                                                    <!--end::Item-->
 
-                                                    <!--begin::Item-->
+
                                                     <div class="d-flex flex-aligns-center">
                                                         <!--begin::Icon-->
                                                         <img alt="/apps/projects/project.html" class="w-30px me-3" src="/assets/media/svg/files/css.svg" />
@@ -359,33 +325,23 @@
                                                         </div>
                                                         <!--end::Icon-->
                                                     </div>
-                                                    <!--end::Item-->
                                                 </div>
                                             </div>
-                                            <!--end::Timeline details-->
                                         </div>
 
                                     </div>
 
-                                    <!--begin::Timeline item-->
                                     <div class="timeline-item">
-                                        <!--begin::Timeline line-->
                                         <div class="timeline-line"></div>
-                                        <!--end::Timeline line-->
 
-                                        <!--begin::Timeline icon-->
                                         <div class="timeline-icon">
                                             <i class="ki-duotone ki-abstract-26 fs-2 text-gray-500"><span class="path1"></span><span class="path2"></span></i>
                                         </div>
-                                        <!--end::Timeline icon-->
 
-                                        <!--begin::Timeline content-->
                                         <div class="timeline-content mb-10 mt-n1">
-                                            <!--begin::Timeline heading-->
                                             <div class="pe-3 mb-5">
 
                                                 <div class="fs-5 fw-semibold mb-2">Task <a href="#" class="text-primary fw-bold me-1">#45890</a> merged with <a href="#" class="text-primary fw-bold me-1">#45890</a> in “Ads Pro Admin Dashboard project:</div>
-                                                <!--end::Title-->
 
                                                 <!--begin::Description-->
                                                 <div class="d-flex align-items-center mt-1 fs-6">
@@ -399,32 +355,23 @@
                                                     </div>
 
                                                 </div>
-                                                <!--end::Description-->
                                             </div>
 
                                         </div>
 
                                     </div>
 
-                                    <!--begin::Timeline item-->
                                     <div class="timeline-item">
-                                        <!--begin::Timeline line-->
                                         <div class="timeline-line"></div>
-                                        <!--end::Timeline line-->
 
-                                        <!--begin::Timeline icon-->
                                         <div class="timeline-icon">
                                             <i class="ki-duotone ki-pencil fs-2 text-gray-500"><span class="path1"></span><span class="path2"></span></i>
                                         </div>
-                                        <!--end::Timeline icon-->
 
-                                        <!--begin::Timeline content-->
                                         <div class="timeline-content mb-10 mt-n1">
-                                            <!--begin::Timeline heading-->
                                             <div class="pe-3 mb-5">
 
                                                 <div class="fs-5 fw-semibold mb-2">3 new application design concepts added:</div>
-                                                <!--end::Title-->
 
                                                 <!--begin::Description-->
                                                 <div class="d-flex align-items-center mt-1 fs-6">
@@ -438,89 +385,64 @@
                                                     </div>
 
                                                 </div>
-                                                <!--end::Description-->
                                             </div>
 
 
-                                            <!--begin::Timeline details-->
+
                                             <div class="overflow-auto pb-5">
                                                 <div class="d-flex align-items-center border border-dashed border-gray-300 rounded min-w-700px p-7">
-                                                    <!--begin::Item-->
+
                                                     <div class="overlay me-10">
-                                                        <!--begin::Image-->
+
                                                         <div class="overlay-wrapper">
                                                             <img alt="img" class="rounded w-150px" src="/assets/media/stock/600x400/img-29.jpg" />
                                                         </div>
-                                                        <!--end::Image-->
-
-                                                        <!--begin::Link-->
                                                         <div class="overlay-layer bg-dark bg-opacity-10 rounded">
                                                             <a href="#" class="btn btn-sm btn-primary btn-shadow">Explore</a>
                                                         </div>
-                                                        <!--end::Link-->
                                                     </div>
-                                                    <!--end::Item-->
 
-                                                    <!--begin::Item-->
+
                                                     <div class="overlay me-10">
-                                                        <!--begin::Image-->
+
                                                         <div class="overlay-wrapper">
                                                             <img alt="img" class="rounded w-150px" src="/assets/media/stock/600x400/img-31.jpg" />
                                                         </div>
-                                                        <!--end::Image-->
-
-                                                        <!--begin::Link-->
                                                         <div class="overlay-layer bg-dark bg-opacity-10 rounded">
                                                             <a href="#" class="btn btn-sm btn-primary btn-shadow">Explore</a>
                                                         </div>
-                                                        <!--end::Link-->
                                                     </div>
-                                                    <!--end::Item-->
 
-                                                    <!--begin::Item-->
+
                                                     <div class="overlay">
-                                                        <!--begin::Image-->
+
                                                         <div class="overlay-wrapper">
                                                             <img alt="img" class="rounded w-150px" src="/assets/media/stock/600x400/img-40.jpg" />
                                                         </div>
-                                                        <!--end::Image-->
-
-                                                        <!--begin::Link-->
                                                         <div class="overlay-layer bg-dark bg-opacity-10 rounded">
                                                             <a href="#" class="btn btn-sm btn-primary btn-shadow">Explore</a>
                                                         </div>
-                                                        <!--end::Link-->
                                                     </div>
-                                                    <!--end::Item-->
                                                 </div>
                                             </div>
-                                            <!--end::Timeline details-->
                                         </div>
 
                                     </div>
 
-                                    <!--begin::Timeline item-->
                                     <div class="timeline-item">
-                                        <!--begin::Timeline line-->
                                         <div class="timeline-line"></div>
-                                        <!--end::Timeline line-->
 
-                                        <!--begin::Timeline icon-->
                                         <div class="timeline-icon">
                                             <i class="ki-duotone ki-sms fs-2 text-gray-500"><span class="path1"></span><span class="path2"></span></i>
                                         </div>
-                                        <!--end::Timeline icon-->
 
-                                        <!--begin::Timeline content-->
                                         <div class="timeline-content mb-10 mt-n1">
-                                            <!--begin::Timeline heading-->
                                             <div class="pe-3 mb-5">
 
                                                 <div class="fs-5 fw-semibold mb-2">
                                                     New case <a href="#" class="text-primary fw-bold me-1">#67890</a>
                                                     is assigned to you in Multi-platform Database Design project
                                                 </div>
-                                                <!--end::Title-->
 
                                                 <!--begin::Description-->
                                                 <div class="overflow-auto pb-5">
@@ -534,9 +456,7 @@
                                                         <a href="#" class="text-primary fw-bold me-1">Alice Tan</a>
 
                                                     </div>
-                                                    <!--end::Wrapper-->
                                                 </div>
-                                                <!--end::Description-->
                                             </div>
 
                                         </div>
@@ -552,25 +472,17 @@
                             <div id="kt_activity_month" class="card-body p-0 tab-pane fade show" role="tabpanel" aria-labelledby="kt_activity_month_tab">
 
                                 <div class="timeline timeline-border-dashed">
-                                    <!--begin::Timeline item-->
                                     <div class="timeline-item">
-                                        <!--begin::Timeline line-->
                                         <div class="timeline-line"></div>
-                                        <!--end::Timeline line-->
 
-                                        <!--begin::Timeline icon-->
                                         <div class="timeline-icon">
                                             <i class="ki-duotone ki-pencil fs-2 text-gray-500"><span class="path1"></span><span class="path2"></span></i>
                                         </div>
-                                        <!--end::Timeline icon-->
 
-                                        <!--begin::Timeline content-->
                                         <div class="timeline-content mb-10 mt-n1">
-                                            <!--begin::Timeline heading-->
                                             <div class="pe-3 mb-5">
 
                                                 <div class="fs-5 fw-semibold mb-2">3 new application design concepts added:</div>
-                                                <!--end::Title-->
 
                                                 <!--begin::Description-->
                                                 <div class="d-flex align-items-center mt-1 fs-6">
@@ -584,89 +496,64 @@
                                                     </div>
 
                                                 </div>
-                                                <!--end::Description-->
                                             </div>
 
 
-                                            <!--begin::Timeline details-->
+
                                             <div class="overflow-auto pb-5">
                                                 <div class="d-flex align-items-center border border-dashed border-gray-300 rounded min-w-700px p-7">
-                                                    <!--begin::Item-->
+
                                                     <div class="overlay me-10">
-                                                        <!--begin::Image-->
+
                                                         <div class="overlay-wrapper">
                                                             <img alt="img" class="rounded w-150px" src="/assets/media/stock/600x400/img-29.jpg" />
                                                         </div>
-                                                        <!--end::Image-->
-
-                                                        <!--begin::Link-->
                                                         <div class="overlay-layer bg-dark bg-opacity-10 rounded">
                                                             <a href="#" class="btn btn-sm btn-primary btn-shadow">Explore</a>
                                                         </div>
-                                                        <!--end::Link-->
                                                     </div>
-                                                    <!--end::Item-->
 
-                                                    <!--begin::Item-->
+
                                                     <div class="overlay me-10">
-                                                        <!--begin::Image-->
+
                                                         <div class="overlay-wrapper">
                                                             <img alt="img" class="rounded w-150px" src="/assets/media/stock/600x400/img-31.jpg" />
                                                         </div>
-                                                        <!--end::Image-->
-
-                                                        <!--begin::Link-->
                                                         <div class="overlay-layer bg-dark bg-opacity-10 rounded">
                                                             <a href="#" class="btn btn-sm btn-primary btn-shadow">Explore</a>
                                                         </div>
-                                                        <!--end::Link-->
                                                     </div>
-                                                    <!--end::Item-->
 
-                                                    <!--begin::Item-->
+
                                                     <div class="overlay">
-                                                        <!--begin::Image-->
+
                                                         <div class="overlay-wrapper">
                                                             <img alt="img" class="rounded w-150px" src="/assets/media/stock/600x400/img-40.jpg" />
                                                         </div>
-                                                        <!--end::Image-->
-
-                                                        <!--begin::Link-->
                                                         <div class="overlay-layer bg-dark bg-opacity-10 rounded">
                                                             <a href="#" class="btn btn-sm btn-primary btn-shadow">Explore</a>
                                                         </div>
-                                                        <!--end::Link-->
                                                     </div>
-                                                    <!--end::Item-->
                                                 </div>
                                             </div>
-                                            <!--end::Timeline details-->
                                         </div>
 
                                     </div>
 
-                                    <!--begin::Timeline item-->
                                     <div class="timeline-item">
-                                        <!--begin::Timeline line-->
                                         <div class="timeline-line"></div>
-                                        <!--end::Timeline line-->
 
-                                        <!--begin::Timeline icon-->
                                         <div class="timeline-icon">
                                             <i class="ki-duotone ki-sms fs-2 text-gray-500"><span class="path1"></span><span class="path2"></span></i>
                                         </div>
-                                        <!--end::Timeline icon-->
 
-                                        <!--begin::Timeline content-->
                                         <div class="timeline-content mb-10 mt-n1">
-                                            <!--begin::Timeline heading-->
                                             <div class="pe-3 mb-5">
 
                                                 <div class="fs-5 fw-semibold mb-2">
                                                     New case <a href="#" class="text-primary fw-bold me-1">#67890</a>
                                                     is assigned to you in Multi-platform Database Design project
                                                 </div>
-                                                <!--end::Title-->
 
                                                 <!--begin::Description-->
                                                 <div class="overflow-auto pb-5">
@@ -680,37 +567,27 @@
                                                         <a href="#" class="text-primary fw-bold me-1">Alice Tan</a>
 
                                                     </div>
-                                                    <!--end::Wrapper-->
                                                 </div>
-                                                <!--end::Description-->
                                             </div>
 
                                         </div>
 
                                     </div>
 
-                                    <!--begin::Timeline item-->
                                     <div class="timeline-item">
-                                        <!--begin::Timeline line-->
                                         <div class="timeline-line"></div>
-                                        <!--end::Timeline line-->
 
-                                        <!--begin::Timeline icon-->
                                         <div class="timeline-icon">
                                             <i class="ki-duotone ki-basket fs-2 text-gray-500"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
                                         </div>
-                                        <!--end::Timeline icon-->
 
-                                        <!--begin::Timeline content-->
                                         <div class="timeline-content mt-n1">
-                                            <!--begin::Timeline heading-->
                                             <div class="pe-3 mb-5">
 
                                                 <div class="fs-5 fw-semibold mb-2">
                                                     New order <a href="#" class="text-primary fw-bold me-1">#67890</a>
                                                     is placed for Workshow Planning &amp; Budget Estimation
                                                 </div>
-                                                <!--end::Title-->
 
                                                 <!--begin::Description-->
                                                 <div class="d-flex align-items-center mt-1 fs-6">
@@ -722,7 +599,6 @@
                                                     <a href="#" class="text-primary fw-bold me-1">Jimmy Bold</a>
 
                                                 </div>
-                                                <!--end::Description-->
                                             </div>
 
                                         </div>
@@ -730,25 +606,17 @@
                                     </div>
 
 
-                                    <!--begin::Timeline item-->
                                     <div class="timeline-item">
-                                        <!--begin::Timeline line-->
                                         <div class="timeline-line"></div>
-                                        <!--end::Timeline line-->
 
-                                        <!--begin::Timeline icon-->
                                         <div class="timeline-icon me-4">
                                             <i class="ki-duotone ki-flag fs-2 text-gray-500"><span class="path1"></span><span class="path2"></span></i>
                                         </div>
-                                        <!--end::Timeline icon-->
 
-                                        <!--begin::Timeline content-->
                                         <div class="timeline-content mb-10 mt-n2">
-                                            <!--begin::Timeline heading-->
                                             <div class="overflow-auto pe-3">
 
                                                 <div class="fs-5 fw-semibold mb-2">Invitation for crafting engaging designs that speak human workshop</div>
-                                                <!--end::Title-->
 
                                                 <!--begin::Description-->
                                                 <div class="d-flex align-items-center mt-1 fs-6">
@@ -762,32 +630,23 @@
                                                     </div>
 
                                                 </div>
-                                                <!--end::Description-->
                                             </div>
 
                                         </div>
 
                                     </div>
 
-                                    <!--begin::Timeline item-->
                                     <div class="timeline-item">
-                                        <!--begin::Timeline line-->
                                         <div class="timeline-line"></div>
-                                        <!--end::Timeline line-->
 
-                                        <!--begin::Timeline icon-->
                                         <div class="timeline-icon">
                                             <i class="ki-duotone ki-disconnect fs-2 text-gray-500"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
                                         </div>
-                                        <!--end::Timeline icon-->
 
-                                        <!--begin::Timeline content-->
                                         <div class="timeline-content mb-10 mt-n1">
-                                            <!--begin::Timeline heading-->
                                             <div class="mb-5 pe-3">
 
                                                 <a href="#" class="fs-5 fw-semibold text-gray-800 text-hover-primary mb-2">3 New Incoming Project Files:</a>
-                                                <!--end::Title-->
 
                                                 <!--begin::Description-->
                                                 <div class="d-flex align-items-center mt-1 fs-6">
@@ -801,14 +660,13 @@
                                                     </div>
 
                                                 </div>
-                                                <!--end::Description-->
                                             </div>
 
 
-                                            <!--begin::Timeline details-->
+
                                             <div class="overflow-auto pb-5">
                                                 <div class="d-flex align-items-center border border-dashed border-gray-300 rounded min-w-700px p-5">
-                                                    <!--begin::Item-->
+
                                                     <div class="d-flex flex-aligns-center pe-10 pe-lg-20">
                                                         <!--begin::Icon-->
                                                         <img alt="" class="w-30px me-3" src="/assets/media/svg/files/pdf.svg" />
@@ -826,9 +684,8 @@
                                                         </div>
 
                                                     </div>
-                                                    <!--end::Item-->
 
-                                                    <!--begin::Item-->
+
                                                     <div class="d-flex flex-aligns-center pe-10 pe-lg-20">
                                                         <!--begin::Icon-->
                                                         <img alt="/apps/projects/project.html" class="w-30px me-3" src="/assets/media/svg/files/doc.svg" />
@@ -846,9 +703,8 @@
                                                         </div>
 
                                                     </div>
-                                                    <!--end::Item-->
 
-                                                    <!--begin::Item-->
+
                                                     <div class="d-flex flex-aligns-center">
                                                         <!--begin::Icon-->
                                                         <img alt="/apps/projects/project.html" class="w-30px me-3" src="/assets/media/svg/files/css.svg" />
@@ -866,33 +722,23 @@
                                                         </div>
                                                         <!--end::Icon-->
                                                     </div>
-                                                    <!--end::Item-->
                                                 </div>
                                             </div>
-                                            <!--end::Timeline details-->
                                         </div>
 
                                     </div>
 
-                                    <!--begin::Timeline item-->
                                     <div class="timeline-item">
-                                        <!--begin::Timeline line-->
                                         <div class="timeline-line"></div>
-                                        <!--end::Timeline line-->
 
-                                        <!--begin::Timeline icon-->
                                         <div class="timeline-icon">
                                             <i class="ki-duotone ki-abstract-26 fs-2 text-gray-500"><span class="path1"></span><span class="path2"></span></i>
                                         </div>
-                                        <!--end::Timeline icon-->
 
-                                        <!--begin::Timeline content-->
                                         <div class="timeline-content mb-10 mt-n1">
-                                            <!--begin::Timeline heading-->
                                             <div class="pe-3 mb-5">
 
                                                 <div class="fs-5 fw-semibold mb-2">Task <a href="#" class="text-primary fw-bold me-1">#45890</a> merged with <a href="#" class="text-primary fw-bold me-1">#45890</a> in “Ads Pro Admin Dashboard project:</div>
-                                                <!--end::Title-->
 
                                                 <!--begin::Description-->
                                                 <div class="d-flex align-items-center mt-1 fs-6">
@@ -906,7 +752,6 @@
                                                     </div>
 
                                                 </div>
-                                                <!--end::Description-->
                                             </div>
 
                                         </div>
@@ -922,25 +767,17 @@
                             <div id="kt_activity_year" class="card-body p-0 tab-pane fade show" role="tabpanel" aria-labelledby="kt_activity_year_tab">
 
                                 <div class="timeline timeline-border-dashed">
-                                    <!--begin::Timeline item-->
                                     <div class="timeline-item">
-                                        <!--begin::Timeline line-->
                                         <div class="timeline-line"></div>
-                                        <!--end::Timeline line-->
 
-                                        <!--begin::Timeline icon-->
                                         <div class="timeline-icon">
                                             <i class="ki-duotone ki-disconnect fs-2 text-gray-500"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
                                         </div>
-                                        <!--end::Timeline icon-->
 
-                                        <!--begin::Timeline content-->
                                         <div class="timeline-content mb-10 mt-n1">
-                                            <!--begin::Timeline heading-->
                                             <div class="mb-5 pe-3">
 
                                                 <a href="#" class="fs-5 fw-semibold text-gray-800 text-hover-primary mb-2">3 New Incoming Project Files:</a>
-                                                <!--end::Title-->
 
                                                 <!--begin::Description-->
                                                 <div class="d-flex align-items-center mt-1 fs-6">
@@ -954,14 +791,13 @@
                                                     </div>
 
                                                 </div>
-                                                <!--end::Description-->
                                             </div>
 
 
-                                            <!--begin::Timeline details-->
+
                                             <div class="overflow-auto pb-5">
                                                 <div class="d-flex align-items-center border border-dashed border-gray-300 rounded min-w-700px p-5">
-                                                    <!--begin::Item-->
+
                                                     <div class="d-flex flex-aligns-center pe-10 pe-lg-20">
                                                         <!--begin::Icon-->
                                                         <img alt="" class="w-30px me-3" src="/assets/media/svg/files/pdf.svg" />
@@ -979,9 +815,8 @@
                                                         </div>
 
                                                     </div>
-                                                    <!--end::Item-->
 
-                                                    <!--begin::Item-->
+
                                                     <div class="d-flex flex-aligns-center pe-10 pe-lg-20">
                                                         <!--begin::Icon-->
                                                         <img alt="/apps/projects/project.html" class="w-30px me-3" src="/assets/media/svg/files/doc.svg" />
@@ -999,9 +834,8 @@
                                                         </div>
 
                                                     </div>
-                                                    <!--end::Item-->
 
-                                                    <!--begin::Item-->
+
                                                     <div class="d-flex flex-aligns-center">
                                                         <!--begin::Icon-->
                                                         <img alt="/apps/projects/project.html" class="w-30px me-3" src="/assets/media/svg/files/css.svg" />
@@ -1019,33 +853,23 @@
                                                         </div>
                                                         <!--end::Icon-->
                                                     </div>
-                                                    <!--end::Item-->
                                                 </div>
                                             </div>
-                                            <!--end::Timeline details-->
                                         </div>
 
                                     </div>
 
-                                    <!--begin::Timeline item-->
                                     <div class="timeline-item">
-                                        <!--begin::Timeline line-->
                                         <div class="timeline-line"></div>
-                                        <!--end::Timeline line-->
 
-                                        <!--begin::Timeline icon-->
                                         <div class="timeline-icon">
                                             <i class="ki-duotone ki-abstract-26 fs-2 text-gray-500"><span class="path1"></span><span class="path2"></span></i>
                                         </div>
-                                        <!--end::Timeline icon-->
 
-                                        <!--begin::Timeline content-->
                                         <div class="timeline-content mb-10 mt-n1">
-                                            <!--begin::Timeline heading-->
                                             <div class="pe-3 mb-5">
 
                                                 <div class="fs-5 fw-semibold mb-2">Task <a href="#" class="text-primary fw-bold me-1">#45890</a> merged with <a href="#" class="text-primary fw-bold me-1">#45890</a> in “Ads Pro Admin Dashboard project:</div>
-                                                <!--end::Title-->
 
                                                 <!--begin::Description-->
                                                 <div class="d-flex align-items-center mt-1 fs-6">
@@ -1059,32 +883,23 @@
                                                     </div>
 
                                                 </div>
-                                                <!--end::Description-->
                                             </div>
 
                                         </div>
 
                                     </div>
 
-                                    <!--begin::Timeline item-->
                                     <div class="timeline-item">
-                                        <!--begin::Timeline line-->
                                         <div class="timeline-line"></div>
-                                        <!--end::Timeline line-->
 
-                                        <!--begin::Timeline icon-->
                                         <div class="timeline-icon">
                                             <i class="ki-duotone ki-pencil fs-2 text-gray-500"><span class="path1"></span><span class="path2"></span></i>
                                         </div>
-                                        <!--end::Timeline icon-->
 
-                                        <!--begin::Timeline content-->
                                         <div class="timeline-content mb-10 mt-n1">
-                                            <!--begin::Timeline heading-->
                                             <div class="pe-3 mb-5">
 
                                                 <div class="fs-5 fw-semibold mb-2">3 new application design concepts added:</div>
-                                                <!--end::Title-->
 
                                                 <!--begin::Description-->
                                                 <div class="d-flex align-items-center mt-1 fs-6">
@@ -1098,89 +913,64 @@
                                                     </div>
 
                                                 </div>
-                                                <!--end::Description-->
                                             </div>
 
 
-                                            <!--begin::Timeline details-->
+
                                             <div class="overflow-auto pb-5">
                                                 <div class="d-flex align-items-center border border-dashed border-gray-300 rounded min-w-700px p-7">
-                                                    <!--begin::Item-->
+
                                                     <div class="overlay me-10">
-                                                        <!--begin::Image-->
+
                                                         <div class="overlay-wrapper">
                                                             <img alt="img" class="rounded w-150px" src="/assets/media/stock/600x400/img-29.jpg" />
                                                         </div>
-                                                        <!--end::Image-->
-
-                                                        <!--begin::Link-->
                                                         <div class="overlay-layer bg-dark bg-opacity-10 rounded">
                                                             <a href="#" class="btn btn-sm btn-primary btn-shadow">Explore</a>
                                                         </div>
-                                                        <!--end::Link-->
                                                     </div>
-                                                    <!--end::Item-->
 
-                                                    <!--begin::Item-->
+
                                                     <div class="overlay me-10">
-                                                        <!--begin::Image-->
+
                                                         <div class="overlay-wrapper">
                                                             <img alt="img" class="rounded w-150px" src="/assets/media/stock/600x400/img-31.jpg" />
                                                         </div>
-                                                        <!--end::Image-->
-
-                                                        <!--begin::Link-->
                                                         <div class="overlay-layer bg-dark bg-opacity-10 rounded">
                                                             <a href="#" class="btn btn-sm btn-primary btn-shadow">Explore</a>
                                                         </div>
-                                                        <!--end::Link-->
                                                     </div>
-                                                    <!--end::Item-->
 
-                                                    <!--begin::Item-->
+
                                                     <div class="overlay">
-                                                        <!--begin::Image-->
+
                                                         <div class="overlay-wrapper">
                                                             <img alt="img" class="rounded w-150px" src="/assets/media/stock/600x400/img-40.jpg" />
                                                         </div>
-                                                        <!--end::Image-->
-
-                                                        <!--begin::Link-->
                                                         <div class="overlay-layer bg-dark bg-opacity-10 rounded">
                                                             <a href="#" class="btn btn-sm btn-primary btn-shadow">Explore</a>
                                                         </div>
-                                                        <!--end::Link-->
                                                     </div>
-                                                    <!--end::Item-->
                                                 </div>
                                             </div>
-                                            <!--end::Timeline details-->
                                         </div>
 
                                     </div>
 
-                                    <!--begin::Timeline item-->
                                     <div class="timeline-item">
-                                        <!--begin::Timeline line-->
                                         <div class="timeline-line"></div>
-                                        <!--end::Timeline line-->
 
-                                        <!--begin::Timeline icon-->
                                         <div class="timeline-icon">
                                             <i class="ki-duotone ki-sms fs-2 text-gray-500"><span class="path1"></span><span class="path2"></span></i>
                                         </div>
-                                        <!--end::Timeline icon-->
 
-                                        <!--begin::Timeline content-->
                                         <div class="timeline-content mb-10 mt-n1">
-                                            <!--begin::Timeline heading-->
                                             <div class="pe-3 mb-5">
 
                                                 <div class="fs-5 fw-semibold mb-2">
                                                     New case <a href="#" class="text-primary fw-bold me-1">#67890</a>
                                                     is assigned to you in Multi-platform Database Design project
                                                 </div>
-                                                <!--end::Title-->
 
                                                 <!--begin::Description-->
                                                 <div class="overflow-auto pb-5">
@@ -1194,37 +984,27 @@
                                                         <a href="#" class="text-primary fw-bold me-1">Alice Tan</a>
 
                                                     </div>
-                                                    <!--end::Wrapper-->
                                                 </div>
-                                                <!--end::Description-->
                                             </div>
 
                                         </div>
 
                                     </div>
 
-                                    <!--begin::Timeline item-->
                                     <div class="timeline-item">
-                                        <!--begin::Timeline line-->
                                         <div class="timeline-line"></div>
-                                        <!--end::Timeline line-->
 
-                                        <!--begin::Timeline icon-->
                                         <div class="timeline-icon">
                                             <i class="ki-duotone ki-basket fs-2 text-gray-500"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
                                         </div>
-                                        <!--end::Timeline icon-->
 
-                                        <!--begin::Timeline content-->
                                         <div class="timeline-content mt-n1">
-                                            <!--begin::Timeline heading-->
                                             <div class="pe-3 mb-5">
 
                                                 <div class="fs-5 fw-semibold mb-2">
                                                     New order <a href="#" class="text-primary fw-bold me-1">#67890</a>
                                                     is placed for Workshow Planning &amp; Budget Estimation
                                                 </div>
-                                                <!--end::Title-->
 
                                                 <!--begin::Description-->
                                                 <div class="d-flex align-items-center mt-1 fs-6">

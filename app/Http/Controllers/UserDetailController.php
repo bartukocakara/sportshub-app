@@ -37,10 +37,10 @@ class UserDetailController extends Controller
      * @param int $id The user ID.
      * @return \Illuminate\View\View
      */
-    public function teams($id)
+    public function teams(Request $request, string $id)
     {
         // Example: Fetch user's teams data using the service
-        $datas = $this->userDetailService->getUserTeamsData($id); // You'll create this method
+        $datas = $this->userDetailService->getUserTeamsData($request, $id); // You'll create this method
 
         return view('users.show.teams', compact('datas'));
     }
@@ -51,16 +51,11 @@ class UserDetailController extends Controller
      * @param int $id The user ID.
      * @return \Illuminate\View\View
      */
-    public function matches($id)
+    public function matches(Request $request, string $id)
     {
-        // Example: Fetch user's matches data using the service
-        $matchesData = $this->userDetailService->getUserMatchesData($id); // You'll create this method
+        $datas = $this->userDetailService->getUserMatchesData($request, $id); // You'll create this method
 
-        return view('users.show.matches', [
-            'id' => $id,
-            'matchesData' => $matchesData,
-            'user_id' => $id
-        ]);
+        return view('users.show.matches', compact('datas'));
     }
 
     /**
@@ -69,16 +64,11 @@ class UserDetailController extends Controller
      * @param int $id The user ID.
      * @return \Illuminate\View\View
      */
-    public function activities($id)
+    public function activities(Request $request, string $id)
     {
         // Example: Fetch user's activities data using the service
-        $activitiesData = $this->userDetailService->getUserActivitiesData($id); // You'll create this method
-
-        return view('users.show.activities', [
-            'id' => $id,
-            'activitiesData' => $activitiesData,
-            'user_id' => $id
-        ]);
+        $datas = $this->userDetailService->getUserActivitiesData($request, $id); // You'll create this method
+        return view('users.show.activities', compact('datas'));
     }
 
     /**
@@ -87,15 +77,11 @@ class UserDetailController extends Controller
      * @param int $id The user ID.
      * @return \Illuminate\View\View
      */
-    public function announcements($id)
+    public function announcements(Request $request, string $id)
     {
         // Example: Fetch user's announcements data using the service
-        $announcementsData = $this->userDetailService->getUserAnnouncementsData($id); // You'll create this method
+        $datas = $this->userDetailService->getUserAnnouncementsData($request, $id); // You'll create this method
 
-        return view('users.show.announcements', [
-            'id' => $id,
-            'announcementsData' => $announcementsData,
-            'user_id' => $id
-        ]);
+        return view('users.show.announcements', compact('datas'));
     }
 }

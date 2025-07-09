@@ -2,9 +2,21 @@
 
 namespace App\Services;
 
+use App\Http\Resources\ActivityResource;
+use App\Http\Resources\AnnouncementResource;
+use App\Http\Resources\MatchResource;
+use App\Http\Resources\TeamResource;
 use App\Http\Resources\UserResource;
+use App\Models\Activity;
+use App\Models\Announcement;
+use App\Models\Matches;
+use App\Models\Team;
+use App\Repositories\ActivityRepository;
+use App\Repositories\AnnouncementRepository;
 use App\Repositories\CityRepository;
+use App\Repositories\MatchRepository;
 use App\Repositories\SportTypeRepository;
+use App\Repositories\TeamRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 
@@ -52,13 +64,11 @@ class UserDetailService extends CrudService
      * @param string $userId
      * @return array
      */
-    public function getUserTeamsData(string $userId): array
+    public function getUserTeamsData(Request $request, string $userId): array
     {
         $datas = [];
-        $datas['user'] = $this->userRepository->find($userId);
-        if ($datas['user']) {
-            $datas['teams'] = $datas['user']->teams->toArray();
-        }
+        $datas['teams'] = TeamResource::collection((new TeamRepository(new Team()))->all($request, ['users'], false))->response()->getData(true);
+
         return $datas;
     }
 
@@ -68,45 +78,36 @@ class UserDetailService extends CrudService
      * @param string $userId
      * @return array
      */
-    public function getUserMatchesData(string $userId): array
+    public function getUserMatchesData(Request $request, string $userId): array
     {
-        // Example: Fetch matches associated with the user
-        $user = $this->userRepository->find($userId);
-        if ($user) {
-            return $user->matches->toArray(); // Assuming a 'matches' relationship on User model
-        }
-        return [];
+        $datas['matches'] = MatchResource::collection((new MatchRepository(new Matches()))->all($request, [], false))->response()->getData(true);
+        return $datas;
     }
 
     /**
      * Get user's activities data.
      *
+     * @param Request $request
      * @param string $userId
      * @return array
      */
-    public function getUserActivitiesData(string $userId): array
+    public function getUserActivitiesData(Request $request, string $userId): array
     {
-        // Example: Fetch activities associated with the user
-        $user = $this->userRepository->find($userId);
-        if ($user) {
-            return $user->activities->toArray(); // Assuming an 'activities' relationship
-        }
-        return [];
+        $datas['activities'] = ActivityResource::collection((new ActivityRepository(new Activity()))->all($request, [], false))->response()->getData(true);
+        return $datas;
     }
 
     /**
      * Get user's announcements data.
      *
+     * @param Request $request
      * @param string $userId
      * @return array
      */
-    public function getUserAnnouncementsData(string $userId): array
+    public function getUserAnnouncementsData(Request $request, string $userId): array
     {
-        // Example: Fetch announcements relevant to the user
-        $user = $this->userRepository->find($userId);
-        if ($user) {
-            return $user->announcements->toArray(); // Assuming an 'announcements' relationship
-        }
-        return [];
+        $datas['announcements'] = AnnouncementResource::collection((new AnnouncementRepository(new Announcement()))->all($request, [], false))->response()->getData(true);
+
+        return $datas;
     }
 }
