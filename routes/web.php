@@ -18,6 +18,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\SubscriptionPlanController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserDetailController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -51,7 +52,13 @@ Route::get('reservation/payment/failed', function(){
 Route::resource('matches', MatchController::class);
 Route::resource('teams', TeamController::class);
 Route::resource('users', UserController::class);
-
+Route::prefix('users/{id}')->name('users.')->group(function () {
+    Route::get('profile', [UserDetailController::class, 'profile'])->name('profile');
+    Route::get('teams', [UserDetailController::class, 'teams'])->name('teams');
+    Route::get('matches', [UserDetailController::class, 'matches'])->name('matches'); // Corrected method name
+    Route::get('activities', [UserDetailController::class, 'activities'])->name('activities');
+    Route::get('announcements', [UserDetailController::class, 'announcements'])->name('announcements');
+});
 Route::resource('/courts', CourtController::class)->names('courts')->parameters([
     'courts' => 'id'
 ])->except(['store', 'update', 'destroy']);
