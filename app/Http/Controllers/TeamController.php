@@ -51,7 +51,6 @@ class TeamController extends Controller
     {
         $selected = $request->input('selected', []);
         $key = $request->input('key', 'selected_players'); // Default session key
-
         $validated = collect($selected)->map(function ($player) {
             return [
                 'id' => $player['id'],
@@ -100,7 +99,7 @@ class TeamController extends Controller
     public function update(TeamRequest $request, string $id) : RedirectResponse
     {
         $this->teamService->update($request->validated(), $id);
-        return redirect()->route('teams.index')->with('success', 'Team updated successfully.');
+        return redirect()->back()->with('success', __('messages.team_updated_successfully'));
     }
 
     /**

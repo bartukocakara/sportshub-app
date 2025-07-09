@@ -103,7 +103,7 @@ class BaseRepository
      * Bir kaynağı güncellemek için kullanılır.
      *
      * @param array $data
-     * @param int $id
+     * @param string $id
      * @return bool
     */
     public function update(array $params, string $id) : bool

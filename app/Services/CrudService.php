@@ -52,7 +52,7 @@ class CrudService
 
     /**
      * @param array $data
-     * @param int $id
+     * @param string $id
      * @return bool
     */
     public function update(array $data, string $id) : bool

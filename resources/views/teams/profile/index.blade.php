@@ -33,6 +33,8 @@
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-fluid">
+                <x-response-messages />
+                {{-- END FLASH MESSAGES --}}
                 <div class="d-flex flex-column flex-xl-row">
                     <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
                         @include('components.team.profile.details')
