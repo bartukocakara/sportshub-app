@@ -165,6 +165,10 @@ class User extends Authenticatable
         return $this->statusDefinition->description_tr ?? 'Bilinmiyor';
     }
 
+    public function activities()
+    {
+        return $this->hasMany(Activity::class, 'causer_id');
+    }
     // public function matchTeamPlayer()
     // {
     //     return $this->belongsTo(MatchTeamPlayer::class, 'id', 'user_id');

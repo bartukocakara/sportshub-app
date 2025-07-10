@@ -23,9 +23,10 @@ class ActivitySeeder extends Seeder
         foreach ($users as $user) {
             // Simulate random activity types for a user
             $activities = [
+                ['type' => 'match.created',    'subject' => Matches::inRandomOrder()->first()],
                 ['type' => 'match.joined',    'subject' => Matches::inRandomOrder()->first()],
                 ['type' => 'team.created',    'subject' => Team::inRandomOrder()->first()],
-                ['type' => 'court.reviewed',  'subject' => Court::inRandomOrder()->first()],
+                ['type' => 'team.joined',    'subject' => Team::inRandomOrder()->first()],
             ];
 
             foreach ($activities as $item) {

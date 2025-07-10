@@ -75,6 +75,7 @@ class UserDetailService extends CrudService
     /**
      * Get user's matches data.
      *
+     * @param Request $request
      * @param string $userId
      * @return array
      */
@@ -93,7 +94,10 @@ class UserDetailService extends CrudService
      */
     public function getUserActivitiesData(Request $request, string $userId): array
     {
-        $datas['activities'] = ActivityResource::collection((new ActivityRepository(new Activity()))->all($request, [], false))->response()->getData(true);
+        // $request->merge(['causer_id' => $userId]);
+        $relations = ['subject'];
+        $datas['activities'] = ActivityResource::collection((new ActivityRepository(new Activity()))->all($request, $relations, false))->response()->getData(true);
+        // dd($datas['activities']);
         return $datas;
     }
 

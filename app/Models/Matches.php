@@ -69,4 +69,9 @@ class Matches extends Model
             default    => 'badge-light-secondary',
         };
     }
+
+    public function activities()
+    {
+        return $this->morphMany(Activity::class, 'subject');
+    }
 }
