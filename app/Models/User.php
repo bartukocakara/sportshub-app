@@ -68,9 +68,9 @@ class User extends Authenticatable
         return 'string';
     }
 
-    public function fullName() : string
+    public function getFullNameAttribute() : string
     {
-        return $this->first_name . ' ' .  $this->last_name;
+        return "$this->first_name $this->last_name";
     }
 
     // public function userImages()

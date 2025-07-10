@@ -97,7 +97,6 @@ class UserDetailService extends CrudService
         // $request->merge(['causer_id' => $userId]);
         $relations = ['subject'];
         $datas['activities'] = ActivityResource::collection((new ActivityRepository(new Activity()))->all($request, $relations, false))->response()->getData(true);
-        // dd($datas['activities']);
         return $datas;
     }
 
@@ -110,7 +109,8 @@ class UserDetailService extends CrudService
      */
     public function getUserAnnouncementsData(Request $request, string $userId): array
     {
-        $datas['announcements'] = AnnouncementResource::collection((new AnnouncementRepository(new Announcement()))->all($request, [], false))->response()->getData(true);
+        // $request->merge(['created_user_id' => $userId]);
+        $datas['announcements'] = AnnouncementResource::collection((new AnnouncementRepository(new Announcement()))->all($request, ['user'], false))->response()->getData(true);
 
         return $datas;
     }
