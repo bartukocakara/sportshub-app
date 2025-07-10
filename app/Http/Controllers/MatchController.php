@@ -44,7 +44,8 @@ class MatchController extends Controller
      */
     public function create()
     {
-        return view('matches.create');
+        $datas = $this->matchService->create();
+        return view('matches.create.index', compact('datas'));
     }
 
     /**

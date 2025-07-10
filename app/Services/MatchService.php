@@ -36,4 +36,11 @@ class MatchService extends CrudService
         $datas['cities'] = (new CityRepository(new City()))->getByCountryCode($countryCode);
         return $datas;
     }
+
+    public function create() : array
+    {
+        $datas = [];
+
+        return $datas;
+    }
 }

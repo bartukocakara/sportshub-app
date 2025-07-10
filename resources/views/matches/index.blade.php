@@ -23,18 +23,16 @@
                             <li class="breadcrumb-item">
                                 <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
                             </li>
-                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">Pages</li>
+                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">{{ __('messages.home') }}</li>
                             <li class="breadcrumb-item">
                                 <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
                             </li>
-                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">User Profile</li>
-                            <li class="breadcrumb-item">
-                                <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
-                            </li>
-                            <li class="breadcrumb-item text-gray-700">Projects</li>
+                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">{{ __('messages.matches') }}</li>
                         </ul>
                     </div>
-                    <a href="#" class="btn btn-sm btn-success ms-3 px-4 py-3" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app"> Create Project </a>
+                    <a href="{{ route('matches.create') }}" class="btn btn-sm btn-success ms-3 px-4 py-3" >
+                        {{ __('messages.create_match') }}
+                    </a>
                 </div>
             </div>
         </div>

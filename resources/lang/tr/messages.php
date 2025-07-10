@@ -326,4 +326,11 @@ return [
     'approved' => 'Onaylandı',
     'rejected' => 'Reddedildi',
     'refunded' => 'İade Edildi',
+    'create_match' => 'Maç oluştur',
+    'match_created_successfully' => 'Maç başarıyla oluşturuldu',
+    'match_updated_successfully' => 'Maç başarıyla güncellendi',
+    'match_deleted_successfully' => 'Maç başarıyla silindi',
+    'failed_to_create_match' => 'Maç oluşturulamadı. Lütfen tekrar deneyiniz.',
+    'failed_to_update_match' => 'Maç güncellenirken bir hata oluştu. Lütfen tekrar deneyiniz.',
+    'failed_to_delete_match' => 'Maç silinemedi. Lütfen tekrar deneyiniz.',
 ];
