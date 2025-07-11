@@ -54,8 +54,7 @@ class UserDetailService extends CrudService
     public function getUserProfileData(string $userId):array
     {
         $datas['user'] = UserResource::make($this->userRepository->find($userId));
-        $datas['id'] = $userId;
-        return $datas; // Use a UserResource to format the data
+        return $datas;
     }
 
     /**

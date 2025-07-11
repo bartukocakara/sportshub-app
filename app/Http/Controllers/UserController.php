@@ -70,8 +70,7 @@ class UserController extends Controller
     {
         $user = $this->userService->show($id);
 
-        // Return the view for a single user
-        return view('users.profile.index', compact('user'));
+        return view('users.show.profile', compact('user'));
     }
 
     /**

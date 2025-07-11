@@ -96,7 +96,7 @@
                 </div>
             </div>
         </div>
-        <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
+        <!-- <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
             <a href="#" class="menu-link px-5">
                 <span class="menu-title position-relative">{{ __('messages.language') }}
                 <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">{{ __('messages.turkish') }}
@@ -116,7 +116,7 @@
                     </span>{{ __('messages.turkish') }}</a>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="menu-item px-5">
             @auth
                 <form action="{{ route('logout') }}" method="post">
@@ -126,7 +126,6 @@
                     </button>
                 </form>
             @endauth
-
             @guest
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authModal">
                 {{ __('messages.login') }}
@@ -135,6 +134,3 @@
         </div>
     </div>
 </div>
-
-<!-- Modal (Login / Register Modal) -->
-<!-- IMPORTANT: Place this modal markup at the end of your layout (directly inside <body>) -->
