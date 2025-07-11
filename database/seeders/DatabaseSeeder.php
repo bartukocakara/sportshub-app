@@ -45,7 +45,9 @@ class DatabaseSeeder extends Seeder
             TeamSeeder::class,
             ActivitySeeder::class,
             PlayerTeamSeeder::class,
-            TeamLeaderSeeder::class
+            TeamLeaderSeeder::class,
+            MatchTeamSeeder::class,
+            MatchTeamPlayerSeeder::class,
             // CourtAddressSeeder::class
         ]);
     }

@@ -6,6 +6,7 @@ use App\Filters\FilterBuilder;
 use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Matches extends Model
 {
@@ -47,6 +48,16 @@ class Matches extends Model
     {
         return $this->belongsTo(Definition::class, 'match_status', 'value')
             ->where('group_key', 'match_status');
+    }
+
+    public function sportType(): BelongsTo
+    {
+        return $this->belongsTo(SportType::class);
+    }
+
+    public function court(): BelongsTo
+    {
+        return $this->belongsTo(Court::class);
     }
 
     public function getMatchStatusTextAttribute(): string

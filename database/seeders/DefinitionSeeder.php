@@ -36,6 +36,14 @@ class DefinitionSeeder extends Seeder
             ['group_key' => 'player_status', 'value' => 'injured', 'description_tr' => 'Sakat', 'description_en' => 'Injured'],
             ['group_key' => 'player_status', 'value' => 'suspended', 'description_tr' => 'Cezalı', 'description_en' => 'Suspended'],
 
+            // participant_status
+            // participant_status (for match join status)
+            ['group_key' => 'participant_status', 'value' => 'invited', 'description_tr' => 'Davetli', 'description_en' => 'Invited'],
+            ['group_key' => 'participant_status', 'value' => 'joined', 'description_tr' => 'Katıldı', 'description_en' => 'Joined'],
+            ['group_key' => 'participant_status', 'value' => 'declined', 'description_tr' => 'Reddedildi', 'description_en' => 'Declined'],
+            ['group_key' => 'participant_status', 'value' => 'pending_response', 'description_tr' => 'Yanıt Bekleniyor', 'description_en' => 'Pending Response'],
+            ['group_key' => 'participant_status', 'value' => 'kicked', 'description_tr' => 'Çıkarıldı', 'description_en' => 'Kicked'],
+
         ];
 
         foreach ($definitions as $definition) {
