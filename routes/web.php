@@ -11,6 +11,7 @@ use App\Http\Controllers\CourtBusinessController;
 use App\Http\Controllers\CourtController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MatchController;
+use App\Http\Controllers\MatchDetailController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RefundController;
@@ -49,9 +50,11 @@ Route::get('reservation/payment/completed', [CheckoutController::class, 'payment
 Route::get('reservation/payment/failed', function(){
     return view('checkout.payment.failed');
 })->name('reservation.payment.failed');
-Route::resource('matches', MatchController::class);
+
 Route::resource('teams', TeamController::class);
 Route::resource('users', UserController::class);
+Route::resource('matches', MatchController::class);
+
 Route::prefix('users/{id}')->name('users.')->group(function () {
     Route::get('profile', [UserDetailController::class, 'profile'])->name('profile');
     Route::get('teams', [UserDetailController::class, 'teams'])->name('teams');
@@ -59,6 +62,14 @@ Route::prefix('users/{id}')->name('users.')->group(function () {
     Route::get('activities', [UserDetailController::class, 'activities'])->name('activities');
     Route::get('announcements', [UserDetailController::class, 'announcements'])->name('announcements');
 });
+
+Route::prefix('matches/{id}')->name('matches.')->group(function () {
+    Route::get('activities', [MatchDetailController::class, 'activities'])->name('activities');
+    Route::get('announcements', [MatchDetailController::class, 'announcements'])->name('announcements');
+    Route::get('profile', [MatchDetailController::class, 'profile'])->name('profile');
+    Route::get('teams', [MatchDetailController::class, 'teams'])->name('teams');
+});
+
 Route::resource('/courts', CourtController::class)->names('courts')->parameters([
     'courts' => 'id'
 ])->except(['store', 'update', 'destroy']);

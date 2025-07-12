@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CourtImageResource extends JsonResource
+class MatchTeamResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +16,9 @@ class CourtImageResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'court_id' => $this->court_id,
-            'order' => $this->order,
-            'file_path' => $this->file_path,
+            'match_id' => $this->match_id,
+            'match_team_players' => MatchTeamPlayerResource::collection($this->whenLoaded('matchTeamPlayers')),
+            'created_at' => $this->created_at,
         ];
     }
 }

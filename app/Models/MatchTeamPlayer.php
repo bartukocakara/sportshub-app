@@ -42,19 +42,19 @@ class MatchTeamPlayer extends Model
     //     return $this->belongsTo(MatchOwner::class, 'match_id', 'match_id');
     // }
 
-    public function getMatchTeamPlayaerStatusTextAttribute(): string
+    public function getMatchTeamPlayerStatusTextAttribute(): string
     {
         return $this->statusDefinition->description_tr ?? 'Bilinmiyor';
     }
 
     public function getStatusBadgeAttribute(): string
     {
-        return match ($this->match_status) {
+        return match ($this->participant_status) {
             'pending'   => 'badge-light-warning',
             'confirmed' => 'badge-light-success',
             'completed' => 'badge-light-info',
-            'canceled'   => 'badge-light-danger',
-            default    => 'badge-light-secondary',
+            'canceled'  => 'badge-light-danger',
+            default     => 'badge-light-secondary',
         };
     }
 }

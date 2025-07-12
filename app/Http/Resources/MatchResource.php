@@ -18,7 +18,7 @@ class MatchResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             // 'users' => UserResource::collection($this->whenLoaded('users')),
-            'court' => CourtResource::make($this->whenLoaded('court')),
+            'court' => MatchCourtResource::make($this->whenLoaded('court')),
             'sport_type' => SportTypeResource::make($this->whenLoaded('sportType')),
             'status_definition' => $this->match_status_text,
             'status_badge' => $this->status_badge,

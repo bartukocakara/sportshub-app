@@ -22,7 +22,7 @@ class UserDetailController extends Controller
     /**
      * Displays the user profile overview.
      *
-     * @param int $id The user ID.
+     * @param string $id The user ID.
      * @return \Illuminate\View\View
      */
     public function profile($id)
@@ -34,7 +34,7 @@ class UserDetailController extends Controller
     /**
      * Displays the user's teams.
      *
-     * @param int $id The user ID.
+     * @param string $id The user ID.
      * @return \Illuminate\View\View
      */
     public function teams(Request $request, string $id)
@@ -48,7 +48,7 @@ class UserDetailController extends Controller
     /**
      * Displays the user's matches.
      *
-     * @param int $id The user ID.
+     * @param string $id The user ID.
      * @return \Illuminate\View\View
      */
     public function matches(Request $request, string $id)
@@ -61,7 +61,7 @@ class UserDetailController extends Controller
     /**
      * Displays the user's activities.
      *
-     * @param int $id The user ID.
+     * @param string $id The user ID.
      * @return \Illuminate\View\View
      */
     public function activities(Request $request, string $id)
@@ -74,7 +74,7 @@ class UserDetailController extends Controller
     /**
      * Displays the user's announcements.
      *
-     * @param int $id The user ID.
+     * @param string $id The user ID.
      * @return \Illuminate\View\View
      */
     public function announcements(Request $request, string $id)

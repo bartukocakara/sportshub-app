@@ -39,8 +39,13 @@ class Announcement extends Model
         return $this->belongsTo(Court::class);
     }
 
-    public function subject() : MorphTo
+    public function subject(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function causer()
+    {
+        return $this->belongsTo(User::class, 'causer_id');
     }
 }
