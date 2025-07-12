@@ -315,4 +315,5 @@ return [
     'failed_to_create_match' => 'Match could not be created. Please try again.',
     'failed_to_update_match' => 'Match could not be updated. Please try again.',
     'failed_to_delete_match' => 'Match could not be deleted. Please try again.',
+    'profile' => 'Profile'
 ];

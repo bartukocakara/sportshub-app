@@ -32,23 +32,48 @@
                                 <div id="kt_app_content_container" class="app-container container-fluid">
                                     <div class="card mb-5 mb-xxl-8">
                                         <div class="card-body p-4">
+                                            @php
+                                                $navItems = [
+                                                    [
+                                                        'route' => 'users.profile',
+                                                        'icon' => 'fas fa-user',
+                                                        'label' => __('messages.details'),
+                                                    ],
+                                                    [
+                                                        'route' => 'users.teams',
+                                                        'icon' => 'fas fa-users',
+                                                        'label' => __('messages.teams'),
+                                                    ],
+                                                    [
+                                                        'route' => 'users.matches',
+                                                        'icon' => 'fas fa-handshake',
+                                                        'label' => __('messages.matches'),
+                                                    ],
+                                                    [
+                                                        'route' => 'users.activities',
+                                                        'icon' => 'fas fa-map-marker-alt',
+                                                        'label' => __('messages.activities'),
+                                                    ],
+                                                    [
+                                                        'route' => 'users.announcements',
+                                                        'icon' => 'fas fa-bullhorn',
+                                                        'label' => __('messages.announcements'),
+                                                    ],
+                                                ];
+                                            @endphp
+
                                             <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-6">
-                                            <li class="nav-item mt-2">
-                                                <a class="nav-link text-active-primary ms-0 me-10 py-5 {{ $currentRoute == 'users.profile' ? 'active' : '' }}" href="{{ route('users.profile', ['id' => $userId]) }}">{{ __('messages.details') }}</a>
-                                            </li>
-                                            <li class="nav-item mt-2">
-                                                <a class="nav-link text-active-primary ms-0 me-10 py-5 {{ $currentRoute == 'users.teams' ? 'active' : '' }}" href="{{ route('users.teams', ['id' => $userId]) }}"> {{ __('messages.teams') }} </a>
-                                            </li>
-                                            <li class="nav-item mt-2">
-                                                <a class="nav-link text-active-primary ms-0 me-10 py-5 {{ $currentRoute == 'users.matches' ? 'active' : '' }}" href="{{ route('users.matches', ['id' => $userId]) }}"> {{ __('messages.matches') }} </a>
-                                            </li>
-                                            <li class="nav-item mt-2">
-                                                <a class="nav-link text-active-primary ms-0 me-10 py-5 {{ $currentRoute == 'users.activities' ? 'active' : '' }}" href="{{ route('users.activities', ['id' => $userId]) }}"> {{ __('messages.activities') }} </a>
-                                            </li>
-                                            <li class="nav-item mt-2">
-                                                <a class="nav-link text-active-primary ms-0 me-10 py-5 {{ $currentRoute == 'users.announcements' ? 'active' : '' }}" href="{{ route('users.announcements', ['id' => $userId]) }}"> {{ __('messages.announcements') }} </a>
-                                            </li>
-                                        </ul>
+                                                @foreach($navItems as $item)
+                                                    <li class="nav-item mt-2">
+                                                        <a class="nav-link text-active-primary ms-0 me-10 py-5 {{ $currentRoute === $item['route'] ? 'active' : '' }}"
+                                                        href="{{ route($item['route'], ['id' => $userId]) }}">
+                                                            <i class="{{ $item['icon'] }} me-1"></i>
+                                                            {{ $item['label'] }}
+                                                        </a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+
                                         </div>
                                     </div>
                                     @yield('content')

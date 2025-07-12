@@ -12,6 +12,7 @@ use App\Http\Controllers\CourtController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MatchController;
 use App\Http\Controllers\MatchDetailController;
+use App\Http\Controllers\MeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RefundController;
@@ -82,17 +83,13 @@ Route::middleware('auth')->group(function () {
     Route::get('reservation/user/payment', [CheckoutController::class, 'userPaymentIndex'])->name('reservation.user.payment.index');
     Route::post('reservation/user/payment', [CheckoutController::class, 'userMakePayment'])->name('reservation.user.make.payment');
 
-    Route::get('/account-settings', [AccountController::class, 'index'])->name('account.settings');
-    Route::get('/account-settings/personal-info', [AccountController::class, 'personalInfo'])->name('account.personal-info');
-    Route::get('/account-settings/security', [AccountController::class, 'security'])->name('account.security');
-    Route::get('/account-settings/payments', [AccountController::class, 'payments'])->name('account.payments');
-    Route::get('/account-settings/notifications', [AccountController::class, 'notifications'])->name('account.notifications');
-    Route::get('/account-settings/privacy', [AccountController::class, 'privacy'])->name('account.privacy');
-    Route::get('/account-settings/taxes', [AccountController::class, 'taxes'])->name('account.taxes');
-    Route::get('/account-settings/travel-preferences', [AccountController::class, 'travelPreferences'])->name('account.travel-preferences');
-    Route::get('/account-settings/credits-coupons', [AccountController::class, 'creditsCoupons'])->name('account.credits-coupons');
-    Route::get('/account-settings/professional-tools', [AccountController::class, 'professionalTools'])->name('account.professional-tools');
-
+    Route::prefix('me')->name('me.')->group(function () {
+        Route::get('profile', [MeController::class, 'profile'])->name('profile');
+        Route::get('teams', [MeController::class, 'teams'])->name('teams');
+        Route::get('matches', [MeController::class, 'matches'])->name('matches');
+        Route::get('activities', [MeController::class, 'activities'])->name('activities');
+        Route::get('announcements', [MeController::class, 'announcements'])->name('announcements');
+    });
 
     Route::resource('court-businesses', CourtBusinessController::class);
     Route::resource('/courts', CourtController::class)->names('courts')->parameters([

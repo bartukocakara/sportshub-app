@@ -22,7 +22,7 @@
         <div class="separator my-2"></div>
         @auth
         <div class="menu-item px-5">
-            <a href="{{ route('account.settings') }}" class="menu-link px-5">{{ __('messages.account') }}</a>
+            <a href="{{ route('me.profile') }}" class="menu-link px-5">{{ __('messages.account') }}</a>
         </div>
 
 

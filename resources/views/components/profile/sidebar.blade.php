@@ -1,34 +1,29 @@
 @php
     $menuItems = [
         [
-            'route' => 'activities.index',
-            'icon' => '📍',
+            'route' => 'me.profile',
+            'icon' => '<i class="fas fa-user"></i>',
+            'label' => __('messages.profile')
+        ],
+        [
+            'route' => 'me.activities',
+            'icon' => '<i class="fas fa-history"></i>',
             'label' => __('messages.activities')
         ],
         [
-            'route' => 'announcements.index',
-            'icon' => '🔔',
+            'route' => 'me.announcements',
+            'icon' => '<i class="fas fa-bullhorn"></i>',
             'label' => __('messages.announcements')
         ],
         [
-            'route' => 'home',
-            'icon' => '🏟️',
-            'label' => __('messages.courts')
-        ],
-        [
-            'route' => 'matches.index',
-            'icon' => '🤝',
+            'route' => 'me.matches',
+            'icon' => '<i class="fas fa-handshake"></i>',
             'label' => __('messages.matches')
         ],
         [
-            'route' => 'teams.index',
-            'icon' => '👥',
+            'route' => 'me.teams',
+            'icon' => '<i class="fas fa-users"></i>',
             'label' => __('messages.teams')
-        ],
-        [
-            'route' => 'users.index',
-            'icon' => '👥',
-            'label' => __('messages.players')
         ],
     ];
 @endphp
@@ -56,21 +51,23 @@
         <div id="kt_app_sidebar_menu"
              data-kt-menu="true"
              data-kt-menu-expand="false"
-             class="flex-column-fluid menu -indention menu-column menu-rounded menu-active-bg mb-7">
+             class="flex-column-fluid menu menu-column menu-rounded menu-active-bg mb-7">
 
             @foreach($menuItems as $item)
                 @php
                     $isActive = Route::currentRouteName() === $item['route'];
                 @endphp
+
                 <div class="menu-item">
-                    <a class="menu-link text-dark {{ $isActive ? 'active bg-light-primary fw-bold' : '' }}"
-                       style="font-size: 20px;"
-                       href="{{ route($item['route']) }}">
-                        <span class="menu-icon">{{ $item['icon'] }}</span>
+                    <a href="{{ route($item['route']) }}"
+                       class="menu-link text-dark {{ $isActive ? 'active bg-light-primary fw-bold' : '' }}"
+                       style="font-size: 20px;">
+                        <span class="menu-icon">{!! $item['icon'] !!}</span>
                         <span class="menu-title">{{ $item['label'] }}</span>
                     </a>
                 </div>
             @endforeach
+
         </div>
     </div>
 </div>

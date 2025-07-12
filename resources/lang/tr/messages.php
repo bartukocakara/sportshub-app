@@ -333,4 +333,5 @@ return [
     'failed_to_create_match' => 'Maç oluşturulamadı. Lütfen tekrar deneyiniz.',
     'failed_to_update_match' => 'Maç güncellenirken bir hata oluştu. Lütfen tekrar deneyiniz.',
     'failed_to_delete_match' => 'Maç silinemedi. Lütfen tekrar deneyiniz.',
+    'profile' => 'Profil'
 ];
