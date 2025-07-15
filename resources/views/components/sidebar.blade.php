@@ -63,7 +63,7 @@
                     $isActive = Route::currentRouteName() === $item['route'];
                 @endphp
                 <div class="menu-item">
-                    <a class="menu-link text-dark {{ $isActive ? 'active bg-light-primary fw-bold' : '' }}"
+                    <a class="menu-link text-dark {{ $isActive ? 'active fw-bold' : '' }}"
                        style="font-size: 20px;"
                        href="{{ route($item['route']) }}">
                         <span class="menu-icon">{{ $item['icon'] }}</span>
