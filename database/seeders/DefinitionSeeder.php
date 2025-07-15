@@ -36,6 +36,11 @@ class DefinitionSeeder extends Seeder
             ['group_key' => 'player_status', 'value' => 'injured', 'description_tr' => 'Sakat', 'description_en' => 'Injured'],
             ['group_key' => 'player_status', 'value' => 'suspended', 'description_tr' => 'Cezalı', 'description_en' => 'Suspended'],
 
+            // court_status
+            ['group_key' => 'court_status', 'value' => 'available', 'description_tr' => 'Müsait', 'description_en' => 'Available'],
+            ['group_key' => 'court_status', 'value' => 'maintenance', 'description_tr' => 'Bakımda', 'description_en' => 'Under Maintenance'],
+            ['group_key' => 'court_status', 'value' => 'unavailable', 'description_tr' => 'Kullanılamaz', 'description_en' => 'Unavailable'],
+
             // participant_status
             // participant_status (for match join status)
             ['group_key' => 'participant_status', 'value' => 'invited', 'description_tr' => 'Davetli', 'description_en' => 'Invited'],

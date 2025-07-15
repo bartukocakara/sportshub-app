@@ -29,7 +29,6 @@ return new class extends Migration
               ->on('sport_types')
               ->onDelete('cascade');
             $table->string('status');
-            $table->string('type');
             $table->string('title');
             $table->date('expiring_date')->default(Carbon::today()->addWeek());
 

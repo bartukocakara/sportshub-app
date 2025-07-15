@@ -66,7 +66,7 @@ class MatchesSeeder extends Seeder
             $fromHour = sprintf('%02d', $hour) . ':00'; // Start from 08:00 and increment by an hour
             $toHour = date('H:i:s', strtotime($fromHour . ' + 1 hour'));
 
-            $requestReservationId = Str::uuid()->toString();
+            // $requestReservationId = Str::uuid()->toString();
             $matchId = Str::uuid()->toString();
 
             $matchTitle = $this->faker->word . ' Match';

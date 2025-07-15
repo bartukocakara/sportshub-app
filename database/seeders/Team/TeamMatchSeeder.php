@@ -5,6 +5,7 @@ namespace Database\Seeders\Team;
 use App\Enums\Request\RequestStatusEnum;
 use App\Enums\TypeEnums\MatchTypeEnum;
 use App\Enums\TypeEnums\RequestTypeEnum;
+use App\Models\Definition;
 use App\Models\Team;
 use App\Models\User;
 use Faker\Generator;
@@ -54,11 +55,10 @@ class TeamMatchSeeder extends Seeder
 
                 $requestTeamMatchInsert[] = [
                     'id' => Str::uuid()->toString(),
+                    'requested_user_id' => $this->faker->randomElement(User::all()->pluck('id')),
                     'requested_team_id' => $this->faker->randomElement(TeamLeader::where('user_id', $userId)->pluck('team_id')),
-                    'team_match_id' => $teamMatchId,
-                    'status' => $this->faker->randomElement([RequestStatusEnum::WAITING_FOR_APPROVAL->value,
-                            RequestStatusEnum::ACCEPTED->value,
-                            RequestStatusEnum::REJECTED->value]),
+                    'match_id' => $match->id,
+                    'status' => $this->faker->randomElement(Definition::where('group_key', 'request_status')->get()->pluck('value')),
                     'type' => $this->faker->randomElement([RequestTypeEnum::JOIN->value, RequestTypeEnum::INVITE->value]),
                     'title' => $this->faker->word,
                     'expiring_date' => $expiringDate
@@ -79,8 +79,10 @@ class TeamMatchSeeder extends Seeder
 
                 $requestTeamMatchInsert[] = [
                     'id' => Str::uuid()->toString(),
+                    'requested_user_id' => $this->faker->randomElement(User::all()->pluck('id')),
                     'requested_team_id' => $this->faker->randomElement(Team::all()->pluck('id')),
-                    'team_match_id' => $teamMatchId,
+                    'status' => $this->faker->randomElement(Definition::where('group_key', 'request_status')->get()->pluck('value')),
+                    'match_id' => $match->id,
                     'title' => $this->faker->word,
                     'type' => $this->faker->randomElement([RequestTypeEnum::JOIN->value, RequestTypeEnum::INVITE->value]),
                     'expiring_date' => $expiringDate

@@ -26,6 +26,7 @@ return new class extends Migration
                   ->on('court_businesses')
                   ->onDelete('cascade');
             $table->string('title');
+            $table->string('status');
 
             $table->timestamps();
         });

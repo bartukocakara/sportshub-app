@@ -20,6 +20,7 @@ class Court extends Model
         'sport_type_id',
         'title',
         'court_business_id',
+        'status'
     ];
 
     public function scopeFilterBy($query, $filters, array $with = [])
