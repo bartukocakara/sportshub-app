@@ -10,8 +10,6 @@ use Illuminate\Support\Str;
 use App\Models\MatchTeamPlayer;
 use Illuminate\Database\Seeder;
 use Illuminate\Container\Container;
-use App\Models\MatchTeamPlayerStatus;
-use App\Models\Position;
 
 class MatchTeamPlayerSeeder extends Seeder
 {

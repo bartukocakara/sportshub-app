@@ -44,6 +44,10 @@ class DefinitionSeeder extends Seeder
             ['group_key' => 'participant_status', 'value' => 'pending_response', 'description_tr' => 'Yanıt Bekleniyor', 'description_en' => 'Pending Response'],
             ['group_key' => 'participant_status', 'value' => 'kicked', 'description_tr' => 'Çıkarıldı', 'description_en' => 'Kicked'],
 
+            // request_status
+            ['group_key' => 'request_status', 'value' => 'waiting_for_approval', 'description_tr' => 'Beklemede', 'description_en' => 'Waiting for Approval'],
+            ['group_key' => 'request_status', 'value' => 'accepted', 'description_tr' => 'Kabul Edildi', 'description_en' => 'Accepted'],
+            ['group_key' => 'request_status', 'value' => 'rejected', 'description_tr' => 'Reddedildi', 'description_en' => 'Rejected'],
         ];
 
         foreach ($definitions as $definition) {

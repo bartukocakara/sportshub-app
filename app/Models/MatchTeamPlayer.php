@@ -16,7 +16,6 @@ class MatchTeamPlayer extends Model
     protected $fillable = [
         'user_id',
         'match_team_id',
-        'position_id',
         'match_team_player_status_id'
     ];
 

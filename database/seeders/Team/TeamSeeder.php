@@ -6,7 +6,6 @@ use App\Models\City;
 use App\Models\Team;
 use App\Models\User;
 use Faker\Generator;
-use App\Models\Position;
 use App\Models\SportType;
 use App\Models\PlayerTeam;
 use App\Models\TeamLeader;
@@ -14,7 +13,7 @@ use App\Models\TeamStatus;
 use App\Models\TeamSetting;
 use Illuminate\Support\Str;
 use App\Enums\EventGenderEnum;
-use App\Enums\StatusEnums\Request\RequestStatusEnum;
+use App\Enums\Request\RequestStatusEnum;
 use App\Enums\TypeEnums\RequestTypeEnum;
 use App\Models\ChatChannel;
 use App\Models\ChatMessage;
@@ -99,7 +98,6 @@ class TeamSeeder extends Seeder
             //     'status' => $this->faker->randomElement([RequestStatusEnum::WAITING_FOR_APPROVAL->value,
             //                 RequestStatusEnum::ACCEPTED->value,
             //                 RequestStatusEnum::REJECTED->value]),
-            //     // 'position_id' => $this->faker->randomElement(Position::where('sport_type_id', $sportType->id)->pluck('id')),
             //     'type' => $this->faker->randomElement([RequestTypeEnum::JOIN->value, RequestTypeEnum::INVITE->value]),
             //     'title' =>  $this->faker->word,
             //     'expiring_date' => $expiringDate
