@@ -53,6 +53,20 @@
 <script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>
 <script src="{{ asset('assets/js/custom/widgets.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/tr.js"></script>
+<script>
+    document.querySelector('#kt_filter_modal form').addEventListener('submit', function(e) {
+    const form = e.target;
+    [...form.elements].forEach(el => {
+        if ((el.tagName === 'INPUT' || el.tagName === 'SELECT') && !el.disabled) {
+            if (el.type === 'checkbox' || el.type === 'radio') {
+                if (!el.checked) el.name = ''; // unchecked checkbox/radio gönderilmez
+            } else if (!el.value) {
+                el.name = ''; // boş input gönderilmez
+            }
+        }
+    });
+});
+</script>
 @yield('page-scripts')
 </body>
 </html>

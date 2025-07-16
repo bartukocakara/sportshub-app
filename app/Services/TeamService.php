@@ -14,23 +14,36 @@ use App\Repositories\UserRepository;
 use App\Http\Resources\PlayerTeamResource;
 use App\Repositories\PlayerTeamRepository;
 use Illuminate\Support\Facades\DB;
+use App\Aggregates\Team\TeamAggregate;
+use Illuminate\Database\Eloquent\Model;
 
 class TeamService extends CrudService
 {
+    protected TeamAggregate $teamAggregate;
+    protected TeamRepository $teamRepository;
+    protected PlayerTeamRepository $playerTeamRepository;
+    protected MetaDataService $metaDataService;
+
     /**
      * Constructor for TeamService.
      *
-     * @param TeamRepository $teamRepository The repository for Team model. This will also be passed to the parent CrudService.
-     * @param PlayerTeamRepository $playerTeamRepository The repository for PlayerTeam model.
-     * @param MetaDataService $metaDataService The service for metadata operations.
+     * @param TeamAggregate $teamAggregate
+     * @param TeamRepository $teamRepository
+     * @param PlayerTeamRepository $playerTeamRepository
+     * @param MetaDataService $metaDataService
      */
     public function __construct(
-        protected TeamRepository $teamRepository,
-        protected PlayerTeamRepository $playerTeamRepository,
-        protected MetaDataService $metaDataService
+        TeamAggregate $teamAggregate,
+        TeamRepository $teamRepository,
+        PlayerTeamRepository $playerTeamRepository,
+        MetaDataService $metaDataService
     ) {
         // IMPORTANT FIX: Call the parent constructor and pass the primary repository
         // for this service (TeamRepository) so CrudService's $this->repository is initialized.
+        $this->teamRepository = $teamRepository;
+        $this->metaDataService = $metaDataService;
+        $this->teamAggregate = $teamAggregate;
+        $this->playerTeamRepository = $playerTeamRepository;
         parent::__construct($teamRepository);
 
         // The explicit assignment $this->teamRepository = $teamRepository; is redundant
@@ -77,49 +90,13 @@ class TeamService extends CrudService
     }
 
     /**
-     * Store a new team and associate players.
+     * store
      *
-     * @param array $data
-     * @return Team
-     * @throws \Exception
+     * @param  array $request
+     * @return Model
      */
-    public function store(array $data): Team
+    public function store(array $params) : Model
     {
-        return DB::transaction(function () use ($data) {
-            // Prepare team data for creation
-            $teamData = [
-                'title' => $data['title'],
-                'sport_type_id' => $data['sport_type_id'],
-                'city_id' => $data['city_id'],
-                'gender' => $data['gender'],
-                'max_player' => $data['max_player'],
-                'min_player' => $data['min_player'],
-                'team_status' => 'active',
-                'player_count' => count($data['user_ids'] ?? []), // Initial player count
-            ];
-
-            // Create the team using the TeamRepository
-            $team = $this->teamRepository->create($teamData);
-            // Attach players to the team if user_ids are provided
-            if (!empty($data['user_ids'])) {
-                $playerTeamInsertData = [];
-                foreach ($data['user_ids'] as $userId) {
-                    $playerTeamInsertData[] = [
-                        'id' => Str::uuid()->toString(),
-                        'user_id' => $userId,
-                        'team_id' => $team->id,
-                        'created_at' => now(), // Add timestamps for mass insert
-                        'updated_at' => now(), // Add timestamps for mass insert
-                    ];
-                }
-                // Insert player-team relationships using the PlayerTeamRepository
-                $this->playerTeamRepository->insert($playerTeamInsertData);
-            }
-
-            // Optionally, clear the session for selected players after team creation
-            session()->forget('team_create_selected_players');
-
-            return $team;
-        });
+        return $this->teamAggregate->creatTeam($params);
     }
 }

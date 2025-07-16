@@ -73,8 +73,18 @@ class TeamController extends Controller
      */
     public function store(TeamRequest $request)
     {
-        $this->teamService->store($request->validated());
-        return redirect()->route('teams.index')->with('success', 'Team created successfully.');
+        try {
+            $this->teamService->store($request->validated());
+
+            return redirect()->route('teams.index')
+                            ->with('success', __('messages.team_created_successfully'));
+        } catch (\Throwable $e) {
+            logger()->error($e);
+
+            return redirect()->back()
+                            ->withInput()
+                            ->with('error', __('messages.failed_to_create_team'));
+    }
     }
 
     /**

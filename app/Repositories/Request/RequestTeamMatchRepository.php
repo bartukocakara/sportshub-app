@@ -4,9 +4,6 @@ namespace App\Repositories\Request;
 
 use App\Models\RequestTeamMatch;
 use App\Repositories\BaseRepository;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Http\Request;
 
 class RequestTeamMatchRepository extends BaseRepository
 {
@@ -24,16 +21,5 @@ class RequestTeamMatchRepository extends BaseRepository
         parent::__construct($requestTeamMatch);
         // Model bu repoda kullanılmak üzere değişkene tanımlanıyor.
         $this->requestTeamMatch = $requestTeamMatch;
-    }
-
-    /**
-     * all
-     *
-     * @param  Request $request
-     * @return LengthAwarePaginator|Collection
-     */
-    public function all(Request $request): LengthAwarePaginator|Collection
-    {
-        return $this->requestTeamMatch->with(['requestedUser', 'requestedTeam', 'match'])->filterBy($request->all());
     }
 }

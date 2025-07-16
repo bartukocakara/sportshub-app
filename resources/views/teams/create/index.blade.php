@@ -11,6 +11,7 @@
     <div class="d-flex flex-column flex-column-fluid">
         <div id="kt_app_toolbar" class="app-toolbar pt-5">
             <div class="app-container container-fluid d-flex align-items-stretch">
+
                 <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
                     <div class="page-title d-flex flex-column gap-1 me-3 mb-2">
                         <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-6">
@@ -35,6 +36,21 @@
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div class="app-container container-fluid">
+                {{-- GENERAL ERROR MESSAGE DISPLAY --}}
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                {{-- SUCCESS MESSAGE (Opsiyonel) --}}
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <form method="POST" action="{{ route('teams.store') }}">
                     @csrf
                     <div class="d-flex flex-column flex-lg-row">

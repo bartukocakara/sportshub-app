@@ -333,5 +333,22 @@ return [
     'failed_to_create_match' => 'Maç oluşturulamadı. Lütfen tekrar deneyiniz.',
     'failed_to_update_match' => 'Maç güncellenirken bir hata oluştu. Lütfen tekrar deneyiniz.',
     'failed_to_delete_match' => 'Maç silinemedi. Lütfen tekrar deneyiniz.',
-    'profile' => 'Profil'
+    'profile' => 'Profil',
+    'whats_on_your_mind' => "Ne düşünüyorsun, :name?",
+    'filter_announcements' => 'Duyuruları Filtrele',
+    'search_announcement_title' => 'Duyuru Başlığı Ara',
+    'select_gender' => 'Cinsiyet Seçiniz',
+    'other' => 'Diğer',
+    'filter_users' => 'Kullanıcıları Filtrele',
+    'search_full_name' => 'Tam Adı Ara',
+    'select_location' => 'Konum Seçiniz',
+    'activity_list' => 'Aktiviteler',
+    'announcement_list' => 'Duyurular',
+    'user_list' => 'Kullanıcılar',
+    'announcement_details' => 'Duyuru Detayları',
+    'announcement_created_successfully' => 'Duyuru başarıyla oluşturuldu',
+    'announcement_updated_successfully' => 'Duyuru başarıyla güncellendi',
+    'announcement_deleted_successfully' => 'Duyuru başarıyla silindi',
+    'filter_activities' => 'Aktiviteleri Filtrele',
+
 ];

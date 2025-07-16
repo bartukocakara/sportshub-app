@@ -43497,7 +43497,7 @@ code:not([class*=language-]) {
   justify-content: center;
   position: absolute;
   z-index: 0;
-  left: 0;
+  left: 8.5px;
   top: 0;
   bottom: 0;
   transform: translate(50%);

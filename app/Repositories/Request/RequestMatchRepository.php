@@ -15,7 +15,7 @@ class RequestMatchRepository extends BaseRepository
     protected RequestMatch $requestMatch;
 
     /**
-     * @param Court $report
+     * @param RequestMatch $report
      * @return void
     */
     public function __construct(RequestMatch $requestMatch)

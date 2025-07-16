@@ -18,9 +18,12 @@ class FullName implements FilterInterface
      *
      * @param string $value
      * @return void
-    */
+     */
     public function handle($value): void
     {
-        $this->query->where('full_name', 'ilike', "%$value%");
+        $this->query->where(function ($query) use ($value) {
+            $query->where('first_name', 'ilike', "%{$value}%")
+                  ->orWhere('last_name', 'ilike', "%{$value}%");
+        });
     }
 }

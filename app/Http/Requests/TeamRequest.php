@@ -23,7 +23,7 @@ class TeamRequest extends FormRequest
             'sport_type_id' => 'required|uuid|exists:sport_types,id', // Assuming sport_type_id is a UUID and exists
             'user_ids' => 'nullable|array', // Allow null for create or update if no players are selected
             'user_ids.*' => 'uuid|exists:users,id', // Ensure each user ID is a UUID and exists in 'users' table
-            'team_status' => ['required', Rule::in(['active', 'inactive', 'banned'])], // For update modal
+            'team_status' => ['nullable', Rule::in(['active', 'inactive', 'banned'])], // For update modal
         ];
     }
 }

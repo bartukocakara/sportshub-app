@@ -315,5 +315,21 @@ return [
     'failed_to_create_match' => 'Match could not be created. Please try again.',
     'failed_to_update_match' => 'Match could not be updated. Please try again.',
     'failed_to_delete_match' => 'Match could not be deleted. Please try again.',
-    'profile' => 'Profile'
+    'profile' => 'Profile',
+    'whats_on_your_mind' => "What's on your mind, :name?",
+    'filter_announcements' => 'Filter Announcements',
+    'search_announcement_title' => 'Search Announcement Title',
+    'other' => 'Other',
+    'filter_users' => 'Filter Users',
+    'search_full_name' => 'Search Full Name',
+    'select_location' => 'Select Location',
+    'activity_list' => 'Activity List',
+    'announcement_list' => 'Announcement List',
+    'user_list' => 'User List',
+    'announcement_details' => 'Announcement Details',
+    'announcement_created_successfully' => 'Announcement created successfully',
+    'announcement_updated_successfully' => 'Announcement updated successfully',
+    'announcement_deleted_successfully' => 'Announcement deleted successfully',
+    'filter_activities' => 'Filter Activities',
+    
 ];

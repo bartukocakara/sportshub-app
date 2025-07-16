@@ -18,11 +18,11 @@ class UserResource extends JsonResource
         $selectedIds = $selectedPlayers instanceof \Illuminate\Support\Collection
             ? $selectedPlayers->pluck('id')->toArray()
             : (is_array($selectedPlayers) ? array_column($selectedPlayers, 'id') : []);
-
         return [
             'id' => $this->id,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
+            'full_name' => $this->full_name,
             'avatar' => $this->avatar,
             'status_definition' => $this->user_status_text,
             'status_badge' => $this->status_badge,

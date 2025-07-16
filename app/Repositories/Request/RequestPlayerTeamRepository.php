@@ -32,9 +32,9 @@ class RequestPlayerTeamRepository extends BaseRepository
      * @param  Request $request
      * @return LengthAwarePaginator|Collection
      */
-    public function all(Request $request): LengthAwarePaginator|Collection
+    public function all(Request $request, array $with = [], bool $useCache = false): LengthAwarePaginator|Collection
     {
-        return $this->requestPlayerTeam->with(['requestedUser', 'team.users'])->filterBy($request->all());
+        return $this->requestPlayerTeam->with(['requestedUser', 'team.users'])->filterBy($request->all(), $with);
     }
 
     /**

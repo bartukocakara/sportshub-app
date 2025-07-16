@@ -4,9 +4,6 @@ namespace App\Repositories\Request;
 
 use App\Models\RequestCreateCourt;
 use App\Repositories\BaseRepository;
-use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class RequestCreateCourtRepository extends BaseRepository
 {
@@ -24,16 +21,5 @@ class RequestCreateCourtRepository extends BaseRepository
         parent::__construct($requestCreateCourt);
         // Model bu repoda kullanılmak üzere değişkene tanımlanıyor.
         $this->requestCreateCourt = $requestCreateCourt;
-    }
-
-    /**
-     * all
-     *
-     * @param  mixed $request
-     * @return LengthAwarePaginator|Collection
-     */
-    public function all( Request $request): LengthAwarePaginator|Collection
-    {
-        return $this->requestCreateCourt->with(['requestedUser', 'court.courtImage'])->filterBy($request->all());
     }
 }
