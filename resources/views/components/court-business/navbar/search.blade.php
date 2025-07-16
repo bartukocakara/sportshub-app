@@ -39,42 +39,6 @@
                                 <span class="fs-7 fw-semibold text-muted">Marketing Manager</span>
                             </div>
                         </a>
-                        <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
-                            <div class="symbol symbol-40px me-4">
-                                <img src="assets/media/avatars/300-2.jpg" alt="">
-                            </div>
-                            <div class="d-flex flex-column justify-content-start fw-semibold">
-                                <span class="fs-6 fw-semibold">Olivia Bold</span>
-                                <span class="fs-7 fw-semibold text-muted">Software Engineer</span>
-                            </div>
-                        </a>
-                        <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
-                            <div class="symbol symbol-40px me-4">
-                                <img src="assets/media/avatars/300-9.jpg" alt="">
-                            </div>
-                            <div class="d-flex flex-column justify-content-start fw-semibold">
-                                <span class="fs-6 fw-semibold">Ana Clark</span>
-                                <span class="fs-7 fw-semibold text-muted">UI/UX Designer</span>
-                            </div>
-                        </a>
-                        <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
-                            <div class="symbol symbol-40px me-4">
-                                <img src="assets/media/avatars/300-14.jpg" alt="">
-                            </div>
-                            <div class="d-flex flex-column justify-content-start fw-semibold">
-                                <span class="fs-6 fw-semibold">Nick Pitola</span>
-                                <span class="fs-7 fw-semibold text-muted">Art Director</span>
-                            </div>
-                        </a>
-                        <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
-                            <div class="symbol symbol-40px me-4">
-                                <img src="assets/media/avatars/300-11.jpg" alt="">
-                            </div>
-                            <div class="d-flex flex-column justify-content-start fw-semibold">
-                                <span class="fs-6 fw-semibold">Edward Kulnic</span>
-                                <span class="fs-7 fw-semibold text-muted">System Administrator</span>
-                            </div>
-                        </a>
                         <h3 class="fs-5 text-muted m-0 pt-5 pb-5" data-kt-search-element="category-title">Customers</h3>
                         <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
                             <div class="symbol symbol-40px me-4">
@@ -120,17 +84,6 @@
                                 <span class="fs-7 fw-semibold text-muted">Marketing</span>
                             </div>
                         </a>
-                        <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
-                            <div class="symbol symbol-40px me-4">
-                                <span class="symbol-label bg-light">
-                                    <img class="w-20px h-20px" src="assets/media/svg/brand-logos/tower.svg" alt="">
-                                </span>
-                            </div>
-                            <div class="d-flex flex-column justify-content-start fw-semibold">
-                                <span class="fs-6 fw-semibold">Tower Group Website</span>
-                                <span class="fs-7 fw-semibold text-muted">Google Adwords</span>
-                            </div>
-                        </a>
                         <h3 class="fs-5 text-muted m-0 pt-5 pb-5" data-kt-search-element="category-title">Projects</h3>
                         <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
                             <div class="symbol symbol-40px me-4">
@@ -147,52 +100,6 @@
                             <div class="d-flex flex-column">
                                 <span class="fs-6 fw-semibold">Si-Fi Project by AU Themes</span>
                                 <span class="fs-7 fw-semibold text-muted">#45670</span>
-                            </div>
-                        </a>
-                        <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
-                            <div class="symbol symbol-40px me-4">
-                                <span class="symbol-label bg-light">
-                                    <i class="ki-duotone ki-frame fs-2 text-primary">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                        <span class="path3"></span>
-                                        <span class="path4"></span>
-                                    </i>
-                                </span>
-                            </div>
-                            <div class="d-flex flex-column">
-                                <span class="fs-6 fw-semibold">Shopix Mobile App Planning</span>
-                                <span class="fs-7 fw-semibold text-muted">#45690</span>
-                            </div>
-                        </a>
-                        <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
-                            <div class="symbol symbol-40px me-4">
-                                <span class="symbol-label bg-light">
-                                    <i class="ki-duotone ki-message-text-2 fs-2 text-primary">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                        <span class="path3"></span>
-                                    </i>
-                                </span>
-                            </div>
-                            <div class="d-flex flex-column">
-                                <span class="fs-6 fw-semibold">Finance Monitoring SAAS Discussion</span>
-                                <span class="fs-7 fw-semibold text-muted">#21090</span>
-                            </div>
-                        </a>
-                        <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
-                            <div class="symbol symbol-40px me-4">
-                                <span class="symbol-label bg-light">
-                                    <i class="ki-duotone ki-profile-circle fs-2 text-primary">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                        <span class="path3"></span>
-                                    </i>
-                                </span>
-                            </div>
-                            <div class="d-flex flex-column">
-                                <span class="fs-6 fw-semibold">Dashboard Analitics Launch</span>
-                                <span class="fs-7 fw-semibold text-muted">#34560</span>
                             </div>
                         </a>
                     </div>
@@ -288,20 +195,6 @@
                         <div class="d-flex align-items-center mb-5">
                             <div class="symbol symbol-40px me-4">
                                 <span class="symbol-label bg-light">
-                                    <i class="ki-duotone ki-bank fs-2 text-primary">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                    </i>
-                                </span>
-                            </div>
-                            <div class="d-flex flex-column">
-                                <a href="#" class="fs-6 text-gray-800 text-hover-primary fw-semibold">Shopix Mobile App</a>
-                                <span class="fs-7 text-muted fw-semibold">#45690</span>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center mb-5">
-                            <div class="symbol symbol-40px me-4">
-                                <span class="symbol-label bg-light">
                                     <i class="ki-duotone ki-chart-line-down fs-2 text-primary">
                                         <span class="path1"></span>
                                         <span class="path2"></span>
@@ -343,14 +236,6 @@
                         <label>
                             <input type="radio" class="btn-check" name="type" value="users">
                             <span class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4">Users</span>
-                        </label>
-                        <label>
-                            <input type="radio" class="btn-check" name="type" value="orders">
-                            <span class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4">Orders</span>
-                        </label>
-                        <label>
-                            <input type="radio" class="btn-check" name="type" value="projects">
-                            <span class="btn btn-sm btn-color-muted btn-active btn-active-primary px-4">Projects</span>
                         </label>
                     </div>
                 </div>

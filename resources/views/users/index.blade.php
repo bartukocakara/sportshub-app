@@ -1,4 +1,6 @@
-@extends('layouts.app') @section('title', __('messages.players')) @section('custom-styles')
+@extends('layouts.app')
+@section('title', __('messages.players'))
+@section('custom-styles')
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
 <link href="{{ asset('assets/css/pagination.css') }}" rel="stylesheet" type="text/css" />
@@ -29,8 +31,10 @@
     <div id="kt_app_content_container" class="app-container container-fluid">
         <div class="d-flex flex-row">
             <div class="w-100 flex-lg-row-fluid mx-lg-13">
-
-                @include('components.users.card-list')
+                <div class="row g-6 mb-6 g-xl-9 mb-xl-9">
+                    <x-filter :clearRoute="route(Route::currentRouteName())" />
+                    @include('components.users.card-list')
+                </div>
             </div>
             @include('components.users.suggestions-list')
         </div>

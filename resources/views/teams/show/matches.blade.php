@@ -1,4 +1,4 @@
-@extends('layouts.user.index')
+@extends('layouts.team.index')
 
 @section('title', __('messages.matches'))
 @section('custom-styles')
@@ -31,24 +31,26 @@
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-fluid">
-                <x-filter :clearRoute="route(Route::currentRouteName(), ['id' => request()->route('id')])" />
-                @php
-                    $cityTitles = collect($datas['cities'] ?? [])->pluck('title', 'id')->toArray();
-                    $sportTypeTitles = collect($datas['sport_types'] ?? [])->pluck('title', 'id')->toArray();
-                @endphp
-                <x-filter-tags
-                    :excludedFilters="['page', 'per_page']"
-                    :titleMaps="[
-                        'city_id' => $cityTitles,
-                        'sport_type_id' => $sportTypeTitles,
-                    ]"
-                    translationsPrefix="messages"
-                />
-            @include('components.pagination.default', ['data' => $datas['matches']])
-            <div class="row g-6 g-xl-9 mt-2">
-            @include('components.matches.card-list')
+                    <x-filter :clearRoute="route(Route::currentRouteName(), ['id' => request()->route('id')])" />
+                    @php
+                        $cityTitles = collect($datas['cities'] ?? [])->pluck('title', 'id')->toArray();
+                        $sportTypeTitles = collect($datas['sport_types'] ?? [])->pluck('title', 'id')->toArray();
+                    @endphp
+                    <x-filter-tags
+                        :excludedFilters="['page', 'per_page']"
+                        :titleMaps="[
+                            'city_id' => $cityTitles,
+                            'sport_type_id' => $sportTypeTitles,
+                        ]"
+                        translationsPrefix="messages"
+                    />
+                @include('components.pagination.default', ['data' => $datas['matches']])
+                <div class="row g-6 g-xl-9 mt-2">
+                    @include('components.matches.card-list')
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 @endsection

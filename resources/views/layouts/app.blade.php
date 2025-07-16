@@ -10,7 +10,9 @@
         <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
             @include('components.sidebar')
             <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
-                @yield('content')
+                <div id="kt_app_content" class="app-content flex-column-fluid">
+                    @yield('content')
+                </div>
                 @include('components.footer')
             </div>
             {{-- @include('components.aside') --}}
@@ -52,6 +54,7 @@
 <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
 <script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>
 <script src="{{ asset('assets/js/custom/widgets.js') }}"></script>
+<script src="{{ asset('assets/js/custom/utilities/modals/users-search.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/tr.js"></script>
 <script>
     document.querySelector('#kt_filter_modal form').addEventListener('submit', function(e) {

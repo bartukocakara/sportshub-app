@@ -1,4 +1,4 @@
-@extends('layouts.user.index')
+@extends('layouts.team.index')
 
 @section('title', __('messages.activities'))
 
@@ -32,28 +32,34 @@
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-fluid">
-                <div class="card-body">
-                    <div class="card-body p-0" role="tabpanel">
-                    <x-filter :clearRoute="route(Route::currentRouteName(), ['id' => request()->route('id')])" />
-                    @php
-                        $cityTitles = collect($datas['cities'] ?? [])->pluck('title', 'id')->toArray();
-                        $sportTypeTitles = collect($datas['sport_types'] ?? [])->pluck('title', 'id')->toArray();
-                    @endphp
-                    <x-filter-tags
-                        :excludedFilters="['page', 'per_page']"
-                        :titleMaps="[
-                            'city_id' => $cityTitles,
-                            'sport_type_id' => $sportTypeTitles,
-                        ]"
-                        translationsPrefix="messages"
-                    />
-                    @include('components.activities.timeline')
+                <div class="d-flex flex-row">
+                        <div class="card-body">
+                            <div class="card-body p-0" role="tabpanel">
+                                <x-filter :clearRoute="route(Route::currentRouteName(), ['id' => request()->route('id')])" />
+                                @php
+                                    $cityTitles = collect($datas['cities'] ?? [])->pluck('title', 'id')->toArray();
+                                    $sportTypeTitles = collect($datas['sport_types'] ?? [])->pluck('title', 'id')->toArray();
+                                @endphp
+
+                                <x-filter-tags
+                                    :excludedFilters="['page', 'per_page']"
+                                    :titleMaps="[
+                                        'city_id' => $cityTitles,
+                                        'sport_type_id' => $sportTypeTitles,
+                                    ]"
+                                    translationsPrefix="messages"
+                                />
+                                @include('components.activities.timeline')
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
 </div>
 @include('components.activities.modals.filter-modal')
 
+@endsection
+@section('page-scripts')
 @endsection

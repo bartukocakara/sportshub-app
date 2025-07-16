@@ -1,4 +1,4 @@
-@extends('layouts.user.index')
+@extends('layouts.team.index')
 
 @section('title', __('messages.profile'))
 @section('custom-styles')
@@ -20,7 +20,7 @@
                             <li class="breadcrumb-item">
                                 <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
                             </li>
-                            <li class="breadcrumb-item text-gray-700">{{ __('messages.user_details') }}</li>
+                            <li class="breadcrumb-item text-gray-700">{{ __('messages.activity_list') }}</li>
                         </ul>
                         <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bolder fs-1 lh-0">{{ __('messages.activity_list') }}</h1>
                     </div>

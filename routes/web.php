@@ -19,6 +19,7 @@ use App\Http\Controllers\RefundController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\SubscriptionPlanController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\TeamDetailController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDetailController;
 use Illuminate\Support\Facades\Route;
@@ -69,6 +70,15 @@ Route::prefix('matches/{id}')->name('matches.')->group(function () {
     Route::get('announcements', [MatchDetailController::class, 'announcements'])->name('announcements');
     Route::get('profile', [MatchDetailController::class, 'profile'])->name('profile');
     Route::get('teams', [MatchDetailController::class, 'teams'])->name('teams');
+});
+
+Route::prefix('teams/{id}')->name('teams.')->group(function () {
+    Route::get('activities', [TeamDetailController::class, 'activities'])->name('activities');
+    Route::get('announcements', [TeamDetailController::class, 'announcements'])->name('announcements');
+    Route::get('profile', [TeamDetailController::class, 'profile'])->name('profile');
+    Route::get('players', [TeamDetailController::class, 'players'])->name('players');
+    Route::get('matches', [TeamDetailController::class, 'matches'])->name('matches');
+
 });
 
 Route::resource('/courts', CourtController::class)->names('courts')->parameters([

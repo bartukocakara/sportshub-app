@@ -1,5 +1,4 @@
 @props(['clearRoute'])
-
 <div class="d-flex flex-wrap flex-stack mb-6">
     <div class="d-flex flex-wrap my-2">
         <div class="me-4">

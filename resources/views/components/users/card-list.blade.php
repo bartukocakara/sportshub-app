@@ -1,18 +1,15 @@
-<div class="row g-6 mb-6 g-xl-9 mb-xl-9">
-    <x-filter :clearRoute="route(Route::currentRouteName())" />
-                    @php
-                        $cityTitles = collect($datas['cities'] ?? [])->pluck('title', 'id')->toArray();
-                        $sportTypeTitles = collect($datas['sport_types'] ?? [])->pluck('title', 'id')->toArray();
-                    @endphp
-
-                    <x-filter-tags
-                        :excludedFilters="['page', 'per_page']"
-                        :titleMaps="[
-                            'city_id' => $cityTitles,
-                            'sport_type_id' => $sportTypeTitles,
-                        ]"
-                        translationsPrefix="messages"
-                    />
+    @php
+        $cityTitles = collect($datas['cities'] ?? [])->pluck('title', 'id')->toArray();
+        $sportTypeTitles = collect($datas['sport_types'] ?? [])->pluck('title', 'id')->toArray();
+    @endphp
+    <x-filter-tags
+        :excludedFilters="['page', 'per_page']"
+        :titleMaps="[
+            'city_id' => $cityTitles,
+            'sport_type_id' => $sportTypeTitles,
+        ]"
+        translationsPrefix="messages"
+    />
     @include('components.pagination.default', ['data' => $datas['users']])
     @foreach ($datas['users']['data'] as $key => $user)
         <div class="col-md-6 col-xxl-4">
@@ -42,4 +39,3 @@
         </div>
     </div>
     @endforeach
-</div>

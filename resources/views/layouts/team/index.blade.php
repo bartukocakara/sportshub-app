@@ -11,49 +11,49 @@
         <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
             @php
                 $id = request()->route('id');
-                $menuItems = [
+                $menuItems =  [
                     [
-                        'route' => 'users.profile',
+                        'route' => 'teams.profile',
                         'icon' => "<i class='fas fa-user me-1'></i>",
                         'params' => ['id' => $id],
                         'label' => __('messages.details'),
                     ],
                     [
-                        'route' => 'users.teams',
+                        'route' => 'teams.players',
                         'icon' => "<i class='fas fa-users me-1'></i>",
                         'params' => ['id' => $id],
-                        'label' => __('messages.teams'),
+                        'label' => __('messages.players'),
                     ],
                     [
-                        'route' => 'users.matches',
+                        'route' => 'teams.matches',
                         'icon' => "<i class='fas fa-handshake'></i>",
                         'params' => ['id' => $id],
                         'label' => __('messages.matches'),
                     ],
                     [
-                        'route' => 'users.activities',
+                        'route' => 'teams.activities',
                         'icon' => "<i class='fas fa-map-marker-alt'></i>",
                         'params' => ['id' => $id],
                         'label' => __('messages.activities'),
                     ],
                     [
-                        'route' => 'users.announcements',
+                        'route' => 'teams.announcements',
                         'icon' => "<i class='fas fa-bullhorn''></i>",
                         'params' => ['id' => $id],
                         'label' => __('messages.announcements'),
                     ],
                 ];
             @endphp
-            @include('components.show-sidebar')
+            @include('components.team.show.sidebar')
             <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+                <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
                     @php
                         $userId = request()->route('id'); // Get the 'id' parameter from the URL
                         $currentRoute = Route::currentRouteName();
                     @endphp
                     <div class="d-flex flex-column flex-column-fluid">
-                            <div id="kt_app_content" class="app-content flex-column-fluid">
-                                @yield('content')
-                            </div>
+                        <div id="kt_app_content" class="app-content flex-column-fluid">
+                            @yield('content')
                         </div>
                     </div>
 

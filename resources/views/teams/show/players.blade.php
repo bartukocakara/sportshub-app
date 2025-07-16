@@ -1,6 +1,6 @@
-@extends('layouts.user.index')
+@extends('layouts.team.index')
 
-@section('title', __('messages.matches'))
+@section('title', __('messages.players'))
 @section('custom-styles')
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
 @endsection
@@ -20,33 +20,25 @@
                             <li class="breadcrumb-item">
                                 <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
                             </li>
-                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">{{ __('messages.matches') }}</li>
+                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">{{ __('messages.players') }}</li>
                         </ul>
                     </div>
                     <a href="{{ route('matches.create') }}" class="btn btn-sm btn-success ms-3 px-4 py-3" >
-                        {{ __('messages.create_match') }}
+                        Oyuncu ekle
                     </a>
                 </div>
             </div>
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-fluid">
+                <div class="d-flex flex-row">
+                <div class="w-100 flex-lg-row-fluid ">
+                <div class="row g-6 mb-6 g-xl-9 ">
                 <x-filter :clearRoute="route(Route::currentRouteName(), ['id' => request()->route('id')])" />
-                @php
-                    $cityTitles = collect($datas['cities'] ?? [])->pluck('title', 'id')->toArray();
-                    $sportTypeTitles = collect($datas['sport_types'] ?? [])->pluck('title', 'id')->toArray();
-                @endphp
-                <x-filter-tags
-                    :excludedFilters="['page', 'per_page']"
-                    :titleMaps="[
-                        'city_id' => $cityTitles,
-                        'sport_type_id' => $sportTypeTitles,
-                    ]"
-                    translationsPrefix="messages"
-                />
-            @include('components.pagination.default', ['data' => $datas['matches']])
-            <div class="row g-6 g-xl-9 mt-2">
-            @include('components.matches.card-list')
+                @include('components.users.card-list')
+                </div>
+                </div>
+                </div>
             </div>
         </div>
     </div>
