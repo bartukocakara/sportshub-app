@@ -60,7 +60,7 @@ Route::resource('matches', MatchController::class);
 Route::prefix('users/{id}')->name('users.')->group(function () {
     Route::get('profile', [UserDetailController::class, 'profile'])->name('profile');
     Route::get('teams', [UserDetailController::class, 'teams'])->name('teams');
-    Route::get('matches', [UserDetailController::class, 'matches'])->name('matches'); // Corrected method name
+    Route::get('matches', [UserDetailController::class, 'matches'])->name('matches');
     Route::get('activities', [UserDetailController::class, 'activities'])->name('activities');
     Route::get('announcements', [UserDetailController::class, 'announcements'])->name('announcements');
 });

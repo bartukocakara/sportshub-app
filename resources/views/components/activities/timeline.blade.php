@@ -1,4 +1,4 @@
- <div id="kt_activity_today" class="card-body p-0 tab-pane fade show active" role="tabpanel" aria-labelledby="kt_activity_today_tab">
+ <div id="kt_activity_today" class="card-body px-15 tab-pane fade show active" role="tabpanel" aria-labelledby="kt_activity_today_tab">
     @include('components.pagination.default', ['data' => $datas['activities']])
     <div class="timeline timeline-border-dashed mt-5">
         @foreach ($datas['activities']['data'] as $activity)
@@ -36,7 +36,7 @@
                 <div class="timeline-content mb-10 mt-n1">
                     <div class="pe-3 mb-2">
                         <div class="fs-5 fw-semibold text-gray-800">
-                            {{ $activity['properties']['message'] ?? 'No activity message available.' }}
+                            {{ __('messages.' . ($activity['properties']['key'] ?? 'unknown'), $activity['properties']['params'] ?? []) }}
                         </div>
                         <div class="d-flex align-items-center mt-1 fs-6 text-muted">
                             <span class="me-2 fs-7">
@@ -46,9 +46,8 @@
                     </div>
                     @if (!empty($activity['subject_url']))
                         <div class="px-3">
-                            <a href="{{ $activity['subject_url'] }}"
-                            class="btn btn-sm btn-light btn-active-light-primary">
-                                View {{ $activity['subject_title'] ?? 'Details' }}
+                            <a href="{{ $activity['subject_url'] }}" class="btn btn-sm btn-light btn-active-light-primary">
+                                {{ __('messages.view') }} {{ $activity['subject_title'] }}
                             </a>
                         </div>
                     @endif

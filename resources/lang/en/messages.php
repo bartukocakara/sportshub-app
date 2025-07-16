@@ -331,5 +331,8 @@ return [
     'announcement_updated_successfully' => 'Announcement updated successfully',
     'announcement_deleted_successfully' => 'Announcement deleted successfully',
     'filter_activities' => 'Filter Activities',
-    
+    'match.created' => ':user created a match',
+    'match.joined' => ':user joined a match',
+    'team.created' => ':user created a team',
+    'team.joined' => ':user joined a team',
 ];

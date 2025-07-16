@@ -14,15 +14,14 @@ class ActivityResource extends JsonResource
 
         // Subject route üretimi
         if ($this->subject_type === \App\Models\Matches::class) {
-            $subjectUrl = route('matches.show', ['match' => $this->subject_id]);
+            $subjectUrl = route('matches.profile', ['id' => $this->subject_id]);
             $subjectTitle = 'Match #' . $this->subject->title;
         }
 
         if ($this->subject_type === \App\Models\Team::class) {
-            $subjectUrl = route('teams.show', ['team' => $this->subject_id]);
+            $subjectUrl = route('teams.profile', ['id' => $this->subject_id]);
             $subjectTitle = 'Team #' . $this->subject->title;
         }
-
         return [
             'id'            => $this->id,
             'type'          => $this->type,

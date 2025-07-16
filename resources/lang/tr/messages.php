@@ -350,5 +350,8 @@ return [
     'announcement_updated_successfully' => 'Duyuru başarıyla güncellendi',
     'announcement_deleted_successfully' => 'Duyuru başarıyla silindi',
     'filter_activities' => 'Aktiviteleri Filtrele',
-
+    'match.created' => ':user bir maçı oluşturdu',
+    'match.joined' => ':user bir maça katıldı',
+    'team.created' => ':user bir takımı oluşturdu',
+    'team.joined' => ':user bir takıma katıldı',
 ];
