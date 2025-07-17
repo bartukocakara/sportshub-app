@@ -47,15 +47,25 @@ class TeamDetailService extends CrudService
     /**
      * Get user profile data.
      *
-     * @param string $userId
-     * @return mixed
+     * @param string $id
+     * @return array
      */
-    public function getTeamProfileData(string $userId):array
+    public function getTeamProfileData(string $id):array
     {
-        $datas['user'] = UserResource::make($this->teamRepository->find($userId));
+        $datas['team'] = TeamResource::make($this->teamRepository->find($id));
         return $datas;
     }
 
+    /**
+     * Get user profile data.
+     *
+     * @param string $id
+     * @return array
+     */
+    public function getRequestedTeamPlayersData()
+    {
+
+    }
     /**
      * Get user's teams data.
      *

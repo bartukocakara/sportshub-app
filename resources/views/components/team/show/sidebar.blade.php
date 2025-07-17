@@ -24,17 +24,43 @@
              class="flex-column-fluid menu -indention menu-column menu-rounded menu-active-bg mb-7">
 
             @foreach($menuItems as $item)
-                @php
-                    $isActive = Route::currentRouteName() === $item['route'];
-                @endphp
-                <div class="menu-item">
-                    <a class="menu-link text-dark {{ $isActive ? 'active fw-bold' : '' }}"
-                       style="font-size: 20px;"
-                       href="{{ route($item['route'], $item['params']) }}">
-                        <span class="menu-icon">{!! $item['icon'] !!}</span>
-                        <span class="menu-title">{{ $item['label'] }}</span>
-                    </a>
-                </div>
+                @if(isset($item['children']))
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        <span class="menu-link text-dark" style="font-size: 20px;">
+                            <span class="menu-icon">{!! $item['icon'] ?? '' !!}</span>
+                            <span class="menu-title">{{ $item['label'] }}</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion">
+                            @foreach($item['children'] as $child)
+                                @php
+                                    $isActive = Route::currentRouteName() === $child['route'];
+                                @endphp
+                                <div class="menu-item">
+                                    <a class="menu-link {{ $isActive ? 'active fw-bold text-dark' : 'text-dark' }}"
+                                    href="{{ route($child['route'], $child['params']) }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+                                        <span class="menu-title">{{ $child['label'] }}</span>
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @else
+                    @php
+                        $isActive = Route::currentRouteName() === $item['route'];
+                    @endphp
+                    <div class="menu-item">
+                        <a class="menu-link text-dark {{ $isActive ? 'active fw-bold' : '' }}"
+                        style="font-size: 20px;"
+                        href="{{ route($item['route'], $item['params']) }}">
+                            <span class="menu-icon">{!! $item['icon'] ?? '' !!}</span>
+                            <span class="menu-title">{{ $item['label'] }}</span>
+                        </a>
+                    </div>
+                @endif
             @endforeach
         </div>
     </div>

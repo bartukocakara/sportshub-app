@@ -335,4 +335,6 @@ return [
     'match.joined' => ':user joined a match',
     'team.created' => ':user created a team',
     'team.joined' => ':user joined a team',
+    'requested_players' => 'Requested Players',
+    'add_new_players' => 'Add New Players',
 ];

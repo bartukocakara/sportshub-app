@@ -21,8 +21,24 @@
                     [
                         'route' => 'teams.players',
                         'icon' => "<i class='fas fa-users me-1'></i>",
-                        'params' => ['id' => $id],
-                        'label' => __('messages.players'),
+                        'label' => __('messages.players'), // ← Bu satır eksikti, eklendi
+                        'children' => [
+                            [
+                                'route' => 'teams.requested-players',
+                                'params' => ['id' => $id],
+                                'label' => __('messages.requested_players'),
+                            ],
+                            [
+                                'route' => 'teams.players',
+                                'params' => ['id' => $id],
+                                'label' => __('messages.players'),
+                            ],
+                            [
+                                'route' => 'teams.add-new-players',
+                                'params' => ['id' => $id],
+                                'label' => __('messages.add_new_players'),
+                            ],
+                        ]
                     ],
                     [
                         'route' => 'teams.matches',

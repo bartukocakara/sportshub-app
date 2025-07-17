@@ -23,21 +23,18 @@
                             <li class="breadcrumb-item text-gray-700 fw-bold lh-1">{{ __('messages.players') }}</li>
                         </ul>
                     </div>
-                    <a href="{{ route('matches.create') }}" class="btn btn-sm btn-success ms-3 px-4 py-3" >
-                        Oyuncu ekle
-                    </a>
                 </div>
             </div>
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-fluid">
                 <div class="d-flex flex-row">
-                <div class="w-100 flex-lg-row-fluid ">
-                <div class="row g-6 mb-6 g-xl-9 ">
-                <x-filter :clearRoute="route(Route::currentRouteName(), ['id' => request()->route('id')])" />
-                @include('components.users.card-list')
-                </div>
-                </div>
+                    <div class="w-100 flex-lg-row-fluid ">
+                        <div class="row g-6 mb-6 g-xl-9 ">
+                            <x-filter :clearRoute="route(Route::currentRouteName(), ['id' => request()->route('id')])" />
+                            @include('components.users.card-list')
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

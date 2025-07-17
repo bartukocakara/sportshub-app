@@ -3,7 +3,7 @@
         $sportTypeTitles = collect($datas['sport_types'] ?? [])->pluck('title', 'id')->toArray();
     @endphp
     <x-filter-tags
-        :excludedFilters="['page', 'per_page']"
+        :excludedFilters="['page', 'per_page', 'team_id']"
         :titleMaps="[
             'city_id' => $cityTitles,
             'sport_type_id' => $sportTypeTitles,

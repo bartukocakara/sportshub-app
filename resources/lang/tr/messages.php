@@ -354,4 +354,6 @@ return [
     'match.joined' => ':user bir maça katıldı',
     'team.created' => ':user bir takımı oluşturdu',
     'team.joined' => ':user bir takıma katıldı',
+    'requested_players' => 'İstek Gönderilen Oyuncular',
+    'add_new_players' => 'Yeni Oyuncu Ekle',
 ];
