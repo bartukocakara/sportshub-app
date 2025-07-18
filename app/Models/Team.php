@@ -69,9 +69,41 @@ class Team extends Model
         };
     }
 
+    public function getStatusBadgeWithIconAttribute(): string
+    {
+        return match ($this->team_status) {
+            'active' => '<span class="badge badge-light-success">
+                            <i class="fas fa-check-circle text-success me-1"></i> ' . $this->team_status_text . '
+                        </span>',
+
+            'inactive' => '<span class="badge badge-light-warning">
+                            <i class="fas fa-pause-circle text-warning me-1"></i> ' . $this->team_status_text . '
+                        </span>',
+
+            'banned' => '<span class="badge badge-light-danger">
+                            <i class="fas fa-ban text-danger me-1"></i> ' . $this->team_status_text . '
+                        </span>',
+
+            default => '<span class="badge badge-light-secondary">
+                            <i class="fas fa-question-circle text-muted me-1"></i> Bilinmiyor
+                        </span>',
+        };
+    }
+
+
 
     public function activities()
     {
         return $this->morphMany(Activity::class, 'subject');
+    }
+
+    public function requestPlayerTeams()
+    {
+        return $this->hasMany(RequestPlayerTeam::class);
+    }
+
+    public function teamLeaders()
+    {
+        return $this->hasMany(TeamLeader::class);
     }
 }

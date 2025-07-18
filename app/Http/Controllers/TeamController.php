@@ -109,6 +109,7 @@ class TeamController extends Controller
     public function update(TeamRequest $request, string $id) : RedirectResponse
     {
         $this->teamService->update($request->validated(), $id);
+
         return redirect()->back()->with('success', __('messages.team_updated_successfully'));
     }
 

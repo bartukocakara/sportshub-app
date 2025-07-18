@@ -12,8 +12,8 @@ class Subscription extends Model
     /** @use HasFactory<\Database\Factories\SubscriptionFactory> */
     use HasFactory, UUID;
 
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, 'SubscriptionFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, $with, 'SubscriptionFilters'))->apply();
     }
 }

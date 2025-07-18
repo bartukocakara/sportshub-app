@@ -342,4 +342,13 @@ return [
     'join_request_sent' => 'Join request sent',
     'join_request_accepted' => 'Join request accepted',
     'join_request_rejected' => 'Join request rejected',
+    'following' => 'Following',
+    'follow' => 'Follow',
+    'unfollow' => 'Unfollow',
+    'member' => 'Member',
+    'pending' => 'Pending',
+    'waiting_for_approval' => 'Waiting for approval',
+    'rejected' => 'Rejected',
+    'leader' => 'Leader',
+
 ];

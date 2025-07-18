@@ -1,7 +1,7 @@
 <div class="row g-6 g-xl-9 mt-1">
     @foreach ($datas['teams']['data'] as $key => $team)
     <div class="col-md-6 col-xl-4">
-        <a href="{{ route('teams.profile', ['id' => $team['id']]) }}" class="card border-hover-primary">
+        <div class="card border shadow-sm">
             <div class="card-header border-0 pt-9">
                 <div class="card-title m-0">
                     <div class="symbol-group symbol-hover">
@@ -38,19 +38,22 @@
                 </div>
             </div>
             <div class="card-body p-9">
-                <div class="fs-3 fw-bold text-gray-900 mb-3">{{ $team['title'] }}</div>
-
+                <div class="fs-3 fw-bold text-gray-900 mb-3">
+                    <a href="{{ route('teams.profile', ['id' => $team['id']]) }}">
+                        {{ $team['title'] }}
+                    </a>
+                </div>
                 <ul class="list-unstyled mb-5 text-light-700 fw-semibold">
                     <li><i class="bi bi-geo-alt me-2 text-light-500"></i>: {{ $team['city_title'] ?? '-' }}</li>
                     <li><i class="bi bi-award me-2 text-light-500"></i>: {{ $team['sport_type']['title'] ?? '-' }}</li>
-                    <li><i class="bi bi-calendar3 me-2 text-light-500"></i> : {{ \Carbon\Carbon::parse($team['created_at'])->translatedFormat('d F Y') }}</li>
+                    <li><i class="bi bi-calendar3 me-2 text-light-500"></i> : {{ $team['created_at'] }}</li>
                 </ul>
 
                 <!-- <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip" aria-label="This project 40% completed" data-bs-original-title="This project 40% completed">
                     <div class="bg-primary rounded h-4px" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                 </div> -->
             </div>
-        </a>
+        </div>
     </div>
     @endforeach
 </div>

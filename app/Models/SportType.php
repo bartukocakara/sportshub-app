@@ -22,8 +22,8 @@ class SportType extends Model
         'img'
     ];
 
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy($query, $filters, array $with = [] )
     {
-        return  (new FilterBuilder($query, $filters, 'SportTypeFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, $with, 'SportTypeFilters'))->apply();
     }
 }

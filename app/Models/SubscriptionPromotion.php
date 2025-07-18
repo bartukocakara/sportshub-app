@@ -14,8 +14,8 @@ class SubscriptionPromotion extends Model
 
     protected $fillable = ['code', 'type', 'amount', 'applies_to', 'valid_until'];
 
-    public function scopeFilterBy($query, $filters)
+    public function scopeFilterBy($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, 'SubscriptionPromotionFilters'))->apply();
+        return  (new FilterBuilder($query, $filters, $with, 'SubscriptionPromotionFilters'))->apply();
     }
 }

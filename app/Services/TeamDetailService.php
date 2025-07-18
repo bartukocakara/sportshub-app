@@ -6,22 +6,20 @@ use App\Http\Resources\ActivityResource;
 use App\Http\Resources\AnnouncementResource;
 use App\Http\Resources\MatchResource;
 use App\Http\Resources\Request\RequestPlayerTeamResource;
-use App\Http\Resources\TeamResource;
 use App\Http\Resources\UserResource;
 use App\Models\Activity;
 use App\Models\Announcement;
 use App\Models\Matches;
 use App\Models\RequestPlayerTeam;
-use App\Models\Team;
 use App\Models\User;
 use App\Repositories\ActivityRepository;
 use App\Repositories\AnnouncementRepository;
-use App\Repositories\CityRepository;
 use App\Repositories\MatchRepository;
 use App\Repositories\Request\RequestPlayerTeamRepository;
-use App\Repositories\SportTypeRepository;
 use App\Repositories\TeamRepository;
 use App\Repositories\UserRepository;
+use App\Services\AccessServices\TeamAccessService;
+use App\ViewModels\TeamProfileViewModel;
 use Illuminate\Http\Request;
 
 class TeamDetailService extends CrudService
@@ -54,14 +52,14 @@ class TeamDetailService extends CrudService
      * @param array $with
      * @return array
      */
-    public function getTeamProfileData(string $id, array $with, bool $useCache = false):array
+    public function getTeamProfileData(string $id, array $with, bool $useCache = false): array
     {
-        $datas['team'] = TeamResource::make($this->teamRepository->find($id, $with, $useCache));
-        $datas['cities']  = $this->metaDataService->getCitiesByRequest();
-        $datas['sport_types'] = $this->metaDataService->getSportTypes();
+        $team = $this->teamRepository->find($id, ['users', 'teamLeaders', 'city', 'sportType', 'statusDefinition', 'requestPlayerTeams']);
 
-        return $datas;
+        $viewModel = new TeamProfileViewModel($team, new TeamAccessService(), $this->metaDataService);
+        return $viewModel->toArray();
     }
+
 
     /**
      * Get user profile data.

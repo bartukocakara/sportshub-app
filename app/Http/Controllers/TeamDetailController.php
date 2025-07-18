@@ -27,7 +27,7 @@ class TeamDetailController extends Controller
      */
     public function profile($id)
     {
-        $datas = $this->teamDetailService->getTeamProfileData($id, ['city', 'sportType', 'statusDefinition']);
+        $datas = $this->teamDetailService->getTeamProfileData($id, ['city', 'sportType', 'statusDefinition', 'requestPlayerTeams']);
         return view('teams.show.profile', compact('datas'));
     }
 
