@@ -34,7 +34,7 @@
                                 'label' => __('messages.players'),
                             ],
                             [
-                                'route' => 'teams.add-new-players',
+                                'route' => 'teams.new-players',
                                 'params' => ['id' => $id],
                                 'label' => __('messages.add_new_players'),
                             ],

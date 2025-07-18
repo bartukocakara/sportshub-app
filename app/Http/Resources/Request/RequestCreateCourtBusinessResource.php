@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Request;
 
-use App\Http\Resources\Player\PlayerResource;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RequestCreateCourtBusinessResource extends JsonResource
@@ -17,7 +17,7 @@ class RequestCreateCourtBusinessResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user' => PlayerResource::make($this->whenLoaded('requestedUser')),
+            'user' => UserResource::make($this->whenLoaded('requestedUser')),
             'court_business_id' => $this->court_id,
             'title' => $this->title,
             'expiring_date' => $this->expiring_date,

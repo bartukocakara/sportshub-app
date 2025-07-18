@@ -2,9 +2,8 @@
 
 namespace App\Http\Resources\Request;
 
-use App\Enums\StatusEnum;
-use App\Http\Resources\Match\MatchTeamResource;
-use App\Http\Resources\Player\PlayerResource;
+use App\Http\Resources\MatchTeamResource;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RequestMatchResource extends JsonResource
@@ -28,7 +27,7 @@ class RequestMatchResource extends JsonResource
         if(!$requestedUserId) {
             $additionalDatas = [
                 'id' => $this->id,
-                'user' => PlayerResource::make($this->whenLoaded('requestedUser')),
+                'user' => UserResource::make($this->whenLoaded('requestedUser')),
                 'court' => $this->match?->court->title,
                 'image' => $this->match->court->courtImage?->file_path,
                 'district' => $this->match->court->district->title,

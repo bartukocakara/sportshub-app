@@ -25,13 +25,19 @@
 
             @foreach($menuItems as $item)
                 @if(isset($item['children']))
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    @php
+                        // Herhangi bir alt route aktif mi?
+                        $isChildActive = collect($item['children'])->contains(function ($child) {
+                            return Route::currentRouteName() === $child['route'];
+                        });
+                    @endphp
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ $isChildActive ? 'show' : '' }}">
                         <span class="menu-link text-dark" style="font-size: 20px;">
                             <span class="menu-icon">{!! $item['icon'] ?? '' !!}</span>
                             <span class="menu-title">{{ $item['label'] }}</span>
                             <span class="menu-arrow"></span>
                         </span>
-                        <div class="menu-sub menu-sub-accordion">
+                        <div class="menu-sub menu-sub-accordion" style="{{ $isChildActive ? 'display: block;' : '' }}">
                             @foreach($item['children'] as $child)
                                 @php
                                     $isActive = Route::currentRouteName() === $child['route'];
@@ -62,6 +68,7 @@
                     </div>
                 @endif
             @endforeach
+
         </div>
     </div>
 </div>

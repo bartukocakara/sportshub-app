@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Request;
 
-use App\Http\Resources\Player\PlayerResource;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RequestTeamMatchPlayerResource extends JsonResource
@@ -18,7 +18,7 @@ class RequestTeamMatchPlayerResource extends JsonResource
         return [
             'id' => $this->id,
             'status' => config('status.request.'.$this->status),
-            'user' => PlayerResource::make($this->whenLoaded('requestedUser')),
+            'user' => UserResource::make($this->whenLoaded('requestedUser')),
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'expiring_date' => $this->expiring_date
         ];

@@ -1,6 +1,6 @@
 @foreach ($datas['matches']['data'] as $key => $match)
 <div class="col-md-6 col-xl-4">
-        <a href="{{ route('matches.activities', ['id' => $match['id']]) }}" class="card border-hover-primary">
+        <div class="card border shadow-sm">
         <div class="card-header border-0 pt-9">
             <div class="card-title m-0">
                 <div class="symbol symbol-50px w-50px bg-light">
@@ -28,7 +28,9 @@
                             class="me-3 rounded"
                             style="width: 50px; height: 50px;" />
                     @endif
-                <div class="fs-3 fw-bold text-gray-900">{{ $match['title'] }}</div>
+                <div class="fs-3 fw-bold text-gray-900">
+                    <a href="{{ route('matches.activities', ['id' => $match['id']]) }}">{{ $match['title'] }}</a>
+                </div>
             </div>
 
             <div class="d-flex flex-wrap mb-5">
@@ -78,6 +80,6 @@
                 </div>
             </div>
         </div>
-    </a>
+    </div>
 </div>
 @endforeach

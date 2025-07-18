@@ -2,9 +2,7 @@
 
 namespace App\Http\Resources\Request;
 
-use App\Http\Resources\Match\MatchResource;
-use App\Http\Resources\Match\MatchStatusResource;
-use App\Http\Resources\Player\PlayerResource;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RequestMatchTeamPlayerResource extends JsonResource
@@ -20,12 +18,12 @@ class RequestMatchTeamPlayerResource extends JsonResource
         $match = $this->matchTeam->match;
         return [
             'id' => $this->id,
-            'user' => PlayerResource::make($this->whenLoaded('requestedUser')),
+            'user' => UserResource::make($this->whenLoaded('requestedUser')),
             'team_title' => $this->matchTeam->title,
             'match' => [
                 'id' => $match->id,
                 'title' => $match->title,
-                'status' => MatchStatusResource::make($match->status),
+                'status' => '',
                 'play_date' => $match->play_date,
                 'time' => [
                     'from_hour' => $match->from_hour,

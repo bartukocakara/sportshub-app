@@ -335,6 +335,11 @@ return [
     'match.joined' => ':user joined a match',
     'team.created' => ':user created a team',
     'team.joined' => ':user joined a team',
-    'requested_players' => 'Requested Players',
+    'requested_players' => 'Invited Players',
     'add_new_players' => 'Add New Players',
+    'join' => 'Join',
+    'joined' => 'Joined',
+    'join_request_sent' => 'Join request sent',
+    'join_request_accepted' => 'Join request accepted',
+    'join_request_rejected' => 'Join request rejected',
 ];

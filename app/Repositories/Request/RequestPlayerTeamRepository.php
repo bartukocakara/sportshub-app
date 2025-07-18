@@ -25,26 +25,4 @@ class RequestPlayerTeamRepository extends BaseRepository
         // Model bu repoda kullanılmak üzere değişkene tanımlanıyor.
         $this->requestPlayerTeam = $requestPlayerTeam;
     }
-
-    /**
-     * all
-     *
-     * @param  Request $request
-     * @return LengthAwarePaginator|Collection
-     */
-    public function all(Request $request, array $with = [], bool $useCache = false): LengthAwarePaginator|Collection
-    {
-        return $this->requestPlayerTeam->with(['requestedUser', 'team.users'])->filterBy($request->all(), $with);
-    }
-
-    /**
-     * store
-     *
-     * @param  array $params
-     * @return bool
-     */
-    public function insert(array $params) : bool
-    {
-        return $this->requestPlayerTeam->insert($params);
-    }
 }

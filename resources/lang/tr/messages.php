@@ -354,6 +354,11 @@ return [
     'match.joined' => ':user bir maça katıldı',
     'team.created' => ':user bir takımı oluşturdu',
     'team.joined' => ':user bir takıma katıldı',
-    'requested_players' => 'İstek Gönderilen Oyuncular',
+    'requested_players' => 'Davet Edilen Oyuncular',
     'add_new_players' => 'Yeni Oyuncu Ekle',
+    'join' => 'Katıl',
+    'joined' => 'Katıldı',
+    'join_request_sent' => 'Katılım isteği gönderildi',
+    'join_request_accepted' => 'Katılım isteği kabul edildi',
+    'join_request_rejected' => 'Katılım isteği reddedildi',
 ];

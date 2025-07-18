@@ -5,17 +5,20 @@ namespace App\Services;
 use App\Http\Resources\ActivityResource;
 use App\Http\Resources\AnnouncementResource;
 use App\Http\Resources\MatchResource;
+use App\Http\Resources\Request\RequestPlayerTeamResource;
 use App\Http\Resources\TeamResource;
 use App\Http\Resources\UserResource;
 use App\Models\Activity;
 use App\Models\Announcement;
 use App\Models\Matches;
+use App\Models\RequestPlayerTeam;
 use App\Models\Team;
 use App\Models\User;
 use App\Repositories\ActivityRepository;
 use App\Repositories\AnnouncementRepository;
 use App\Repositories\CityRepository;
 use App\Repositories\MatchRepository;
+use App\Repositories\Request\RequestPlayerTeamRepository;
 use App\Repositories\SportTypeRepository;
 use App\Repositories\TeamRepository;
 use App\Repositories\UserRepository;
@@ -48,31 +51,59 @@ class TeamDetailService extends CrudService
      * Get user profile data.
      *
      * @param string $id
+     * @param array $with
      * @return array
      */
-    public function getTeamProfileData(string $id):array
+    public function getTeamProfileData(string $id, array $with, bool $useCache = false):array
     {
-        $datas['team'] = TeamResource::make($this->teamRepository->find($id));
+        $datas['team'] = TeamResource::make($this->teamRepository->find($id, $with, $useCache));
+        $datas['cities']  = $this->metaDataService->getCitiesByRequest();
+        $datas['sport_types'] = $this->metaDataService->getSportTypes();
+
         return $datas;
     }
 
     /**
      * Get user profile data.
      *
+     * @param Request $request
      * @param string $id
      * @return array
      */
-    public function getRequestedTeamPlayersData()
+    public function getRequestedTeamPlayersData(Request $request, string $id):array
     {
-
+        $request->merge(['team_id' => $id]);
+        $requestTeamPlayerRepo = new RequestPlayerTeamRepository(new RequestPlayerTeam());
+        $datas['users'] = RequestPlayerTeamResource::collection($requestTeamPlayerRepo->all($request, ['requestedUser'], false))->response()->getData(true);
+        return $datas;
     }
+
     /**
      * Get user's teams data.
      *
-     * @param string $userId
+     * @param Request $request
+     * @param string $teamId
      * @return array
      */
     public function getTeamPlayersData(Request $request, string $teamId): array
+    {
+        $datas = [];
+        $request->merge(['team_id' => $teamId]);
+        $datas['users'] = UserResource::collection((new UserRepository(new User()))->all($request, [], false))->response()->getData(true);
+        $datas['cities']  = $this->metaDataService->getCitiesByRequest();
+        $datas['sport_types'] = $this->metaDataService->getSportTypes();
+
+        return $datas;
+    }
+
+    /**
+     * Get user's teams data.
+     *
+     * @param Request $request
+     * @param string $teamId
+     * @return array
+     */
+    public function getNotInTeamPlayersData(Request $request, string $teamId): array
     {
         $datas = [];
         $request->merge(['team_id' => $teamId]);
@@ -92,7 +123,7 @@ class TeamDetailService extends CrudService
      */
     public function getTeamMatchesData(Request $request, string $teamId): array
     {
-        $datas['matches'] = MatchResource::collection((new MatchRepository(new Matches()))->all($request, [], false))->response()->getData(true);
+        $datas['matches'] = MatchResource::collection((new MatchRepository(new Matches()))->all($request, ['sportType', 'court.courtAddress.district.city'], false))->response()->getData(true);
         $datas['cities']  = $this->metaDataService->getCitiesByRequest();
         $datas['sport_types'] = $this->metaDataService->getSportTypes();
 

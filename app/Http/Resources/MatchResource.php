@@ -22,7 +22,7 @@ class MatchResource extends JsonResource
             'sport_type' => SportTypeResource::make($this->whenLoaded('sportType')),
             'status_definition' => $this->match_status_text,
             'status_badge' => $this->status_badge,
-            'city_title' => $this->city_title,
+            'city_title' => $this->court?->courtAddress?->city?->title,
             'play_date' => $this->play_date,
             'expiring_date' => $this->expiring_date,
             'from_hour' => $this->created_at,

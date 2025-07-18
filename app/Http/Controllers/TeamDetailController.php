@@ -27,7 +27,7 @@ class TeamDetailController extends Controller
      */
     public function profile($id)
     {
-        $datas = $this->teamDetailService->getTeamProfileData($id);
+        $datas = $this->teamDetailService->getTeamProfileData($id, ['city', 'sportType', 'statusDefinition']);
         return view('teams.show.profile', compact('datas'));
     }
 
@@ -42,7 +42,7 @@ class TeamDetailController extends Controller
         // Example: Fetch user's teams data using the service
         $datas = $this->teamDetailService->getRequestedTeamPlayersData($request, $id); // You'll create this method
 
-        return view('teams.show.players', compact('datas'));
+        return view('teams.show.players.requested-players', compact('datas'));
     }
 
     /**
@@ -56,7 +56,21 @@ class TeamDetailController extends Controller
         // Example: Fetch user's teams data using the service
         $datas = $this->teamDetailService->getTeamPlayersData($request, $id); // You'll create this method
 
-        return view('teams.show.players', compact('datas'));
+        return view('teams.show.players.players', compact('datas'));
+    }
+
+    /**
+     * Displays the user's teams.
+     *
+     * @param string $id The user ID.
+     * @return \Illuminate\View\View
+     */
+    public function getNotInTeamPlayersData(Request $request, string $id)
+    {
+        // Example: Fetch user's teams data using the service
+        $datas = $this->teamDetailService->getNotInTeamPlayersData($request, $id); // You'll create this method
+
+        return view('teams.show.players.new-players', compact('datas'));
     }
 
     /**
