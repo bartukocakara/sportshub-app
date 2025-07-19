@@ -63,6 +63,7 @@
                                         </a> --}}
                                         @include('components.team.action-buttons', [
                                             'status' => $datas['user_status'],
+                                            'role' => $datas['user_role'],
                                             'team' => $datas['team']->resource ?? null,
                                         ])
 

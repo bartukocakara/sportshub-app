@@ -52,7 +52,7 @@
     <button class="btn btn-sm btn-success me-2" disabled>
         <i class="fas fa-user-check me-1"></i> {{ __('messages.member') }}
     </button>
-    @if ($status === 'member')
+    @if ($role === 'member')
         <a href="#" class="btn btn-sm btn-warning me-2" data-bs-toggle="modal" data-bs-target="#kt_modal_delete_team">
             <i class="fas fa-sign-out-alt me-1"></i> {{ __('messages.quit_membership') }}
         </a>

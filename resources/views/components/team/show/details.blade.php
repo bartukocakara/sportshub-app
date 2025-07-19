@@ -1,5 +1,5 @@
 <div class="card mb-5 mb-xl-8">
-    <div class="card-body pt-15">
+    <div class="card-body">
         <div class="d-flex flex-column align-items-center text-center mb-4">
             <h2 class="fs-4 fs-md-3 text-primary fw-bold mb-2">
                 {{ $data['team']->title }}
@@ -9,8 +9,6 @@
                 {{ $data['team']->team_status_text }}
             </span>
         </div>
-
-
         <div class="d-flex flex-stack fs-4 py-3">
             <div class="fw-bold rotate collapsible" data-bs-toggle="collapse" href="#kt_team_view_details" role="button" aria-expanded="true" aria-controls="kt_team_view_details">
                 {{ __('messages.details') }}
