@@ -34,100 +34,91 @@
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-fluid">
-                <div class="card mb-5 mb-xxl-8 px-20 border shadow-sm">
-                    <div class="card-body pt-9 pb-0 px-10">
-                        <div class="d-flex flex-wrap flex-sm-nowrap">
-                            <div class="flex-grow-1">
-                                <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
-                                    <div class="d-flex flex-column">
-                                        <div class="d-flex align-items-center mb-2">
-                                            <div class="text-gray-900 text-primary fs-2 fw-bold me-1">{{ $datas['team']->title }}</div>
-                                            <span class="badge {{ $datas['team']->status_badge }}">
-                                                {!! $datas['team']->status_badge_with_icon !!}
-                                            </span>
-                                        </div>
-                                        <div class="d-flex flex-wrap fw-semibold fs-3 mb-4 pe-2">
-                                            <p class="d-flex align-items-center text-gray-900 me-5 mb-2">
-                                                <i class="ki-duotone ki-geolocation fs-4 me-1"><span class="path1"></span><span class="path2"></span></i>
-                                                {{ $datas['team']->city->title }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex my-4">
-                                        {{-- <a href="#" class="btn btn-sm btn-light me-2" id="kt_user_follow_button">
-                                            <i class="ki-duotone ki-check fs-2 d-none"></i>
-                                            <span class="indicator-label">{{ __('messages.following') }}</span>
-                                            <span class="indicator-progress">
-                                                Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                            </span>
-                                        </a> --}}
-                                        @include('components.team.action-buttons', [
-                                            'status' => $datas['user_status'],
-                                            'role' => $datas['user_role'],
-                                            'team' => $datas['team']->resource ?? null,
-                                        ])
+                <div class="card mb-5 border shadow-sm px-4 px-lg-10 px-xxl-20">
+                    <div class="card-body pt-9 pb-0">
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-4 mb-6">
 
-                                    </div>
+                            {{-- Başlık ve rozet --}}
+                            <div class="d-flex flex-column gap-2">
+                                <h2 class="text-gray-900 text-primary fs-3 fs-md-2 fw-bold mb-0 text-break">
+                                    {{ $datas['team']->title }}
+                                </h2>
+
+                                <p class="badge {{ $datas['team']->status_badge }} text-900 fs-10">
+                                    {!! $datas['team']->status_badge_with_icon !!}
+                                </p>
+
+                                <div class="d-flex align-items-center text-gray-700 mt-2">
+                                    <i class="ki-duotone ki-geolocation fs-4 me-2"></i>
+                                    <span class="fw-semibold fs-6">
+                                        {{ $datas['team']->city->title }}
+                                    </span>
                                 </div>
-                                <div class="d-flex flex-wrap flex-stack">
-                                    <div class="d-flex flex-column flex-grow-1 pe-8">
-                                        <div class="d-flex flex-wrap">
-                                            @php
-                                                $gender = $datas['team']->gender ?? 'mixed';
+                            </div>
 
-                                                $genderEmoji = match($gender) {
-                                                    'male' => '👨🏻',
-                                                    'female' => '👩🏻',
-                                                    'mixed' => '🧑🏻‍🤝‍🧑🏻',
-                                                    'other' => '🧑🏻‍🤝‍🧑🏻',
-                                                    default => '❓',
-                                                };
+                            {{-- Aksiyon Butonları --}}
+                            <div class="d-flex flex-wrap gap-2">
+                                @include('components.team.action-buttons', [
+                                    'status' => $datas['user_status'],
+                                    'role' => $datas['user_role'],
+                                    'team' => $datas['team']->resource ?? null,
+                                ])
+                            </div>
+                        </div>
 
-                                                $genderText = match($gender) {
-                                                    'male' => __('messages.male'),
-                                                    'female' => __('messages.female'),
-                                                    'other' => __('messages.other'),
-                                                    'mixed' => __('messages.mixed'),
-                                                    default => __('messages.unknown'),
-                                                };
-                                            @endphp
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 my-5">
+                            @php
+                                $gender = $datas['team']->gender ?? 'mixed';
+                                $genderEmoji = match($gender) {
+                                    'male' => '👨🏻',
+                                    'female' => '👩🏻',
+                                    default => '🧑🏻‍🤝‍🧑🏻',
+                                };
+                                $genderText = match($gender) {
+                                    'male' => __('messages.male'),
+                                    'female' => __('messages.female'),
+                                    'mixed' => __('messages.mixed'),
+                                    'other' => __('messages.other'),
+                                    default => __('messages.unknown'),
+                                };
+                            @endphp
+                            <div class="col">
+                                <div class="border border-gray-300 border-dashed rounded py-3 px-4 text-center h-100">
+                                    <div class="fw-semibold fs-6 text-gray-900 mb-1">{{ __('messages.gender') }}</div>
+                                    <div class="fs-3">{{ $genderEmoji }} {{ $genderText }}</div>
+                                </div>
+                            </div>
 
-                                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                                                <div class="fw-semibold fs-6 text-gray-900">{{ __('messages.gender') }}</div>
-                                                <div class="d-flex align-items-center justify-content-center fs-2">
-                                                    <span class="me-2">{{ $genderEmoji }}</span>
-                                                    <span class="fw-bold">{{ $genderText }}</span>
-                                                </div>
-                                            </div>
+                            <div class="col">
+                                <div class="border border-gray-300 border-dashed rounded py-3 px-4 text-center h-100">
+                                    <div class="fw-semibold fs-6 text-gray-900 mb-1">{{ __('messages.min_player') }}</div>
+                                    <div class="fs-3 fw-bold">{{ $datas['team']['min_player'] }}</div>
+                                </div>
+                            </div>
 
-                                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                                                <div class="fw-semibold fs-6 text-gray-900">{{ __('messages.min_player') }}</div>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="fs-2 fw-bold counted m-auto" data-kt-countup="true" data-kt-countup-value="4500" data-kt-countup-prefix="$" data-kt-initialized="1">
-                                                        {{ $datas['team']['min_player'] }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                                                <div class="fw-semibold fs-6 text-gray-900">{{ __('messages.max_player') }}</div>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="fs-2 fw-bold counted m-auto" data-kt-countup="true" data-kt-countup-value="80" data-kt-initialized="1">{{ $datas['team']['max_player'] }}</div>
-                                                </div>
-                                            </div>
-                                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
-                                                <div class="fw-semibold fs-6 text-gray-900">{{ __('messages.sport_type') }}</div>
-                                                <div class="d-flex align-items-center">
-                                                    <img src="{{ "{$datas['team']->sportType->img}" }}" class="w-20px me-3" alt="">
-                                                    <div class="fs-2 fw-bold counted m-auto" data-kt-countup="true" data-kt-countup-value="60" data-kt-countup-prefix="%" data-kt-initialized="1">{{ $datas['team']->sportType->title }}</div>
-                                                </div>
-                                            </div>
-                                        </div>
+                            {{-- Max Oyuncu --}}
+                            <div class="col">
+                                <div class="border border-gray-300 border-dashed rounded py-3 px-4 text-center h-100">
+                                    <div class="fw-semibold fs-6 text-gray-900 mb-1">{{ __('messages.max_player') }}</div>
+                                    <div class="fs-3 fw-bold">{{ $datas['team']['max_player'] }}</div>
+                                </div>
+                            </div>
+
+                            {{-- Spor Türü --}}
+                            <div class="col">
+                                <div class="border border-gray-300 border-dashed rounded py-3 px-4 text-center h-100">
+                                    <div class="fw-semibold fs-6 text-gray-900 mb-1">{{ __('messages.sport_type') }}</div>
+                                    <div class="d-flex align-items-center justify-content-center gap-2">
+                                        <img src="{{ $datas['team']->sportType->img }}" class="w-20px" alt="">
+                                        <div class="fs-5 fw-bold">{{ $datas['team']->sportType->title }}</div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
