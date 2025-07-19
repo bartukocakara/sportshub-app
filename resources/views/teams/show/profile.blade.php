@@ -1,10 +1,6 @@
 @extends('layouts.team.index')
 
 @section('title', __('messages.profile'))
-@section('custom-styles')
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
-
-@endsection
 @section('content')
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
     <div class="d-flex flex-column flex-column-fluid">
@@ -50,23 +46,23 @@
                                                 {!! $datas['team']->status_badge_with_icon !!}
                                             </span>
                                         </div>
-                                        <div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
-                                            <a href="#" class="d-flex align-items-center text-gray-900 me-5 mb-2">
-                                                <i class="ki-duotone ki-geolocation fs-4 me-1"><span class="path1"></span><span class="path2"></span></i> {{ $datas['team']->city->title }}
-                                            </a>
+                                        <div class="d-flex flex-wrap fw-semibold fs-3 mb-4 pe-2">
+                                            <p class="d-flex align-items-center text-gray-900 me-5 mb-2">
+                                                <i class="ki-duotone ki-geolocation fs-4 me-1"><span class="path1"></span><span class="path2"></span></i>
+                                                {{ $datas['team']->city->title }}
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="d-flex my-4">
-                                        <a href="#" class="btn btn-sm btn-light me-2" id="kt_user_follow_button">
+                                        {{-- <a href="#" class="btn btn-sm btn-light me-2" id="kt_user_follow_button">
                                             <i class="ki-duotone ki-check fs-2 d-none"></i>
                                             <span class="indicator-label">{{ __('messages.following') }}</span>
                                             <span class="indicator-progress">
                                                 Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                                             </span>
-                                        </a>
+                                        </a> --}}
                                         @include('components.team.action-buttons', [
                                             'status' => $datas['user_status'],
-                                            'isTeamLeader' => $datas['is_team_leader'],
                                             'team' => $datas['team']->resource ?? null,
                                         ])
 
@@ -75,6 +71,34 @@
                                 <div class="d-flex flex-wrap flex-stack">
                                     <div class="d-flex flex-column flex-grow-1 pe-8">
                                         <div class="d-flex flex-wrap">
+                                            @php
+                                                $gender = $datas['team']->gender ?? 'mixed';
+
+                                                $genderEmoji = match($gender) {
+                                                    'male' => '👨🏻',
+                                                    'female' => '👩🏻',
+                                                    'mixed' => '🧑🏻‍🤝‍🧑🏻',
+                                                    'other' => '🧑🏻‍🤝‍🧑🏻',
+                                                    default => '❓',
+                                                };
+
+                                                $genderText = match($gender) {
+                                                    'male' => __('messages.male'),
+                                                    'female' => __('messages.female'),
+                                                    'other' => __('messages.other'),
+                                                    'mixed' => __('messages.mixed'),
+                                                    default => __('messages.unknown'),
+                                                };
+                                            @endphp
+
+                                            <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
+                                                <div class="fw-semibold fs-6 text-gray-900">{{ __('messages.gender') }}</div>
+                                                <div class="d-flex align-items-center justify-content-center fs-2">
+                                                    <span class="me-2">{{ $genderEmoji }}</span>
+                                                    <span class="fw-bold">{{ $genderText }}</span>
+                                                </div>
+                                            </div>
+
                                             <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                                 <div class="fw-semibold fs-6 text-gray-900">{{ __('messages.min_player') }}</div>
                                                 <div class="d-flex align-items-center">

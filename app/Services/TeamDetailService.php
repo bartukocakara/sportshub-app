@@ -21,6 +21,7 @@ use App\Repositories\UserRepository;
 use App\Services\AccessServices\TeamAccessService;
 use App\ViewModels\TeamProfileViewModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class TeamDetailService extends CrudService
 {
@@ -54,8 +55,16 @@ class TeamDetailService extends CrudService
      */
     public function getTeamProfileData(string $id, array $with, bool $useCache = false): array
     {
-        $team = $this->teamRepository->find($id, ['users', 'teamLeaders', 'city', 'sportType', 'statusDefinition', 'requestPlayerTeams']);
+        $cacheKey = "team_profile_{$id}_" . auth()->id();
+        if ($useCache) {
+            return Cache::remember($cacheKey, now()->addMinutes(60), function () use ($id, $with) {
+                $team = $this->teamRepository->find($id, ['users', 'teamLeaders', 'city', 'sportType', 'statusDefinition', 'requestPlayerTeams']);
+                $viewModel = new TeamProfileViewModel($team, new TeamAccessService(), $this->metaDataService);
+                return $viewModel->toArray();
+            });
+        }
 
+        $team = $this->teamRepository->find($id, ['users', 'teamLeaders', 'city', 'sportType', 'statusDefinition', 'requestPlayerTeams']);
         $viewModel = new TeamProfileViewModel($team, new TeamAccessService(), $this->metaDataService);
         return $viewModel->toArray();
     }

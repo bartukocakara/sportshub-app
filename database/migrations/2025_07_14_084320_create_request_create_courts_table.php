@@ -30,8 +30,7 @@ return new class extends Migration
 
             $table->string('status');
 
-
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->date('expiring_date')->default(Carbon::today()->addWeek());
 
             $table->timestamps();

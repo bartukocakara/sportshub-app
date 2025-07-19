@@ -14,8 +14,10 @@ use App\Http\Controllers\MatchController;
 use App\Http\Controllers\MatchDetailController;
 use App\Http\Controllers\MeController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PlayerTeamController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RefundController;
+use App\Http\Controllers\Request\RequestPlayerTeamController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\SubscriptionPlanController;
 use App\Http\Controllers\TeamController;
@@ -87,6 +89,12 @@ Route::resource('/courts', CourtController::class)->names('courts')->parameters(
     'courts' => 'id'
 ])->except(['store', 'update', 'destroy']);
 Route::middleware('auth')->group(function () {
+
+    Route::delete('/player-teams/{teamId}', [PlayerTeamController::class, 'destroy'])->name('player-teams.destroy');
+    Route::post('/request-player-teams', [RequestPlayerTeamController::class, 'store'])->name('request-player-teams.store');
+    Route::delete('/request-player-teams/{id}', [RequestPlayerTeamController::class, 'destroy'])->name('request-player-teams.destroy');
+
+
     Route::post('/teams/selected-players', [TeamController::class, 'updateSelectedPlayers'])->name('teams.selected-players');
 
     Route::post('checkout/user', [CheckoutController::class, 'userIndex'])->name('checkout.user.index');

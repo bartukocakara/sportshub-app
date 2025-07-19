@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Player;
+namespace App\Repositories;
 
 use App\Models\PlayerTeam;
 use Illuminate\Http\Request;

@@ -43,11 +43,42 @@
                         {{ $team['title'] }}
                     </a>
                 </div>
-                <ul class="list-unstyled mb-5 text-light-700 fw-semibold">
-                    <li><i class="bi bi-geo-alt me-2 text-light-500"></i>: {{ $team['city_title'] ?? '-' }}</li>
-                    <li><i class="bi bi-award me-2 text-light-500"></i>: {{ $team['sport_type']['title'] ?? '-' }}</li>
-                    <li><i class="bi bi-calendar3 me-2 text-light-500"></i> : {{ $team['created_at'] }}</li>
+                <ul class="list-unstyled mb-5 text-gray-700 fw-semibold fs-5">
+                    @php
+                        $gender = $team['gender'] ?? 'mixed';
+
+                        $genderEmoji = match($gender) {
+                            'male' => '👨🏻',
+                            'female' => '👩🏻',
+                            'mixed' => '🧑🏻‍🤝‍🧑🏻',
+                            default => '❓',
+                        };
+
+                        $genderText = match($gender) {
+                            'male' => __('messages.male'),
+                            'female' => __('messages.female'),
+                            'mixed' => __('messages.mixed'),
+                            default => __('messages.unknown'),
+                        };
+                    @endphp
+
+                    <li class="mb-2">
+                        📍 <strong>{{ $team['city_title'] ?? '-' }}</strong>
+                    </li>
+
+                    <li class="mb-2">
+                        🏅 <strong>{{ $team['sport_type']['title'] ?? '-' }}</strong>
+                    </li>
+
+                    <li class="mb-2">
+                        📅 <strong>{{ $team['created_at'] }}</strong>
+                    </li>
+
+                    <li class="mb-2">
+                        {{ $genderEmoji }} <strong>{{ $genderText }}</strong>
+                    </li>
                 </ul>
+
 
                 <!-- <div class="h-4px w-100 bg-light mb-5" data-bs-toggle="tooltip" aria-label="This project 40% completed" data-bs-original-title="This project 40% completed">
                     <div class="bg-primary rounded h-4px" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>

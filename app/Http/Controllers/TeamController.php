@@ -121,7 +121,6 @@ class TeamController extends Controller
      */
     public function destroy(string $id) : RedirectResponse
     {
-        $this->teamService->destroy($id);
-        return redirect()->route('teams.index')->with('success', 'Team deleted successfully.');
+        return $this->teamService->delete($id);
     }
 }

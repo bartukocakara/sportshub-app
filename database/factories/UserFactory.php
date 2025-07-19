@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Definition;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -36,6 +37,7 @@ class UserFactory extends Factory
             'phone_number' => $this->faker->phoneNumber,
             'email' => $this->faker->unique()->safeEmail,
             'birth_date' => $this->faker->date('Y-m-d', '2005-01-01'),
+            'gender' => Definition::where('group_key', 'personal_gender')->inRandomOrder()->first()->value,
             'password' => Hash::make('password'),
             'provider' => null,
             'provider_id' => null,

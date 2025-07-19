@@ -21,9 +21,15 @@ class DefinitionSeeder extends Seeder
             ['group_key' => 'team_status', 'value' => 'banned', 'description_tr' => 'Yasaklandı', 'description_en' => 'Banned'],
 
             // Gender
-            ['group_key' => 'gender', 'value' => 'male', 'description_tr' => 'Erkek', 'description_en' => 'Male'],
-            ['group_key' => 'gender', 'value' => 'female', 'description_tr' => 'Kadın', 'description_en' => 'Female'],
-            ['group_key' => 'gender', 'value' => 'other', 'description_tr' => 'Diğer', 'description_en' => 'Other'],
+            ['group_key' => 'personal_gender', 'value' => 'male', 'description_tr' => 'Erkek', 'description_en' => 'Male'],
+            ['group_key' => 'personal_gender', 'value' => 'female', 'description_tr' => 'Kadın', 'description_en' => 'Female'],
+            ['group_key' => 'personal_gender', 'value' => 'other', 'description_tr' => 'Diğer', 'description_en' => 'Other'],
+
+            // Team Gende
+            ['group_key' => 'group_gender', 'value' => 'male', 'description_tr' => 'Erkek', 'description_en' => 'Male'],
+            ['group_key' => 'group_gender', 'value' => 'female', 'description_tr' => 'Kadın', 'description_en' => 'Female'],
+            ['group_key' => 'group_gender', 'value' => 'other', 'description_tr' => 'Diğer', 'description_en' => 'Other'],
+            ['group_key' => 'group_gender', 'value' => 'mixed', 'description_tr' => 'Karışık', 'description_en' => 'Mixed'],
 
             // match_status
             ['group_key' => 'match_status', 'value' => 'pending', 'description_tr' => 'Beklemede', 'description_en' => 'Pending'],

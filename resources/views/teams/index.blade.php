@@ -1,4 +1,6 @@
-@extends('layouts.app') @section('title', __('messages.teams')) @section('custom-styles')
+@extends('layouts.app')
+@section('title', __('messages.teams'))
+@section('custom-styles')
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
 <link href="{{ asset('assets/css/pagination.css') }}" rel="stylesheet" type="text/css" />

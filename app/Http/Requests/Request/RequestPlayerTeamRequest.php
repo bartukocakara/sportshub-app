@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Request;
 
-use App\Http\Requests\BaseFormRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
-class RequestPlayerTeamRequest extends BaseFormRequest
+class RequestPlayerTeamRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,12 +14,9 @@ class RequestPlayerTeamRequest extends BaseFormRequest
     public function rules()
     {
         $rules = [
-            'title' => $this->isMethod('post') ? 'required|max:255' : 'max:255',
-            'team_id' => 'required',
-            'status' => 'in:1,2,3',
-            'requested_user_id' => 'uuid',
-            'position_id' => 'uuid|exists:positions,id',
-            'type' => 'in:invite,join'
+            'title' => 'nullable|max:255',
+            'team_id' => 'required|exists:teams,id',
+            'type' => 'required|in:invite,join'
         ];
 
         // If request method is "PUT", remove validation rule for 'type'

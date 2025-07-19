@@ -4,9 +4,7 @@
 
 @section('custom-styles')
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
-{{-- You might also want to add custom styles for announcements here if needed --}}
 <style>
-    /* Example: Make announcement messages more readable */
     .announcement-message {
         font-size: 1.1rem;
         line-height: 1.6;
@@ -133,7 +131,6 @@
 
                                     <div class="card-body">
                                         <div class="fs-6 fw-normal text-gray-700 mb-5 announcement-message">
-                                            {{-- Dynamic announcement message --}}
                                             {{ $announcement['message'] }}
                                         </div>
                                     </div>

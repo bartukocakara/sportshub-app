@@ -36,4 +36,14 @@ class City extends Model
     {
         return $this->hasMany(District::class);
     }
+
+    public function getTitleAttribute($value)
+    {
+        return ucfirst($value);
+    }
+
+    public function setTitleAttribute($value)
+    {
+        $this->attributes['title'] = mb_strtolower($value, 'UTF-8');
+    }
 }

@@ -15,7 +15,10 @@ use App\Http\Resources\PlayerTeamResource;
 use App\Repositories\PlayerTeamRepository;
 use Illuminate\Support\Facades\DB;
 use App\Aggregates\Team\TeamAggregate;
+use App\Loggers\LoggerManager;
+use App\ValueObjects\SwalMessage;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\RedirectResponse;
 
 class TeamService extends CrudService
 {
@@ -98,5 +101,34 @@ class TeamService extends CrudService
     public function store(array $params) : Model
     {
         return $this->teamAggregate->creatTeam($params);
+    }
+
+    public function delete(string $id): RedirectResponse
+    {
+        try {
+            $this->teamRepository->delete($id);
+
+            // TODO: Delete team images, send notifications...
+
+            return redirect()->route('teams.index')->with(
+                'swal',
+                SwalMessage::warning(
+                    '🗑️ ' . __('messages.team_deleted_successfully'),
+                    '<strong>' . __('messages.team_deleted_body_line_1') . '</strong><br>' .
+                    '<small class="text-muted">' . __('messages.team_deleted_body_line_2') . '</small>'
+                )->toArray()
+            );
+        } catch (\Throwable $th) {
+            LoggerManager::log('Error deleting team: ', $th->getMessage(), ['user_id' => $id]);
+
+            return redirect()->route('teams.index')->with(
+                'swal',
+                SwalMessage::error(
+                    '😔 ' . __('messages.unexpected_error'),
+                    '<strong>' . __('messages.failed_to_delete_team') . '</strong><br>' .
+                    '<small class="text-muted">' . __('messages.contact_support_prompt') . '</small>'
+                )->toArray()
+            );
+        }
     }
 }

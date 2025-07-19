@@ -18,6 +18,7 @@ class TeamResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'gender' => $this->gender,
             'users' => UserResource::collection($this->whenLoaded('users')),
             'sport_type' => SportTypeResource::make($this->whenLoaded('sportType')),
             'status_definition' => $this->team_status_text,

@@ -9,6 +9,7 @@ use App\Http\Resources\Request\RequestPlayerTeamResource;
 use App\Services\Request\RequestPlayerTeamService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Request\RequestMultiplePlayerTeamRequest;
+use Illuminate\Http\RedirectResponse;
 
 class RequestPlayerTeamController extends Controller
 {
@@ -73,11 +74,11 @@ class RequestPlayerTeamController extends Controller
      * Yeni bir kaynağı kaydetmek için kullanılır.
      *
      * @param  RequestPlayerTeamRequest $request
-     * @return JsonResponse
+     * @return RedirectResponse
     */
-    public function store(RequestPlayerTeamRequest $request) : JsonResponse
+    public function store(RequestPlayerTeamRequest $request) : RedirectResponse
     {
-        return $this->createdApiResponse($this->requestPlayerTeamService->store($request->validated()));
+        return $this->requestPlayerTeamService->create($request->validated());
     }
 
     /**
@@ -109,10 +110,10 @@ class RequestPlayerTeamController extends Controller
      * destroy
      *
      * @param  string $id
-     * @return JsonResponse
+     * @return RedirectResponse
      */
-    public function destroy(string $id) : JsonResponse
+    public function destroy(string $id) : RedirectResponse
     {
-        return $this->noContentApiResponse($this->requestPlayerTeamService->destroy($id));
+        return $this->requestPlayerTeamService->delete($id);
     }
 }

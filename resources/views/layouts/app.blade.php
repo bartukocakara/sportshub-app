@@ -38,18 +38,21 @@
     };
 </script>
 <script src="{{ asset('assets/plugins/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/js/custom/auth-modal.js') }}"></script>
+<script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
 <script src="{{ asset('assets/js/toaster.min.js') }}"></script>
 <script>
     toastr.options = {
-        closeButton: true, // Show close button
-        progressBar: true, // Show progress bar
-        positionClass: 'toast-top-right', // Position of the toast
-        timeOut: 3000, // Auto-close after 3 seconds
-        extendedTimeOut: 1000, // Additional time if hovered
+        closeButton: true,
+        progressBar: true,
+        positionClass: 'toast-top-right',
+        timeOut: 3000,
+        extendedTimeOut: 1000,
     };
 </script>
-<script src="{{ asset('assets/js/custom/auth-modal.js') }}"></script>
-<script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
+<x-toast-message />
+<x-swal-message />
+
 <script src="{{ asset('assets/js/custom/form.js') }}"></script>
 <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
 <script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>

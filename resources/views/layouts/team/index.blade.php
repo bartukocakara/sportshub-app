@@ -11,56 +11,69 @@
         <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
             @php
                 $id = request()->route('id');
-                $menuItems =  [
+                $menuItems = [
                     [
                         'route' => 'teams.profile',
                         'icon' => "<i class='fas fa-user me-1'></i>",
                         'params' => ['id' => $id],
                         'label' => __('messages.details'),
+                        'visible_status' => ['leader', 'member', 'none'], // bu menüyü sadece lider ve üyeler görebilir
                     ],
                     [
                         'route' => 'teams.players',
                         'icon' => "<i class='fas fa-users me-1'></i>",
-                        'label' => __('messages.players'), // ← Bu satır eksikti, eklendi
+                        'label' => __('messages.players'),
+                        'visible_status' => ['leader', 'member', 'none'], // sadece lider görebilir
                         'children' => [
                             [
                                 'route' => 'teams.requested-players',
                                 'params' => ['id' => $id],
                                 'label' => __('messages.requested_players'),
+                                'visible_status' => ['leader'],
                             ],
                             [
                                 'route' => 'teams.players',
                                 'params' => ['id' => $id],
                                 'label' => __('messages.players'),
+                                'visible_status' => ['leader', 'member', 'none'],
                             ],
                             [
                                 'route' => 'teams.new-players',
                                 'params' => ['id' => $id],
                                 'label' => __('messages.add_new_players'),
+                                'visible_status' => ['leader'],
                             ],
-                        ]
+                        ],
                     ],
                     [
                         'route' => 'teams.matches',
                         'icon' => "<i class='fas fa-handshake'></i>",
                         'params' => ['id' => $id],
                         'label' => __('messages.matches'),
+                        'visible_status' => ['leader', 'member', 'none'],
                     ],
                     [
                         'route' => 'teams.activities',
                         'icon' => "<i class='fas fa-map-marker-alt'></i>",
                         'params' => ['id' => $id],
                         'label' => __('messages.activities'),
+                        'visible_status' => ['leader', 'member', 'none'],
                     ],
                     [
                         'route' => 'teams.announcements',
-                        'icon' => "<i class='fas fa-bullhorn''></i>",
+                        'icon' => "<i class='fas fa-bullhorn'></i>",
                         'params' => ['id' => $id],
                         'label' => __('messages.announcements'),
+                        'visible_status' => ['leader', 'member', 'none'],
                     ],
                 ];
+
             @endphp
-            @include('components.team.show.sidebar')
+            @include('components.team.show.sidebar', [
+                'menuItems' => $menuItems,
+                'userStatus' => $datas['user_status'],
+                'isTeamLeader' => $datas['is_team_leader'],
+            ])
             <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
                 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
                     @php
@@ -115,6 +128,8 @@
 <script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>
 <script src="{{ asset('assets/js/custom/widgets.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/tr.js"></script>
+<x-swal-message />
+
 @yield('page-scripts')
 </body>
 </html>

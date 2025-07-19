@@ -3,10 +3,7 @@
 namespace App\Repositories\Request;
 
 use App\Models\RequestPlayerTeam;
-use Illuminate\Http\Request;
 use App\Repositories\BaseRepository;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class RequestPlayerTeamRepository extends BaseRepository
 {

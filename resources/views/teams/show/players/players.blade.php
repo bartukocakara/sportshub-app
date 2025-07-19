@@ -1,9 +1,6 @@
 @extends('layouts.team.index')
 
 @section('title', __('messages.players'))
-@section('custom-styles')
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
-@endsection
 @section('content')
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
     <div class="d-flex flex-column flex-column-fluid">

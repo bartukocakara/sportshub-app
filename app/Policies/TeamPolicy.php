@@ -12,4 +12,9 @@ class TeamPolicy
     {
         return $team->teamLeaders()->where('user_id', $user->id)->exists();
     }
+
+    public function delete(User $user, Team $team): bool
+    {
+        return $team->teamLeaders()->where('user_id', $user->id)->exists();
+    }
 }

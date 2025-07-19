@@ -100,6 +100,39 @@ class BaseRepository
     }
 
     /**
+     * Bir kaynağı görüntülemek için kullanılır.
+     *
+     * @param array $params
+     * @return Model
+    */
+    public function findByParams(array $params): Model
+    {
+        return $this->model->where($params)->first();
+    }
+
+    /**
+     * Bir kaynağı görüntülemek için kullanılır.
+     *
+     * @param array $params
+     * @return Collection
+    */
+    public function getByParams(array $params): Collection
+    {
+        return $this->model->where($params)->get();
+    }
+
+    /**
+     * Bir kaynağı görüntülemek için kullanılır.
+     *
+     * @param array $params
+     * @return bool
+    */
+    public function deleteByParams(array $params): bool
+    {
+        return $this->model->where($params)->delete();
+    }
+
+    /**
      * Bir kaynağı güncellemek için kullanılır.
      *
      * @param array $data

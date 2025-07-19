@@ -78,7 +78,7 @@ class MatchesSeeder extends Seeder
                 'sport_type_id' => $sportTypeId,
                 'type' => MatchTypeEnum::TEAM->value,
                 // 'field_usage_type' => $fieldUsageType,
-                'gender' => $this->faker->randomElement(Definition::where('group_key', 'gender')->get()->pluck('value')),
+                'gender' => $this->faker->randomElement(Definition::where('group_key', 'group_gender')->get()->pluck('value')),
                 'price' => $this->faker->randomFloat(2, 100, 500),
                 'title' => $matchTitle,
                 'is_court_private' => $this->faker->boolean(),

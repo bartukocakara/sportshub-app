@@ -4,16 +4,17 @@ namespace App\Services\Request;
 
 use App\Enums\Request\RequestStatusEnum;
 use App\Enums\TypeEnums\RequestTypeEnum;
-use App\Models\RequestPlayerTeam;
-use App\Repositories\Chat\ChatChannelRepository;
-use App\Repositories\Chat\ChatUserRepository;
+use App\Loggers\LoggerManager;
+use App\Repositories\PlayerTeamRepository;
 use App\Services\CrudService;
-use App\Repositories\Player\PlayerTeamRepository;
 use App\Repositories\Request\RequestPlayerTeamRepository;
 use App\Repositories\Request\RequestReceiverRepository;
-use App\Repositories\Team\TeamLeaderRepository;
-use Illuminate\Database\Eloquent\Model;
+use App\Repositories\TeamLeaderRepository;
+use App\ValueObjects\SwalMessage;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Throwable;
 
 class RequestPlayerTeamService extends CrudService
 {
@@ -23,92 +24,68 @@ class RequestPlayerTeamService extends CrudService
     protected RequestPlayerTeamRepository $requestPlayerTeamRepository;
     protected RequestReceiverRepository $requestReceiverRepository;
 
-    protected ChatChannelRepository $chatChannelRepository;
-
-    protected ChatUserRepository $chatUserRepository;
-
     public function __construct(RequestPlayerTeamRepository $requestPlayerTeamRepository,
                                 PlayerTeamRepository $playerTeamRepository,
-                                ChatChannelRepository $chatChannelRepository,
-                                ChatUserRepository $chatUserRepository,
                                 TeamLeaderRepository $teamLeaderRepository,
                                 RequestReceiverRepository $requestReceiverRepository)
     {
         $this->requestPlayerTeamRepository = $requestPlayerTeamRepository;
         $this->playerTeamRepository = $playerTeamRepository;
-        $this->chatChannelRepository = $chatChannelRepository;
-        $this->chatUserRepository = $chatUserRepository;
         $this->teamLeaderRepository = $teamLeaderRepository;
         $this->requestReceiverRepository = $requestReceiverRepository;
         parent::__construct($this->requestPlayerTeamRepository);
     }
 
-    public function store(array $data) : Model
+    public function create(array $data): RedirectResponse
     {
-        $model = $this->requestPlayerTeamRepository->create($data);
-        $type = $data['type'];
-        switch ($type) {
-            case 'invite':
-                 $this->invite($model, $data);
-                break;
-            case 'join':
-                $this->join($model,$data);
-                break;
-            default:
-                # code...
-                break;
+        $data['requested_user_id'] = auth()->id();
+        try {
+            DB::beginTransaction();
+
+            // Kullanıcı id'sini garantiye alalım
+            $data['requested_user_id'] = auth()->id();
+            $data['expiring_date'] = now()->addWeek();
+            $data['status'] = RequestStatusEnum::WAITING_FOR_APPROVAL->value;
+            // İstek kaydı oluştur
+            $requestPlayerTeam = $this->requestPlayerTeamRepository->create($data);
+
+            $teamLeaders = $this->teamLeaderRepository->getByParams([
+                'team_id' => $data['team_id']
+            ]);
+
+            // Bildirim alıcılarını oluştur (örnek)
+            foreach ($teamLeaders as $leader) {
+                $this->requestReceiverRepository->create([
+                    'receiver_user_id' => $leader->user_id, // lider user id
+                    'requestable_id' => $requestPlayerTeam->id,
+                    'requestable_type' => 'App\Models\RequestPlayerTeam',
+                    'name' => 'player_team',
+                ]);
+            }
+
+            // İstersen burada bildirim gönderme mantığını tetikleyebilirsin
+
+            DB::commit();
+
+            return redirect()->back()->with(
+                'swal',
+                SwalMessage::success(
+                    '🤝 ' . __('messages.team_join_request_sent_successfully'),
+                    '<br><small class="text-muted">' . __('messages.see_you_again') . '</small>'
+                )->toArray()
+            );
+        } catch (Throwable $th) {
+            DB::rollBack();
+            LoggerManager::log('error', $th->getMessage());
+
+            return redirect()->back()->with(
+                'swal',
+                SwalMessage::error(
+                    '😓 ' . __('messages.team_join_request_sent_failed'),
+                    '<small class="text-muted">' . __('messages.contact_support_prompt') . '</small>'
+                )->toArray()
+            );
         }
-
-        return $model;
-    }
-
-    /**
-     * join
-     *
-     * @param  RequestPlayerTeam $model
-     * @param  array $data
-     * @return void
-     */
-    private function join(RequestPlayerTeam $model ,array $data)
-    {
-        $teamLeaders = $this->teamLeaderRepository->getByParams([
-            'team_id' => $data['team_id']
-        ]);
-        $requestReceiverRows = [];
-        foreach($teamLeaders as $value) {
-            $requestReceiverRows[] = [
-                'id' => Str::uuid()->toString(),
-                'requestable_id' => $model->id,
-                'requestable_type' => 'App\Models\RequestPlayerTeam',
-                'name' => 'player_team',
-                'receiver_user_id' => $value->user->id,
-                'created_at' => now(),
-                'updated_at' => now()
-            ];
-        }
-
-        $this->requestReceiverRepository->insert($requestReceiverRows);
-    }
-
-    /**
-     * invite
-     *
-     * @param  RequestPlayerTeam $model
-     * @param  array $data
-     * @return void
-     */
-    private function invite(RequestPlayerTeam $model, array $data)
-    {
-        $requestReceiverRow = [
-            'id' => Str::uuid()->toString(),
-            'requestable_id' => $model->id,
-            'requestable_type' => 'App\Models\RequestPlayerTeam',
-            'receiver_user_id' => $data['requested_user_id'],
-            'name' => 'player_team',
-            'created_at' => now(),
-            'updated_at' => now()
-        ];
-        $this->requestReceiverRepository->insert($requestReceiverRow);
     }
 
     /**
@@ -149,38 +126,40 @@ class RequestPlayerTeamService extends CrudService
         $this->requestReceiverRepository->insert($requestReceiverRows);
     }
 
-    /**
-     * update
-     *
-     * @param array $data
-     * @param int|string $id
-     * @return bool
-     */
-    public function update(array $data, int|string $id) : bool
+    public function delete(string $id) : RedirectResponse
     {
-        $model = $this->requestPlayerTeamRepository->find($id);
-        $update = $model->update($data);
-        if($data['status'] == RequestStatusEnum::ACCEPTED->value) {
-            $this->playerTeamRepository->create([
-                'user_id' => $model->requested_user_id,
-                'team_id' => $model->team_id,
-            ]);
+        try {
+            DB::beginTransaction();
 
-            $chatChannel = $this->chatChannelRepository->findByChattableId($model->team_id);
-            $this->chatUserRepository->create([
-                'user_id' => $model->requested_user_id,
-                'chat_channel_id' => $chatChannel->id
-            ]);
+            $deleted = $this->requestPlayerTeamRepository->delete($id);
+
+            if (!$deleted) {
+                throw new \Exception('RequestPlayerTeam not found or already deleted');
+            }
+
+            $this->requestReceiverRepository->deleteByRequestableId($id);
+
+            DB::commit();
+
+            return redirect()->back()->with(
+                'swal',
+                SwalMessage::success(
+                    '✅ ' . __('messages.request_cancelled_title'),
+                    '<strong>' . __('messages.request_cancelled_body') . '</strong><br><small class="text-muted">' . __('messages.request_cancelled_small') . '</small>'
+                )->toArray()
+            );
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            LoggerManager::log('RequestPlayerTeam Delete Error', $th->getMessage(), ['request_id' => $id]);
+
+            return redirect()->back()->with(
+                'swal',
+                SwalMessage::error(
+                    '😓 ' . __('messages.failed_to_cancel_request'),
+                    '<small class="text-muted">' . __('messages.contact_support_prompt') . '</small>'
+                )->toArray()
+            );
         }
-
-        return $update;
-    }
-
-    public function destroy(string $id) : bool
-    {
-        $delete = $this->requestPlayerTeamRepository->delete($id);
-        $this->requestReceiverRepository->deleteByRequestableId($id);
-
-        return $delete;
     }
 }
