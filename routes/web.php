@@ -79,6 +79,7 @@ Route::prefix('teams/{id}')->name('teams.')->group(function () {
     Route::get('announcements', [TeamDetailController::class, 'announcements'])->name('announcements');
     Route::get('profile', [TeamDetailController::class, 'profile'])->name('profile');
     Route::get('players', [TeamDetailController::class, 'players'])->name('players');
+    Route::get('invited-players', [TeamDetailController::class, 'invitedPlayers'])->name('invited-players');
     Route::get('requested-players', [TeamDetailController::class, 'requestedPlayers'])->name('requested-players');
     Route::get('new-players', [TeamDetailController::class, 'getNotInTeamPlayersData'])->name('new-players');
     Route::get('matches', [TeamDetailController::class, 'matches'])->name('matches');

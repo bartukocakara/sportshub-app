@@ -419,4 +419,6 @@ return [
     'request_cancelled_title' => 'İstek İptal Edildi',
     'request_cancelled_body' => 'Katılma isteğin başarıyla geri çekildi.',
     'request_cancelled_small' => 'Yeni bir istek gönderebilirsin.',
+    'invited_players' => 'Davet Edilen Oyuncular',
+
 ];

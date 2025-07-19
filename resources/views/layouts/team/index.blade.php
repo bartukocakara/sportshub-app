@@ -43,6 +43,12 @@
                                 'label' => __('messages.add_new_players'),
                                 'visible_status' => ['leader'],
                             ],
+                            [
+                                'route' => 'teams.invited-players',
+                                'params' => ['id' => $id],
+                                'label' => __('messages.invited_players'),
+                                'visible_status' => ['leader'],
+                            ],
                         ],
                     ],
                     [

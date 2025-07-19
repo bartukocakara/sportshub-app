@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\TypeEnums\RequestTypeEnum;
 use Illuminate\Http\Request;
 use App\Services\TeamDetailService; // Import your service
 
@@ -39,7 +40,6 @@ class TeamDetailController extends Controller
      */
     public function requestedPlayers(Request $request, string $id)
     {
-        // Example: Fetch user's teams data using the service
         $datas = $this->teamDetailService->getRequestedTeamPlayersData($request, $id); // You'll create this method
 
         return view('teams.show.players.requested-players', compact('datas'));
@@ -51,9 +51,22 @@ class TeamDetailController extends Controller
      * @param string $id The user ID.
      * @return \Illuminate\View\View
      */
+    public function invitedPlayers(Request $request, string $id)
+    {
+        $request->merge(['type' => RequestTypeEnum::INVITE->value]);
+        $datas = $this->teamDetailService->getRequestedTeamPlayersData($request, $id); // You'll create this method
+
+        return view('teams.show.players.invited-players', compact('datas'));
+    }
+
+    /**
+     * Displays the user's teams.
+     *
+     * @param string $id The user ID.
+     * @return \Illuminate\View\View
+     */
     public function players(Request $request, string $id)
     {
-        // Example: Fetch user's teams data using the service
         $datas = $this->teamDetailService->getTeamPlayersData($request, $id); // You'll create this method
 
         return view('teams.show.players.players', compact('datas'));

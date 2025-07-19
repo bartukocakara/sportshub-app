@@ -390,4 +390,5 @@ return [
     'request_cancelled_title' => 'Request Cancelled',
     'request_cancelled_body' => 'You have successfully cancelled the join request.',
     'request_cancelled_small' => 'You can always make a new request.',
+    'invited_players' => 'Invited Players',
 ];

@@ -69,7 +69,6 @@ class TeamDetailService extends CrudService
         return $viewModel->toArray();
     }
 
-
     /**
      * Get user profile data.
      *
