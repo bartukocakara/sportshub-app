@@ -23,7 +23,6 @@ class TeamProfileViewModel
             'team' => TeamResource::make($this->team),
             'cities' => $this->metaDataService->getCitiesByRequest(),
             'sport_types' => $this->metaDataService->getSportTypes(),
-
             'user_status' => $this->accessService->getUserRequestStatus($user, $this->team),
             'user_role' => $this->accessService->getUserRole($user, $this->team),
             'is_team_leader' => $this->accessService->isTeamLeader($user, $this->team),

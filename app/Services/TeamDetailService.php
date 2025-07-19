@@ -57,7 +57,7 @@ class TeamDetailService extends CrudService
     {
         $cacheKey = "team_profile_{$id}_" . auth()->id();
         if ($useCache) {
-            return Cache::remember($cacheKey, now()->addMinutes(60), function () use ($id, $with) {
+            return Cache::remember($cacheKey, now()->addMinutes(15), function () use ($id, $with) {
                 $team = $this->teamRepository->find($id, ['users', 'teamLeaders', 'city', 'sportType', 'statusDefinition', 'requestPlayerTeams']);
                 $viewModel = new TeamProfileViewModel($team, new TeamAccessService(), $this->metaDataService);
                 return $viewModel->toArray();
