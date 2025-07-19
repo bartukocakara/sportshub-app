@@ -1,15 +1,15 @@
 <div class="card mb-5 mb-xl-8">
     <div class="card-body pt-15">
-        <div class="d-flex flex-center flex-column mb-5">
-            <p class="fs-3 text-primary-800 fw-bold mb-1">
+        <div class="d-flex flex-column align-items-center text-center mb-4">
+            <h2 class="fs-4 fs-md-3 text-primary fw-bold mb-2">
                 {{ $data['team']->title }}
-            </p>
-            <div class="fs-5 fw-semibold mb-6">
-                <span class="badge {{ $data['team']->status_badge }}">
-                    {{ $data['team']->team_status_text }}
-                </span>
-            </div>
+            </h2>
+
+            <span class="badge {{ $data['team']->status_badge }} fs-6 fw-semibold">
+                {{ $data['team']->team_status_text }}
+            </span>
         </div>
+
 
         <div class="d-flex flex-stack fs-4 py-3">
             <div class="fw-bold rotate collapsible" data-bs-toggle="collapse" href="#kt_team_view_details" role="button" aria-expanded="true" aria-controls="kt_team_view_details">
