@@ -27,6 +27,9 @@ class TeamProfileViewModel
             'user_role' => $this->accessService->getUserRole($user, $this->team),
             'is_team_leader' => $this->accessService->isTeamLeader($user, $this->team),
             'request_id' => $this->accessService->getUserTeamRequest($user, $this->team)?->id,
+            'is_request_receiver' => $this->accessService->isRequestReceiver($user, $this->team),
+            'is_following' => $this->accessService->isFollowing($user, $this->team),
+            'follow_id' => $this->accessService->getFollowId($user, $this->team),
         ];
     }
 }

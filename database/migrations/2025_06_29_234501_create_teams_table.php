@@ -33,6 +33,8 @@ return new class extends Migration
             $table->string('gender');
             $table->integer('max_player')->default(20);
             $table->integer('min_player')->default(4);
+            $table->string('followable_status')->default('public'); // public, private
+
             // v2 de eklencek
             // $table->enum('level', ['PROF', 'SEMI_PROF', 'COMPETITIVE', 'CASUAL', 'JUST_FOR_FUN']);
 

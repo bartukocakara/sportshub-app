@@ -16,9 +16,11 @@ use App\Repositories\PlayerTeamRepository;
 use Illuminate\Support\Facades\DB;
 use App\Aggregates\Team\TeamAggregate;
 use App\Loggers\LoggerManager;
+use App\Support\Messages\TeamSwalMessages;
 use App\ValueObjects\SwalMessage;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
 
 class TeamService extends CrudService
 {
@@ -39,8 +41,7 @@ class TeamService extends CrudService
         TeamAggregate $teamAggregate,
         TeamRepository $teamRepository,
         PlayerTeamRepository $playerTeamRepository,
-        MetaDataService $metaDataService
-    ) {
+        MetaDataService $metaDataService) {
         // IMPORTANT FIX: Call the parent constructor and pass the primary repository
         // for this service (TeamRepository) so CrudService's $this->repository is initialized.
         $this->teamRepository = $teamRepository;
@@ -106,29 +107,25 @@ class TeamService extends CrudService
     public function delete(string $id): RedirectResponse
     {
         try {
-            $this->teamRepository->delete($id);
+            $team = $this->teamRepository->find($id);
+
+            // Related models üzerinden silme işlemi
+            $team->announcements()->delete();
+            $team->activities()->delete();
+            $team->followers()->delete();
+
+            $team->delete(); // Team'in kendisini sil
+
+            DB::commit();
 
             // TODO: Delete team images, send notifications...
 
-            return redirect()->route('teams.index')->with(
-                'swal',
-                SwalMessage::warning(
-                    '🗑️ ' . __('messages.team_deleted_successfully'),
-                    '<strong>' . __('messages.team_deleted_body_line_1') . '</strong><br>' .
-                    '<small class="text-muted">' . __('messages.team_deleted_body_line_2') . '</small>'
-                )->toArray()
-            );
+            return redirect()->route('teams.index')->with('swal', TeamSwalMessages::deletedSuccessfully()->toArray());
         } catch (\Throwable $th) {
-            LoggerManager::log('Error deleting team: ', $th->getMessage(), ['user_id' => $id]);
+            Log::error("message", [$th->getMessage()]);
+            // LoggerManager::log('Error deleting team: ', $th->getMessage(), ['user_id' => $id]);
 
-            return redirect()->route('teams.index')->with(
-                'swal',
-                SwalMessage::error(
-                    '😔 ' . __('messages.unexpected_error'),
-                    '<strong>' . __('messages.failed_to_delete_team') . '</strong><br>' .
-                    '<small class="text-muted">' . __('messages.contact_support_prompt') . '</small>'
-                )->toArray()
-            );
+            return redirect()->route('teams.index')->with('swal', TeamSwalMessages::deleteError()->toArray());
         }
     }
 }

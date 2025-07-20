@@ -36,4 +36,9 @@ class RequestPlayerTeam extends Model
     {
         return $this->belongsTo(Team::class, 'team_id', 'id');
     }
+
+    public function receivers()
+    {
+        return $this->morphMany(RequestReceiver::class, 'requestable');
+    }
 }

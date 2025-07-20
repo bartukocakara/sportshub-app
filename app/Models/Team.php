@@ -43,6 +43,16 @@ class Team extends Model
         return $this->belongsTo(SportType::class);
     }
 
+    public function announcements()
+    {
+        return $this->morphMany(Announcement::class, 'subject');
+    }
+
+    public function followers()
+    {
+        return $this->morphMany(Follow::class, 'followable');
+    }
+
     public function statusDefinition()
     {
         return $this->belongsTo(Definition::class, 'team_status', 'value')

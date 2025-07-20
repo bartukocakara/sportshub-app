@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\FollowStatusEnum;
 use App\Models\Follow;
 use App\Models\User;
 use App\Models\Team;
@@ -26,9 +27,10 @@ class FollowFactory extends Factory
         } while ($followableType === User::class && $followableId === $userId);
 
         return [
-            'user_id'        => $userId,
-            'followable_id'   => $followableId,
-            'followable_type' => $followableType,
+            'user_id'           => $userId,
+            'followable_id'     => $followableId,
+            'followable_type'   => $followableType,
+            'status'            => $this->faker->randomElement([FollowStatusEnum::PENDING->value, FollowStatusEnum::ACCEPTED->value]),
         ];
     }
 }

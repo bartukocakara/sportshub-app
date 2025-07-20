@@ -37,26 +37,32 @@
                 <div class="card mb-5 border shadow-sm px-4 px-lg-10 px-xxl-20">
                     <div class="card-body pt-9 pb-0">
                         <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-4 mb-6">
+                            <div class="d-flex flex-column gap-3">
+                                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
+                                    <h2 class="text-gray-900 text-primary fs-3 fs-md-2 fw-bold mb-0 text-break">
+                                        {{ $datas['team']->title }}
+                                    </h2>
 
-                            {{-- Başlık ve rozet --}}
-                            <div class="d-flex flex-column gap-2">
-                                <h2 class="text-gray-900 text-primary fs-3 fs-md-2 fw-bold mb-0 text-break">
-                                    {{ $datas['team']->title }}
-                                </h2>
-
-                                <p class="badge {{ $datas['team']->status_badge }} text-900 fs-10">
-                                    {!! $datas['team']->status_badge_with_icon !!}
-                                </p>
-
-                                <div class="d-flex align-items-center text-gray-700 mt-2">
-                                    <i class="ki-duotone ki-geolocation fs-4 me-2"></i>
-                                    <span class="fw-semibold fs-6">
+                                    <div class="mt-2 mt-md-0 ms-md-4">
+                                        <x-follow-buttons
+                                            :follow-id="$datas['follow_id']"
+                                            :followable-id="$datas['team']->id"
+                                            followable-type="App\Models\Team"
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="badge {{ $datas['team']->status_badge }} text-900 fs-10 mb-0">
+                                        {!! $datas['team']->status_badge_with_icon !!}
+                                    </p>
+                                </div>
+                                <div class="d-flex align-items-center text-gray-700">
+                                    📍
+                                    <span class="fw-semibold fs-6 ms-2">
                                         {{ $datas['team']->city->title }}
                                     </span>
                                 </div>
                             </div>
-
-                            {{-- Aksiyon Butonları --}}
                             <div class="d-flex flex-wrap gap-2">
                                 @include('components.team.action-buttons', [
                                     'status' => $datas['user_status'],
@@ -65,7 +71,6 @@
                                 ])
                             </div>
                         </div>
-
                         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 my-5">
                             @php
                                 $gender = $datas['team']->gender ?? 'mixed';
@@ -96,7 +101,6 @@
                                 </div>
                             </div>
 
-                            {{-- Max Oyuncu --}}
                             <div class="col">
                                 <div class="border border-gray-300 border-dashed rounded py-3 px-4 text-center h-100">
                                     <div class="fw-semibold fs-6 text-gray-900 mb-1">{{ __('messages.max_player') }}</div>
@@ -104,7 +108,6 @@
                                 </div>
                             </div>
 
-                            {{-- Spor Türü --}}
                             <div class="col">
                                 <div class="border border-gray-300 border-dashed rounded py-3 px-4 text-center h-100">
                                     <div class="fw-semibold fs-6 text-gray-900 mb-1">{{ __('messages.sport_type') }}</div>
@@ -114,11 +117,9 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

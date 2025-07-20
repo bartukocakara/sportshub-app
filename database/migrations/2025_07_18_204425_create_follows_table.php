@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\FollowableStatusEnum;
+use App\Enums\FollowStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +20,12 @@ return new class extends Migration
                   ->references('id')
                   ->on('users')
                   ->onDelete('cascade');
-            $table->morphs('followable');
+            $table->uuidMorphs('followable');
+            $table->enum('status', [
+                FollowStatusEnum::ACCEPTED->value,
+                FollowStatusEnum::PENDING->value,
+            ])->default(FollowStatusEnum::PENDING->value);
+
             $table->timestamps();
 
             $table->unique(['user_id', 'followable_id', 'followable_type']);

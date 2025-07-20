@@ -9,6 +9,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommissionController;
 use App\Http\Controllers\CourtBusinessController;
 use App\Http\Controllers\CourtController;
+use App\Http\Controllers\FollowController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MatchController;
 use App\Http\Controllers\MatchDetailController;
@@ -94,7 +95,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/player-teams/{teamId}', [PlayerTeamController::class, 'destroy'])->name('player-teams.destroy');
     Route::post('/request-player-teams', [RequestPlayerTeamController::class, 'store'])->name('request-player-teams.store');
     Route::delete('/request-player-teams/{id}', [RequestPlayerTeamController::class, 'destroy'])->name('request-player-teams.destroy');
+    Route::post('/request-player-teams/{id}/accept', [RequestPlayerTeamController::class, 'accept'])->name('request-player-teams.accept');
 
+    Route::post('follows', [FollowController::class, 'store'])->name('follows.store');
+    Route::delete('follows/{id}', [FollowController::class, 'destroy'])->name('follows.destroy');
 
     Route::post('/teams/selected-players', [TeamController::class, 'updateSelectedPlayers'])->name('teams.selected-players');
 

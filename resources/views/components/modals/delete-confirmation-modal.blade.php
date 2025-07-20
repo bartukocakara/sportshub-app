@@ -6,13 +6,15 @@
     'emotionalWarning' => null,
     'buttonText' => __('messages.delete'),
     'icon' => 'fas fa-trash',
-    'color' => 'danger', // 'danger' (default), 'warning', 'info' vs.
+    'color' => 'secondary',
+    'emoji' => '😢', // Default emoji
 ])
 
 @php
     $bgColor = match($color) {
         'warning' => 'bg-warning text-dark',
         'info' => 'bg-info text-white',
+        'secondary' => 'bg-secondary text-white',
         default => 'bg-danger text-white',
     };
 
@@ -25,7 +27,7 @@
     $btnClass = match($color) {
         'warning' => 'btn-warning',
         'info' => 'btn-info',
-        default => 'btn-danger',
+        default => 'btn-secondary',
     };
 
     $iconColor = match($color) {
@@ -53,11 +55,13 @@
                         {{ $emotionalWarning }}
                     </p>
                 @endif
-                <div class="fs-1" role="img" aria-label="Sad Emoji">😢</div>
+                @if($emoji)
+                    <div class="fs-1" role="img" aria-label="Emoji">{{ $emoji }}</div>
+                @endif
             </div>
 
             <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">
+                <button type="button" class="btn btn-primary btn-lg" data-bs-dismiss="modal">
                     {{ __('messages.cancel') }}
                 </button>
 

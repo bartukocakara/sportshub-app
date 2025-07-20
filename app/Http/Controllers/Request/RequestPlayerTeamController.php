@@ -106,6 +106,16 @@ class RequestPlayerTeamController extends Controller
                 $this->requestPlayerTeamService->update($request->validated(), $id));
     }
 
+    public function accept(string $id) : RedirectResponse
+    {
+        return $this->requestPlayerTeamService->accept($id);
+    }
+
+    public function reject(string $id) : RedirectResponse
+    {
+        return $this->requestPlayerTeamService->reject($id);
+    }
+
     /**
      * destroy
      *

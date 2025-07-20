@@ -68,6 +68,7 @@ class TeamSeeder extends Seeder
                         'player_count' => $this->faker->numberBetween(1, 20),
                         'min_player' => $this->faker->numberBetween(0, 4),
                         'max_player' => $this->faker->numberBetween(8, 24),
+                        'followable_status' => $this->faker->randomElement(['public', 'private']),
                     ]
                 ]);
                 // $chatChannel = ChatChannel::create([

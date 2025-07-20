@@ -48,7 +48,7 @@ class DefinitionSeeder extends Seeder
             ['group_key' => 'court_status', 'value' => 'unavailable', 'description_tr' => 'Kullanılamaz', 'description_en' => 'Unavailable'],
 
             // participant_status
-            // participant_status (for match join status)
+            // participant_status (for match or team join status)
             ['group_key' => 'participant_status', 'value' => 'invited', 'description_tr' => 'Davetli', 'description_en' => 'Invited'],
             ['group_key' => 'participant_status', 'value' => 'joined', 'description_tr' => 'Katıldı', 'description_en' => 'Joined'],
             ['group_key' => 'participant_status', 'value' => 'declined', 'description_tr' => 'Reddedildi', 'description_en' => 'Declined'],

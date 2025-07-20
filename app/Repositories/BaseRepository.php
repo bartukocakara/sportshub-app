@@ -100,6 +100,22 @@ class BaseRepository
     }
 
     /**
+     * Bir kaynağı bulmak için kullanılır.
+     *
+     * @param array $params
+     * @return bool
+    */
+    public function existByParams(array $params): bool
+    {
+        return $this->model->where($params)->exists();
+    }
+
+    public function exists(string|int $id): bool
+    {
+        return $this->model->where(['id' => $id])->exists();
+    }
+
+    /**
      * Bir kaynağı görüntülemek için kullanılır.
      *
      * @param array $params

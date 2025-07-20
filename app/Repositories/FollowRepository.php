@@ -17,4 +17,18 @@ class FollowRepository extends BaseRepository
         parent::__construct($follow);
         $this->follow = $follow;
     }
+
+    public function findWithFollowable(string $id): ?Follow
+    {
+        return $this->follow->with('followable')->find($id);
+    }
+
+    public function deleteByFollowable(int $userId, string $followableId, string $followableType): void
+    {
+        $this->model->where([
+            'user_id' => $userId,
+            'followable_id' => $followableId,
+            'followable_type' => $followableType,
+        ])->delete();
+    }
 }

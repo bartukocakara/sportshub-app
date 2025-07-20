@@ -54,8 +54,7 @@ class FollowController extends Controller
      */
     public function store(FollowRequest $request): RedirectResponse
     {
-        $this->followService->store($request->validated());
-        return redirect()->route('follows.index')->with('success', 'Follow created successfully.');
+        return $this->followService->create($request->validated());
     }
 
     /**
@@ -103,7 +102,6 @@ class FollowController extends Controller
      */
     public function destroy(string $id): RedirectResponse
     {
-        $this->followService->destroy($id);
-        return redirect()->route('follows.index')->with('success', 'Follow deleted successfully.');
+        return $this->followService->delete($id);
     }
 }

@@ -1,16 +1,40 @@
 @php
     $userRole = $datas['user_role'] ?? 'none';
     $userStatus = $datas['user_status'] ?? 'none';
-    $isTeamLeader = $datas['is_team_leader'] ?? false; // Get this from datas array directly
+    $isTeamLeader = $datas['is_team_leader'] ?? false;
+    $isRequestReceiver = $datas['is_request_receiver'] ?? false;
+    $requestId = $datas['request_id'] ?? null;
 @endphp
 
-@if ($userRole === 'leader')
-    {{-- User is a team leader --}}
+@if ($isRequestReceiver && $userStatus === 'waiting_for_approval')
+    <form action="{{ route('request-player-teams.accept', ['id' => $requestId]) }}" method="POST" class="d-inline">
+        @csrf
+        <button type="submit" class="btn btn-sm btn-success me-2">
+            <i class="fas fa-check-circle me-1"></i> {{ __('messages.accept_invitation') }}
+        </button>
+    </form>
+
+    <a href="#" class="btn btn-sm btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#kt_modal_reject_invite">
+        <i class="fas fa-times-circle me-1"></i> {{ __('messages.reject_invitation') }}
+    </a>
+
+    <x-modals.delete-confirmation-modal
+        id="kt_modal_reject_invite"
+        :route="route('request-player-teams.destroy', ['id' => $requestId])"
+        :title="__('messages.reject_invitation_title')"
+        :message="__('messages.reject_invitation_message')"
+        :emotionalWarning="__('messages.reject_invitation_emotional_warning')"
+        :buttonText="__('messages.reject_invitation')"
+        icon="fas fa-times-circle"
+        color="secondary"
+        emoji="🙅‍♂️"
+    />
+
+@elseif ($userRole === 'leader')
     <button class="btn btn-sm btn-info me-2" disabled>
         <i class="fas fa-star me-1"></i> {{ __('messages.leader') }}
     </button>
 
-    {{-- Edit button for team leader (or anyone with update permission) --}}
     @if ($isTeamLeader || (isset($team) && auth()->user()->can('update', $team)))
         <a href="#" id="kt_team_edit_button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_update_team_info">
             <i class="fas fa-pencil-alt me-1"></i> {{ __('messages.edit') }}
@@ -18,17 +42,16 @@
     @endif
 
 @elseif ($userRole === 'member')
-    {{-- User is a team member (and not a leader) --}}
     <button class="btn btn-sm btn-success me-2" disabled>
         <i class="fas fa-user-check me-1"></i> {{ __('messages.member') }}
     </button>
 
-    {{-- Quit membership button for members --}}
-    <a href="#" class="btn btn-sm btn-warning me-2" data-bs-toggle="modal" data-bs-target="#kt_modal_quit_membership">
+    <a href="#" class="btn btn-sm btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#kt_modal_quit_membership">
         <i class="fas fa-sign-out-alt me-1"></i> {{ __('messages.quit_membership') }}
     </a>
+
     <x-modals.delete-confirmation-modal
-        id="kt_modal_quit_membership" {{-- Changed ID to avoid conflict with team delete modal --}}
+        id="kt_modal_quit_membership"
         :route="route('player-teams.destroy', $team->id)"
         :title="__('messages.quit')"
         :message="__('messages.quit_membership')"
@@ -36,27 +59,31 @@
         :buttonText="__('messages.quit')"
         icon="fas fa-sign-out-alt"
         color="warning"
+        emoji="🙅‍♂️"
     />
 
 @elseif ($userStatus === 'waiting_for_approval')
-    {{-- User has a pending request (and is not a leader or member) --}}
-    <a href="#" class="btn btn-sm btn-warning me-2" data-bs-toggle="modal" data-bs-target="#kt_modal_cancel_request">
+    <button class="btn btn-sm btn-success me-2" disabled>
+        <i class="fas fa-user-clock me-1"></i> {{ __('messages.waiting_for_approval') }}
+    </button>
+
+    <a href="#" class="btn btn-sm btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#kt_modal_cancel_request">
         <i class="fas fa-times-circle me-1"></i> {{ __('messages.cancel_request') }}
     </a>
 
     <x-modals.delete-confirmation-modal
         id="kt_modal_cancel_request"
-        :route="route('request-player-teams.destroy', ['id' => $datas['request_id']])"
+        :route="route('request-player-teams.destroy', ['id' => $requestId])"
         :title="__('messages.cancel_request_title')"
         :message="__('messages.cancel_request_message')"
         :emotionalWarning="__('messages.cancel_request_emotional_warning')"
         :buttonText="__('messages.cancel_request')"
         icon="fas fa-times-circle"
-        color="warning"
+        color="secondary"
+        emoji="🙅‍♂️"
     />
 
-@else {{-- ($userRole == 'none' && $userStatus == 'none') --}}
-    {{-- User is neither a leader, member, nor has a pending request --}}
+@else
     <a href="#" class="btn btn-sm btn-primary me-2" data-bs-toggle="modal" data-bs-target="#kt_modal_join_team">
         <i class="fas fa-plus me-1"></i> {{ __('messages.join') }}
     </a>
@@ -69,7 +96,7 @@
         :emotionalWarning="__('messages.join_team_emotional_warning')"
         :buttonText="__('messages.join')"
         icon="fas fa-handshake"
-        color="primary"
+        color="secondary"
         :params="[
             'team_id' => $team->id,
             'type' => 'join',
@@ -77,18 +104,21 @@
     />
 @endif
 
+{{-- Delete team button - only visible if not request receiver --}}
+@if (!$isRequestReceiver && (($isTeamLeader ?? false) || (isset($team) && auth()->user()->can('delete', $team))))
+    <div style="width: 1px; height: 34px; background-color: #ccc;" class="mx-2"></div>
 
-
-@if (($isTeamLeader ?? false) || (isset($team) && auth()->user()->can('delete', $team)))
-    <a href="#" id="kt_team_delete_button" class="btn btn-sm btn-danger mx-5" data-bs-toggle="modal" data-bs-target="#kt_modal_delete_team_confirm"> {{-- Changed ID to avoid conflict --}}
+    <a href="#" id="kt_team_delete_button" class="btn btn-sm btn-grey-action mx-5" data-bs-toggle="modal" data-bs-target="#kt_modal_delete_team_confirm">
         <i class="fas fa-trash me-1"></i> {{ __('messages.delete') }}
     </a>
+
     <x-modals.delete-confirmation-modal
-        id="kt_modal_delete_team_confirm" {{-- Changed ID to avoid conflict --}}
+        id="kt_modal_delete_team_confirm"
         :route="route('teams.destroy', $team->id)"
         :message="__('messages.delete_team_warning')"
         :emotionalWarning="__('messages.delete_team_emotional_warning')"
         icon="fas fa-trash"
-        color="danger"
+        color="secondary"
+        emoji="🗑️"
     />
 @endif

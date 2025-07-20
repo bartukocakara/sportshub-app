@@ -2,6 +2,7 @@
 
 namespace App\Services\AccessServices;
 
+use App\Enums\FollowStatusEnum;
 use App\Models\Team;
 use App\Models\User;
 
@@ -38,4 +39,31 @@ class TeamAccessService
             ->latest()
             ->first();
     }
+
+    public function isRequestReceiver(User $user, Team $team): bool
+    {
+        return $team->requestPlayerTeams()
+            ->where('type', 'invite')
+            ->where('status', 'waiting_for_approval')
+            ->whereHas('receivers', fn ($q) =>
+                $q->where('receiver_user_id', $user->id)
+            )
+            ->exists();
+    }
+
+    public function isFollowing(User $user, Team $team): bool
+    {
+        return $team->followers()
+            ->where('user_id', $user->id)
+            ->where('status', FollowStatusEnum::ACCEPTED->value) // opsiyonel: sadece kabul edilmiş takipleri say
+            ->exists();
+    }
+
+    public function getFollowId(User $user, Team $team): ?string
+    {
+        return $team->followers()
+            ->where('user_id', $user->id)
+            ->first()?->id;
+    }
+
 }
