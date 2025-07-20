@@ -405,5 +405,7 @@ return [
     'error' => 'Error',
     'follow_success' => 'You have successfully followed.',
     'unfollow_success' => 'You have successfully unfollowed.',
-
+    'current_players' => 'Current Players',
+    'go_to_announcements' => 'Go to Announcements',
+    'show_more' => 'Show More',
 ];

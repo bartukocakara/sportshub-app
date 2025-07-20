@@ -31,7 +31,7 @@ class FollowFactory extends Factory
             }
 
             // Aynı ilişki daha önce oluşturulmuş mu?
-            $exists = \App\Models\Follow::where([
+            $exists = Follow::where([
                 'user_id' => $userId,
                 'followable_id' => $followableId,
                 'followable_type' => $followableType,

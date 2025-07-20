@@ -33,6 +33,17 @@ class Team extends Model
         return $this->belongsToMany(User::class, 'player_teams', 'team_id', 'user_id');
     }
 
+    public function getUsersCountAttribute(): int
+    {
+        // Eğer ilişkili kullanıcılar zaten yüklenmişse, koleksiyon üzerinden sayar
+        if ($this->relationLoaded('users')) {
+            return $this->users->count();
+        }
+
+        // Aksi halde veritabanından sayar
+        return $this->users()->count();
+    }
+
     public function city()
     {
         return $this->belongsTo(City::class);

@@ -58,7 +58,7 @@
         :emotionalWarning="__('messages.quit_team_emotional_warning')"
         :buttonText="__('messages.quit')"
         icon="fas fa-sign-out-alt"
-        color="warning"
+        color="secondary"
         emoji="🙅‍♂️"
     />
 

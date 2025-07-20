@@ -3,10 +3,13 @@
 namespace App\ViewModels;
 
 use App\Enums\UserTeamStatusEnum;
+use App\Http\Resources\AnnouncementResource;
 use App\Http\Resources\TeamResource;
+use App\Models\Announcement;
 use App\Models\Team;
 use App\Services\MetaDataService;
 use App\Services\AccessServices\TeamAccessService;
+use Illuminate\Http\Request;
 
 class TeamProfileViewModel
 {
@@ -16,9 +19,14 @@ class TeamProfileViewModel
         protected MetaDataService $metaDataService,
     ) {}
 
-    public function toArray(): array
+    public function toArray(Request $request): array
     {
         $user = auth()->user();
+        $request->merge([
+            'subject_id' => $this->team->id,
+            'subject_type' => 'Team',
+        ]);
+        $announcements =  Announcement::filterBy($request->all());
         return [
             'team' => TeamResource::make($this->team),
             'cities' => $this->metaDataService->getCitiesByRequest(),
@@ -30,6 +38,7 @@ class TeamProfileViewModel
             'is_request_receiver' => $this->accessService->isRequestReceiver($user, $this->team),
             'is_following' => $this->accessService->isFollowing($user, $this->team),
             'follow_id' => $this->accessService->getFollowId($user, $this->team),
+            'announcements' => AnnouncementResource::collection($announcements)->response()->getData(true),
         ];
     }
 }

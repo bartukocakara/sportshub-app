@@ -1,5 +1,22 @@
 @extends('layouts.team.index')
+@section('custom-styles')
+<style>
+    /* Scroll-to-top button – sadece masaüstü görsün */
+    #scrollTopDesktop {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 100;
+        display: none; /* Default olarak gizli */
+    }
 
+    @media (min-width: 768px) {
+        #scrollTopDesktop {
+            display: flex; /* Sadece masaüstünde göster */
+        }
+    }
+</style>
+@endsection
 @section('title', __('messages.profile'))
 @section('content')
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
@@ -34,95 +51,137 @@
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-fluid">
-                <div class="card mb-5 border shadow-sm px-4 px-lg-10 px-xxl-20">
-                    <div class="card-body pt-9 pb-0">
-                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-4 mb-6">
-                            <div class="d-flex flex-column gap-3">
-                                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
-                                    <h2 class="text-gray-900 text-primary fs-3 fs-md-2 fw-bold mb-0 text-break">
-                                        {{ $datas['team']->title }}
-                                    </h2>
-
-                                    <div class="mt-2 mt-md-0 ms-md-4">
-                                        <x-follow-buttons
-                                            :follow-id="$datas['follow_id']"
-                                            :followable-id="$datas['team']->id"
-                                            followable-type="App\Models\Team"
-                                        />
-                                    </div>
-                                </div>
-                                <div>
-                                    <p class="badge {{ $datas['team']->status_badge }} text-900 fs-10 mb-0">
-                                        {!! $datas['team']->status_badge_with_icon !!}
-                                    </p>
-                                </div>
-                                <div class="d-flex align-items-center text-gray-700">
-                                    📍
-                                    <span class="fw-semibold fs-6 ms-2">
-                                        {{ $datas['team']->city->title }}
-                                    </span>
-                                </div>
+                @include('components.team.show.details')
+            </div>
+        </div>
+        @isset($datas['announcements'])
+        <div id="kt_app_content" class="app-content flex-column-fluid">
+            <div id="kt_app_content_container" class="app-container container-fluid">
+                <div class="d-flex flex-row">
+                    <div class="w-100 flex-lg-row-fluid mx-lg-13">
+                        <div class="mb-10" id="kt_social_feeds_posts">
+                            <div>
+                                <h2 class="fw-bold fs-2 text-gray-900">{{ __('messages.announcements') }}</h2>
                             </div>
-                            <div class="d-flex flex-wrap gap-2">
-                                @include('components.team.action-buttons', [
-                                    'status' => $datas['user_status'],
-                                    'role' => $datas['user_role'],
-                                    'team' => $datas['team']->resource ?? null,
-                                ])
+                            <div id="announcement-list">
+                                @include('components.announcements.card-list', ['announcements' => $datas['announcements']['data']])
                             </div>
-                        </div>
-                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 my-5">
-                            @php
-                                $gender = $datas['team']->gender ?? 'mixed';
-                                $genderEmoji = match($gender) {
-                                    'male' => '👨🏻',
-                                    'female' => '👩🏻',
-                                    default => '🧑🏻‍🤝‍🧑🏻',
-                                };
-                                $genderText = match($gender) {
-                                    'male' => __('messages.male'),
-                                    'female' => __('messages.female'),
-                                    'mixed' => __('messages.mixed'),
-                                    'other' => __('messages.other'),
-                                    default => __('messages.unknown'),
-                                };
-                            @endphp
-                            <div class="col">
-                                <div class="border border-gray-300 border-dashed rounded py-3 px-4 text-center h-100">
-                                    <div class="fw-semibold fs-6 text-gray-900 mb-1">{{ __('messages.gender') }}</div>
-                                    <div class="fs-3">{{ $genderEmoji }} {{ $genderText }}</div>
-                                </div>
+                            <div id="spinner" class="text-center my-4 d-none">
+                                <div class="spinner-border text-primary" role="status"></div>
                             </div>
-
-                            <div class="col">
-                                <div class="border border-gray-300 border-dashed rounded py-3 px-4 text-center h-100">
-                                    <div class="fw-semibold fs-6 text-gray-900 mb-1">{{ __('messages.min_player') }}</div>
-                                    <div class="fs-3 fw-bold">{{ $datas['team']['min_player'] }}</div>
-                                </div>
+                            @if($datas['announcements']['meta']['current_page'] < $datas['announcements']['meta']['last_page'])
+                            <div class="text-center my-4">
+                                <button id="showMoreButton" class="btn fw-semibold d-flex align-items-center justify-content-center gap-2" style="background-color: #f4f4f4; color: grey; border-radius: 25px; padding: 10px 20px;">
+                                    ⬇️ {{ __('messages.show_more') }}
+                                </button>
                             </div>
-
-                            <div class="col">
-                                <div class="border border-gray-300 border-dashed rounded py-3 px-4 text-center h-100">
-                                    <div class="fw-semibold fs-6 text-gray-900 mb-1">{{ __('messages.max_player') }}</div>
-                                    <div class="fs-3 fw-bold">{{ $datas['team']['max_player'] }}</div>
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="border border-gray-300 border-dashed rounded py-3 px-4 text-center h-100">
-                                    <div class="fw-semibold fs-6 text-gray-900 mb-1">{{ __('messages.sport_type') }}</div>
-                                    <div class="d-flex align-items-center justify-content-center gap-2">
-                                        <img src="{{ $datas['team']->sportType->img }}" class="w-20px" alt="">
-                                        <div class="fs-5 fw-bold">{{ $datas['team']->sportType->title }}</div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        @endisset
+        <div class="d-md-none position-fixed bottom-0 start-0 end-0 bg-white shadow py-2 px-4 z-index-50 d-flex gap-2">
+            <button onclick="scrollToAnnouncements()" class="btn btn-secondary w-100 fw-semibold py-3" style="background-color:#F4F4F4">
+                📢 {{ __('messages.go_to_announcements') }}
+            </button>
+            <button id="scrollTopButton" class="btn btn-light fw-semibold d-flex align-items-center justify-content-center" style="width: 56px; height: 100%; font-size: 1.5rem;">
+                ⬆️
+            </button>
+            <button id="openSidebarButton" class="btn btn-light fw-semibold d-flex align-items-center justify-content-center" style="width: 56px; height: 100%; font-size: 1.5rem;">
+                ☰
+            </button>
+        </div>
+        <button id="kt_app_sidebar_mobile_toggle" class="d-none"></button>
     </div>
+    @include('components.team.modals.edit-profile-modal')
+    <div id="scrollTopDesktop">
+    <button onclick="scrollToTop()" class="btn btn-icon shadow rounded-circle"
+            style="background-color:#f4f4f4 color: white; width: 48px; height: 48px; font-size: 1.2rem;">
+        ⬆️
+    </button>
 </div>
-@include('components.team.modals.edit-profile-modal')
+@endsection
+
+@section('page-scripts')
+<script>
+    let currentPage = {{ $datas['announcements']['meta']['current_page'] ?? 1 }};
+    const lastPage = {{ $datas['announcements']['meta']['last_page'] ?? 1 }};
+    let isLoading = false;
+
+    async function loadMoreAnnouncements() {
+        if (isLoading || currentPage >= lastPage) return;
+
+        isLoading = true;
+        currentPage++;
+
+        const spinner = document.getElementById('spinner');
+        spinner.classList.remove('d-none');
+
+        try {
+            const response = await fetch(`{{ url()->current() }}?page=${currentPage}`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            });
+
+            const html = await response.text();
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            const newAnnouncements = tempDiv.querySelector('#announcement-list')?.innerHTML;
+
+            if (newAnnouncements) {
+                document.getElementById('announcement-list').insertAdjacentHTML('beforeend', newAnnouncements);
+            }
+
+            // Hide the button if no more pages are available
+            if (currentPage >= lastPage) {
+                document.getElementById('showMoreButton')?.parentElement.remove();
+            }
+        } catch (e) {
+            console.error('Duyurular yüklenirken hata:', e);
+        }
+
+        spinner.classList.add('d-none');
+        isLoading = false;
+    }
+
+    document.getElementById('showMoreButton')?.addEventListener('click', loadMoreAnnouncements);
+
+    function scrollToAnnouncements() {
+        const el = document.getElementById('kt_social_feeds_posts');
+        if (el) {
+            const offset = -100;
+            const y = el.getBoundingClientRect().top + window.pageYOffset + offset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+    }
+
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('openSidebarButton')?.addEventListener('click', function () {
+        document.querySelector('#kt_app_sidebar_mobile_toggle')?.click();
+    });
+
+    document.getElementById('scrollTopButton')?.addEventListener('click', scrollToTop);
+
+    window.addEventListener('scroll', function () {
+        const desktopBtn = document.getElementById('scrollTopDesktop');
+        if (window.scrollY > 300) {
+            desktopBtn?.classList.remove('d-none');
+        } else {
+            desktopBtn?.classList.add('d-none');
+        }
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+        const isMobile = window.innerWidth < 768;
+        if (isMobile) {R
+            const btn = document.getElementById('scrollTopDesktop');
+            if (btn) btn.remove(); // tamamen DOM'dan kaldır
+        }
+    });
+</script>
 @endsection

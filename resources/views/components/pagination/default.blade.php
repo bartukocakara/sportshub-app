@@ -31,7 +31,7 @@
     }
 @endphp
 @if (isset($data['meta']['links']) && count($data['meta']['links']) > 1)
-    <form method="GET" class="d-flex justify-content-between align-items-center flex-wrap gap-3 mt-4">
+    <form method="GET" class="d-flex justify-content-between align-items-center flex-wrap gap-3 mt-4 mb-2">
         <ul class="pagination mb-0">
             @php
             $prevPage = 0;
@@ -48,7 +48,7 @@
         <div class="total-entries">
             <span>Toplam: {{ $data['meta']['total'] }} kayıt</span>
         </div>
-        @foreach (request()->except(['page', 'per_page']) as $param => $value)
+        @foreach (request()->except(['page', 'per_page', 'subject_id', 'subject_type']) as $param => $value)
             @if (is_array($value))
                 @foreach ($value as $v)
                     <input type="hidden" name="{{ $param }}[]" value="{{ $v }}">
@@ -57,6 +57,7 @@
                 <input type="hidden" name="{{ $param }}" value="{{ $value }}">
             @endif
         @endforeach
+
         <div class="d-flex align-items-center">
             <label for="per_page" class="me-2 fw-semibold">Göster:</label>
             <select name="per_page" id="per_page" class="form-select form-select-sm w-auto" onchange="this.form.submit()">

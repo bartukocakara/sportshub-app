@@ -23,12 +23,13 @@ class TeamDetailController extends Controller
     /**
      * Displays the user profile overview.
      *
+     * @param Request $request
      * @param string $id The user ID.
      * @return \Illuminate\View\View
      */
-    public function profile($id)
+    public function profile(Request $request, string $id)
     {
-        $datas = $this->teamDetailService->getTeamProfileData($id, ['city', 'sportType', 'statusDefinition', 'requestPlayerTeams']);
+        $datas = $this->teamDetailService->getTeamProfileData($request, $id, ['city', 'sportType', 'statusDefinition', 'requestPlayerTeams']);
         return view('teams.show.profile', compact('datas'));
     }
 

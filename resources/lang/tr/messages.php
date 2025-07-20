@@ -441,4 +441,7 @@ return [
     'error' => 'Hata',
     'follow_success' => 'Takımı takip ediyorsunuz',
     'unfollow_success' => 'Takımı takipten çıktınız',
+    'current_players' => 'Mevcut Oyuncular',
+    'go_to_announcements' => 'Duyurulara Git',
+    'show_more' => 'Daha Fazla Görüntüle',
 ];

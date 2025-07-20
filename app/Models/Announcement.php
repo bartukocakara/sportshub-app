@@ -39,6 +39,11 @@ class Announcement extends Model
         return $this->belongsTo(Court::class);
     }
 
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
     public function subject(): MorphTo
     {
         return $this->morphTo();

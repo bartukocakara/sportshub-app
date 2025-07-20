@@ -53,20 +53,21 @@ class TeamDetailService extends CrudService
      * @param array $with
      * @return array
      */
-    public function getTeamProfileData(string $id, array $with, bool $useCache = false): array
+    public function getTeamProfileData(Request $request, string $id, array $with, bool $useCache = false): array
     {
         $cacheKey = "team_profile_{$id}_" . auth()->id();
         if ($useCache) {
-            return Cache::remember($cacheKey, now()->addMinutes(15), function () use ($id, $with) {
+            return Cache::remember($cacheKey, now()->addMinutes(15), function () use ($id, $with, $request) {
                 $team = $this->teamRepository->find($id, ['users', 'teamLeaders', 'city', 'sportType', 'statusDefinition', 'requestPlayerTeams']);
                 $viewModel = new TeamProfileViewModel($team, new TeamAccessService(), $this->metaDataService);
-                return $viewModel->toArray();
+
+                return $viewModel->toArray($request);
             });
         }
 
         $team = $this->teamRepository->find($id, ['users', 'teamLeaders', 'city', 'sportType', 'statusDefinition', 'requestPlayerTeams']);
         $viewModel = new TeamProfileViewModel($team, new TeamAccessService(), $this->metaDataService);
-        return $viewModel->toArray();
+        return $viewModel->toArray($request);
     }
 
     /**

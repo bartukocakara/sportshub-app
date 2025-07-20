@@ -65,13 +65,13 @@
                         'label' => __('messages.activities'),
                         'visible_status' => ['leader', 'member', 'none'],
                     ],
-                    [
-                        'route' => 'teams.announcements',
-                        'icon' => "<i class='fas fa-bullhorn'></i>",
-                        'params' => ['id' => $id],
-                        'label' => __('messages.announcements'),
-                        'visible_status' => ['leader', 'member', 'none'],
-                    ],
+                    // [
+                    //     'route' => 'teams.announcements',
+                    //     'icon' => "<i class='fas fa-bullhorn'></i>",
+                    //     'params' => ['id' => $id],
+                    //     'label' => __('messages.announcements'),
+                    //     'visible_status' => ['leader', 'member', 'none'],
+                    // ],
                 ];
 
             @endphp
