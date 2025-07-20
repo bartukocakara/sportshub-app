@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Team;
 use App\Models\Court;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\DB;
 
 class FollowFactory extends Factory
 {
@@ -15,39 +16,58 @@ class FollowFactory extends Factory
 
     public function definition(): array
     {
+        $maxAttempts = 10; // Prevent infinite loops
+        $attempt = 0;
+
         do {
             $userId = User::inRandomOrder()->value('id');
-
-            $followableType = $this->faker->randomElement([Team::class, Court::class, User::class]);
-            $followableId = match ($followableType) {
-                Team::class  => Team::inRandomOrder()->value('id'),
-                Court::class => Court::inRandomOrder()->value('id'),
-                User::class  => User::inRandomOrder()->value('id'),
-            };
-
-            // Kullanıcı kendisini takip etmesin
-            if ($followableType === User::class && $followableId === $userId) {
-                continue;
+            if (!$userId) {
+                throw new \Exception('No users found in the database. Please seed the users table first.');
             }
 
-            // Aynı ilişki daha önce oluşturulmuş mu?
+            $followableType = $this->faker->randomElement([Team::class, Court::class, User::class]);
+            $followableId = null;
+
+            switch ($followableType) {
+                case Team::class:
+                    $followableId = Team::inRandomOrder()->value('id');
+                    if (!$followableId) {
+                        throw new \Exception('No teams found in the database. Please seed the teams table first.');
+                    }
+                    break;
+                case Court::class:
+                    $followableId = Court::inRandomOrder()->value('id');
+                    if (!$followableId) {
+                        throw new \Exception('No courts found in the database. Please seed the courts table first.');
+                    }
+                    break;
+                case User::class:
+                    do {
+                        $followableId = User::inRandomOrder()->value('id');
+                    } while ($followableId === $userId || !$followableId);
+                    break;
+            }
+
             $exists = Follow::where([
                 'user_id' => $userId,
                 'followable_id' => $followableId,
                 'followable_type' => $followableType,
             ])->exists();
 
+            $attempt++;
+            if ($attempt >= $maxAttempts) {
+                throw new \Exception('Could not find a unique follow combination after ' . $maxAttempts . ' attempts.');
+            }
         } while ($exists);
 
         return [
-            'user_id'         => $userId,
-            'followable_id'   => $followableId,
+            'user_id' => $userId,
+            'followable_id' => $followableId,
             'followable_type' => $followableType,
-            'status'          => $this->faker->randomElement([
+            'status' => $this->faker->randomElement([
                 FollowStatusEnum::PENDING->value,
                 FollowStatusEnum::ACCEPTED->value,
             ]),
         ];
     }
-
 }
