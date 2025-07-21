@@ -9,18 +9,6 @@ use Laravel\Socialite\Facades\Socialite;
 
 class SocialLoginController extends Controller
 {
-    public function redirectToGoogle()
-    {
-        return Socialite::driver('google')->redirect();
-    }
-
-    // Handle Google Callback
-    public function handleGoogleCallback()
-    {
-        $user = Socialite::driver('google')->user();
-        $this->loginOrCreateUser($user, 'google');
-    }
-
     // Redirect to Facebook
     public function redirectToFacebook()
     {

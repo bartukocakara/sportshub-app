@@ -11,9 +11,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <!-- Authentication contents container -->
                 <div id="authContainer">
-                    <!-- Centered Tabs -->
                     <ul class="nav nav-tabs justify-content-center" id="authTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login-pane" type="button" role="tab" aria-controls="login-pane" aria-selected="true">
@@ -27,7 +25,6 @@
                         </li>
                     </ul>
                     <div class="tab-content mt-4" id="authTabContent">
-                        <!-- Login Tab Content -->
                         <div class="tab-pane fade show active" id="login-pane" role="tabpanel" aria-labelledby="login-tab">
                             <form action="{{ route('login') }}" method="POST" class="auth-form mt-4">
                                 @csrf
@@ -47,10 +44,15 @@
                                 <span>{{ __('messages.or') }}</span>
                             </div>
                             <div class="d-grid gap-2">
-                                <a href="{{ route('auth.google', ['type' => 'login']) }}" class="btn btn-outline-danger">
+                                <a href="{{ route('auth.google') }}" class="btn btn-outline-danger">
                                     <i class="fab fa-google me-2"></i> {{ __('messages.login_with_google') }}
                                 </a>
                             </div>
+                            @if(session('error'))
+                                <div class="mt-4 text-red-600 text-sm">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
                         </div>
                         <!-- Register Tab Content -->
                         <div class="tab-pane fade" id="register-pane" role="tabpanel" aria-labelledby="register-tab">

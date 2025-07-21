@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CommentController;
@@ -31,14 +32,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index']);
 Route::get('/subscription-plans', [SubscriptionPlanController::class, 'index']);
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
 
-// Google Login
-Route::get('auth/google', [SocialLoginController::class, 'redirectToGoogle'])->name('auth.google');
-Route::get('auth/google/callback', [SocialLoginController::class, 'handleGoogleCallback']);
-
-// Facebook Login
-Route::get('auth/facebook', [SocialLoginController::class, 'redirectToFacebook'])->name('auth.facebook');
-Route::get('auth/facebook/callback', [SocialLoginController::class, 'handleFacebookCallback']);
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 Route::resource('announcements', AnnouncementController::class);
 Route::resource('activities', ActivityController::class);
