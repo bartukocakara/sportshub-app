@@ -59,6 +59,15 @@ class DefinitionSeeder extends Seeder
             ['group_key' => 'request_status', 'value' => 'waiting_for_approval', 'description_tr' => 'Beklemede', 'description_en' => 'Waiting for Approval'],
             ['group_key' => 'request_status', 'value' => 'accepted', 'description_tr' => 'Kabul Edildi', 'description_en' => 'Accepted'],
             ['group_key' => 'request_status', 'value' => 'rejected', 'description_tr' => 'Reddedildi', 'description_en' => 'Rejected'],
+
+            // announcement_type
+            ['group_key' => 'announcement_type', 'value' => 'team_needs_player', 'description_tr' => 'Takıma oyuncu aranıyor', 'description_en' => 'Team needs a player', ],
+            ['group_key' => 'announcement_type', 'value' => 'match_needs_player', 'description_tr' => 'Maça oyuncu aranıyor', 'description_en' => 'Match needs a player',],
+            ['group_key' => 'announcement_type', 'value' => 'match_needs_team', 'description_tr' => 'Maça takım aranıyor', 'description_en' => 'Match needs a team',],
+            ['group_key' => 'announcement_type', 'value' => 'court_available', 'description_tr' => 'Saha müsait', 'description_en' => 'Court is available',],
+            ['group_key' => 'announcement_type', 'value' => 'user_needs_team', 'description_tr' => 'Takım arayan oyuncu', 'description_en' => 'User needs a team',],
+            ['group_key' => 'announcement_type', 'value' => 'user_needs_match', 'description_tr' => 'Maç arayan oyuncu', 'description_en' => 'User needs a match',],
+            ['group_key' => 'announcement_type', 'value' => 'user_needs_court', 'description_tr' => 'Saha arayan oyuncu', 'description_en' => 'User needs a court',],
         ];
 
         foreach ($definitions as $definition) {

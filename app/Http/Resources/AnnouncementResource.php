@@ -26,11 +26,11 @@ class AnnouncementResource extends JsonResource
         return [
             'id'                  => $this->id,
             'sport_type_id'       => $this->sport_type_id,
-            'type'                => $this->type,
             'subject_type'        => $this->subject_type,
             'subject_id'          => $this->subject_id,
             'title'               => $this->title,
             'message'             => $this->message,
+            'type_definition'     => $this->typeDefinition,
             'created_at'          => $this->created_at?->toISOString(),
             'created_at_readable' => $this->created_at?->format('d M Y, H:i'),
             'created_at_diff'     => $createdAt?->diffForHumans(),

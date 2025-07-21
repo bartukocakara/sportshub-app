@@ -55,7 +55,6 @@ class AnnouncementController extends Controller
      */
     public function store(AnnouncementRequest $request):RedirectResponse
     {
-        dd($request->validated());
         return $this->announcementService->create($request->validated());
     }
 

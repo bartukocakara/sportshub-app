@@ -56,7 +56,6 @@
                                 </div>
 
                                 <div class="card-body pt-2 pb-0 border">
-                                    {{-- SPORT TYPE --}}
                                     <div class="mb-3">
                                         <label for="sport_type_id" class="form-label">{{ __('messages.sport_type') }}</label>
                                         <select name="sport_type_id" id="sport_type_id" class="form-select @error('sport_type_id') is-invalid @enderror" required>
@@ -69,15 +68,12 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-
-                                    {{-- TYPE --}}
                                     <div class="mb-3">
                                         <label for="type" class="form-label">{{ __('messages.type') }}</label>
                                         <select name="type" id="type" class="form-select @error('type') is-invalid @enderror" required>
                                             <option disabled selected>{{ __('messages.select_type') }}</option>
-                                            <option value="general" {{ old('type') == 'general' ? 'selected' : '' }}>{{ __('messages.general') }}</option>
-                                            <option value="info" {{ old('type') == 'info' ? 'selected' : '' }}>{{ __('messages.info') }}</option>
-                                            <option value="urgent" {{ old('type') == 'urgent' ? 'selected' : '' }}>{{ __('messages.urgent') }}</option>
+                                            <option value="inviter" {{ old('type') == 'inviter' ? 'selected' : '' }}>{{ __('messages.inviter') }}</option>
+                                            <option value="participant" {{ old('type') == 'participant' ? 'selected' : '' }}>{{ __('messages.participant') }}</option>
                                         </select>
                                         @error('type')
                                             <div class="invalid-feedback">{{ $message }}</div>
@@ -87,7 +83,6 @@
                                     <input type="hidden" name="subject_type" value="Team">
                                     <input type="hidden" name="subject_id" value="{{ $datas['team']['id'] }}">
 
-                                    {{-- TITLE --}}
                                     <div class="mb-3">
                                         <label for="title" class="form-label">{{ __('messages.title') }}</label>
                                         <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror"
@@ -96,8 +91,6 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-
-                                    {{-- MESSAGE --}}
                                     <div class="mb-3">
                                         <label for="message" class="form-label">{{ __('messages.message') }}</label>
                                         <textarea

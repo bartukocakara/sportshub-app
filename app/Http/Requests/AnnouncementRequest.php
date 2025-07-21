@@ -15,9 +15,9 @@ class AnnouncementRequest extends FormRequest
     {
         return [
             'sport_type_id'   => ['required', 'exists:sport_types,id'],
-            'type'            => ['required', 'string', 'in:general,info,urgent'], // adjust types as needed
+            'type'            => ['required', 'string', 'in:inviter,participant'], // adjust types as needed
             'subject_type'    => ['required', 'string', 'in:Team,Matches,Reservation,Court'], // adjust as needed
-            'subject_id'      => ['required', 'integer'],
+            'subject_id'      => ['required', 'uuid'],
             'title'           => ['required', 'string', 'max:255'],
             'message'         => ['required', 'string', 'max:5000'],
         ];

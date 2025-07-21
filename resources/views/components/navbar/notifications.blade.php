@@ -1,9 +1,6 @@
 <div class="app-navbar-item me-lg-1">
     <div class="btn btn-icon btn-custom btn-color-gray-600 btn-active-color-primary w-35px h-35px w-md-40px h-md-40px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
-        <i class="ki-duotone ki-graph-3 fs-1">
-            <span class="path1"></span>
-            <span class="path2"></span>
-        </i>
+        🔔
     </div>
     <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px" data-kt-menu="true" id="kt_menu_notifications">
         <div class="d-flex flex-column bgi-no-repeat rounded-top" style="background-image:url('assets/media/misc/menu-header-bg.jpg')">

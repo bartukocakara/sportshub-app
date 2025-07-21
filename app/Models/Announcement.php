@@ -53,4 +53,10 @@ class Announcement extends Model
     {
         return $this->belongsTo(User::class, 'causer_id');
     }
+
+    public function typeDefinition()
+    {
+        return $this->hasOne(Definition::class, 'value', 'type')
+                    ->where('group_key', 'announcement_type');
+    }
 }

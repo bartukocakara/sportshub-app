@@ -7,22 +7,26 @@
     <div class="card-header pt-9">
         <div class="d-flex align-items-center">
             <div class="symbol symbol-50px me-5">
-                <img src="{{ 'avatar/' . $announcement['created_by']['avatar'] }}" class="" alt="" />
+                <img src="{{ asset('storage/' . $announcement['created_by']['avatar']) }}" alt="avatar" />
             </div>
             <div class="flex-grow-1">
-                <a href="#" class="text-gray-800 text-hover-primary fs-4 fw-bold">{{ $announcement['created_by']['full_name'] }}</a>
-                <span class="text-gray-500 fw-semibold d-block">{{ $announcement['created_at_locale'] }}</span>
+                <a href="#" class="text-gray-800 text-hover-primary fs-4 fw-bold">
+                    {{ $announcement['created_by']['full_name'] }}
+                </a>
+                <span class="text-gray-500 fw-semibold d-block">
+                    {{ $announcement['created_at_locale'] }}
+                </span>
             </div>
         </div>
         <div class="card-toolbar">
             <div class="m-0">
-                <button
-                    class="btn btn-icon btn-color-gray-500 btn-active-color-primary me-n4"
+                <button class="btn btn-icon btn-color-gray-500 btn-active-color-primary me-n4"
                     data-kt-menu-trigger="click"
                     data-kt-menu-placement="bottom-end"
-                    data-kt-menu-overflow="true"
-                >
-                    <i class="ki-duotone ki-dots-square fs-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
+                    data-kt-menu-overflow="true">
+                    <i class="ki-duotone ki-dots-square fs-1">
+                        <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span>
+                    </i>
                 </button>
                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px" data-kt-menu="true">
                     <div class="menu-item px-3">
@@ -47,12 +51,40 @@
             </div>
         </div>
     </div>
+
+    {{-- ✅ Card Body: title + type + message --}}
     <div class="card-body">
+        {{-- 📌 TYPE --}}
+        <div class="badge badge-light-primary mb-2">
+            {{ $announcement['type_definition']['description_tr'] }}
+        </div>
+
+        {{-- 📌 TITLE --}}
+        <div class="fs-5 fw-bold text-gray-800 mb-2">
+            {{ $announcement['title'] }}
+        </div>
+
+        {{-- 📌 MESSAGE --}}
         <div class="fs-6 fw-normal text-gray-700 mb-5">
             {{ $announcement['message'] }}
         </div>
+
+        {{-- 📌 SUBJECT INFO (e.g. Team, Match, etc.) --}}
+        <div class="text-muted small">
+            <strong>Konu:</strong>
+            {{ class_basename($announcement['subject_type']) }} #{{ $announcement['subject_id'] }}
+        </div>
+
+        {{-- 📌 SPORT TYPE (if available) --}}
+        @if (!empty($announcement['sport_type_name']))
+        <div class="text-muted small mt-1">
+            <strong>Spor Türü:</strong> {{ $announcement['sport_type_name'] }}
+        </div>
+        @endif
     </div>
+
     <div class="card-footer pt-0">
+        {{-- Opsiyonel footer eylemleri veya CTA butonları --}}
     </div>
 </div>
 @endforeach

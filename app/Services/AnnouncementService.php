@@ -45,13 +45,16 @@ class AnnouncementService extends CrudService
     {
         try {
             DB::beginTransaction();
-            $data['created_user_id'] = auth()->user()->id;
-            $this->announcementRepository->create($data);
+             $data['created_user_id'] = auth()->user()->id;
 
+            $data['subject_type'] = 'App\\Models\\' . ucfirst($data['subject_type']);
+            DB::commit();
+            $this->announcementRepository->create($data);
+            
             return redirect()->back()->with('swal', AnnouncementSwalMessages::createSuccess()->toArray());
-            //code...
         } catch (\Throwable $th) {
             //throw $th;
+            DB::rollBack();
             Log::error($th);
             return redirect()->back()->with('swal', AnnouncementSwalMessages::createError()->toArray());
         }

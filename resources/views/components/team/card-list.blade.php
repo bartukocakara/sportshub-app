@@ -9,7 +9,7 @@
                             @if ($index < 3)
                                 @if ($user['avatar'])
                                     <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" aria-label="{{ $user['first_name'] }}" data-bs-original-title="{{ $user['first_name'] }}">
-                                        <img alt="Pic" src="/storage/avatar/{{ $user['avatar'] }}" />
+                                        <img alt="Pic" src="{{ asset('storage/' . $user['avatar']) }}" class="symbol symbol-35px symbol-circle" alt="Pic" />
                                     </div>
                                 @else
                                     <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="{{ $user['first_name'] }}">

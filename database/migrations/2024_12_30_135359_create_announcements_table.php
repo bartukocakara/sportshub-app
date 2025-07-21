@@ -21,9 +21,7 @@ return new class extends Migration
                   ->references('id')
                   ->on('sport_types')
                   ->onDelete('cascade');
-            $table->enum('type', [AnnouncementTypeEnum::INVITER->value,
-                                    AnnouncementTypeEnum::PARTICIPANT->value])
-                    ->default(AnnouncementTypeEnum::PARTICIPANT->value);
+            $table->string('type');
             $table->string('subject_type');
             $table->foreignUuid('subject_id')->nullable();
             $table->foreignUuid('created_user_id')

@@ -43,7 +43,7 @@ class UserFactory extends Factory
             'provider_id' => null,
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
-            'avatar' => fake()->randomElement($avatarList),
+            'avatar' => 'avatar/'.fake()->randomElement($avatarList),
         ];
     }
 }
