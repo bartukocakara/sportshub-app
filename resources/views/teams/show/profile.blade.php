@@ -1,22 +1,5 @@
 @extends('layouts.team.index')
-@section('custom-styles')
-<style>
-    /* Scroll-to-top button – sadece masaüstü görsün */
-    #scrollTopDesktop {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 100;
-        display: none; /* Default olarak gizli */
-    }
 
-    @media (min-width: 768px) {
-        #scrollTopDesktop {
-            display: flex; /* Sadece masaüstünde göster */
-        }
-    }
-</style>
-@endsection
 @section('title', __('messages.profile'))
 @section('content')
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
@@ -96,91 +79,57 @@
         <button id="kt_app_sidebar_mobile_toggle" class="d-none"></button>
     </div>
     @include('components.team.modals.edit-profile-modal')
-    <div id="scrollTopDesktop">
+    <div id="scrollTopDesktop" style="position: fixed; bottom: 20px; right: 20px; z-index: 100; display: none; ">
     <button onclick="scrollToTop()" class="btn btn-icon shadow rounded-circle"
-            style="background-color:#f4f4f4 color: white; width: 48px; height: 48px; font-size: 1.2rem;">
+            style="background-color:#f4f4f4; color: white; width: 48px; height: 48px; font-size: 1.2rem;">
         ⬆️
     </button>
 </div>
 @endsection
-
 @section('page-scripts')
+{{-- Include your new JavaScript files --}}
+<script src="{{ asset('assets/js/card-list/announcement-card-list.js') }}"></script>
+<script src="{{ asset('assets/js/load-more.js') }}"></script>
+<script src="{{ asset('assets/js/mobile-buttons.js') }}"></script>
+
 <script>
-    let currentPage = {{ $datas['announcements']['meta']['current_page'] ?? 1 }};
-    const lastPage = {{ $datas['announcements']['meta']['last_page'] ?? 1 }};
-    let isLoading = false;
-
-    async function loadMoreAnnouncements() {
-        if (isLoading || currentPage >= lastPage) return;
-
-        isLoading = true;
-        currentPage++;
-
-        const spinner = document.getElementById('spinner');
-        spinner.classList.remove('d-none');
-
-        try {
-            const response = await fetch(`{{ url()->current() }}?page=${currentPage}`, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            });
-
-            const html = await response.text();
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = html;
-            const newAnnouncements = tempDiv.querySelector('#announcement-list')?.innerHTML;
-
-            if (newAnnouncements) {
-                document.getElementById('announcement-list').insertAdjacentHTML('beforeend', newAnnouncements);
-            }
-
-            // Hide the button if no more pages are available
-            if (currentPage >= lastPage) {
-                document.getElementById('showMoreButton')?.parentElement.remove();
-            }
-        } catch (e) {
-            console.error('Duyurular yüklenirken hata:', e);
-        }
-
-        spinner.classList.add('d-none');
-        isLoading = false;
-    }
-
-    document.getElementById('showMoreButton')?.addEventListener('click', loadMoreAnnouncements);
-
-    function scrollToAnnouncements() {
-        const el = document.getElementById('kt_social_feeds_posts');
-        if (el) {
-            const offset = -100;
-            const y = el.getBoundingClientRect().top + window.pageYOffset + offset;
-            window.scrollTo({ top: y, behavior: 'smooth' });
-        }
-    }
-
-    function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    document.getElementById('openSidebarButton')?.addEventListener('click', function () {
-        document.querySelector('#kt_app_sidebar_mobile_toggle')?.click();
-    });
-
-    document.getElementById('scrollTopButton')?.addEventListener('click', scrollToTop);
-
-    window.addEventListener('scroll', function () {
-        const desktopBtn = document.getElementById('scrollTopDesktop');
-        if (window.scrollY > 300) {
-            desktopBtn?.classList.remove('d-none');
-        } else {
-            desktopBtn?.classList.add('d-none');
-        }
-    });
     document.addEventListener("DOMContentLoaded", function () {
-        const isMobile = window.innerWidth < 768;
-        if (isMobile) {R
-            const btn = document.getElementById('scrollTopDesktop');
-            if (btn) btn.remove(); // tamamen DOM'dan kaldır
+        // Initialize mobile buttons
+        if (typeof initializeMobileButtons === 'function') {
+            initializeMobileButtons();
+        }
+        // Initialize LoadMoreController for announcements
+        @isset($datas['announcements'])
+        const announcementLoadMore = new LoadMoreController({
+            apiUrl: '{{ route('announcements') }}',
+            containerId: 'announcement-list',
+            spinnerId: 'spinner',
+            showMoreButtonId: 'showMoreButton',
+            renderItemCallback: renderAnnouncementCard,
+            initialMeta: {
+                current_page: {{ (int) $datas['announcements']['meta']['current_page'] }},
+                last_page: {{ (int) $datas['announcements']['meta']['last_page'] }}
+            },
+            extraParams: {
+                subject_type: 'Team',
+                subject_id: '{{ $datas['team']['id'] }}' // ID burada string ise tırnak içinde, integer ise sayı olarak bırakabilirsiniz
+            }
+        });
+        @endisset
+
+        // Handle desktop scroll-to-top button visibility
+        window.addEventListener('scroll', function () {
+            const desktopBtn = document.getElementById('scrollTopDesktop');
+            if (window.scrollY > 300) {
+                desktopBtn?.classList.remove('d-none');
+            } else {
+                desktopBtn?.classList.add('d-none');
+            }
+        });
+
+        // Remove desktop scroll button on mobile
+        if (window.innerWidth < 768) {
+            document.getElementById('scrollTopDesktop')?.remove();
         }
     });
 </script>

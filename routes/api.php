@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Api\AnnouncementController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\CommissionController;
 use App\Http\Controllers\CourtBusinessController;
 use App\Http\Controllers\Api\DistrictController;
 use App\Http\Controllers\Api\CourtReservationPricingController;
+use App\Http\Controllers\TeamDetailController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('api')->group(function () {
@@ -14,6 +16,10 @@ Route::prefix('api')->group(function () {
 
     Route::get('/court-reservation-pricings', [CourtReservationPricingController::class, 'index'])->name('api.court-reservation-pricings.index');
     Route::get('/court-reservation-pricings/check-availability', [CourtReservationPricingController::class, 'checkAvailablitiy'])->name('api.court-reservation-pricings.check-availability');
+
+    // Announcements route with CSRF middleware
+    Route::middleware('auth')->get('/announcements', [AnnouncementController::class, 'index'])->name('announcements');
+
     Route::middleware('auth:web')->group(function () {
         Route::resource('comments', CommentController::class)->names([
             'index' => 'api.comments.index',

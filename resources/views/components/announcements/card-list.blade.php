@@ -11,7 +11,7 @@
             </div>
             <div class="flex-grow-1">
                 <a href="#" class="text-gray-800 text-hover-primary fs-4 fw-bold">{{ $announcement['created_by']['full_name'] }}</a>
-                <span class="text-gray-500 fw-semibold d-block">{{ $announcement['created_at'] }}</span>
+                <span class="text-gray-500 fw-semibold d-block">{{ $announcement['created_at_locale'] }}</span>
             </div>
         </div>
         <div class="card-toolbar">
@@ -53,23 +53,6 @@
         </div>
     </div>
     <div class="card-footer pt-0">
-        <div>
-            <div class="separator separator-solid"></div>
-            <ul class="nav py-3">
-                <li class="nav-item">
-                    <a class="nav-link btn btn-sm btn-color-gray-600 btn-active-color-primary btn-active-light-primary fw-bold px-4 me-1 collapsible active"
-                        data-bs-toggle="collapse"
-                        href="#kt_social_feeds_comments_1">
-                        <i class="ki-duotone ki-message-text-2 fs-2 me-1">
-                            <span class="path1"></span>
-                            <span class="path2"></span>
-                            <span class="path3"></span>
-                        </i>
-                        2 Comments
-                    </a>
-                </li>
-            </ul>
-        </div>
     </div>
 </div>
 @endforeach
