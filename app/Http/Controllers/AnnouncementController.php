@@ -53,10 +53,10 @@ class AnnouncementController extends Controller
      * @param  AnnouncementRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(AnnouncementRequest $request)
+    public function store(AnnouncementRequest $request):RedirectResponse
     {
-        $this->announcementService->store($request->validated());
-        return redirect()->route('announcements.index')->with('success', 'Announcement created successfully.');
+        dd($request->validated());
+        return $this->announcementService->create($request->validated());
     }
 
     /**

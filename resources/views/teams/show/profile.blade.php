@@ -42,6 +42,90 @@
             <div id="kt_app_content_container" class="app-container container-fluid">
                 <div class="d-flex flex-row">
                     <div class="w-100 flex-lg-row-fluid mx-lg-13">
+                        @if($datas['is_team_leader'])
+                        <form method="POST" action="{{ route('announcements.store') }}">
+                            @csrf
+                            <div class="card card-flush mb-10">
+                                <div class="card-header justify-content-start align-items-center pt-4">
+                                    <div class="symbol symbol-45px me-5">
+                                        <img src="/assets/media/avatars/300-3.jpg" alt="" />
+                                    </div>
+                                    <span class="text-gray-500 fw-semibold fs-6">
+                                        {{ __('messages.whats_on_your_mind', ['name' => auth()->user()->first_name ?? '']) }}
+                                    </span>
+                                </div>
+
+                                <div class="card-body pt-2 pb-0 border">
+                                    {{-- SPORT TYPE --}}
+                                    <div class="mb-3">
+                                        <label for="sport_type_id" class="form-label">{{ __('messages.sport_type') }}</label>
+                                        <select name="sport_type_id" id="sport_type_id" class="form-select @error('sport_type_id') is-invalid @enderror" required>
+                                            <option disabled selected>{{ __('messages.select_sport_type') }}</option>
+                                            @foreach($datas['sport_types'] as $sportType)
+                                                <option value="{{ $sportType->id }}" {{ old('sport_type_id') == $sportType->id ? 'selected' : '' }}>{{ $sportType->title }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('sport_type_id')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    {{-- TYPE --}}
+                                    <div class="mb-3">
+                                        <label for="type" class="form-label">{{ __('messages.type') }}</label>
+                                        <select name="type" id="type" class="form-select @error('type') is-invalid @enderror" required>
+                                            <option disabled selected>{{ __('messages.select_type') }}</option>
+                                            <option value="general" {{ old('type') == 'general' ? 'selected' : '' }}>{{ __('messages.general') }}</option>
+                                            <option value="info" {{ old('type') == 'info' ? 'selected' : '' }}>{{ __('messages.info') }}</option>
+                                            <option value="urgent" {{ old('type') == 'urgent' ? 'selected' : '' }}>{{ __('messages.urgent') }}</option>
+                                        </select>
+                                        @error('type')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <input type="hidden" name="subject_type" value="Team">
+                                    <input type="hidden" name="subject_id" value="{{ $datas['team']['id'] }}">
+
+                                    {{-- TITLE --}}
+                                    <div class="mb-3">
+                                        <label for="title" class="form-label">{{ __('messages.title') }}</label>
+                                        <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror"
+                                            value="{{ old('title') }}" required minlength="3" maxlength="255">
+                                        @error('title')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    {{-- MESSAGE --}}
+                                    <div class="mb-3">
+                                        <label for="message" class="form-label">{{ __('messages.message') }}</label>
+                                        <textarea
+                                            class="form-control @error('message') is-invalid @enderror"
+                                            id="message"
+                                            name="message"
+                                            rows="3"
+                                            placeholder="{{ __('messages.write_your_announcement') }}"
+                                            required>{{ old('message') }}</textarea>
+                                        @error('message')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="card-footer d-flex justify-content-end pt-0">
+                                    <button type="submit" class="btn btn-sm btn-primary" id="kt_social_feeds_post_btn">
+                                        <span class="indicator-label">{{ __('messages.post') }}</span>
+                                        <span class="indicator-progress">
+                                            {{ __('messages.please_wait') }} <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        @endif
+
+
                         <div class="mb-10" id="kt_social_feeds_posts">
                             <div>
                                 <h2 class="fw-bold fs-2 text-gray-900">{{ __('messages.announcements') }}</h2>
@@ -78,8 +162,9 @@
         </div>
         <button id="kt_app_sidebar_mobile_toggle" class="d-none"></button>
     </div>
-    @include('components.team.modals.edit-profile-modal')
-    <div id="scrollTopDesktop" style="position: fixed; bottom: 20px; right: 20px; z-index: 100; display: none; ">
+</div>
+@include('components.team.modals.edit-profile-modal')
+<div id="scrollTopDesktop" style="position: fixed; bottom: 20px; right: 20px; z-index: 100; display: none; ">
     <button onclick="scrollToTop()" class="btn btn-icon shadow rounded-circle"
             style="background-color:#f4f4f4; color: white; width: 48px; height: 48px; font-size: 1.2rem;">
         ⬆️
@@ -87,7 +172,6 @@
 </div>
 @endsection
 @section('page-scripts')
-{{-- Include your new JavaScript files --}}
 <script src="{{ asset('assets/js/card-list/announcement-card-list.js') }}"></script>
 <script src="{{ asset('assets/js/load-more.js') }}"></script>
 <script src="{{ asset('assets/js/mobile-buttons.js') }}"></script>

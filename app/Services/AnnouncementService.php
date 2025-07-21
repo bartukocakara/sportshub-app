@@ -8,7 +8,11 @@ use App\Models\SportType;
 use App\Repositories\AnnouncementRepository;
 use App\Repositories\CityRepository;
 use App\Repositories\SportTypeRepository;
+use App\Support\Messages\AnnouncementSwalMessages;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AnnouncementService extends CrudService
 {
@@ -35,5 +39,21 @@ class AnnouncementService extends CrudService
         $countryCode = substr($language, 3, 2); // Extract country code (e.g., 'US' for 'en-US')
         $datas['cities'] = (new CityRepository(new City()))->getByCountryCode($countryCode, ['districts.courtAddresses', 'districts.courtBusinesses'], false);
         return $datas;
+    }
+
+    public function create(array $data): RedirectResponse
+    {
+        try {
+            DB::beginTransaction();
+            $data['created_user_id'] = auth()->user()->id;
+            $this->announcementRepository->create($data);
+
+            return redirect()->back()->with('swal', AnnouncementSwalMessages::createSuccess()->toArray());
+            //code...
+        } catch (\Throwable $th) {
+            //throw $th;
+            Log::error($th);
+            return redirect()->back()->with('swal', AnnouncementSwalMessages::createError()->toArray());
+        }
     }
 }

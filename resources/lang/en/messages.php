@@ -408,4 +408,7 @@ return [
     'current_players' => 'Current Players',
     'go_to_announcements' => 'Go to Announcements',
     'show_more' => 'Show More',
+    'post' => 'Post',
+    'write_your_announcement' => 'Write your announcement',
+    'announcement_created_successfully_prompt' => 'Your announcement has been created successfully.',
 ];

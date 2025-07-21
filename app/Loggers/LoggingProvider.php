@@ -23,9 +23,14 @@ class LoggingProvider
 
     public static function all(): array
     {
-        return IntegratedChannel::where('active', true)
+        $channels = IntegratedChannel::where('active', true)
             ->get()
             ->map(fn($channel) => self::resolve($channel->key, $channel->config))
             ->all();
+
+        // Add StorageLogger statically (always enabled)
+        $channels[] = new \App\Loggers\Channels\StorageLogger();
+
+        return $channels;
     }
 }
