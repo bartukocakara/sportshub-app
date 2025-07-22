@@ -2,7 +2,6 @@
     'announcements' => [],
     'sport_types' => [],
     'announcement_types' => [],
-    'subject' => [],
 ])
 @foreach ($announcements as $key => $announcement)
     @php
@@ -105,14 +104,15 @@
         emoji="🗑️"
     />
     <x-announcements.modals.edit-modal
-    :id="$updateModalId"
-    :route="route('announcements.update', ['announcement' => $announcement['id']])"
-    :announcement="$announcement"
-    :title="__('messages.update_announcement_title')"
-    :message="__('messages.update_announcement_message')"
-    :sportTypes="$sport_types"
-    :announcementTypes="$announcement_types"
-    :currentSubjectId="($subject['id'] ?? auth()->user()->id)"
-/>
+        :id="$updateModalId"
+        :route="route('announcements.update', ['announcement' => $announcement['id']])"
+        :announcement="$announcement"
+        :title="__('messages.update_announcement_title')"
+        :message="__('messages.update_announcement_message')"
+        :sport_types="$sport_types"
+        :subject_type="ucfirst($announcement['subject_type'])"
+        :announcement_types="$announcement_types"
+        :currentSubjectId="$announcement['subject_id']"
+    />
 
 @endforeach

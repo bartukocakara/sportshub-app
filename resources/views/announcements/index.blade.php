@@ -137,7 +137,11 @@
                             translationsPrefix="messages"
                         />
                         @include('components.pagination.default', ['data' => $datas['announcements']])
-                        @include('components.announcements.card-list', ['announcements' => $datas['announcements']['data']])
+                        <x-announcements.card-list
+                                        :announcements="$datas['announcements']['data']"
+                                        :sport_types="$datas['sport_types']"
+                                        :announcement_types="$datas['announcement_types']"
+                                    />
                     </div>
                 </div>
                 <div

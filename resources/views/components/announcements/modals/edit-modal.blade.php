@@ -2,9 +2,10 @@
     'id', // The unique ID for the modal (e.g., updateAnnouncementModal-123)
     'route', // The form action URL (e.g., announcements/{announcement}/update)
     'title' => __('messages.edit_announcement'), // Default title
-    'sportTypes' => [], // Collection of sport types
+    'sport_types' => [], // Collection of sport types
     'announcement' => [], // The announcement data
-    'announcementTypes' => [], // Collection of announcement types
+    'subject_type' => '', // The type of subject (e.g., Team)
+    'announcement_types' => [], // Collection of announcement types
     'currentSubjectId' => null, // The ID of the subject (e.g., team ID)
 ])
 
@@ -44,7 +45,7 @@
                                     </label>
                                     <select name="sport_type_id" id="edit_sport_type_id_{{ $id }}" class="form-select select2" data-dropdown-parent="#{{ $id }}" required>
                                         <option value="" disabled>{{ __('messages.select_sport_type') }}</option>
-                                        @foreach($sportTypes as $sportType)
+                                        @foreach($sport_types as $sportType)
                                             <option value="{{ $sportType->id }}" {{ $announcement['sport_type_id'] == $sportType->id ? 'selected' : '' }}>
                                                 {{ $sportType->title }}
                                             </option>
@@ -60,7 +61,7 @@
                                         <option value="" disabled>
                                             {{ __('messages.select_type') }}
                                         </option>
-                                        @foreach ($announcementTypes as $announcementType)
+                                        @foreach ($announcement_types as $announcementType)
                                             <option value="{{ $announcementType->value }}" {{ $announcement['type_definition']['value'] == $announcementType ? 'selected' : '' }}>
                                                 {{ $announcementType->description_tr }}
                                             </option>
@@ -68,7 +69,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <input type="hidden" name="subject_type" value="Team">
+                            <input type="hidden" name="subject_type" value="{{ $subject_type }}">
                             <input type="hidden" name="subject_id" value="{{ $currentSubjectId }}">
                             <div class="mt-4">
                                 <label for="edit_title_{{ $id }}" class="form-label fw-bold">
