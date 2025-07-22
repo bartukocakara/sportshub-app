@@ -445,4 +445,13 @@ return [
     'delete_announcement_message' => 'Duyuruyu silmek istediğinize emin misiniz?',
     'delete_announcement_title' => 'Duyuru Sil',
     'user' => 'Kullanıcı',
+    'suggestions_for_you' => 'Senin icin öneriler',
+    'view_all' => 'Hepsini Görüntüle',
+    'no_suggestions' => 'Hicbir ozet yok',
+    'update_announcement_title' => 'Duyuru Güncelle',
+    'update_announcement_message' => 'Duyuruyu güncellemek istediğinize emin misiniz?',
+    'announcement_updated_successfully_prompt' => 'Duyurunuz güncellendi.',
+    'delete_announcement_emotional_warning' => 'Bu islem gercekten yapılacaksa, ilgili bilgiler kalıcı olarak silinecektir.',
+    'update_announcement_emotional_warning' => 'Bu islem gercekten yapılacaksa, ilgili bilgiler kalıcı olarak silinecektir.',
+    'announcement_deleted_successfully_prompt' => 'Duyurunuz silindi.',
 ];

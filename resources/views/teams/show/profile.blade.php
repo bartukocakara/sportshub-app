@@ -91,11 +91,9 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    {{-- Hidden Fields --}}
                                     <input type="hidden" name="subject_type" value="Team">
                                     <input type="hidden" name="subject_id" value="{{ $datas['team']['id'] }}">
 
-                                    {{-- Title --}}
                                     <div class="mt-4">
                                         <label for="title" class="form-label fw-bold">
                                             <i class="bi bi-type me-2 text-primary"></i> {{ __('messages.title') }}
@@ -138,13 +136,21 @@
                             </div>
                         </form>
                     @endif
+
                     @isset($datas['announcements'])
                         <div class="mb-10" id="kt_social_feeds_posts">
                             <div>
                                 <h2 class="fw-bold fs-2 text-gray-900">{{ __('messages.announcements') }}</h2>
                             </div>
                             <div id="profile-announcement-list">
-                                @include('components.announcements.card-list', ['announcements' => $datas['announcements']['data']])
+                                <x-announcements.card-list
+                                        :announcements="$datas['announcements']['data']"
+                                        :sport_types="$datas['sport_types']"
+                                        :announcement_types="$datas['announcement_types']"
+                                        :subject="$datas['team']"
+                                        :datas="$datas"
+                                    />
+
                             </div>
                             <div id="spinner" class="text-center my-4 d-none">
                                 <div class="spinner-border text-primary" role="status"></div>
@@ -222,7 +228,6 @@
             }
         });
 
-        // Remove desktop scroll button on mobile
         if (window.innerWidth < 768) {
             document.getElementById('scrollTopDesktop')?.remove();
         }

@@ -52,8 +52,8 @@ class AnnouncementService extends CrudService
              $data['created_user_id'] = auth()->user()->id;
 
             $data['subject_type'] = 'App\\Models\\' . ucfirst($data['subject_type']);
-            DB::commit();
             $this->announcementRepository->create($data);
+            DB::commit();
 
             return redirect()->back()->with('swal', AnnouncementSwalMessages::createSuccess()->toArray());
         } catch (\Throwable $th) {
@@ -61,6 +61,26 @@ class AnnouncementService extends CrudService
             DB::rollBack();
             Log::error($th);
             return redirect()->back()->with('swal', AnnouncementSwalMessages::createError()->toArray());
+        }
+    }
+
+    public function update(array $data, string $id): bool
+    {
+        try {
+            DB::beginTransaction();
+             $data['created_user_id'] = auth()->user()->id;
+
+            $data['subject_type'] = 'App\\Models\\' . ucfirst($data['subject_type']);
+            $this->announcementRepository->update($data, $id);
+
+            DB::commit();
+
+            return true;
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+            Log::error($th);
+            return false;
         }
     }
 }

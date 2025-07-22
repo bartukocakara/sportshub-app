@@ -91,7 +91,7 @@ class AnnouncementController extends Controller
     public function update(AnnouncementRequest $request, string $id) : RedirectResponse
     {
         $this->announcementService->update($request->validated(), $id);
-        return redirect()->route('announcements.index')->with('success', 'Announcement updated successfully.');
+        return redirect()->back()->with('success', __('messages.announcement_updated_successfully.'));
     }
 
     /**

@@ -31,94 +31,96 @@
     <div id="kt_app_content_container" class="app-container container-fluid">
         <div class="d-flex flex-row">
             <div class="w-100 flex-lg-row-fluid mx-lg-13">
-                <form method="POST" action="{{ route('announcements.store') }}">
-                        @csrf
-                        <div class="card card-flush mb-10">
-                            <div class="card-header justify-content-start align-items-center pt-4">
-                                <div class="symbol symbol-45px me-3">
-                                    @if(auth()->user()->avatar)
-                                        <img src="{{ auth()->user()->avatar }}" alt="user" />
-                                    @else
-                                        <div class="symbol-label bg-primary text-white fw-bold d-flex align-items-center justify-content-center rounded-circle" style="width: 45px; height: 45px;">
-                                            {{ strtoupper(mb_substr(auth()->user()->first_name, 0, 1)) }}
+                    @auth
+                        <form method="POST" action="{{ route('announcements.store') }}">
+                            @csrf
+                            <div class="card card-flush mb-10">
+                                <div class="card-header justify-content-start align-items-center pt-4">
+                                    <div class="symbol symbol-45px me-3">
+                                        @if(auth()->user()->avatar)
+                                            <img src="{{ auth()->user()->avatar }}" alt="user" />
+                                        @else
+                                            <div class="symbol-label bg-primary text-white fw-bold d-flex align-items-center justify-content-center rounded-circle" style="width: 45px; height: 45px;">
+                                                {{ strtoupper(mb_substr(auth()->user()->first_name, 0, 1)) }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <span class="text-gray-600 fw-semibold fs-6">
+                                        {{ __('messages.whats_on_your_mind', ['name' => auth()->user()->first_name ?? '']) }}
+                                    </span>
+                                </div>
+                                <div class="card-body pt-3 pb-0 border">
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label for="sport_type_id" class="form-label fw-bold">
+                                                <i class="bi bi-trophy-fill me-2 text-primary"></i> {{ __('messages.sport_type') }}
+                                            </label>
+                                            <select name="sport_type_id" id="sport_type_id" class="form-select select2 @error('sport_type_id') is-invalid @enderror" required>
+                                                <option disabled selected>{{ __('messages.select_sport_type') }}</option>
+                                                @foreach($datas['sport_types'] as $sportType)
+                                                    <option value="{{ $sportType->id }}" {{ old('sport_type_id') == $sportType->id ? 'selected' : '' }}>{{ $sportType->title }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('sport_type_id')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
-                                    @endif
-                                </div>
-                                <span class="text-gray-600 fw-semibold fs-6">
-                                    {{ __('messages.whats_on_your_mind', ['name' => auth()->user()->first_name ?? '']) }}
-                                </span>
-                            </div>
-                            <div class="card-body pt-3 pb-0 border">
-                                <div class="row g-3">
-                                    <div class="col-12">
-                                        <label for="sport_type_id" class="form-label fw-bold">
-                                            <i class="bi bi-trophy-fill me-2 text-primary"></i> {{ __('messages.sport_type') }}
+                                        <div class="col-12">
+                                            <label for="type" class="form-label fw-bold">
+                                                <i class="bi bi-person-plus-fill me-2 text-primary"></i> {{ __('messages.type') }}
+                                            </label>
+                                            <select name="type" id="type" class="form-select select2 @error('type') is-invalid @enderror" required>
+                                                <option disabled selected>{{ __('messages.select_type') }}</option>
+                                                @foreach ($datas['announcement_types'] as $announcementType)
+                                                    <option value="{{ $announcementType->value  }}" {{ old('type') == 'participant' ? 'selected' : '' }}>{{ $announcementType->description_tr }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('type')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="subject_type" value="User">
+                                    <input type="hidden" name="subject_id" value="{{ auth()->user()->id }}">
+                                    <div class="mt-4">
+                                        <label for="title" class="form-label fw-bold">
+                                            <i class="bi bi-type me-2 text-primary"></i> {{ __('messages.title') }}
                                         </label>
-                                        <select name="sport_type_id" id="sport_type_id" class="form-select select2 @error('sport_type_id') is-invalid @enderror" required>
-                                            <option disabled selected>{{ __('messages.select_sport_type') }}</option>
-                                            @foreach($datas['sport_types'] as $sportType)
-                                                <option value="{{ $sportType->id }}" {{ old('sport_type_id') == $sportType->id ? 'selected' : '' }}>{{ $sportType->title }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('sport_type_id')
+                                        <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror"
+                                            value="{{ old('title') }}" required minlength="3" maxlength="255">
+                                        @error('title')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="col-12">
-                                        <label for="type" class="form-label fw-bold">
-                                            <i class="bi bi-person-plus-fill me-2 text-primary"></i> {{ __('messages.type') }}
+                                    <div class="mt-4">
+                                        <label for="message" class="form-label fw-bold">
+                                            <i class="bi bi-chat-text me-2 text-primary"></i> {{ __('messages.message') }}
                                         </label>
-                                        <select name="type" id="type" class="form-select select2 @error('type') is-invalid @enderror" required>
-                                            <option disabled selected>{{ __('messages.select_type') }}</option>
-                                            @foreach ($datas['announcement_types'] as $announcementType)
-                                                <option value="{{ $announcementType->value  }}" {{ old('type') == 'participant' ? 'selected' : '' }}>{{ $announcementType->description_tr }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('type')
+                                        <textarea
+                                            class="form-control @error('message') is-invalid @enderror"
+                                            id="message"
+                                            name="message"
+                                            rows="3"
+                                            placeholder="{{ __('messages.write_your_announcement') }}"
+                                            required>{{ old('message') }}</textarea>
+                                        @error('message')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
-                                <input type="hidden" name="subject_type" value="User">
-                                <input type="hidden" name="subject_id" value="{{ auth()->user()->id }}">
-                                <div class="mt-4">
-                                    <label for="title" class="form-label fw-bold">
-                                        <i class="bi bi-type me-2 text-primary"></i> {{ __('messages.title') }}
-                                    </label>
-                                    <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror"
-                                        value="{{ old('title') }}" required minlength="3" maxlength="255">
-                                    @error('title')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="mt-4">
-                                    <label for="message" class="form-label fw-bold">
-                                        <i class="bi bi-chat-text me-2 text-primary"></i> {{ __('messages.message') }}
-                                    </label>
-                                    <textarea
-                                        class="form-control @error('message') is-invalid @enderror"
-                                        id="message"
-                                        name="message"
-                                        rows="3"
-                                        placeholder="{{ __('messages.write_your_announcement') }}"
-                                        required>{{ old('message') }}</textarea>
-                                    @error('message')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                <div class="card-footer d-flex justify-content-end pt-3">
+                                    <button type="submit" class="btn btn-sm btn-primary" id="kt_social_feeds_post_btn">
+                                        <span class="indicator-label">
+                                            <i class="bi bi-send-fill me-1"></i> {{ __('messages.post') }}
+                                        </span>
+                                        <span class="indicator-progress">
+                                            {{ __('messages.please_wait') }} <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                        </span>
+                                    </button>
                                 </div>
                             </div>
-                            <div class="card-footer d-flex justify-content-end pt-3">
-                                <button type="submit" class="btn btn-sm btn-primary" id="kt_social_feeds_post_btn">
-                                    <span class="indicator-label">
-                                        <i class="bi bi-send-fill me-1"></i> {{ __('messages.post') }}
-                                    </span>
-                                    <span class="indicator-progress">
-                                        {{ __('messages.please_wait') }} <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                    </span>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    @endauth
                     <div class="mb-10" id="kt_social_feeds_posts">
                         <x-filter :clearRoute="route(Route::currentRouteName())" />
                         @php
@@ -151,59 +153,25 @@
                 <div class="card mb-5 mb-xl-8">
                     <div class="card-header border-0 pt-5">
                         <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bold text-gray-900">Suggestions for you</span>
+                            <span class="card-label fw-bold text-gray-900">{{ __('messages.suggestions_for_you') }}</span>
 
                             <span class="text-muted mt-1 fw-semibold fs-7">8k social visitors</span>
                         </h3>
-
                         <div class="card-toolbar">
                             <button
                                 class="btn btn-icon btn-color-gray-500 btn-active-color-primary justify-content-end"
                                 data-kt-menu-trigger="click"
                                 data-kt-menu-placement="bottom-end"
-                                data-kt-menu-overflow="true"
-                            >
+                                data-kt-menu-overflow="true">
                                 <i class="ki-duotone ki-dots-square fs-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
                             </button>
-
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px" data-kt-menu="true">
                                 <div class="menu-item px-3">
-                                    <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">Quick Actions</div>
+                                    <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">{{ __('messages.actions') }}</div>
                                 </div>
-
                                 <div class="separator mb-3 opacity-75"></div>
-
                                 <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3"> New Ticket </a>
-                                </div>
-
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3"> New Customer </a>
-                                </div>
-
-                                <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
-                                    <a href="#" class="menu-link px-3">
-                                        <span class="menu-title">New Group</span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-
-                                    <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                        <div class="menu-item px-3">
-                                            <a href="#" class="menu-link px-3"> Admin Group </a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3"> New Contact </a>
-                                </div>
-
-                                <div class="separator mt-3 opacity-75"></div>
-
-                                <div class="menu-item px-3">
-                                    <div class="menu-content px-3 py-3">
-                                        <a class="btn btn-primary btn-sm px-4" href="#"> Generate Reports </a>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -213,9 +181,7 @@
                             <div class="symbol symbol-40px me-5">
                                 <img src="/assets/media/avatars/300-11.jpg" class="h-50 align-self-center" alt="" />
                             </div>
-
                             <div class="d-flex align-items-center flex-row-fluid flex-wrap">
-                                <!--begin:Author-->
                                 <div class="flex-grow-1 me-2">
                                     <a href="/pages/user-profile/overview.html" class="text-gray-800 text-hover-primary fs-6 fw-bold">Jacob Jones </a>
 

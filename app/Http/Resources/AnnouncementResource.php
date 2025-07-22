@@ -27,23 +27,25 @@ class AnnouncementResource extends JsonResource
         // Türkçe tarih formatlama
         $createdAt = $this->created_at?->copy()->locale('tr');
         $updatedAt = $this->updated_at?->copy()->locale('tr');
+        
         return [
-            'id'                        => $this->id,
-            'sport_type_id'             => $this->sport_type_id,
-            'sport_type_name'           => $this->subject?->sportType?->title,
-            'subject_type'              => lcfirst(class_basename($this->subject_type)),
-            'subject_id'                => $this->subject_id,
-            'title'                     => $this->title,
-            'message'                   => $this->message,
-            'type_definition'           => $this->getSubjectTypeDefinition(),
-            'created_at'                => $this->created_at?->toISOString(),
-            'created_at_readable'       => $this->created_at?->format('d M Y, H:i'),
-            'created_at_diff'           => $createdAt?->diffForHumans(),
-            'created_at_locale'         => $createdAt?->translatedFormat('d F Y l - H:i'), // Örn: 21 Temmuz 2025 Pazartesi - 13:45
-            'updated_at'                => $this->updated_at?->toISOString(),
-            'updated_at_locale'         => $updatedAt?->translatedFormat('d F Y l - H:i'),
-            'created_user_id'           => $this->created_user_id,
-            'created_by'                => $creator,
+            'id'                    => $this->id,
+            'sport_type_id'         => $this->sport_type_id,
+            'sport_type_name'       => $this->subject?->sportType?->title,
+            'subject_type'          => lcfirst(class_basename($this->subject_type)),
+            'subject_id'            => $this->subject_id,
+            'title'                 => $this->title,
+            'message'               => $this->message,
+            'type'                  => $this->type,
+            'type_definition'       => $this->getSubjectTypeDefinition(),
+            'created_at'            => $this->created_at?->toISOString(),
+            'created_at_readable'   => $this->created_at?->format('d M Y, H:i'),
+            'created_at_diff'       => $createdAt?->diffForHumans(),
+            'created_at_locale'     => $createdAt?->translatedFormat('d F Y l - H:i'), // Örn: 21 Temmuz 2025 Pazartesi - 13:45
+            'updated_at'            => $this->updated_at?->toISOString(),
+            'updated_at_locale'     => $updatedAt?->translatedFormat('d F Y l - H:i'),
+            'created_user_id'       => $this->created_user_id,
+            'created_by'            => $creator,
         ];
     }
 
