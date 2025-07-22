@@ -23,7 +23,6 @@
                 </ul>
                 <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bolder fs-1 lh-0">{{ __('messages.announcements') }}</h1>
             </div>
-            <a href="#" class="btn btn-sm btn-success ms-3 px-4 py-3" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app"> {{ __('messages.create_announcement') }} </a>
         </div>
     </div>
 </div>

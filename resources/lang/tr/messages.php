@@ -444,4 +444,5 @@ return [
     'subject' => 'Konu',
     'delete_announcement_message' => 'Duyuruyu silmek istediğinize emin misiniz?',
     'delete_announcement_title' => 'Duyuru Sil',
+    'user' => 'Kullanıcı',
 ];
