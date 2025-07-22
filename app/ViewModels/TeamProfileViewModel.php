@@ -4,6 +4,7 @@ namespace App\ViewModels;
 
 use App\Enums\UserTeamStatusEnum;
 use App\Http\Resources\AnnouncementResource;
+use App\Http\Resources\DefinitionResource;
 use App\Http\Resources\TeamResource;
 use App\Models\Announcement;
 use App\Models\Definition;
@@ -41,7 +42,7 @@ class TeamProfileViewModel
             'is_following' => $this->accessService->isFollowing($user, $this->team),
             'follow_id' => $this->accessService->getFollowId($user, $this->team),
             'announcements' => AnnouncementResource::collection($announcements)->response()->getData(true),
-            'announcement_types' => AnnouncementResource::collection($definitions),
+            'announcement_types' => DefinitionResource::collection($definitions),
         ];
     }
 }

@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <div id="kt_app_content" class="app-content flex-column-fluid">
+        <div id="kt_app_content" class="app-content flex-column-fluid pb-0">
             <div id="kt_app_content_container" class="app-container container-fluid">
                 @include('components.team.show.details')
             </div>
@@ -60,9 +60,7 @@
                                         {{ __('messages.whats_on_your_mind', ['name' => auth()->user()->first_name ?? '']) }}
                                     </span>
                                 </div>
-
                                 <div class="card-body pt-3 pb-0 border">
-
                                     <div class="row g-3">
                                         <div class="col-12">
                                             <label for="sport_type_id" class="form-label fw-bold">
@@ -78,7 +76,6 @@
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
-
                                         <div class="col-12">
                                             <label for="type" class="form-label fw-bold">
                                                 <i class="bi bi-person-plus-fill me-2 text-primary"></i> {{ __('messages.type') }}
@@ -94,7 +91,6 @@
                                             @enderror
                                         </div>
                                     </div>
-
                                     {{-- Hidden Fields --}}
                                     <input type="hidden" name="subject_type" value="Team">
                                     <input type="hidden" name="subject_id" value="{{ $datas['team']['id'] }}">
@@ -142,7 +138,7 @@
                             </div>
                         </form>
                     @endif
-
+                    @isset($datas['announcements'])
                         <div class="mb-10" id="kt_social_feeds_posts">
                             <div>
                                 <h2 class="fw-bold fs-2 text-gray-900">{{ __('messages.announcements') }}</h2>
@@ -161,7 +157,7 @@
                             </div>
                             @endif
                         </div>
-                    </div>
+                    @endisset
                 </div>
             </div>
         </div>
@@ -195,11 +191,9 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Initialize mobile buttons
         if (typeof initializeMobileButtons === 'function') {
             initializeMobileButtons();
         }
-        // Initialize LoadMoreController for announcements
         @isset($datas['announcements'])
         const announcementLoadMore = new LoadMoreController({
             apiUrl: '{{ route('announcements') }}',

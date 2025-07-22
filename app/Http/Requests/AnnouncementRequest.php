@@ -17,10 +17,11 @@ class AnnouncementRequest extends FormRequest
     {
         $subjectType = $this->input('subject_type'); // Formdan gelen değer
         $groupKey = match ($subjectType) {
-            'Court'       => 'court_announcement_type',
-            'Team'        => 'team_announcement_type',
-            'Matches'     => 'match_announcement_type',
-            'Reservation' => 'reservation_announcement_type',
+            'Court'         => 'court_announcement_type',
+            'Team'          => 'team_announcement_type',
+            'Matches'       => 'match_announcement_type',
+            'Reservation'   => 'reservation_announcement_type',
+            'User'          => 'user_announcement_type',
             default       => null,
         };
 
@@ -31,7 +32,7 @@ class AnnouncementRequest extends FormRequest
         return [
             'sport_type_id'   => ['required', 'exists:sport_types,id'],
             'type'            => ['required', 'string', Rule::in($typeValues)],
-            'subject_type'    => ['required', 'string', 'in:Team,Matches,Reservation,Court'],
+            'subject_type'    => ['required', 'string', 'in:Team,Matches,Reservation,Court,User'],
             'subject_id'      => ['required', 'uuid'],
             'title'           => ['required', 'string', 'max:255'],
             'message'         => ['required', 'string', 'max:5000'],

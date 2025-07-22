@@ -175,6 +175,7 @@ return [
         'customer_name' => 'Customer name',
         'customer_phone' => 'Customer phone',
         'customer_email' => 'Customer email',
+        'type' => 'Type',
     ],
 
 ];

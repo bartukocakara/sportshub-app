@@ -32,63 +32,123 @@
     <div id="kt_app_content_container" class="app-container container-fluid">
         <div class="d-flex flex-row">
             <div class="w-100 flex-lg-row-fluid mx-lg-13">
-                <div class="card card-flush mb-10">
-                    <div class="card-header justify-content-start align-items-center pt-4">
-                        <div class="symbol symbol-45px me-5">
-                            <img src="/assets/media/avatars/300-3.jpg" class="" alt="" />
+                <form method="POST" action="{{ route('announcements.store') }}">
+                        @csrf
+                        <div class="card card-flush mb-10">
+                            <div class="card-header justify-content-start align-items-center pt-4">
+                                <div class="symbol symbol-45px me-3">
+                                    @if(auth()->user()->avatar)
+                                        <img src="{{ auth()->user()->avatar }}" alt="user" />
+                                    @else
+                                        <div class="symbol-label bg-primary text-white fw-bold d-flex align-items-center justify-content-center rounded-circle" style="width: 45px; height: 45px;">
+                                            {{ strtoupper(mb_substr(auth()->user()->first_name, 0, 1)) }}
+                                        </div>
+                                    @endif
+                                </div>
+                                <span class="text-gray-600 fw-semibold fs-6">
+                                    {{ __('messages.whats_on_your_mind', ['name' => auth()->user()->first_name ?? '']) }}
+                                </span>
+                            </div>
+                            <div class="card-body pt-3 pb-0 border">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label for="sport_type_id" class="form-label fw-bold">
+                                            <i class="bi bi-trophy-fill me-2 text-primary"></i> {{ __('messages.sport_type') }}
+                                        </label>
+                                        <select name="sport_type_id" id="sport_type_id" class="form-select select2 @error('sport_type_id') is-invalid @enderror" required>
+                                            <option disabled selected>{{ __('messages.select_sport_type') }}</option>
+                                            @foreach($datas['sport_types'] as $sportType)
+                                                <option value="{{ $sportType->id }}" {{ old('sport_type_id') == $sportType->id ? 'selected' : '' }}>{{ $sportType->title }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('sport_type_id')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="type" class="form-label fw-bold">
+                                            <i class="bi bi-person-plus-fill me-2 text-primary"></i> {{ __('messages.type') }}
+                                        </label>
+                                        <select name="type" id="type" class="form-select select2 @error('type') is-invalid @enderror" required>
+                                            <option disabled selected>{{ __('messages.select_type') }}</option>
+                                            @foreach ($datas['announcement_types'] as $announcementType)
+                                                <option value="{{ $announcementType->value  }}" {{ old('type') == 'participant' ? 'selected' : '' }}>{{ $announcementType->description_tr }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('type')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <input type="hidden" name="subject_type" value="User">
+                                <input type="hidden" name="subject_id" value="{{ auth()->user()->id }}">
+                                <div class="mt-4">
+                                    <label for="title" class="form-label fw-bold">
+                                        <i class="bi bi-type me-2 text-primary"></i> {{ __('messages.title') }}
+                                    </label>
+                                    <input type="text" name="title" id="title" class="form-control @error('title') is-invalid @enderror"
+                                        value="{{ old('title') }}" required minlength="3" maxlength="255">
+                                    @error('title')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="mt-4">
+                                    <label for="message" class="form-label fw-bold">
+                                        <i class="bi bi-chat-text me-2 text-primary"></i> {{ __('messages.message') }}
+                                    </label>
+                                    <textarea
+                                        class="form-control @error('message') is-invalid @enderror"
+                                        id="message"
+                                        name="message"
+                                        rows="3"
+                                        placeholder="{{ __('messages.write_your_announcement') }}"
+                                        required>{{ old('message') }}</textarea>
+                                    @error('message')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="card-footer d-flex justify-content-end pt-3">
+                                <button type="submit" class="btn btn-sm btn-primary" id="kt_social_feeds_post_btn">
+                                    <span class="indicator-label">
+                                        <i class="bi bi-send-fill me-1"></i> {{ __('messages.post') }}
+                                    </span>
+                                    <span class="indicator-progress">
+                                        {{ __('messages.please_wait') }} <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                    </span>
+                                </button>
+                            </div>
                         </div>
-                        <span class="text-gray-500 fw-semibold fs-6">{{ __('messages.whats_on_your_mind', ['name' => 'Bartu']) }}</span>
-                    </div>
-                    <div class="card-body pt-2 pb-0 border">
-                        <textarea
-                            class="form-control bg-transparent border-0 px-0"
-                            id="kt_social_feeds_post_input"
-                            name="message"
-                            data-kt-autosize="true"
-                            rows="1"
-                            placeholder="Type your message..."
-                            data-kt-initialized="1"
-                            style="overflow: hidden; overflow-wrap: break-word; resize: none; text-align: start; height: 63px"
-                        >
-                        </textarea>
-                    </div>
-                    <div class="card-footer d-flex justify-content-end pt-0">
-                        <a href="/pages/blog/post.html" class="btn btn-sm btn-primary" id="kt_social_feeds_post_btn">
-                            <span class="indicator-label"> Post</span>
+                    </form>
+                    <div class="mb-10" id="kt_social_feeds_posts">
+                        <x-filter :clearRoute="route(Route::currentRouteName())" />
+                        @php
+                            $cityTitles = collect($datas['cities'] ?? [])->pluck('title', 'id')->toArray();
+                            $sportTypeTitles = collect($datas['sport_types'] ?? [])->pluck('title', 'id')->toArray();
+                        @endphp
 
-                            <span class="indicator-progress"> Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span> </span>
-                        </a>
+                        <x-filter-tags
+                            :excludedFilters="['page', 'per_page']"
+                            :titleMaps="[
+                                'city_id' => $cityTitles,
+                                'sport_type_id' => $sportTypeTitles,
+                            ]"
+                            translationsPrefix="messages"
+                        />
+                        @include('components.pagination.default', ['data' => $datas['announcements']])
+                        @include('components.announcements.card-list', ['announcements' => $datas['announcements']['data']])
                     </div>
                 </div>
-                <div class="mb-10" id="kt_social_feeds_posts">
-                    <x-filter :clearRoute="route(Route::currentRouteName())" />
-                    @php
-                        $cityTitles = collect($datas['cities'] ?? [])->pluck('title', 'id')->toArray();
-                        $sportTypeTitles = collect($datas['sport_types'] ?? [])->pluck('title', 'id')->toArray();
-                    @endphp
-
-                    <x-filter-tags
-                        :excludedFilters="['page', 'per_page']"
-                        :titleMaps="[
-                            'city_id' => $cityTitles,
-                            'sport_type_id' => $sportTypeTitles,
-                        ]"
-                        translationsPrefix="messages"
-                    />
-                    @include('components.pagination.default', ['data' => $datas['announcements']])
-                    @include('components.announcements.card-list', ['announcements' => $datas['announcements']['data']])
-                </div>
-            </div>
-            <div
-                class="d-lg-flex flex-column flex-lg-row-auto w-lg-325px"
-                data-kt-drawer="true"
-                data-kt-drawer-name="end-sidebar"
-                data-kt-drawer-activate="{default: true, lg: false}"
-                data-kt-drawer-overlay="true"
-                data-kt-drawer-width="{default:'200px', '250px': '300px'}"
-                data-kt-drawer-direction="end"
-                data-kt-drawer-toggle="#kt_social_end_sidebar_toggle"
-            >
+                <div
+                    class="d-lg-flex flex-column flex-lg-row-auto w-lg-325px"
+                    data-kt-drawer="true"
+                    data-kt-drawer-name="end-sidebar"
+                    data-kt-drawer-activate="{default: true, lg: false}"
+                    data-kt-drawer-overlay="true"
+                    data-kt-drawer-width="{default:'200px', '250px': '300px'}"
+                    data-kt-drawer-direction="end"
+                    data-kt-drawer-toggle="#kt_social_end_sidebar_toggle"
+                >
                 <div class="card mb-5 mb-xl-8">
                     <div class="card-header border-0 pt-5">
                         <h3 class="card-title align-items-start flex-column">
