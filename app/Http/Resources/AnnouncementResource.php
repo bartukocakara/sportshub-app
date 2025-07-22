@@ -30,7 +30,8 @@ class AnnouncementResource extends JsonResource
         return [
             'id'                        => $this->id,
             'sport_type_id'             => $this->sport_type_id,
-            'subject_type'              => $this->subject_type,
+            'sport_type_name'           => $this->subject?->sportType?->title,
+            'subject_type'              => lcfirst(class_basename($this->subject_type)),
             'subject_id'                => $this->subject_id,
             'title'                     => $this->title,
             'message'                   => $this->message,
@@ -41,6 +42,7 @@ class AnnouncementResource extends JsonResource
             'created_at_locale'         => $createdAt?->translatedFormat('d F Y l - H:i'), // Örn: 21 Temmuz 2025 Pazartesi - 13:45
             'updated_at'                => $this->updated_at?->toISOString(),
             'updated_at_locale'         => $updatedAt?->translatedFormat('d F Y l - H:i'),
+            'created_user_id'           => $this->created_user_id,
             'created_by'                => $creator,
         ];
     }

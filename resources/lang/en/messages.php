@@ -419,4 +419,6 @@ return [
     'select_type' => 'Select Type',
     'message' => 'Message',
     'subject' => 'Subject',
+    'delete_announcement_message' => 'Are you sure you want to delete this announcement?',
+    'delete_announcement_title' => 'Delete Announcement',
 ];

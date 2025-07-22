@@ -441,5 +441,7 @@ return [
     'team' => 'Takım',
     'select_type' => 'Tipi Seçiniz',
     'message' => 'Mesaj',
-    'subject' => 'Konu'
+    'subject' => 'Konu',
+    'delete_announcement_message' => 'Duyuruyu silmek istediğinize emin misiniz?',
+    'delete_announcement_title' => 'Duyuru Sil',
 ];

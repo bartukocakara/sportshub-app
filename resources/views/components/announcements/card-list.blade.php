@@ -1,22 +1,20 @@
-@props([
-    'announcements' => [],
-])
-
-@foreach ($announcements as $key => $announcement)
+@props([ 'announcements' => [], ]) @foreach ($announcements as $key => $announcement)
+@php
+    $announcementId = $announcement['id'];
+    $modalId = "deleteAnnouncementModal-$announcementId";
+@endphp
 <div class="card card-flush mb-10 shadow-sm">
     <div class="card-header pt-9">
         <div class="d-flex align-items-center">
             <div class="symbol symbol-50px me-5">
-                @php
-                    $avatarPath = $announcement['created_by']['avatar'] ?? null;
-                    $avatarUrl = $avatarPath
-                        ? (Str::startsWith($avatarPath, ['http://', 'https://'])
-                            ? $avatarPath
-                            : asset('storage/' . $avatarPath))
-                        : asset('media/avatar/blank.png'); // varsayılan avatar
-                @endphp
-
+                @php $avatarPath = $announcement['created_by']['avatar'] ?? null; $firstName = $announcement['created_by']['full_name'] ?? ''; $avatarUrl = null; if ($avatarPath) { $avatarUrl = Str::startsWith($avatarPath, ['http://',
+                'https://']) ? $avatarPath : asset('storage/' . $avatarPath); } @endphp @if ($avatarUrl)
                 <img src="{{ $avatarUrl }}" alt="avatar" />
+                @else
+                <div class="avatar-placeholder" style="width: 50px; height: 50px; background-color: #ccc; color: #333; font-weight: bold; font-size: 24px; text-align: center; line-height: 50px; border-radius: 20%; user-select: none;">
+                    {{ Str::upper(mb_substr($firstName, 0, 1)) }}
+                </div>
+                @endif
             </div>
             <div class="flex-grow-1">
                 <a href="#" class="text-gray-800 text-hover-primary fs-4 fw-bold">
@@ -27,15 +25,14 @@
                 </span>
             </div>
         </div>
+        @php
+            $isCreator = isset($announcement['created_user_id']) && $announcement['created_user_id'] === auth()->id();
+        @endphp
+        @if($isCreator)
         <div class="card-toolbar">
             <div class="m-0">
-                <button class="btn btn-icon btn-color-gray-500 btn-active-color-primary me-n4"
-                    data-kt-menu-trigger="click"
-                    data-kt-menu-placement="bottom-end"
-                    data-kt-menu-overflow="true">
-                    <i class="ki-duotone ki-dots-square fs-1">
-                        <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span>
-                    </i>
+                <button class="btn btn-icon btn-color-gray-500 btn-active-color-primary me-n4" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-overflow="true">
+                    <i class="ki-duotone ki-dots-square fs-1"> <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span> </i>
                 </button>
                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px" data-kt-menu="true">
                     <div class="menu-item px-3">
@@ -43,49 +40,47 @@
                     </div>
                     <div class="separator mb-3 opacity-75"></div>
                     <div class="menu-item px-3">
-                        <a href="#" class="menu-link px-3"> New Ticket </a>
-                    </div>
-                    <div class="menu-item px-3" data-kt-menu-triggerf="hover" data-kt-menu-placement="right-start">
-                        <a href="#" class="menu-link px-3">
-                            <span class="menu-title">New Group</span>
-                            <span class="menu-arrow"></span>
+                        <a class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#updateAnnouncementModal" data-id="{{ $announcement['id'] }}" data-title="{{ $announcement['title'] }}" data-message="{{ $announcement['message'] }}">
+                            {{ __('messages.edit') }}
                         </a>
-                        <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                            <div class="menu-item px-3">
-                                <a href="#" class="menu-link px-3"> Admin Group </a>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="menu-item px-3">
+                        <a class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#{{ $modalId }}" data-id="{{ $announcement['id'] }}">
+                            {{ __('messages.delete') }}
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
+        @endif
     </div>
 
     <div class="card-body">
         <div class="badge badge-light-primary mb-2">
             {{ $announcement['type_definition']['description_tr'] }}
         </div>
-
         <div class="fs-5 fw-bold text-gray-800 mb-2">
             {{ $announcement['title'] }}
         </div>
-
         <div class="fs-6 fw-normal text-gray-700 mb-5">
             {{ $announcement['message'] }}
         </div>
-
         <div class="text-muted small">
             <strong>{{ __('messages.subject') }}:</strong>
-            {{ class_basename($announcement['subject_type']) }} #{{ $announcement['subject_id'] }}
+            {{ __('messages.' . class_basename($announcement['subject_type'])) }}
         </div>
         @if (!empty($announcement['sport_type_name']))
-        <div class="text-muted small mt-1">
-            <strong>Spor Türü:</strong> {{ $announcement['sport_type_name'] }}
-        </div>
+        <div class="text-muted small mt-1"><strong>{{ __('messages.sport_type') }}:</strong> {{ $announcement['sport_type_name'] }}</div>
         @endif
     </div>
-
-    <div class="card-footer pt-0">
-    </div>
 </div>
+<x-modals.delete-confirmation-modal
+    id="{{  $modalId }}"
+    :route="route('announcements.destroy', ['announcement' => $announcement['id']])"
+    :title="__('messages.delete_announcement_title')"
+    :message="__('messages.delete_announcement_message')"
+    icon="fas fa-trash"
+    color="secondary"
+    emoji="🗑️"
+/>
 @endforeach

@@ -64,7 +64,7 @@
             </div>
             <!--end::Toolbar container-->
         </div>
-        <!--end::Toolbar-->
+
 
         <!--begin::Content-->
         <div id="kt_app_content" class="app-content flex-column-fluid">
@@ -98,88 +98,74 @@
 
                                             <!--begin::Menu 2-->
                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px" data-kt-menu="true">
-                                                <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
                                                     <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">Quick Actions</div>
                                                 </div>
-                                                <!--end::Menu item-->
+
 
                                                 <!--begin::Menu separator-->
                                                 <div class="separator mb-3 opacity-75"></div>
                                                 <!--end::Menu separator-->
 
-                                                <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
                                                     <a href="#" class="menu-link px-3"> New Ticket </a>
                                                 </div>
-                                                <!--end::Menu item-->
 
-                                                <!--begin::Menu item-->
+
                                                 <div class="menu-item px-3">
                                                     <a href="#" class="menu-link px-3"> New Customer </a>
                                                 </div>
-                                                <!--end::Menu item-->
 
-                                                <!--begin::Menu item-->
+
                                                 <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
-                                                    <!--begin::Menu item-->
                                                     <a href="#" class="menu-link px-3">
                                                         <span class="menu-title">New Group</span>
                                                         <span class="menu-arrow"></span>
                                                     </a>
-                                                    <!--end::Menu item-->
+
 
                                                     <!--begin::Menu sub-->
                                                     <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                        <!--begin::Menu item-->
                                                         <div class="menu-item px-3">
                                                             <a href="#" class="menu-link px-3"> Admin Group </a>
                                                         </div>
-                                                        <!--end::Menu item-->
 
-                                                        <!--begin::Menu item-->
+
                                                         <div class="menu-item px-3">
                                                             <a href="#" class="menu-link px-3"> Staff Group </a>
                                                         </div>
-                                                        <!--end::Menu item-->
 
-                                                        <!--begin::Menu item-->
+
                                                         <div class="menu-item px-3">
                                                             <a href="#" class="menu-link px-3"> Member Group </a>
                                                         </div>
-                                                        <!--end::Menu item-->
-                                                    </div>
-                                                    <!--end::Menu sub-->
-                                                </div>
-                                                <!--end::Menu item-->
 
-                                                <!--begin::Menu item-->
+                                                    </div>
+
+                                                </div>
+
+
                                                 <div class="menu-item px-3">
                                                     <a href="#" class="menu-link px-3"> New Contact </a>
                                                 </div>
-                                                <!--end::Menu item-->
+
 
                                                 <!--begin::Menu separator-->
                                                 <div class="separator mt-3 opacity-75"></div>
                                                 <!--end::Menu separator-->
 
-                                                <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
                                                     <div class="menu-content px-3 py-3">
                                                         <a class="btn btn-primary btn-sm px-4" href="#"> Generate Reports </a>
                                                     </div>
                                                 </div>
-                                                <!--end::Menu item-->
+
                                             </div>
-                                            <!--end::Menu 2-->
 
-                                            <!--end::Menu-->
                                         </div>
-                                        <!--end::Toolbar-->
-                                    </div>
-                                    <!--end::Header-->
 
-                                    <!--begin::Body-->
+                                    </div>
+
                                     <div class="card-body pt-5">
                                         <!--begin::Item-->
                                         <div class="d-flex flex-stack">
@@ -279,13 +265,11 @@
                                                 </div>
                                                 <!--end::Heading-->
 
-                                                <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
                                                     <a href="#" class="menu-link px-3"> Create Invoice </a>
                                                 </div>
-                                                <!--end::Menu item-->
 
-                                                <!--begin::Menu item-->
+
                                                 <div class="menu-item px-3">
                                                     <a href="#" class="menu-link flex-stack px-3">
                                                         Create Payment
@@ -295,15 +279,13 @@
                                                         </span>
                                                     </a>
                                                 </div>
-                                                <!--end::Menu item-->
 
-                                                <!--begin::Menu item-->
+
                                                 <div class="menu-item px-3">
                                                     <a href="#" class="menu-link px-3"> Generate Bill </a>
                                                 </div>
-                                                <!--end::Menu item-->
 
-                                                <!--begin::Menu item-->
+
                                                 <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-end">
                                                     <a href="#" class="menu-link px-3">
                                                         <span class="menu-title">Subscription</span>
@@ -312,29 +294,25 @@
 
                                                     <!--begin::Menu sub-->
                                                     <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                        <!--begin::Menu item-->
                                                         <div class="menu-item px-3">
                                                             <a href="#" class="menu-link px-3"> Plans </a>
                                                         </div>
-                                                        <!--end::Menu item-->
 
-                                                        <!--begin::Menu item-->
+
                                                         <div class="menu-item px-3">
                                                             <a href="#" class="menu-link px-3"> Billing </a>
                                                         </div>
-                                                        <!--end::Menu item-->
 
-                                                        <!--begin::Menu item-->
+
                                                         <div class="menu-item px-3">
                                                             <a href="#" class="menu-link px-3"> Statements </a>
                                                         </div>
-                                                        <!--end::Menu item-->
+
 
                                                         <!--begin::Menu separator-->
                                                         <div class="separator my-2"></div>
                                                         <!--end::Menu separator-->
 
-                                                        <!--begin::Menu item-->
                                                         <div class="menu-item px-3">
                                                             <div class="menu-content px-3">
                                                                 <!--begin::Switch-->
@@ -350,27 +328,23 @@
                                                                 <!--end::Switch-->
                                                             </div>
                                                         </div>
-                                                        <!--end::Menu item-->
-                                                    </div>
-                                                    <!--end::Menu sub-->
-                                                </div>
-                                                <!--end::Menu item-->
 
-                                                <!--begin::Menu item-->
+                                                    </div>
+
+                                                </div>
+
+
                                                 <div class="menu-item px-3 my-1">
                                                     <a href="#" class="menu-link px-3"> Settings </a>
                                                 </div>
-                                                <!--end::Menu item-->
+
                                             </div>
                                             <!--end::Menu 3-->
 
-                                            <!--end::Menu-->
                                         </div>
-                                        <!--end::Toolbar-->
-                                    </div>
-                                    <!--end::Header-->
 
-                                    <!--begin::Body-->
+                                    </div>
+
                                     <div class="card-body pt-5">
                                         <!--begin::Item-->
                                         <div class="d-flex flex-stack">
@@ -449,88 +423,64 @@
 
                                     <!--begin::Menu 2-->
                                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px" data-kt-menu="true">
-                                        <!--begin::Menu item-->
                                         <div class="menu-item px-3">
                                             <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">Quick Actions</div>
                                         </div>
-                                        <!--end::Menu item-->
+
 
                                         <!--begin::Menu separator-->
                                         <div class="separator mb-3 opacity-75"></div>
                                         <!--end::Menu separator-->
 
-                                        <!--begin::Menu item-->
                                         <div class="menu-item px-3">
                                             <a href="#" class="menu-link px-3"> New Ticket </a>
                                         </div>
-                                        <!--end::Menu item-->
 
-                                        <!--begin::Menu item-->
+
                                         <div class="menu-item px-3">
                                             <a href="#" class="menu-link px-3"> New Customer </a>
                                         </div>
-                                        <!--end::Menu item-->
 
-                                        <!--begin::Menu item-->
+
                                         <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
-                                            <!--begin::Menu item-->
                                             <a href="#" class="menu-link px-3">
                                                 <span class="menu-title">New Group</span>
                                                 <span class="menu-arrow"></span>
                                             </a>
-                                            <!--end::Menu item-->
+
 
                                             <!--begin::Menu sub-->
                                             <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
                                                     <a href="#" class="menu-link px-3"> Admin Group </a>
                                                 </div>
-                                                <!--end::Menu item-->
 
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3"> Staff Group </a>
-                                                </div>
-                                                <!--end::Menu item-->
-
-                                                <!--begin::Menu item-->
-                                                <div class="menu-item px-3">
-                                                    <a href="#" class="menu-link px-3"> Member Group </a>
-                                                </div>
-                                                <!--end::Menu item-->
                                             </div>
-                                            <!--end::Menu sub-->
-                                        </div>
-                                        <!--end::Menu item-->
 
-                                        <!--begin::Menu item-->
+                                        </div>
+
+
                                         <div class="menu-item px-3">
                                             <a href="#" class="menu-link px-3"> New Contact </a>
                                         </div>
-                                        <!--end::Menu item-->
+
 
                                         <!--begin::Menu separator-->
                                         <div class="separator mt-3 opacity-75"></div>
                                         <!--end::Menu separator-->
 
-                                        <!--begin::Menu item-->
                                         <div class="menu-item px-3">
                                             <div class="menu-content px-3 py-3">
                                                 <a class="btn btn-primary btn-sm px-4" href="#"> Generate Reports </a>
                                             </div>
                                         </div>
-                                        <!--end::Menu item-->
+
                                     </div>
-                                    <!--end::Menu 2-->
 
-                                    <!--end::Menu-->
                                 </div>
-                                <!--end::Toolbar-->
-                            </div>
-                            <!--end::Header-->
 
-                            <!--begin::Body-->
+                            </div>
+
                             <div class="card-body">
                                 <!--begin::Nav-->
                                 <ul class="nav nav-pills nav-pills-custom mb-3" role="tablist">
@@ -991,11 +941,9 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <!--end::Toolbar-->
-                            </div>
-                            <!--end::Header-->
 
-                            <!--begin::Body-->
+                            </div>
+
                             <div class="card-body pt-6">
                                 <!--begin::Tab content-->
                                 <div class="tab-content">
@@ -2576,88 +2524,64 @@
 
                                             <!--begin::Menu 2-->
                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px" data-kt-menu="true">
-                                                <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
                                                     <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">Quick Actions</div>
                                                 </div>
-                                                <!--end::Menu item-->
+
 
                                                 <!--begin::Menu separator-->
                                                 <div class="separator mb-3 opacity-75"></div>
                                                 <!--end::Menu separator-->
 
-                                                <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
                                                     <a href="#" class="menu-link px-3"> New Ticket </a>
                                                 </div>
-                                                <!--end::Menu item-->
 
-                                                <!--begin::Menu item-->
+
                                                 <div class="menu-item px-3">
                                                     <a href="#" class="menu-link px-3"> New Customer </a>
                                                 </div>
-                                                <!--end::Menu item-->
 
-                                                <!--begin::Menu item-->
+
                                                 <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
-                                                    <!--begin::Menu item-->
                                                     <a href="#" class="menu-link px-3">
                                                         <span class="menu-title">New Group</span>
                                                         <span class="menu-arrow"></span>
                                                     </a>
-                                                    <!--end::Menu item-->
+
 
                                                     <!--begin::Menu sub-->
                                                     <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                        <!--begin::Menu item-->
                                                         <div class="menu-item px-3">
                                                             <a href="#" class="menu-link px-3"> Admin Group </a>
                                                         </div>
-                                                        <!--end::Menu item-->
 
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3"> Staff Group </a>
-                                                        </div>
-                                                        <!--end::Menu item-->
-
-                                                        <!--begin::Menu item-->
-                                                        <div class="menu-item px-3">
-                                                            <a href="#" class="menu-link px-3"> Member Group </a>
-                                                        </div>
-                                                        <!--end::Menu item-->
                                                     </div>
-                                                    <!--end::Menu sub-->
-                                                </div>
-                                                <!--end::Menu item-->
 
-                                                <!--begin::Menu item-->
+                                                </div>
+
+
                                                 <div class="menu-item px-3">
                                                     <a href="#" class="menu-link px-3"> New Contact </a>
                                                 </div>
-                                                <!--end::Menu item-->
+
 
                                                 <!--begin::Menu separator-->
                                                 <div class="separator mt-3 opacity-75"></div>
                                                 <!--end::Menu separator-->
 
-                                                <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
                                                     <div class="menu-content px-3 py-3">
                                                         <a class="btn btn-primary btn-sm px-4" href="#"> Generate Reports </a>
                                                     </div>
                                                 </div>
-                                                <!--end::Menu item-->
+
                                             </div>
-                                            <!--end::Menu 2-->
 
-                                            <!--end::Menu-->
                                         </div>
-                                        <!--end::Toolbar-->
-                                    </div>
-                                    <!--end::Header-->
 
-                                    <!--begin::Body-->
+                                    </div>
+
                                     <div class="card-body d-flex justify-content-between flex-column pt-1 px-0 pb-0">
                                         <!--begin::Wrapper-->
                                         <div class="d-flex flex-wrap px-9 mb-5">
@@ -2961,88 +2885,74 @@
 
                                             <!--begin::Menu 2-->
                                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px" data-kt-menu="true">
-                                                <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
                                                     <div class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">Quick Actions</div>
                                                 </div>
-                                                <!--end::Menu item-->
+
 
                                                 <!--begin::Menu separator-->
                                                 <div class="separator mb-3 opacity-75"></div>
                                                 <!--end::Menu separator-->
 
-                                                <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
                                                     <a href="#" class="menu-link px-3"> New Ticket </a>
                                                 </div>
-                                                <!--end::Menu item-->
 
-                                                <!--begin::Menu item-->
+
                                                 <div class="menu-item px-3">
                                                     <a href="#" class="menu-link px-3"> New Customer </a>
                                                 </div>
-                                                <!--end::Menu item-->
 
-                                                <!--begin::Menu item-->
+
                                                 <div class="menu-item px-3" data-kt-menu-trigger="hover" data-kt-menu-placement="right-start">
-                                                    <!--begin::Menu item-->
                                                     <a href="#" class="menu-link px-3">
                                                         <span class="menu-title">New Group</span>
                                                         <span class="menu-arrow"></span>
                                                     </a>
-                                                    <!--end::Menu item-->
+
 
                                                     <!--begin::Menu sub-->
                                                     <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                        <!--begin::Menu item-->
                                                         <div class="menu-item px-3">
                                                             <a href="#" class="menu-link px-3"> Admin Group </a>
                                                         </div>
-                                                        <!--end::Menu item-->
 
-                                                        <!--begin::Menu item-->
+
                                                         <div class="menu-item px-3">
                                                             <a href="#" class="menu-link px-3"> Staff Group </a>
                                                         </div>
-                                                        <!--end::Menu item-->
 
-                                                        <!--begin::Menu item-->
+
                                                         <div class="menu-item px-3">
                                                             <a href="#" class="menu-link px-3"> Member Group </a>
                                                         </div>
-                                                        <!--end::Menu item-->
-                                                    </div>
-                                                    <!--end::Menu sub-->
-                                                </div>
-                                                <!--end::Menu item-->
 
-                                                <!--begin::Menu item-->
+                                                    </div>
+
+                                                </div>
+
+
                                                 <div class="menu-item px-3">
                                                     <a href="#" class="menu-link px-3"> New Contact </a>
                                                 </div>
-                                                <!--end::Menu item-->
+
 
                                                 <!--begin::Menu separator-->
                                                 <div class="separator mt-3 opacity-75"></div>
                                                 <!--end::Menu separator-->
 
-                                                <!--begin::Menu item-->
                                                 <div class="menu-item px-3">
                                                     <div class="menu-content px-3 py-3">
                                                         <a class="btn btn-primary btn-sm px-4" href="#"> Generate Reports </a>
                                                     </div>
                                                 </div>
-                                                <!--end::Menu item-->
+
                                             </div>
-                                            <!--end::Menu 2-->
 
-                                            <!--end::Menu-->
                                         </div>
-                                        <!--end::Toolbar-->
-                                    </div>
-                                    <!--end::Header-->
 
-                                    <!--begin::Body-->
+                                    </div>
+
                                     <div class="card-body">
                                         <!--begin::Item-->
                                         <div class="d-flex flex-stack">
@@ -3377,7 +3287,6 @@
                                             <div class="px-7 py-5">
                                                 <div class="fs-5 text-gray-900 fw-bold">Filter Options</div>
                                             </div>
-                                            <!--end::Header-->
 
                                             <!--begin::Menu separator-->
                                             <div class="separator border-gray-200"></div>
@@ -3971,7 +3880,6 @@
                     <div class="col-xl-4">
                         <!--begin::Engage widget 1-->
                         <div class="card h-xl-100" dir="ltr">
-                            <!--begin::Body-->
                             <div class="card-body d-flex flex-column flex-center">
                                 <!--begin::Heading-->
                                 <div class="mb-2">
@@ -4273,7 +4181,6 @@
 
             <li class="menu-item"><a href="https://keenthemes.com/products" target="_blank" class="menu-link px-2">Purchase</a></li>
         </ul>
-        <!--end::Menu-->
     </div>
     <!--end::Footer-->
 </div>

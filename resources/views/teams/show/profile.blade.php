@@ -64,7 +64,6 @@
                                 <div class="card-body pt-3 pb-0 border">
 
                                     <div class="row g-3">
-                                        {{-- Sport Type --}}
                                         <div class="col-12">
                                             <label for="sport_type_id" class="form-label fw-bold">
                                                 <i class="bi bi-trophy-fill me-2 text-primary"></i> {{ __('messages.sport_type') }}
@@ -148,7 +147,7 @@
                             <div>
                                 <h2 class="fw-bold fs-2 text-gray-900">{{ __('messages.announcements') }}</h2>
                             </div>
-                            <div id="announcement-list">
+                            <div id="profile-announcement-list">
                                 @include('components.announcements.card-list', ['announcements' => $datas['announcements']['data']])
                             </div>
                             <div id="spinner" class="text-center my-4 d-none">
@@ -204,7 +203,7 @@
         @isset($datas['announcements'])
         const announcementLoadMore = new LoadMoreController({
             apiUrl: '{{ route('announcements') }}',
-            containerId: 'announcement-list',
+            containerId: 'profile-announcement-list',
             spinnerId: 'spinner',
             showMoreButtonId: 'showMoreButton',
             renderItemCallback: renderAnnouncementCard,

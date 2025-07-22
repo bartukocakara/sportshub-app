@@ -103,6 +103,6 @@ class AnnouncementController extends Controller
     public function destroy(string $id) : RedirectResponse
     {
         $this->announcementService->destroy($id);
-        return redirect()->route('announcements.index')->with('success', 'Announcement deleted successfully.');
+        return redirect()->back()->with('success', __('messages.announcement_deleted_successfully'));
     }
 }
