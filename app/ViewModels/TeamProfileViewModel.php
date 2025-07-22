@@ -6,6 +6,7 @@ use App\Enums\UserTeamStatusEnum;
 use App\Http\Resources\AnnouncementResource;
 use App\Http\Resources\TeamResource;
 use App\Models\Announcement;
+use App\Models\Definition;
 use App\Models\Team;
 use App\Services\MetaDataService;
 use App\Services\AccessServices\TeamAccessService;
@@ -26,7 +27,8 @@ class TeamProfileViewModel
             'subject_id' => $this->team->id,
             'subject_type' => 'Team',
         ]);
-        $announcements =  Announcement::filterBy($request->all());
+        $announcements =  Announcement::filterBy($request->all(), ['teamTypeDefinition']);
+        $definitions =  Definition::filterBy((new Request(['group_key' => 'team_announcement_type']))->all());
         return [
             'team' => TeamResource::make($this->team),
             'cities' => $this->metaDataService->getCitiesByRequest(),
@@ -39,6 +41,7 @@ class TeamProfileViewModel
             'is_following' => $this->accessService->isFollowing($user, $this->team),
             'follow_id' => $this->accessService->getFollowId($user, $this->team),
             'announcements' => AnnouncementResource::collection($announcements)->response()->getData(true),
+            'announcement_types' => AnnouncementResource::collection($definitions),
         ];
     }
 }

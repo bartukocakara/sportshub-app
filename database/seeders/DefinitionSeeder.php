@@ -61,13 +61,17 @@ class DefinitionSeeder extends Seeder
             ['group_key' => 'request_status', 'value' => 'rejected', 'description_tr' => 'Reddedildi', 'description_en' => 'Rejected'],
 
             // announcement_type
-            ['group_key' => 'announcement_type', 'value' => 'team_needs_player', 'description_tr' => 'Takıma oyuncu aranıyor', 'description_en' => 'Team needs a player', ],
-            ['group_key' => 'announcement_type', 'value' => 'match_needs_player', 'description_tr' => 'Maça oyuncu aranıyor', 'description_en' => 'Match needs a player',],
-            ['group_key' => 'announcement_type', 'value' => 'match_needs_team', 'description_tr' => 'Maça takım aranıyor', 'description_en' => 'Match needs a team',],
-            ['group_key' => 'announcement_type', 'value' => 'court_available', 'description_tr' => 'Saha müsait', 'description_en' => 'Court is available',],
-            ['group_key' => 'announcement_type', 'value' => 'user_needs_team', 'description_tr' => 'Takım arayan oyuncu', 'description_en' => 'User needs a team',],
-            ['group_key' => 'announcement_type', 'value' => 'user_needs_match', 'description_tr' => 'Maç arayan oyuncu', 'description_en' => 'User needs a match',],
-            ['group_key' => 'announcement_type', 'value' => 'user_needs_court', 'description_tr' => 'Saha arayan oyuncu', 'description_en' => 'User needs a court',],
+            ['group_key' => 'team_announcement_type', 'value' => 'team_needs_player', 'description_tr' => 'Takıma oyuncu aranıyor', 'description_en' => 'Team needs a player', ],
+            ['group_key' => 'team_announcement_type', 'value' => 'team_needs_match', 'description_tr' => 'Takıma maç aranıyor', 'description_en' => 'Team needs a match', ],
+            ['group_key' => 'match_announcement_type', 'value' => 'match_needs_player', 'description_tr' => 'Maça oyuncu aranıyor', 'description_en' => 'Match needs a player',],
+            ['group_key' => 'match_announcement_type', 'value' => 'match_needs_team', 'description_tr' => 'Maça takım aranıyor', 'description_en' => 'Match needs a team',],
+            ['group_key' => 'court_announcement_type', 'value' => 'court_available',      'description_tr' => 'Saha müsait',           'description_en' => 'Court is available',       ],
+            ['group_key' => 'court_announcement_type', 'value' => 'court_maintenance',    'description_tr' => 'Saha bakımı',           'description_en' => 'Court under maintenance',  ],
+            ['group_key' => 'court_announcement_type', 'value' => 'court_price_change',   'description_tr' => 'Saha fiyat güncellemesi','description_en' => 'Court price update',       ],
+            ['group_key' => 'court_announcement_type', 'value' => 'court_new_feature',    'description_tr' => 'Saha yeni özellik',     'description_en' => 'Court new feature',        ],
+            ['group_key' => 'user_announcement_type', 'value' => 'user_needs_team', 'description_tr' => 'Takım arayan oyuncu', 'description_en' => 'User needs a team',],
+            ['group_key' => 'user_announcement_type', 'value' => 'user_needs_match', 'description_tr' => 'Maç arayan oyuncu', 'description_en' => 'User needs a match',],
+            ['group_key' => 'user_announcement_type', 'value' => 'user_needs_court', 'description_tr' => 'Saha arayan oyuncu', 'description_en' => 'User needs a court',],
         ];
 
         foreach ($definitions as $definition) {

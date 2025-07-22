@@ -54,9 +54,33 @@ class Announcement extends Model
         return $this->belongsTo(User::class, 'causer_id');
     }
 
-    public function typeDefinition()
+    public function teamTypeDefinition()
     {
         return $this->hasOne(Definition::class, 'value', 'type')
-                    ->where('group_key', 'announcement_type');
+                    ->where('group_key', 'team_announcement_type');
+    }
+
+    public function matchTypeDefinition()
+    {
+        return $this->hasOne(Definition::class, 'value', 'type')
+                    ->where('group_key', 'match_announcement_type');
+    }
+
+    public function courtTypeDefinition()
+    {
+        return $this->hasOne(Definition::class, 'value', 'type')
+                    ->where('group_key', 'court_announcement_type');
+    }
+
+    public function userTypeDefinition()
+    {
+        return $this->hasOne(Definition::class, 'value', 'type')
+                    ->where('group_key', 'user_announcement_type');
+    }
+
+    public function reservationTypeDefinition()
+    {
+        return $this->hasOne(Definition::class, 'value', 'type')
+                    ->where('group_key', 'reservation_announcement_type');
     }
 }

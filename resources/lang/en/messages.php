@@ -411,4 +411,12 @@ return [
     'post' => 'Post',
     'write_your_announcement' => 'Write your announcement',
     'announcement_created_successfully_prompt' => 'Your announcement has been created successfully.',
+    'type' => 'Type',
+    'individual' => 'Individual',
+    'inviter' => 'Inviter',
+    'participant' => 'Participant',
+    'participants' => 'Participants',
+    'select_type' => 'Select Type',
+    'message' => 'Message',
+    'subject' => 'Subject',
 ];

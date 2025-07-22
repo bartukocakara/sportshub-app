@@ -433,5 +433,13 @@ return [
     'post' => 'Gönder',
     'write_your_announcement' => 'Duyurunuzu yazınız.',
     'announcement_created_successfully_prompt' => 'Duyurunuz oluşturuldu.',
-
+    'type' => 'Tipi',
+    'participant' => 'Katılımcı',
+    'inviter' => 'Davet Eden',
+    'participants' => 'Katılımcılar',
+    'individual' => 'Bireysel',
+    'team' => 'Takım',
+    'select_type' => 'Tipi Seçiniz',
+    'message' => 'Mesaj',
+    'subject' => 'Konu'
 ];

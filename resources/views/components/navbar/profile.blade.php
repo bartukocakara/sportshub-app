@@ -3,25 +3,27 @@
          data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
          data-kt-menu-attach="parent"
          data-kt-menu-placement="bottom-end">
-
         @auth
-            <img src="{{ auth()->user()->avatar }}" alt="user">
+            @if(auth()->user()->avatar)
+                <img src="{{ auth()->user()->avatar }}" alt="user">
+            @else
+                <div class="symbol-label bg-primary text-white fw-bold d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; border-radius: 50%;">
+                    {{ strtoupper(mb_substr(auth()->user()->first_name, 0, 1)) }}
+                </div>
+            @endif
         @else
             <div class="btn btn-icon btn-custom btn-color-gray-600 btn-active-color-primary w-45px h-45px w-md-45px h-md-45px d-flex align-items-center justify-content-center">
                 <i class="bi bi-person-circle fs-2"></i>
             </div>
         @endauth
-
     </div>
 
     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
          data-kt-menu="true">
-
         @auth
             <div class="menu-item px-3">
                 <div class="menu-content d-flex align-items-center px-3">
                     <div class="symbol symbol-50px me-5">
-                        <img alt="Logo" src="{{ auth()->user()->avatar }}">
                     </div>
                     <div class="d-flex flex-column">
                         <div class="fw-bold d-flex align-items-center fs-5">
@@ -32,13 +34,10 @@
                     </div>
                 </div>
             </div>
-
             <div class="separator my-2"></div>
-
             <div class="menu-item px-5">
                 <a href="{{ route('me.profile') }}" class="menu-link px-5">{{ __('messages.account') }}</a>
             </div>
-
             <div class="menu-item px-5">
                 <a href="{{ route('reservations.me') }}" class="menu-link px-5">
                     <span class="menu-text">{{ __('messages.my_reservations') }}</span>
@@ -47,15 +46,11 @@
                     </span>
                 </a>
             </div>
-
             <div class="separator my-2"></div>
         @endauth
-
         <div class="menu-item px-5">
             <a href="{{ route('court-business.auth.login') }}" class="menu-link px-5">{{ __('messages.court_business_login') }}</a>
         </div>
-
-        {{-- Mode Toggle --}}
         <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
              data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
             <a href="#" class="menu-link px-5">

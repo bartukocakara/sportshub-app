@@ -7,7 +7,16 @@
     <div class="card-header pt-9">
         <div class="d-flex align-items-center">
             <div class="symbol symbol-50px me-5">
-                <img src="{{ asset('storage/' . $announcement['created_by']['avatar']) }}" alt="avatar" />
+                @php
+                    $avatarPath = $announcement['created_by']['avatar'] ?? null;
+                    $avatarUrl = $avatarPath
+                        ? (Str::startsWith($avatarPath, ['http://', 'https://'])
+                            ? $avatarPath
+                            : asset('storage/' . $avatarPath))
+                        : asset('media/avatar/blank.png'); // varsayılan avatar
+                @endphp
+
+                <img src="{{ $avatarUrl }}" alt="avatar" />
             </div>
             <div class="flex-grow-1">
                 <a href="#" class="text-gray-800 text-hover-primary fs-4 fw-bold">
@@ -52,30 +61,23 @@
         </div>
     </div>
 
-    {{-- ✅ Card Body: title + type + message --}}
     <div class="card-body">
-        {{-- 📌 TYPE --}}
         <div class="badge badge-light-primary mb-2">
             {{ $announcement['type_definition']['description_tr'] }}
         </div>
 
-        {{-- 📌 TITLE --}}
         <div class="fs-5 fw-bold text-gray-800 mb-2">
             {{ $announcement['title'] }}
         </div>
 
-        {{-- 📌 MESSAGE --}}
         <div class="fs-6 fw-normal text-gray-700 mb-5">
             {{ $announcement['message'] }}
         </div>
 
-        {{-- 📌 SUBJECT INFO (e.g. Team, Match, etc.) --}}
         <div class="text-muted small">
-            <strong>Konu:</strong>
+            <strong>{{ __('messages.subject') }}:</strong>
             {{ class_basename($announcement['subject_type']) }} #{{ $announcement['subject_id'] }}
         </div>
-
-        {{-- 📌 SPORT TYPE (if available) --}}
         @if (!empty($announcement['sport_type_name']))
         <div class="text-muted small mt-1">
             <strong>Spor Türü:</strong> {{ $announcement['sport_type_name'] }}
@@ -84,7 +86,6 @@
     </div>
 
     <div class="card-footer pt-0">
-        {{-- Opsiyonel footer eylemleri veya CTA butonları --}}
     </div>
 </div>
 @endforeach
