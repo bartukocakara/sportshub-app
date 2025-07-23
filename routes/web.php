@@ -23,6 +23,7 @@ use App\Http\Controllers\Request\RequestPlayerTeamController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\SubscriptionPlanController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\TeamCreateController;
 use App\Http\Controllers\TeamDetailController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserDetailController;
@@ -81,6 +82,24 @@ Route::prefix('teams/{id}')->name('teams.')->group(function () {
     Route::get('new-players', [TeamDetailController::class, 'getNotInTeamPlayersData'])->name('new-players');
     Route::get('matches', [TeamDetailController::class, 'matches'])->name('matches');
 
+});
+
+
+Route::prefix('teams-create')->name('teams.create.')->group(function () {
+    Route::get('sport-type', [TeamCreateController::class, 'listSportTypes'])->name('sport-type');
+    Route::post('sport-type', [TeamCreateController::class, 'storeSportType'])->name('sport-type.store');
+
+    Route::get('city', [TeamCreateController::class, 'listCities'])->name('city');
+    Route::post('city', [TeamCreateController::class, 'storeCity'])->name('city.store');
+
+    Route::get('players', [TeamCreateController::class, 'listPlayers'])->name('players');
+    Route::post('players', [TeamCreateController::class, 'storePlayers'])->name('players.store');
+
+    Route::get('fill-details', [TeamCreateController::class, 'fillDetails'])->name('fill-details');
+    Route::post('fill-details', [TeamCreateController::class, 'storeDetails'])->name('fill-details.store');
+
+    Route::get('confirm-details', [TeamCreateController::class, 'confirmDetails'])->name('confirm-details');
+    Route::post('confirm-details', [TeamCreateController::class, 'store'])->name('confirm-details.store');
 });
 
 Route::resource('/courts', CourtController::class)->names('courts')->parameters([

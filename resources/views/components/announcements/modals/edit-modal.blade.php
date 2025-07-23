@@ -23,6 +23,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="card card-flush mb-0">
+                        @auth
                         <div class="card-header justify-content-start align-items-center pt-4">
                             <div class="symbol symbol-45px me-3">
                                 @if(auth()->user()->avatar)
@@ -37,6 +38,7 @@
                                 {{ __('messages.whats_on_your_mind', ['name' => auth()->user()->first_name ?? '']) }}
                             </span>
                         </div>
+                        @endauth
                         <div class="card-body pt-3 pb-0 border">
                             <div class="row g-3">
                                 <div class="col-12">

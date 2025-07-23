@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
             // AdminSeeder::class,
             SportTypeSeeder::class,
+            UserSportTypeSeeder::class,
             CourtBusinessSeeder::class,
             CourtSeeder::class,
             CourtImageSeeder::class,

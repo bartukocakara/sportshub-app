@@ -1,10 +1,9 @@
 @extends('layouts.no-sidebar')
-@section('title', __('messages.team_create'))
+@section('title', __('messages.create_team'))
 @section('custom-styles')
 <link href="{{ asset('assets/css/no-sidebar.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
-
 <div class="app-main flex-column flex-row-fluid">
     <div class="d-flex flex-column flex-column-fluid">
         <div id="kt_app_toolbar" class="app-toolbar pt-5">
@@ -33,112 +32,220 @@
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div class="app-container container-fluid">
-                @if (session('error'))
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        {{ session('error') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-                @if (session('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-                <form method="POST" action="{{ route('teams.store') }}">
-                    @csrf
-                    <div class="d-flex flex-column flex-lg-row">
-                        <x-player-list :players="$datas['players']['data']" :meta="$datas['players']['meta']" :key="'team_create_selected_players'" />
-                        <div class="flex-lg-auto min-w-lg-300px">
-                            <div class="card" style="position: sticky; top: 150px;">
-                                <div class="card-body p-10">
-                                    <div class="mb-10">
-                                        <label for="title" class="form-label fw-bold fs-6 text-gray-700">{{ __('messages.team_name') }}</label>
-                                        <input type="text" name="title" id="title" class="form-control form-control-solid @error('title') is-invalid @enderror" placeholder="{{ __('messages.enter_team_name') }}" value="{{ old('title') }}">
-                                        @error('title')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-10">
-                                        <label for="city_id" class="form-label fw-bold fs-6 text-gray-700">{{ __('messages.city') }}</label>
-                                        <select name="city_id" id="city_id" class="form-select form-select-solid @error('city_id') is-invalid @enderror" data-control="select2" data-placeholder="{{ __('messages.select_city') }}">
-                                            <option value="">{{ __('messages.select_city') }}</option>
-                                            @foreach ($datas['cities'] as $city)
-                                                <option value="{{ $city->id }}" {{ old('city_id') == $city->id ? 'selected' : '' }}>{{ $city->title }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('city_id')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-10">
-                                        <label for="sport_type_id" class="form-label fw-bold fs-6 text-gray-700">{{ __('messages.sport_type') }}</label>
-                                        <select name="sport_type_id" id="sport_type_id" class="form-select form-select-solid @error('sport_type_id') is-invalid @enderror" data-control="select2" data-placeholder="{{ __('messages.select_sport_type') }}">
-                                            <option value="">{{ __('messages.select_sport_type') }}</option>
-                                            @foreach ($datas['sport_types'] as $sportType)
-                                                <option value="{{ $sportType->id }}" {{ old('sport_type_id') == $sportType->id ? 'selected' : '' }}>{{ $sportType->title }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('sport_type_id')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-10">
-                                        <label class="form-label fw-bold fs-6 text-gray-700">{{ __('messages.gender') }}</label>
-                                        <div class="d-flex flex-wrap gap-5">
-                                            <div class="form-check form-check-custom form-check-solid">
-                                                <input class="form-check-input @error('gender') is-invalid @enderror" type="radio" name="gender" value="male" id="gender_male" {{ old('gender') == 'male' ? 'checked' : '' }}/>
-                                                <label class="form-check-label" for="gender_male">
-                                                    {{ __('messages.male') }}
-                                                </label>
-                                            </div>
-                                            <div class="form-check form-check-custom form-check-solid">
-                                                <input class="form-check-input @error('gender') is-invalid @enderror" type="radio" name="gender" value="female" id="gender_female" {{ old('gender') == 'female' ? 'checked' : '' }}/>
-                                                <label class="form-check-label" for="gender_female">
-                                                    {{ __('messages.female') }}
-                                                </label>
-                                            </div>
-                                            <div class="form-check form-check-custom form-check-solid">
-                                                <input class="form-check-input @error('gender') is-invalid @enderror" type="radio" name="gender" value="mixed" id="gender_mixed" {{ old('gender') == 'mixed' ? 'checked' : '' }}/>
-                                                <label class="form-check-label" for="gender_mixed">
-                                                    {{ __('messages.mixed') }}
-                                                </label>
-                                            </div>
-                                        </div>
-                                        @error('gender')
-                                            <div class="invalid-feedback d-block">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="row g-10 mb-10">
-                                        <div class="col-lg-6">
-                                            <label for="min_player" class="form-label fw-bold fs-6 text-gray-700">{{ __('messages.min_players') }}</label>
-                                            <input type="number" name="min_player" id="min_player" class="form-control form-control-solid @error('min_player') is-invalid @enderror" placeholder="{{ __('messages.e_g_4') }}" value="{{ old('min_player', 4) }}">
-                                            @error('min_player')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <label for="max_player" class="form-label fw-bold fs-6 text-gray-700">{{ __('messages.max_players') }}</label>
-                                            <input type="number" name="max_player" id="max_player" class="form-control form-control-solid @error('max_player') is-invalid @enderror" placeholder="{{ __('messages.e_g_20') }}" value="{{ old('max_player', 20) }}">
-                                            @error('max_player')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
+                <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid" id="kt_modal_create_app_stepper" data-kt-stepper="true">
+                    <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
+                        <div class="stepper-nav ps-lg-10">
+                            <div class="stepper-item current" data-kt-stepper-element="nav">
+                                <div class="stepper-wrapper">
+                                    <div class="stepper-icon w-40px h-40px"><i class="ki-duotone ki-check stepper-check fs-2"></i> <span class="stepper-number">1</span></div>
+                                    <div class="stepper-label">
+                                        <h3 class="stepper-title">
+                                            {{ __('messages.sport_type') }}
+                                        </h3>
+
+                                        <div class="stepper-desc">
+                                            {{ __('messages.select_sport_type') }}
                                         </div>
                                     </div>
-                                    <div id="selected-player-ids"></div>
-                                    <div class="separator separator-dashed mb-8"></div>
-                                    <button type="submit" class="btn btn-primary w-100">{{ __('messages.create') }}</button>
                                 </div>
+
+                                <div class="stepper-line h-40px"></div>
+                            </div>
+
+                            <div class="stepper-item" data-kt-stepper-element="nav">
+                                <div class="stepper-wrapper">
+                                    <div class="stepper-icon w-40px h-40px"><i class="ki-duotone ki-check stepper-check fs-2"></i> <span class="stepper-number">2</span></div>
+
+                                    <div class="stepper-label">
+                                        <h3 class="stepper-title">
+                                            {{ __('messages.city') }}
+                                        </h3>
+                                        <div class="stepper-desc">
+                                            {{ __('messages.select_city') }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="stepper-line h-40px"></div>
+                            </div>
+
+                            <div class="stepper-item" data-kt-stepper-element="nav">
+                                <div class="stepper-wrapper">
+                                    <div class="stepper-icon w-40px h-40px">
+                                        <i class="ki-duotone ki-check stepper-check fs-2"></i>
+                                        <span class="stepper-number">3</span>
+                                    </div>
+
+                                    <div class="stepper-label">
+                                        <h3 class="stepper-title">
+                                            {{ __('messages.players') }}
+                                        </h3>
+
+                                        <div class="stepper-desc">
+                                            {{ __('messages.select_players') }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="stepper-line h-40px"></div>
+                            </div>
+
+                            <div class="stepper-item" data-kt-stepper-element="nav">
+                                <div class="stepper-wrapper">
+                                    <div class="stepper-icon w-40px h-40px"><i class="ki-duotone ki-check stepper-check fs-2"></i> <span class="stepper-number">4</span></div>
+
+                                    <div class="stepper-label">
+                                        <h3 class="stepper-title">
+                                            {{ __('messages.details') }}
+                                        </h3>
+                                        <div class="stepper-desc">
+                                            {{ __('messages.fill_team_details') }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="stepper-line h-40px"></div>
                             </div>
                         </div>
                     </div>
-                </form>
+                    <div class="flex-row-fluid py-lg-5 px-lg-15">
+                        <form class="form fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_modal_create_app_form">
+                            <div class="current" data-kt-stepper-element="content">
+                                <div class="w-100">
+                                    <div class="fv-row">
+                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-4">
+                                            <span class="required">{{ __('messages.sport_type') }}</span>
+
+                                            <span class="ms-1" data-bs-toggle="tooltip" aria-label="{{ __('messages.select_sport_type') }}" data-bs-original-title="{{ __('messages.select_sport_type') }}" data-kt-initialized="1">
+                                                <i class="ki-duotone ki-information-5 text-gray-500 fs-6"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                                            </span>
+                                        </label>
+                                        <div class="fv-row fv-plugins-icon-container">
+                                            <label class="d-flex flex-stack mb-5 cursor-pointer">
+                                                <span class="d-flex align-items-center me-2">
+                                                    <span class="symbol symbol-50px me-6">
+                                                        <span class="symbol-label bg-light-primary">
+                                                            <i class="ki-duotone ki-compass fs-1 text-primary"><span class="path1"></span><span class="path2"></span></i>
+                                                        </span>
+                                                    </span>
+                                                    <span class="d-flex flex-column">
+                                                        <span class="fw-bold fs-6">Quick Online Courses</span>
+
+                                                        <span class="fs-7 text-muted">Creating a clear text structure is just one SEO</span>
+                                                    </span>
+                                                </span>
+                                                <span class="form-check form-check-custom form-check-solid">
+                                                    <input class="form-check-input" type="radio" name="category" value="1" />
+                                                </span>
+                                            </label>
+                                            <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-kt-stepper-element="content">
+                                <div class="w-100">
+                                    <div class="fv-row fv-plugins-icon-container">
+                                        <label class="d-flex align-items-center fs-5 fw-semibold mb-4">
+                                            <span class="required">Select Framework</span>
+
+                                            <span class="ms-1" data-bs-toggle="tooltip" aria-label="Specify your apps framework" data-bs-original-title="Specify your apps framework" data-kt-initialized="1">
+                                                <i class="ki-duotone ki-information-5 text-gray-500 fs-6"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                                            </span>
+                                        </label>
+
+                                        <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-kt-stepper-element="content">
+                                <div class="w-100">
+                                    <div class="fv-row mb-10 fv-plugins-icon-container">
+                                        <label class="required fs-5 fw-semibold mb-2">
+                                            Database Name
+                                        </label>
+
+                                        <input type="text" class="form-control form-control-lg form-control-solid" name="dbname" placeholder="" value="master_db" />
+                                        <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                                    </div>
+
+                                    <div class="fv-row fv-plugins-icon-container">
+                                        <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-kt-stepper-element="content">
+                                <div class="w-100">
+                                    <div class="d-flex flex-column mb-7 fv-row fv-plugins-icon-container">
+                                        <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                            <span class="required">Name On Card</span>
+
+                                            <span class="ms-1" data-bs-toggle="tooltip" aria-label="Specify a card holder's name" data-bs-original-title="Specify a card holder's name" data-kt-initialized="1">
+                                                <i class="ki-duotone ki-information-5 text-gray-500 fs-6"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                                            </span>
+                                        </label>
+
+                                        <input type="text" class="form-control form-control-solid" placeholder="" name="card_name" value="Max Doe" />
+                                        <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                                    </div>
+
+                                    <div class="d-flex flex-column mb-7 fv-row fv-plugins-icon-container">
+                                        <label class="required fs-6 fw-semibold form-label mb-2">Card Number</label>
+
+                                        <div class="position-relative">
+                                            <input type="text" class="form-control form-control-solid" placeholder="Enter card number" name="card_number" value="4111 1111 1111 1111" />
+
+                                            <div class="position-absolute translate-middle-y top-50 end-0 me-5">
+                                                <img src="/saul-html-pro/assets/media/svg/card-logos/visa.svg" alt="" class="h-25px" />
+                                            </div>
+                                        </div>
+                                        <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div data-kt-stepper-element="content">
+                                <div class="w-100 text-center">
+                                    <h1 class="fw-bold text-gray-900 mb-3">Release!</h1>
+
+                                    <div class="text-muted fw-semibold fs-3">
+                                        Submit your app to kickstart your project.
+                                    </div>
+
+                                    <div class="text-center px-4 py-15">
+                                        <img src="/saul-html-pro/assets/media/illustrations/sketchy-1/9.png" alt="" class="mw-100 mh-300px" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-stack pt-10">
+                                <div class="me-2">
+                                    <button type="button" class="btn btn-lg btn-light-primary me-3" data-kt-stepper-action="previous">
+                                        <i class="ki-duotone ki-arrow-left fs-3 me-1"><span class="path1"></span><span class="path2"></span></i> Back
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="submit">
+                                        <span class="indicator-label">
+                                            Submit
+                                            <i class="ki-duotone ki-arrow-right fs-3 ms-2 me-0"><span class="path1"></span><span class="path2"></span></i>
+                                        </span>
+                                        <span class="indicator-progress"> Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span> </span>
+                                    </button>
+
+                                    <button type="button" class="btn btn-lg btn-primary" data-kt-stepper-action="next">
+                                        Continue
+                                        <i class="ki-duotone ki-arrow-right fs-3 ms-1 me-0"><span class="path1"></span><span class="path2"></span></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 @endsection
 @section('page-scripts')
 @include('components.scripts.pagination-scripts')

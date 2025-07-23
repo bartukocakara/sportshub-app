@@ -1,4 +1,3 @@
-<!-- layouts/app.blade.php -->
 @section('custom-styles')
 <link href="{{ asset('assets/css/no-sidebar.css') }}" rel="stylesheet" type="text/css" />
 @endsection

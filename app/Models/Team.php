@@ -21,7 +21,8 @@ class Team extends Model
         'player_count',
         'gender',
         'min_player',
-        'max_player'
+        'max_player',
+        'followable_status',
     ];
 
     public function scopeFilterBy($query, $filters, array $with = [])

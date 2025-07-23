@@ -26,7 +26,7 @@
                             <li class="breadcrumb-item text-gray-700 fw-bold lh-1"></li>
                         </ul>
                     </div>
-                    <a href="{{ route('teams.create') }}" class="btn btn-sm btn-success ms-3 px-4 py-3"> {{ __('messages.create_team') }} </a>
+                    <a href="{{ route('teams.create.sport-type') }}" class="btn btn-sm btn-success ms-3 px-4 py-3"> {{ __('messages.create_team') }} </a>
                 </div>
             </div>
         </div>
