@@ -104,7 +104,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="flex-row-fluid py-lg-5 px-lg-15">
                         <form class="form" method="POST" action="{{ route('teams.create.confirm-details') }}">
                             @csrf
@@ -119,7 +118,7 @@
 
                                     <div class="row mb-7">
                                         <div class="col-md-4 fw-semibold text-muted">{{ __('messages.team_name') }}:</div>
-                                        <div class="col-md-8 fw-bold fs-6 text-gray-800">{{ $datas['team_name'] ?? 'N/A' }}</div>
+                                        <div class="col-md-8 fw-bold fs-6 text-gray-800">{{ $datas['team_details']['title'] ?? 'N/A' }}</div>
                                     </div>
 
                                     <div class="row mb-7">
@@ -134,52 +133,52 @@
 
                                     <div class="row mb-7">
                                         <div class="col-md-4 fw-semibold text-muted">{{ __('messages.gender_preference') }}:</div>
-                                        <div class="col-md-8 fw-bold fs-6 text-gray-800">{{ ucfirst($datas['team_gender'] ?? 'N/A') }}</div>
+                                        <div class="col-md-8 fw-bold fs-6 text-gray-800">{{ ucfirst($datas['team_details']['gender'] ?? 'N/A') }}</div>
                                     </div>
 
                                     <div class="row mb-7">
                                         <div class="col-md-4 fw-semibold text-muted">{{ __('messages.min_players') }}:</div>
-                                        <div class="col-md-8 fw-bold fs-6 text-gray-800">{{ $datas['team_min_player'] ?? 'N/A' }}</div>
+                                        <div class="col-md-8 fw-bold fs-6 text-gray-800">{{ $datas['team_details']['min_player'] ?? 'N/A' }}</div>
                                     </div>
 
                                     <div class="row mb-7">
                                         <div class="col-md-4 fw-semibold text-muted">{{ __('messages.max_players') }}:</div>
-                                        <div class="col-md-8 fw-bold fs-6 text-gray-800">{{ $datas['team_max_player'] ?? 'N/A' }}</div>
+                                        <div class="col-md-8 fw-bold fs-6 text-gray-800">{{ $datas['team_details']['max_player'] ?? 'N/A' }}</div>
                                     </div>
-
                                     <div class="row mb-7">
                                         <div class="col-md-4 fw-semibold text-muted">{{ __('messages.allow_following') }}:</div>
-                                        <div class="col-md-8 fw-bold fs-6 text-gray-800">{{ $datas['team_followable_status'] ?? 'N/A' }}</div>
+                                        <div class="col-md-8 fw-bold fs-6 text-gray-800">{{ $datas['team_details']['followable_status'] ? __('messages.yes') : __('messages.no') }}</div>
                                     </div>
-
-                                    @if(isset($datas['team_logo_path']) && $datas['team_logo_path'])
-                                        <div class="row mb-7">
-                                            <div class="col-md-4 fw-semibold text-muted">{{ __('messages.team_logo') }}:</div>
-                                            <div class="col-md-8">
-                                                <img src="{{ asset($datas['team_logo_path']) }}" alt="{{ $datas['team_name'] ?? 'Team Logo' }}" class="img-thumbnail" style="max-width: 150px;" />
-                                            </div>
-                                        </div>
-                                    @endif
                                 </div>
-
                                 <div class="mb-10">
                                     <div class="fs-3 fw-bold mb-5">{{ __('messages.selected_players') }}</div>
-                                    @if(isset($datas['selected_players_for_display']) && count($datas['selected_players_for_display']) > 0)
+                                    @if(isset($datas['selected_users']) && count($datas['selected_users']) > 0)
                                         <div class="row g-6 g-xl-9">
-                                            @foreach($datas['selected_players_for_display'] as $player)
-                                                <div class="col-md-6 col-xxl-4">
-                                                    <div class="card card-flush h-md-50">
-                                                        <div class="card-body d-flex flex-center flex-column py-9 px-5">
-                                                            <div class="symbol symbol-65px symbol-circle mb-5">
-                                                                <img src="{{ asset('avatar/'. $player['avatar']) }}" alt="image" />
-                                                                <div class="bg-success position-absolute rounded-circle translate-middle start-100 top-100 border-4 border-body h-15px w-15px ms-n3 mt-n3"></div>
+                                            <div class="symbol-group symbol-hover">
+                                                @foreach ($datas['selected_users'] as $index => $user)
+                                                    @if ($index < 3)
+                                                        @if ($user['avatar'])
+                                                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" aria-label="{{ $user['full_name'] }}" data-bs-original-title="{{ $user['full_name'] }}">
+                                                                <img alt="Pic" src="{{ asset('storage/' . $user['avatar']) }}" class="symbol symbol-35px symbol-circle" alt="Pic" />
                                                             </div>
-                                                            <a href="{{ route('users.profile', ['id' => $player['id']]) }}" class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">{{ $player['full_name'] }}</a>
-                                                            <div class="fw-semibold text-gray-500 mb-6">Art Director</div> {{-- Or display actual player role if available --}}
-                                                        </div>
+                                                        @else
+                                                            <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="{{ $user['full_name'] }}">
+                                                                <span class="symbol-label bg-primary text-inverse-primary fw-bold">
+                                                                    {{ strtoupper(Str::substr($user['full_name'], 0, 1)) }}
+                                                                </span>
+                                                            </div>
+                                                        @endif
+                                                    @endif
+                                                @endforeach
+
+                                                @if (count($datas['selected_users']) > 3)
+                                                    <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="{{ count($datas['selected_users']) - 3 }} kişi daha">
+                                                        <span class="symbol-label bg-light text-gray-600 fw-bold">
+                                                            +{{ count($datas['selected_users']) - 3 }}
+                                                        </span>
                                                     </div>
-                                                </div>
-                                            @endforeach
+                                                @endif
+                                            </div>
                                         </div>
                                     @else
                                         <p class="text-muted">{{ __('messages.no_players_selected') }}</p>

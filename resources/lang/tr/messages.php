@@ -465,4 +465,9 @@ return [
     'followable_status' => 'Takip Edilebilir',
     'review_and_confirm' => 'Detayları gözden geçir ve onayla',
     'gender_preference' => 'Cinsiyet Tercihi',
+    'review_your_team_details' => 'Takımınızı detaylarına gözden gecirin.',
+    'please_review_the_details_below_before_creating_your_team' => 'Lütfen takımınızı oluşturmak için detayları gözden geciriniz.',
+    'yes' => 'Evet',
+    'no' => 'Hayır',
+    'confirm_team_details' => 'Takım Detaylarını Onayla'
 ];

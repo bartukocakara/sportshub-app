@@ -171,7 +171,6 @@ class TeamCreateService
      */
     public function getTeamDetails(): array
     {
-        dd(3123);
         return $this->getSessionData('team_details') ?? [];
     }
 
@@ -182,7 +181,6 @@ class TeamCreateService
     public function getAllTeamData(): array
     {
         $datas = $this->getSessionData();
-
         // Optionally, load related models for display
         $sportType = $datas['sport_type_id'] ? SportType::find($datas['sport_type_id']) : null;
         $city = $datas['city_id'] ? City::find($datas['city_id']) : null;
@@ -191,7 +189,7 @@ class TeamCreateService
         return array_merge($datas, [
             'sport_type_name' => $sportType ? $sportType->title : 'N/A',
             'city_name' => $city ? $city->title : 'N/A',
-            'player_names' => $players->pluck('name')->toArray(),
+            'player_names' => $players->pluck('first_name')->toArray(),
         ]);
     }
 

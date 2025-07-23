@@ -444,4 +444,9 @@ return [
     'allow_others_to_follow_your_team' => 'Allow Others to Follow Your Team',
     'review_and_confirm' => 'Review and Confirm',
     'gender_preference' => 'Gender Preference',
+    'review_your_team_details' => 'Review Your Team Details',
+    'please_review_the_details_below_before_creating_your_team' => 'Please review the details below before creating your team.',
+    'yes' => 'Yes',
+    'no' => 'No',
+    'confirm_team_details' => 'Confirm Team Details',
 ];

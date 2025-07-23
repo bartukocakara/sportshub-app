@@ -102,10 +102,13 @@ class TeamCreateController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'gender' => 'required|string',
+            'min_player' => 'required|integer|min:1',
+            'max_player' => 'required|integer|min:1|gte:min_player',
+            'follow_status' => 'boolean',
         ]);
 
-        $details = $request->only(['title']);
-        $this->teamCreateService->setTeamDetails($details);
+        $this->teamCreateService->setTeamDetails($request->all());
 
         return redirect()->route('teams.create.confirm-details');
     }
