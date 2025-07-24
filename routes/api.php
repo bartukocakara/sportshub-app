@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\Api\AnnouncementController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\CommissionController;
 use App\Http\Controllers\CourtBusinessController;
