@@ -91,7 +91,7 @@ class TeamCreateController extends Controller
     public function fillDetails(Request $request)
     {
         // Retrieve any previously entered details from the session
-        $datas = $this->teamCreateService->getAllTeamData();
+        $datas = $this->teamCreateService->getTeamDetails();
         return view('teams.create.fill-details', compact('datas'));
     }
 
@@ -133,7 +133,7 @@ class TeamCreateController extends Controller
     {
         $teamData = $this->teamCreateService->getAllTeamData();
         if (empty($teamData)) {
-            return redirect()->route('teams.sport-type')->with('error', 'Please start the team creation process.');
+            return redirect()->route('teams.create.sport-type')->with('error', __('messages.team_creation_start_prompt'));
         }
         return view('teams.create.confirm-details', compact('teamData'));
     }

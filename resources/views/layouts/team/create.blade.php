@@ -50,46 +50,8 @@
                     <div id="kt_app_content" class="app-content flex-column-fluid">
                         <div class="app-container container-fluid">
                             <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid">
-                                <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
-                                    <div class="stepper-nav ps-lg-10">
-                                        @php
-                                            $steps = [
-                                                ['title' => __('messages.sport_type'), 'desc' => __('messages.select_sport_type')],
-                                                ['title' => __('messages.city'), 'desc' => __('messages.select_city')],
-                                                ['title' => __('messages.players'), 'desc' => __('messages.select_players')],
-                                                ['title' => __('messages.details'), 'desc' => __('messages.fill_team_details')],
-                                                ['title' => __('messages.confirm_details'), 'desc' => __('messages.review_and_confirm')],
-                                            ];
-                                        @endphp
-                                        @foreach ($steps as $index => $step)
-                                            @php
-                                                $stepNumber = $index + 1;
-
-                                                $isCompleted = $datas['current_step'] > $stepNumber;
-                                                $isCurrent = $datas['current_step'] === $stepNumber;
-                                                $isLast = $index === count($steps) - 1;
-                                            @endphp
-
-                                            <div class="stepper-item {{ $isCurrent ? 'current' : ($isCompleted ? 'completed' : '') }}">
-                                                <div class="stepper-wrapper">
-                                                    <div class="stepper-icon w-40px h-40px">
-                                                        @if ($isCompleted)
-                                                            <i class="ki-duotone ki-check stepper-check fs-2"></i>
-                                                        @else
-                                                            <span class="stepper-number">{{ $stepNumber }}</span>
-                                                        @endif
-                                                    </div>
-                                                    <div class="stepper-label">
-                                                        <h3 class="stepper-title">{{ $step['title'] }}</h3>
-                                                        <div class="stepper-desc">{{ $step['desc'] }}</div>
-                                                    </div>
-                                                </div>
-                                                @if (!$isLast)
-                                                    <div class="stepper-line h-40px"></div>
-                                                @endif
-                                            </div>
-                                        @endforeach
-                                    </div>
+                               <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
+                                    <x-stepper :current-step="$datas['current_step']" :show-last-step="$datas['show_last_step'] ?? false" />
                                 </div>
                                 @yield('content')
                             </div>
@@ -101,7 +63,13 @@
         </div>
     </div>
 </div>
-<script src="{{ asset('assets/plugins/jquery.min.js') }}"></script>
+@include('components.modals.auth-modal')
+
 @yield('page-scripts')
 </body>
 </html>
+<script src="{{ asset('assets/plugins/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/js/custom/auth-modal.js') }}"></script>
+<script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
+<script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>
+<script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>
