@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\TeamCreateService; // Assuming your service is in App\Services
+use Illuminate\Http\RedirectResponse;
 
 class TeamCreateController extends Controller
 {
@@ -127,30 +128,10 @@ class TeamCreateController extends Controller
     }
 
     /**
-     * Display the final creation form (optional, could be merged with confirm-details).
-     */
-    public function create(Request $request)
-    {
-        $teamData = $this->teamCreateService->getAllTeamData();
-        if (empty($teamData)) {
-            return redirect()->route('teams.create.sport-type')->with('error', __('messages.team_creation_start_prompt'));
-        }
-        return view('teams.create.confirm-details', compact('teamData'));
-    }
-
-    /**
      * Store the final team data in the database.
      */
-    public function store(Request $request)
+    public function store(): RedirectResponse
     {
-        try {
-            $team = $this->teamCreateService->createTeamFromSession();
-            // Clear session data after successful creation
-            $this->teamCreateService->clearSession();
-            return redirect()->route('teams.show', $team->id)->with('success', 'Team created successfully!');
-        } catch (\Exception $e) {
-            // Handle error, redirect back with input
-            return redirect()->back()->withInput()->with('error', 'Failed to create team: ' . $e->getMessage());
-        }
+        return $this->teamCreateService->createTeamFromSession();
     }
 }

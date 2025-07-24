@@ -5,7 +5,7 @@
 @endsection
 @section('content')
 <div class="flex-row-fluid py-lg-5 px-lg-15">
-    <form class="form" method="POST" action="{{ route('teams.create.confirm-details') }}">
+    <form class="form" method="POST" action="{{ route('teams.create.confirm-details.store') }}">
         @csrf
         <div class="w-100">
             <div class="pb-10 pb-lg-15">

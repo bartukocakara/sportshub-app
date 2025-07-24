@@ -9,9 +9,14 @@ use App\Models\SportType;
 use App\Models\Team;
 use App\Models\User;
 use App\Repositories\UserRepository;
+use App\Support\Messages\TeamSwalMessages;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class TeamCreateService
 {
@@ -129,7 +134,6 @@ private function withStep(array $data, int $step, bool $showLast = false): array
     public function getAllTeamData(): array
     {
         $data = $this->getSessionData();
-
         $sportType = $data['sport_type_id'] ? SportType::find($data['sport_type_id']) : null;
         $city = $data['city_id'] ? City::find($data['city_id']) : null;
 
@@ -145,41 +149,68 @@ private function withStep(array $data, int $step, bool $showLast = false): array
         ]), 5, true); // ✅ show_last_step = true here only
     }
 
-    public function createTeamFromSession(): Team
+    public function createTeamFromSession(): RedirectResponse
     {
         $data = $this->getSessionData();
+        // Flatten the data structure for validation
+        $flatData = [
+            'sport_type_id' => $data['sport_type_id'] ?? null,
+            'city_id' => $data['city_id'] ?? null,
+            'title' => $data['team_details']['title'] ?? null,
+            'min_player' => $data['team_details']['min_player'] ?? null,
+            'max_player' => $data['team_details']['max_player'] ?? null,
+            'gender' => $data['team_details']['gender'] ?? null,
+            'followable_status' => $data['team_details']['followable_status'] ?? null,
+        ];
 
-        if (
-            empty($data['sport_type_id']) ||
-            empty($data['city_id']) ||
-            empty($data['team_details']['team_name'])
-        ) {
-            throw new \Exception('Missing required team creation data.');
+        $validator = Validator::make($flatData, [
+            'sport_type_id' => ['required', 'uuid'],
+            'city_id' => ['required', 'integer', 'exists:cities,id'],
+            'title' => ['required', 'string', 'max:255'],
+            'min_player' => ['required', 'integer', 'min:1'],
+            'max_player' => ['required', 'integer', 'min:1', 'gte:min_player'],
+            'gender' => ['required', 'in:male,female,mixed'],
+            'followable_status' => ['required', 'in:0,1'],
+        ]);
+
+        if ($validator->fails()) {
+            throw new ValidationException($validator);
         }
 
         DB::beginTransaction();
+
         try {
             $team = Team::create([
-                'title' => $data['team_details']['team_name'],
-                'sport_type_id' => $data['sport_type_id'],
-                'city_id' => $data['city_id'],
-                'min_player' => $data['team_details']['min_player'],
-                'max_player' => $data['team_details']['max_player'],
-                'gender' => $data['team_details']['gender'],
-                'followable_status' => $data['team_details']['followable_status'],
+                'title' => $flatData['title'],
+                'sport_type_id' => $flatData['sport_type_id'],
+                'city_id' => $flatData['city_id'],
+                'min_player' => $flatData['min_player'],
+                'max_player' => $flatData['max_player'],
+                'gender' => $flatData['gender'],
+                'followable_status' => $flatData['followable_status'],
                 'team_status' => 'active',
             ]);
-
+            // Attach users if any
             if (!empty($data['selected_users'])) {
-                $userIds = array_column($data['selected_users'], 'id');
-                $team->users()->attach($userIds);
+                $attachData = [];
+
+                foreach ($data['selected_users'] as $user) {
+                    if (isset($user['id']) && isset($user['uuid'])) {
+                        $attachData[$user['id']] = ['user_uuid' => $user['uuid']];
+                    }
+                }
+
+                $team->users()->attach($attachData);
             }
 
             DB::commit();
-            return $team;
-        } catch (\Exception $e) {
+            $this->clearSession();
+            return redirect()->route('teams.profile', ['id' => $team->id]);
+        } catch (\Throwable $e) {
             DB::rollBack();
-            throw $e;
+            Log::error('Team create error', ['exception' => $e]);
+            return redirect()->back()->with('swal', TeamSwalMessages::teamCreateSuccess()->toArray());
         }
     }
+
 }

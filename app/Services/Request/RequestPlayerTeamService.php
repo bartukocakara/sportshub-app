@@ -94,7 +94,7 @@ class RequestPlayerTeamService extends CrudService
             $isFollowing = $this->followRepository->existByParams([
                 'user_id' => $requestPlayerTeam->requested_user_id,
                 'followable_id' => $requestPlayerTeam->team_id,
-                'followable_type' => \App\Models\Team::class,
+                'followable_type' => Team::class,
             ]);
 
             if (!$isFollowing) {

@@ -6,6 +6,15 @@ use App\ValueObjects\SwalMessage;
 
 class TeamSwalMessages
 {
+    public static function teamCreateSuccess(): SwalMessage
+    {
+        return new SwalMessage(
+            __('messages.success'),
+            '🤝 ' . __('messages.team_created_successfully'),
+            '<br><small class="text-muted">' . __('messages.see_you_again') . '</small>'
+        );
+    }
+
     // Success message for team join request
     public static function teamJoinRequestSuccess(): SwalMessage
     {
