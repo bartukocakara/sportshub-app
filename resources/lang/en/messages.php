@@ -449,4 +449,5 @@ return [
     'yes' => 'Yes',
     'no' => 'No',
     'confirm_team_details' => 'Confirm Team Details',
+    'team_invite_request_title' => 'You have been invited to join a :title team!',
 ];

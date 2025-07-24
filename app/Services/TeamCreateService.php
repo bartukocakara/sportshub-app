@@ -2,25 +2,29 @@
 
 namespace App\Services;
 
-use App\Http\Resources\UserResource;
+use Carbon\Carbon;
 use App\Models\City;
-use App\Models\Player;
-use App\Models\SportType;
 use App\Models\Team;
 use App\Models\User;
-use App\Repositories\UserRepository;
-use App\Support\Messages\TeamSwalMessages;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Player;
+use App\Models\SportType;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use App\Models\RequestPlayerTeam;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Http\Resources\UserResource;
+use App\Repositories\UserRepository;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Session;
+use App\Enums\Request\RequestStatusEnum;
 use Illuminate\Support\Facades\Validator;
+use App\Support\Messages\TeamSwalMessages;
 use Illuminate\Validation\ValidationException;
 
 class TeamCreateService
 {
-    const SESSION_KEY = 'team_creation_data';
+    private const SESSION_KEY = 'team_creation_data';
 
     protected function getSessionData(?string $key = null)
     {
@@ -40,12 +44,12 @@ class TeamCreateService
     /**
      * Wraps data with step number and last step visibility flag.
      */
-private function withStep(array $data, int $step, bool $showLast = false): array
-{
-    $data['current_step'] = $step;
-    $data['show_last_step'] = $showLast;
-    return $data;
-}
+    private function withStep(array $data, int $step, bool $showLast = false): array
+    {
+        $data['current_step'] = $step;
+        $data['show_last_step'] = $showLast;
+        return $data;
+    }
 
     public function getAvailableSportTypes(): array
     {
@@ -82,14 +86,15 @@ private function withStep(array $data, int $step, bool $showLast = false): array
         return $this->getSessionData('city_id');
     }
 
-    public function getAvailablePlayers(Request $request): array
+    public function getAvailableUsers(Request $request): array
     {
         $userRepo = app(UserRepository::class);
         $sportTypeId = $this->getSportType();
 
         $request->merge(['sport_type_id' => [$sportTypeId]]);
+        // $request->merge(['city_id' => $this->getCity()]); #TODO canlıya geçerken açılacak
         $data['users'] = UserResource::collection(
-            $userRepo->all($request, ['sportTypes'])
+            $userRepo->all($request, ['sportTypes', 'userActiveAddress'])
         )->response()->getData(true);
 
         $data['sport_type_id'] = $sportTypeId;
@@ -100,18 +105,34 @@ private function withStep(array $data, int $step, bool $showLast = false): array
 
     public function setPlayers(array $userIds)
     {
+        $authUser = auth()->user();
+        // Fetch users from DB
         $users = User::whereIn('id', $userIds)
             ->select('id', 'first_name', 'last_name', 'avatar')
             ->get()
             ->map(function ($user) {
                 return [
                     'id' => $user->id,
+                    'uuid' => $user->uuid ?? null, // include uuid for attach logic
                     'full_name' => $user->full_name,
                     'avatar' => $user->avatar,
                 ];
-            })->toArray();
+            })
+            ->keyBy('id')
+            ->toArray();
 
-        $this->setSessionData('selected_users', $users);
+        // Add authenticated user if not in the list
+        if (!in_array($authUser->id, $userIds)) {
+            $users[$authUser->id] = [
+                'id' => $authUser->id,
+                'uuid' => $authUser->uuid ?? null,
+                'full_name' => $authUser->full_name,
+                'avatar' => $authUser->avatar,
+            ];
+        }
+
+        // Save to session
+        $this->setSessionData('selected_users', array_values($users));
     }
 
     public function getSelectedUsers(): array
@@ -141,7 +162,6 @@ private function withStep(array $data, int $step, bool $showLast = false): array
         $playerNames = !empty($selectedUsers)
             ? array_column($selectedUsers, 'full_name')
             : [];
-
         return $this->withStep(array_merge($data, [
             'sport_type_name' => $sportType?->title ?? 'N/A',
             'city_name' => $city?->title ?? 'N/A',
@@ -192,17 +212,27 @@ private function withStep(array $data, int $step, bool $showLast = false): array
             ]);
             // Attach users if any
             if (!empty($data['selected_users'])) {
-                $attachData = [];
+                $playerRequests = [];
 
                 foreach ($data['selected_users'] as $user) {
-                    if (isset($user['id']) && isset($user['uuid'])) {
-                        $attachData[$user['id']] = ['user_uuid' => $user['uuid']];
+                    if (isset($user['id'])) {
+                        $playerRequests[] = [
+                            'id' => Str::uuid()->toString(),
+                            'requested_user_id' => $user['id'],
+                            'team_id' => $team->id,
+                            'status' => RequestStatusEnum::WAITING_FOR_APPROVAL->value,
+                            'type' => 'invite',
+                            'player_count' => 1,
+                            'title' => __('messages.team_invite_request_title', ['title' => $team->title]), // <-- define this in your translations
+                            'expiring_date' => Carbon::now()->addDays(7),
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ];
                     }
                 }
 
-                $team->users()->attach($attachData);
+                RequestPlayerTeam::insert($playerRequests);
             }
-
             DB::commit();
             $this->clearSession();
             return redirect()->route('teams.profile', ['id' => $team->id]);

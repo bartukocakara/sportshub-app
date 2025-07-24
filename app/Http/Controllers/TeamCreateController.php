@@ -67,7 +67,7 @@ class TeamCreateController extends Controller
     public function listPlayers(Request $request)
     {
         // Example: Get available players based on selected sport type, if applicable
-        $datas = $this->teamCreateService->getAvailablePlayers($request);
+        $datas = $this->teamCreateService->getAvailableUsers($request);
         return view('teams.create.players', compact('datas'));
     }
 

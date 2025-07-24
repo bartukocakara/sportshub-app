@@ -469,5 +469,6 @@ return [
     'please_review_the_details_below_before_creating_your_team' => 'Lütfen takımınızı oluşturmak için detayları gözden geciriniz.',
     'yes' => 'Evet',
     'no' => 'Hayır',
-    'confirm_team_details' => 'Takım Detaylarını Onayla'
+    'confirm_team_details' => 'Takım Detaylarını Onayla',
+    'team_invite_request_title' => ':title takımına davet edildiniz.'
 ];
