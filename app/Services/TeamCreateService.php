@@ -58,6 +58,7 @@ class TeamCreateService
         $datas = [];
         $datas['sport_types'] = SportType::all();
         $datas['sport_type_id'] = $this->getSportType();
+        $datas['current_step'] = 1;
         return $datas;
     }
 
@@ -88,6 +89,7 @@ class TeamCreateService
         $datas['cities']=  City::all();
         $datas['city_id']=  $this->getCity();
         $datas['sport_type_id'] = $this->getSportType();
+        $datas['current_step'] = 2;
         return $datas;
     }
 
@@ -123,6 +125,8 @@ class TeamCreateService
         $datas['users'] = UserResource::collection($userRepo->all($request, ['sportTypes']))->response()->getData(true);
         $datas['sport_type_id'] = $sportTypeId;
         $datas['selected_users'] = $this->getSelectedUsers();
+        $datas['current_step'] = 3;
+
         // dd($datas['selected_users']);
         return $datas;
     }
@@ -171,7 +175,9 @@ class TeamCreateService
      */
     public function getTeamDetails(): array
     {
-        return $this->getSessionData('team_details') ?? [];
+        $datas['team_details'] = $this->getSessionData('team_details') ?? [];
+        $datas['current_step'] = 4;
+        return $datas;
     }
 
     /**
@@ -185,6 +191,7 @@ class TeamCreateService
         $sportType = $datas['sport_type_id'] ? SportType::find($datas['sport_type_id']) : null;
         $city = $datas['city_id'] ? City::find($datas['city_id']) : null;
         $players = !empty($data['selected_users']) ? User::whereIn('id', $datas['selected_users'])->get() : collect();
+        $datas['current_step'] = 5;
 
         return array_merge($datas, [
             'sport_type_name' => $sportType ? $sportType->title : 'N/A',

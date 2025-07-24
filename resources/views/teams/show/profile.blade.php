@@ -202,7 +202,7 @@
         }
         @isset($datas['announcements'])
         const announcementLoadMore = new LoadMoreController({
-            apiUrl: '{{ route('announcements') }}',
+            apiUrl: '{{ route('api.announcements.index') }}',
             containerId: 'profile-announcement-list',
             spinnerId: 'spinner',
             showMoreButtonId: 'showMoreButton',
