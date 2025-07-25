@@ -258,15 +258,26 @@ class TeamCreateService
 
     private function handleInvitations(array $users): void
     {
+        $userCount = count($users);
+
+        if ($userCount < $this->team->min_player) {
+            throw new \InvalidArgumentException("En az {$this->team->min_player} kullanıcı davet etmelisiniz, mevcut: {$userCount}");
+        }
+
+        if ($userCount > $this->team->max_player) {
+            throw new \InvalidArgumentException("En fazla {$this->team->max_player} kullanıcı davet edebilirsiniz, mevcut: {$userCount}");
+        }
+
         $playerRequests = [];
         $receiverRequests = [];
+        $now = now();
 
         foreach ($users as $user) {
             if (!isset($user['id']) || $user['id'] === auth()->id()) {
-                continue; // auth user'ı ve ID'si olmayanları atla
+                continue;
             }
 
-            $requestId = Str::uuid()->toString();
+            $requestId = (string) Str::uuid();
 
             $playerRequests[] = [
                 'id' => $requestId,
@@ -275,32 +286,24 @@ class TeamCreateService
                 'status' => RequestStatusEnum::WAITING_FOR_APPROVAL->value,
                 'type' => 'invite',
                 'title' => __('messages.team_invite_request_title', ['title' => $this->team->title]),
-                'expiring_date' => now()->addDays(7),
-                'created_at' => now(),
-                'updated_at' => now(),
+                'expiring_date' => $now->copy()->addDays(7),
+                'created_at' => $now,
+                'updated_at' => $now,
             ];
 
             $receiverRequests[] = [
-                'id' => Str::uuid()->toString(),
+                'id' => (string) Str::uuid(),
                 'requestable_id' => $requestId,
                 'requestable_type' => RequestPlayerTeam::class,
                 'receiver_user_id' => $user['id'],
                 'name' => RequestReceiverNameEnum::REQUEST_PLAYER_TEAM->value,
-                'created_at' => now(),
-                'updated_at' => now(),
+                'created_at' => $now,
+                'updated_at' => $now,
             ];
-            // E-posta içeriğini hazırla
-            // $receiver = User::find($user['id']);
-            // $messageBody = __('messages.team_invite_email_body', [
-            //     'team_title' => $this->team->title,
-            //     'inviter_name' => auth()->user()?->name,
-            // ]);
-            // SendTeamInvitationJob::dispatch($receiver, $this->team->title, $messageBody);
         }
 
         RequestPlayerTeam::insert($playerRequests);
         RequestReceiver::insert($receiverRequests);
-
     }
 
     private function addPlayerToTeam(User $user): void
