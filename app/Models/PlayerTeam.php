@@ -20,7 +20,7 @@ class PlayerTeam extends Model
 
     public function scopeFilterBy($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, $with, 'PlayerTeamFilters'))->apply($with);
+        return  (new FilterBuilder($query, $filters, $with, 'PlayerTeamFilters'))->apply();
     }
 
     public function player()

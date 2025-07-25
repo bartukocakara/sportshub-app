@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Filters\FilterBuilder;
+use App\Traits\Followable;
+use App\Traits\LogsActivity;
 use App\Traits\UUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class Team extends Model
 {
     /** @use HasFactory<\Database\Factories\TeamFactory> */
-    use HasFactory, UUID;
+    use HasFactory, UUID, Followable, LogsActivity;
     protected const DEFAULT_PLAYER_COUNT = 1;
 
     protected $fillable = [

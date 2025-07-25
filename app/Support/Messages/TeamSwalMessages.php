@@ -15,6 +15,15 @@ class TeamSwalMessages
         );
     }
 
+    public static function teamCreateError(): SwalMessage
+    {
+        return new SwalMessage(
+            __('messages.error'),
+            '😓' . __('messages.failed_to_create_team'),
+            '<br><small class="text-muted">' . __('messages.contact_support_prompt') . '</small>'
+        );
+    }
+
     // Success message for team join request
     public static function teamJoinRequestSuccess(): SwalMessage
     {

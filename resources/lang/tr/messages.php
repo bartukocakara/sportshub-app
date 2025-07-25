@@ -352,7 +352,7 @@ return [
     'filter_activities' => 'Aktiviteleri Filtrele',
     'match.created' => ':user bir maçı oluşturdu',
     'match.joined' => ':user bir maça katıldı',
-    'team.created' => ':user bir takımı oluşturdu',
+    'team.created' => ':user bir takım oluşturdu',
     'team.joined' => ':user bir takıma katıldı',
     'requested_players' => 'Davet Edilen Oyuncular',
     'add_new_players' => 'Yeni Oyuncu Ekle',

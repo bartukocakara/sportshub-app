@@ -2,11 +2,9 @@
 
 namespace App\Services;
 
-use Carbon\Carbon;
 use App\Models\City;
 use App\Models\Team;
 use App\Models\User;
-use App\Models\Player;
 use App\Models\SportType;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -18,12 +16,18 @@ use App\Repositories\UserRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use App\Enums\Request\RequestStatusEnum;
+use App\Enums\TypeEnums\RequestReceiverNameEnum;
+use App\Models\PlayerTeam;
+use App\Models\RequestReceiver;
+use App\Models\TeamLeader;
 use Illuminate\Support\Facades\Validator;
 use App\Support\Messages\TeamSwalMessages;
+use App\Traits\LogsActivity;
 use Illuminate\Validation\ValidationException;
 
 class TeamCreateService
 {
+    private Team $team;
     private const SESSION_KEY = 'team_creation_data';
 
     protected function getSessionData(?string $key = null)
@@ -172,8 +176,44 @@ class TeamCreateService
     public function createTeamFromSession(): RedirectResponse
     {
         $data = $this->getSessionData();
-        // Flatten the data structure for validation
-        $flatData = [
+
+        $flatData = $this->flattenTeamData($data);
+
+        $this->validateTeamData($flatData);
+
+        DB::beginTransaction();
+
+        try {
+            $this->createTeam($flatData);
+
+            if (!empty($data['selected_users'])) {
+                $this->handleInvitations($data['selected_users']);
+            }
+
+            $this->addPlayerToTeam(auth()->user());
+            $this->team->logActivity('team.created', $this->team, [
+                'user' => auth()->user()?->first_name,
+                'team_title' => $this->team->title,
+            ]);
+
+
+            $this->team->follow(auth()->id());
+            $this->createTeamLeader();
+            DB::commit();
+            $this->clearSession();
+
+            return redirect()->route('teams.profile', ['id' => $this->team->id]);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            Log::error('Team create error', ['exception' => $e]);
+
+            return redirect()->back()->with('swal', TeamSwalMessages::teamCreateError()->toArray());
+        }
+    }
+
+    private function flattenTeamData(array $data): array
+    {
+        return [
             'sport_type_id' => $data['sport_type_id'] ?? null,
             'city_id' => $data['city_id'] ?? null,
             'title' => $data['team_details']['title'] ?? null,
@@ -182,8 +222,11 @@ class TeamCreateService
             'gender' => $data['team_details']['gender'] ?? null,
             'followable_status' => $data['team_details']['followable_status'] ?? null,
         ];
+    }
 
-        $validator = Validator::make($flatData, [
+    private function validateTeamData(array $data): void
+    {
+        $validator = Validator::make($data, [
             'sport_type_id' => ['required', 'uuid'],
             'city_id' => ['required', 'integer', 'exists:cities,id'],
             'title' => ['required', 'string', 'max:255'],
@@ -196,51 +239,82 @@ class TeamCreateService
         if ($validator->fails()) {
             throw new ValidationException($validator);
         }
-
-        DB::beginTransaction();
-
-        try {
-            $team = Team::create([
-                'title' => $flatData['title'],
-                'sport_type_id' => $flatData['sport_type_id'],
-                'city_id' => $flatData['city_id'],
-                'min_player' => $flatData['min_player'],
-                'max_player' => $flatData['max_player'],
-                'gender' => $flatData['gender'],
-                'followable_status' => $flatData['followable_status'],
-                'team_status' => 'active',
-            ]);
-            // Attach users if any
-            if (!empty($data['selected_users'])) {
-                $playerRequests = [];
-
-                foreach ($data['selected_users'] as $user) {
-                    if (isset($user['id'])) {
-                        $playerRequests[] = [
-                            'id' => Str::uuid()->toString(),
-                            'requested_user_id' => $user['id'],
-                            'team_id' => $team->id,
-                            'status' => RequestStatusEnum::WAITING_FOR_APPROVAL->value,
-                            'type' => 'invite',
-                            'player_count' => 1,
-                            'title' => __('messages.team_invite_request_title', ['title' => $team->title]), // <-- define this in your translations
-                            'expiring_date' => Carbon::now()->addDays(7),
-                            'created_at' => now(),
-                            'updated_at' => now(),
-                        ];
-                    }
-                }
-
-                RequestPlayerTeam::insert($playerRequests);
-            }
-            DB::commit();
-            $this->clearSession();
-            return redirect()->route('teams.profile', ['id' => $team->id]);
-        } catch (\Throwable $e) {
-            DB::rollBack();
-            Log::error('Team create error', ['exception' => $e]);
-            return redirect()->back()->with('swal', TeamSwalMessages::teamCreateSuccess()->toArray());
-        }
     }
 
+    private function createTeam(array $data): void
+    {
+        $this->team = Team::create([
+            'title' => $data['title'],
+            'sport_type_id' => $data['sport_type_id'],
+            'city_id' => $data['city_id'],
+            'min_player' => $data['min_player'],
+            'player_count' => 1,
+            'max_player' => $data['max_player'],
+            'gender' => $data['gender'],
+            'followable_status' => $data['followable_status'],
+            'team_status' => 'active',
+        ]);
+    }
+
+    private function handleInvitations(array $users): void
+    {
+        $playerRequests = [];
+        $receiverRequests = [];
+
+        foreach ($users as $user) {
+            if (!isset($user['id']) || $user['id'] === auth()->id()) {
+                continue; // auth user'ı ve ID'si olmayanları atla
+            }
+
+            $requestId = Str::uuid()->toString();
+
+            $playerRequests[] = [
+                'id' => $requestId,
+                'requested_user_id' => $user['id'],
+                'team_id' => $this->team->id,
+                'status' => RequestStatusEnum::WAITING_FOR_APPROVAL->value,
+                'type' => 'invite',
+                'title' => __('messages.team_invite_request_title', ['title' => $this->team->title]),
+                'expiring_date' => now()->addDays(7),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+
+            $receiverRequests[] = [
+                'id' => Str::uuid()->toString(),
+                'requestable_id' => $requestId,
+                'requestable_type' => RequestPlayerTeam::class,
+                'receiver_user_id' => $user['id'],
+                'name' => RequestReceiverNameEnum::REQUEST_PLAYER_TEAM->value,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+
+        RequestPlayerTeam::insert($playerRequests);
+        RequestReceiver::insert($receiverRequests);
+    }
+
+    private function addPlayerToTeam(User $user): void
+    {
+        PlayerTeam::create([
+            'id' => Str::uuid()->toString(),
+            'user_id' => $user->id,
+            'team_id' => $this->team->id,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    }
+
+    private function createTeamLeader()
+    {
+        TeamLeader::insert([
+            [
+                'team_id' => $this->team->id,
+                'user_id'=> auth()->user()->id,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]
+        ]);
+    }
 }
