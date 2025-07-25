@@ -470,5 +470,6 @@ return [
     'yes' => 'Evet',
     'no' => 'Hayır',
     'confirm_team_details' => 'Takım Detaylarını Onayla',
-    'team_invite_request_title' => ':title takımına davet edildiniz.'
+    'team_invite_request_title' => ':title takımına davet edildiniz.',
+    'team_invite_email_body' => ':inviter_name seni :team_title takımına katılman için davet etti.',
 ];

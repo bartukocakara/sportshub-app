@@ -17,12 +17,12 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use App\Enums\Request\RequestStatusEnum;
 use App\Enums\TypeEnums\RequestReceiverNameEnum;
+use App\Jobs\SendTeamInvitationJob;
 use App\Models\PlayerTeam;
 use App\Models\RequestReceiver;
 use App\Models\TeamLeader;
 use Illuminate\Support\Facades\Validator;
 use App\Support\Messages\TeamSwalMessages;
-use App\Traits\LogsActivity;
 use Illuminate\Validation\ValidationException;
 
 class TeamCreateService
@@ -289,10 +289,18 @@ class TeamCreateService
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
+            // E-posta içeriğini hazırla
+            // $receiver = User::find($user['id']);
+            // $messageBody = __('messages.team_invite_email_body', [
+            //     'team_title' => $this->team->title,
+            //     'inviter_name' => auth()->user()?->name,
+            // ]);
+            // SendTeamInvitationJob::dispatch($receiver, $this->team->title, $messageBody);
         }
 
         RequestPlayerTeam::insert($playerRequests);
         RequestReceiver::insert($receiverRequests);
+
     }
 
     private function addPlayerToTeam(User $user): void

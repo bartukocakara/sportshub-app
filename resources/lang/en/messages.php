@@ -450,4 +450,5 @@ return [
     'no' => 'No',
     'confirm_team_details' => 'Confirm Team Details',
     'team_invite_request_title' => 'You have been invited to join a :title team!',
+    'team_invite_email_body' => ':inviter_name seni :team_title takımına katılman için davet etti.',
 ];
