@@ -114,7 +114,14 @@ class TeamService extends CrudService
             $team->activities()->delete();
             $team->followers()->delete();
 
-            $team->delete(); // Team'in kendisini sil
+            $playerRequests = $team->requestPlayerTeams;
+
+            foreach ($playerRequests as $request) {
+                $request->receivers()->delete();
+                $request->delete();
+            }
+
+            $team->delete();
 
             DB::commit();
 

@@ -50,7 +50,7 @@
                     <div id="kt_app_content" class="app-content flex-column-fluid">
                         <div class="app-container container-fluid">
                             <div class="stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid">
-                               <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px">
+                               <div class="d-flex justify-content-center justify-content-xl-start flex-row-auto w-100 w-xl-300px mb-10">
                                     <x-stepper :current-step="$datas['current_step']" :show-last-step="$datas['show_last_step'] ?? false" />
                                 </div>
                                 @yield('content')

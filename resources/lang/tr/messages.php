@@ -473,5 +473,9 @@ return [
     'team_invite_request_title' => ':title takımına davet edildiniz.',
     'team_invite_email_body' => ':inviter_name seni :team_title takımına katılman için davet etti.',
     'no_more_results' => 'Başka sonuç yok...🌵',
-
+    'team_players_min_count_error' => 'Takım oyuncu minimum sayısı hatası',
+    'add_more_players_to_invite_list' => 'Davet listesine daha fazla oyuncu ekle',
+    'team_players_count_error' => 'Takım oyuncu sayısı hatası',
+    'remove_some_players_from_invite_list' => 'Davet listesinden bazı oyuncuları kaldırın',
+    'warning' => 'Uyarı',
 ];

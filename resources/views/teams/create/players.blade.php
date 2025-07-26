@@ -89,33 +89,29 @@
 
 {{-- Import as a module --}}
 <script type="module">
-    // Import the LoadMoreController, getAvatarUrl, and debounce from load-more.js
     import { LoadMoreController, getAvatarUrl, debounce } from '{{ asset('assets/js/load-more.js') }}';
 
-    // Initialize selectedUserIds globally as it's used by both initial setup and the LoadMoreController
     window.selectedUserIds = @json(collect($datas['selected_users'])->pluck('id')->toArray());
 
-    // --- DOM Content Loaded Event Listener ---
     document.addEventListener("DOMContentLoaded", function () {
         // Ensure initializeMobileButtons is called if it exists
         if (typeof initializeMobileButtons === 'function') {
             initializeMobileButtons();
         }
 
-        // Initialize LoadMoreController if user data is available
         @isset($datas['users']['data'])
         window.userLoadMore = new LoadMoreController({
             apiUrl: '{{ route('api.users.index') }}',
             containerId: 'user_list',
             spinnerId: 'spinner',
             showMoreButtonId: 'showMoreButton',
-            renderItemCallback: renderUserCard, // This function must be defined
+            renderItemCallback: renderUserCard,
             initialMeta: {
                 current_page: {{ (int) $datas['users']['meta']['current_page'] }},
                 last_page: {{ (int) $datas['users']['meta']['last_page'] }}
             },
             extraParams: {
-                full_name: ''
+                full_name: '',
             },
             spinnerDelay: 200,
             showMoreText: '⬇️ {{ __('messages.show_more') }}',
@@ -123,12 +119,10 @@
         });
         @endisset
 
-        // Add event listener to the search input with debounce
         const searchInput = document.getElementById('searchInput');
         if (searchInput) {
             searchInput.addEventListener('input', debounce(function (e) {
                 const searchValue = e.target.value.trim();
-                // When searching, reset to page 1 and apply the filter
                 window.userLoadMore.setFilter({ full_name: searchValue });
             }, 400));
         } else {

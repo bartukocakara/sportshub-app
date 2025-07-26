@@ -4,6 +4,23 @@
 <link href="{{ asset('assets/css/no-sidebar.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
+
+{{-- Calculate player counts and validation status --}}
+@php
+    $selectedUsersCount = isset($datas['selected_users']) ? count($datas['selected_users']) : 0;
+    $minPlayers = $datas['team_details']['min_player'] ?? 0;
+    $maxPlayers = $datas['team_details']['max_player'] ?? PHP_INT_MAX; // Use a large number if max_player is not set
+
+    $isPlayerCountValid = ($selectedUsersCount >= $minPlayers && $selectedUsersCount <= $maxPlayers);
+    $warningMessage = null;
+
+    if ($selectedUsersCount < $minPlayers) {
+        $warningMessage = __('messages.team_players_min_count_error', ['min_player' => $minPlayers]);
+    } elseif ($selectedUsersCount > $maxPlayers) {
+        $warningMessage = __('messages.team_players_max_count_error', ['max_player' => $maxPlayers]);
+    }
+@endphp
+
 <div class="flex-row-fluid py-lg-5 px-lg-15">
     <form class="form" method="POST" action="{{ route('teams.create.confirm-details.store') }}">
         @csrf
@@ -12,6 +29,18 @@
                 <h2 class="fw-bold text-dark mb-6">{{ __('messages.review_your_team_details') }}</h2>
                 <div class="text-muted fw-semibold fs-6">{{ __('messages.please_review_the_details_below_before_creating_your_team') }}</div>
             </div>
+
+            {{-- Conditional Warning Message --}}
+            @if (!$isPlayerCountValid)
+                <div class="alert alert-warning d-flex align-items-center p-5 mb-10">
+                    <i class="ki-duotone ki-information-5 fs-2hx text-warning me-4"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                    <div class="d-flex flex-column">
+                        <h4 class="mb-1 text-warning">{{ __('messages.warning') }}</h4>
+                        <span>{{ $warningMessage }}</span>
+                    </div>
+                </div>
+            @endif
+
             <div class="mb-10">
                 <div class="fs-3 fw-bold mb-5">{{ __('messages.general_information') }}</div>
                 <div class="row mb-7">
@@ -40,7 +69,7 @@
                 </div>
                 <div class="row mb-7">
                     <div class="col-md-4 fw-semibold text-muted">{{ __('messages.allow_following') }}:</div>
-                    <div class="col-md-8 fw-bold fs-6 text-gray-800">{{ $datas['team_details']['followable_status'] ? __('messages.yes') : __('messages.no') }}</div>
+                    <div class="col-md-8 fw-bold fs-6 text-gray-800">{{ ($datas['team_details']['followable_status'] ?? false) ? __('messages.yes') : __('messages.no') }}</div>
                 </div>
             </div>
             <div class="mb-10">
@@ -52,7 +81,7 @@
                                 @if ($index < 3)
                                     @if ($user['avatar'])
                                         <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" aria-label="{{ $user['full_name'] }}" data-bs-original-title="{{ $user['full_name'] }}">
-                                            <img alt="Pic" src="{{ asset('storage/' . $user['avatar']) }}" class="symbol symbol-35px symbol-circle" alt="Pic" />
+                                            <img alt="Pic" src="{{ asset('storage/' . $user['avatar']) }}" class="symbol symbol-35px symbol-circle" />
                                         </div>
                                     @else
                                         <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="{{ $user['full_name'] }}">
@@ -64,7 +93,7 @@
                                 @endif
                             @endforeach
                             @if (count($datas['selected_users']) > 3)
-                                <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="{{ count($datas['selected_users']) - 3 }} kişi daha">
+                                <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="{{ (count($datas['selected_users']) - 3) }} {{ __('messages.more_people') }}">
                                     <span class="symbol-label bg-light text-gray-600 fw-bold">
                                         +{{ count($datas['selected_users']) - 3 }}
                                     </span>
@@ -86,7 +115,7 @@
                 </a>
             </div>
             <div>
-                <button type="submit" class="btn btn-lg btn-primary">
+                <button type="submit" class="btn btn-lg btn-primary" {{ !$isPlayerCountValid ? 'disabled' : '' }}>
                     {{ __('messages.create_team') }}
                     <i class="ki-duotone ki-arrow-right fs-3 ms-1 me-0">
                         <span class="path1"></span><span class="path2"></span>

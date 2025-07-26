@@ -154,7 +154,7 @@ class TeamCreateService
     public function getTeamDetails(): array
     {
         $data['team_details'] = $this->getSessionData('team_details') ?? [];
-        return $this->withStep($data, 4); // ❗ do NOT show last step here
+        return $this->withStep($data, 4);
     }
 
     public function getAllTeamData(): array
@@ -188,6 +188,10 @@ class TeamCreateService
             $this->createTeam($flatData);
 
             if (!empty($data['selected_users'])) {
+                $invitationValidationResponse = $this->validateInvitations($data['selected_users']);
+                if ($invitationValidationResponse instanceof RedirectResponse) {
+                    return $invitationValidationResponse;
+                }
                 $this->handleInvitations($data['selected_users']);
             }
 
@@ -257,18 +261,23 @@ class TeamCreateService
         ]);
     }
 
-    private function handleInvitations(array $users): void
+    private function validateInvitations(array $users): ?RedirectResponse
     {
         $userCount = count($users);
 
         if ($userCount < $this->team->min_player) {
-            throw new \InvalidArgumentException("En az {$this->team->min_player} kullanıcı davet etmelisiniz, mevcut: {$userCount}");
+            return redirect()->back()->with('swal', TeamSwalMessages::teamPlayersMinCountError()->toArray());
         }
 
         if ($userCount > $this->team->max_player) {
-            throw new \InvalidArgumentException("En fazla {$this->team->max_player} kullanıcı davet edebilirsiniz, mevcut: {$userCount}");
+            return redirect()->back()->with('swal', TeamSwalMessages::teamPlayersMaxCountError()->toArray());
         }
+        return null;
 
+    }
+
+    private function handleInvitations(array $users): void
+    {
         $playerRequests = [];
         $receiverRequests = [];
         $now = now();

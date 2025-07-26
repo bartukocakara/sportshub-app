@@ -24,6 +24,24 @@ class TeamSwalMessages
         );
     }
 
+    public static function teamPlayersMinCountError(): SwalMessage
+    {
+        return new SwalMessage(
+            __('messages.error'),
+            '😓' . __('messages.team_players_min_count_error'),
+            '<br><small class="text-muted">' . __('messages.add_more_players_to_invite_list') . '</small>'
+        );
+    }
+
+    public static function teamPlayersMaxCountError(): SwalMessage
+    {
+        return new SwalMessage(
+            __('messages.error'),
+            '😓' . __('messages.team_players_count_error'),
+            '<br><small class="text-muted">' . __('messages.remove_some_players_from_invite_list') . '</small>'
+        );
+    }
+
     // Success message for team join request
     public static function teamJoinRequestSuccess(): SwalMessage
     {

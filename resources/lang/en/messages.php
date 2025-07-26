@@ -452,4 +452,9 @@ return [
     'team_invite_request_title' => 'You have been invited to join a :title team!',
     'team_invite_email_body' => ':inviter_name seni :team_title takımına katılman için davet etti.',
     'no_more_results' => 'No more results...🌵',
+    'team_players_min_count_error' => 'Team players min count error',
+    'add_more_players_to_invite_list' => 'Add more players to invite list',
+    'team_players_count_error' => 'Team players count error',
+    'remove_some_players_from_invite_list' => 'Remove some players from invite list',
+    'warning' => 'Warning',
 ];
