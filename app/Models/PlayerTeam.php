@@ -32,4 +32,9 @@ class PlayerTeam extends Model
     {
         return $this->belongsTo(Team::class);
     }
+
+    public function requestedUser()
+    {
+        return $this->belongsTo(RequestPlayerTeam::class, 'requested_user_id', 'user_id');
+    }
 }

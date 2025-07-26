@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\Request\RequestStatusEnum;
+use App\Enums\TypeEnums\RequestTypeEnum;
 use App\Http\Resources\ActivityResource;
 use App\Http\Resources\AnnouncementResource;
 use App\Http\Resources\MatchResource;
@@ -23,6 +24,7 @@ use App\Repositories\Request\RequestPlayerTeamRepository;
 use App\Repositories\TeamRepository;
 use App\Repositories\UserRepository;
 use App\Services\AccessServices\TeamAccessService;
+use App\Support\Messages\TeamSwalMessages;
 use App\Traits\LogsActivity;
 use App\ViewModels\TeamNotInPlayersViewModel;
 use App\ViewModels\TeamPlayersViewModel;
@@ -31,6 +33,7 @@ use App\ViewModels\TeamRequestPlayerTeamViewModel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class TeamDetailService extends CrudService
 {
@@ -128,6 +131,16 @@ class TeamDetailService extends CrudService
             if (!$requestPlayerTeam) {
                 return redirect()->back()->with('error', __('messages.request_player_team_not_found'));
             }
+
+            $team = $requestPlayerTeam->team;
+
+            $currentPlayerCount = $team->users()->count();
+            $maxPlayer = $team->max_player ?? 0;
+            if ($currentPlayerCount >= $maxPlayer) {
+                return redirect()->back()->with('swal', TeamSwalMessages::teamPlayersMaxCountError()->toArray());
+            }
+
+            // İstek kabul işlemleri
             $requestPlayerTeam->receivers()->delete();
 
             $requestPlayerTeam->update([
@@ -136,23 +149,23 @@ class TeamDetailService extends CrudService
 
             PlayerTeam::create([
                 'user_id' => $requestPlayerTeam->requested_user_id,
-                'team_id' => $requestPlayerTeam->team->id,
+                'team_id' => $team->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
 
             $this->logActivity(
                 'team.joined',
-                $requestPlayerTeam->team,
+                $team,
                 [
                     'user' => $requestPlayerTeam->requestedUser->first_name ?? 'Unknown',
-                    'id'   => $requestPlayerTeam->team->id,
+                    'id'   => $team->id,
                 ]
             );
+
             return redirect()->back()->with('success', __('messages.request_player_team_accepted_successfully'));
 
         } catch (\Throwable $th) {
-
             return redirect()->back()->with('error', __('messages.error_occurred_while_accepting'));
         }
     }
@@ -200,17 +213,81 @@ class TeamDetailService extends CrudService
      * @param string $teamId
      * @return array
      */
-    public function getNotInTeamPlayersData(string $teamId): array
+    public function getNotInTeamPlayersData(Request $request, string $teamId): array
     {
+        $userRepo = app(UserRepository::class);
         $team = $this->teamRepository->find($teamId, ['users', 'teamLeaders', 'statusDefinition', 'requestPlayerTeams.requestedUser']);
-        $viewModel = new TeamNotInPlayersViewModel($team, new TeamAccessService());
+
+        $existingPlayerIds = $team->users->pluck('id')->toArray();
+        $requestedUserIds = $team
+            ->requestPlayerTeams()
+            ->where(['status' => RequestStatusEnum::WAITING_FOR_APPROVAL->value])
+            ->pluck('requested_user_id')
+            ->toArray();
+
+        $exceptIds = array_merge($existingPlayerIds, $requestedUserIds, [auth()->id()]);
+        $request->merge([
+            'except_ids' => $exceptIds,
+            // 'city_id' => $team->city_id,
+            'sport_type_id' => $team->sport_type_id
+        ]);
+        $filteredUsers = $userRepo->all($request, ['userAddresses.district', 'sportTypes', 'statusDefinition']);
+        $viewModel = new TeamNotInPlayersViewModel($team, $filteredUsers, $exceptIds, new TeamAccessService());
         return $viewModel->toArray();
+    }
+
+    public function invitePlayer(Request $request, string $id, string $userId) : RedirectResponse
+    {
+        try {
+            DB::beginTransaction();
+            $requestPlayerTeamRepo = app(RequestPlayerTeamRepository::class);
+
+            $requestPlayerTeam = $requestPlayerTeamRepo->create([
+                'team_id' => $id,
+                'requested_user_id' => $userId,
+                'type' => RequestTypeEnum::INVITE->value,
+                'title' => $request->input('title'),
+                'status' => RequestStatusEnum::WAITING_FOR_APPROVAL->value,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            $requestPlayerTeam->receivers()->create([
+                'requestable_id' => $requestPlayerTeam->id,
+                'requestable_type' => RequestPlayerTeam::class,
+                'name' => 'player_team',
+                'receiver_user_id' => $userId,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            DB::commit();
+
+            return redirect()->back()->with('success', __('messages.player_invited_successfully'));
+        } catch (\Throwable $th) {
+
+            DB::rollBack();
+            return redirect()->back()->with('error', __('messages.contact_support'));
+        }
     }
 
     public function destroyPlayer(string $playerTeamId) : RedirectResponse
     {
         try {
             $playerTeamRepo = app(PlayerTeamRepository::class);
+
+            $playerTeam = $playerTeamRepo->find($playerTeamId);
+
+            if (!$playerTeam) {
+                return redirect()->back()->with('error', __('messages.player_team_not_found'));
+            }
+
+            $team = $playerTeam->team;
+
+            $currentPlayerCount = $team->users()->count();
+
+            if ($currentPlayerCount <= $team->min_player) {
+                return redirect()->back()->with('swal', TeamSwalMessages::teamPlayersMinCountError()->toArray());
+            }
 
             $playerTeamRepo->delete($playerTeamId);
 

@@ -92,12 +92,11 @@ export class LoadMoreController {
             console.warn(`LoadMoreController: Show More Button with ID '${this.showMoreButtonId}' not found.`);
         }
 
-        // Apply initial checked state and styling to already rendered checkboxes (if applicable, though maybe not for announcements)
-        // If this LoadMoreController instance is *not* for selecting users, you might remove this block
-        // or make it conditional based on a new option (e.g., `enableSelection: false`)
         document.querySelectorAll(`#${this.containerId} input[name="user_ids[]"]`).forEach(checkbox => {
             checkbox.addEventListener('change', this.handleCheckboxChange);
-            if (window.selectedUserIds && window.selectedUserIds.includes(parseInt(checkbox.value))) {
+            // Note: window.selectedUserIds holds integers if from @json on PHP array of ints.
+            // Ensure comparison type matches if IDs are GUIDs.
+            if (window.selectedUserIds && window.selectedUserIds.includes(checkbox.value)) { // Use checkbox.value directly (string)
                 checkbox.checked = true;
                 const card = checkbox.closest('.player-card'); // Or whatever the parent card class is
                 if (card) {
@@ -108,10 +107,6 @@ export class LoadMoreController {
         });
     }
 
-    /**
-     * Updates the state (disabled status, text, and CSS classes) of the "show more" button.
-     * This function is crucial for providing clear feedback to the user about pagination status.
-     */
     updateShowMoreButtonState() {
         if (!this.showMoreButton) return;
 
@@ -142,10 +137,27 @@ export class LoadMoreController {
         }, this.spinnerDelay);
 
         try {
-            const queryParams = new URLSearchParams({
-                page: this.currentPage,
-                ...this.extraParams
-            }).toString();
+            // Start building the query parameters
+            const queryParts = [];
+            queryParts.push(`page=${this.currentPage}`); // Always include the page parameter
+
+            // Iterate over extraParams to handle arrays specifically
+            for (const key in this.extraParams) {
+                if (Object.prototype.hasOwnProperty.call(this.extraParams, key)) {
+                    const value = this.extraParams[key];
+                    if (Array.isArray(value)) {
+                        // For arrays, append '[]' to the key and add each item separately
+                        value.forEach(item => {
+                            queryParts.push(`${encodeURIComponent(key)}[]=${encodeURIComponent(item)}`);
+                        });
+                    } else if (value !== null && value !== undefined) {
+                        // For non-array values, add them as standard key=value
+                        queryParts.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+                    }
+                }
+            }
+
+            const queryParams = queryParts.join('&'); // Join all parts with '&'
 
             const csrfMeta = document.head.querySelector('meta[name="csrf-token"]');
             const csrfToken = csrfMeta ? csrfMeta.content : '';
@@ -173,16 +185,15 @@ export class LoadMoreController {
                     this.container?.insertAdjacentHTML('beforeend', itemHtml);
                 });
 
-                // Re-attach event listeners to new checkboxes if this instance involves selections.
-                // For announcements, you likely don't have checkboxes for selection, so this might not be needed.
+                // Re-attach event listeners and check selection for newly added items
                 this.container.querySelectorAll(`input[name="user_ids[]"]`).forEach(checkbox => {
-                    if (!checkbox.__listenerAdded) {
+                    if (!checkbox.__listenerAdded) { // Prevent adding multiple listeners
                         checkbox.addEventListener('change', this.handleCheckboxChange);
                         checkbox.__listenerAdded = true;
                     }
-                    if (window.selectedUserIds && window.selectedUserIds.includes(parseInt(checkbox.value))) {
+                    if (window.selectedUserIds && window.selectedUserIds.includes(checkbox.value)) { // Use checkbox.value directly
                         checkbox.checked = true;
-                        const card = checkbox.closest('.player-card');
+                        const card = checkbox.closest('.player-card'); // Ensure this matches your card class
                         if (card) {
                             card.classList.add('border-primary');
                             card.style.borderWidth = '2px';
@@ -191,7 +202,7 @@ export class LoadMoreController {
                 });
 
                 if (typeof KTMenu !== 'undefined' && KTMenu.createInstances) {
-                    KTMenu.createInstances();
+                    KTMenu.createInstances(); // Re-initialize Metronic components if needed
                 }
             }
 
@@ -210,14 +221,14 @@ export class LoadMoreController {
     // This method might not be needed for announcement lists if there's no selection
     handleCheckboxChange(event) {
         const checkbox = event.target;
-        const card = checkbox.closest('.player-card');
+        const card = checkbox.closest('.player-card'); // Ensure this matches your card class
 
         if (!card) {
             console.warn('Player card not found for checkbox:', checkbox);
             return;
         }
 
-        const userId = parseInt(checkbox.value);
+        const userId = checkbox.value; // Keep as string if IDs are GUIDs
 
         if (checkbox.checked) {
             card.classList.add('border-primary');
@@ -244,7 +255,7 @@ export class LoadMoreController {
         }
 
         this.extraParams = { ...this.extraParams, ...params };
-        this.currentPage = 0;
+        this.currentPage = 0; // Set to 0 so loadMore increments to 1 for the first page
         this.lastPage = 1;
         this.container.innerHTML = '';
 

@@ -102,7 +102,8 @@ class TeamCreateService
         $data['users'] = UserResource::collection(
             $userRepo->all($request, ['sportTypes', 'userActiveAddress'])
         )->response()->getData(true);
-
+        $data['city_id'] = $this->getCity();
+        $data['sport_type_id'] = $this->getSportType();
         $data['sport_type_id'] = $sportTypeId;
         $data['selected_users'] = $this->getSelectedUsers();
 

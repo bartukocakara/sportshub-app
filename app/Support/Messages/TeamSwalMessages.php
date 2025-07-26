@@ -37,7 +37,7 @@ class TeamSwalMessages
     {
         return new SwalMessage(
             __('messages.error'),
-            '😓' . __('messages.team_players_count_error'),
+            '😓' . __('messages.team_players_max_count_error'),
             '<br><small class="text-muted">' . __('messages.remove_some_players_from_invite_list') . '</small>'
         );
     }

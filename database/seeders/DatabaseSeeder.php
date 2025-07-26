@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
             DistrictSeeder::class,
             DefinitionSeeder::class,
             UserSeeder::class,
+            UserAddressSeeder::class,
             RolePermissionSeeder::class,
             // AdminSeeder::class,
             SportTypeSeeder::class,

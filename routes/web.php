@@ -83,6 +83,7 @@ Route::prefix('teams/{id}')->name('teams.')->group(function () {
     Route::post('requested-players/{requestId}/accept', [TeamDetailController::class, 'acceptRequestPlayerTeamData'])->name('accept-requested-player');
     Route::delete('requested-players/{requestId}/reject', [TeamDetailController::class, 'rejectRequestPlayerTeamData'])->name('delete-requested-player');
     Route::get('new-players', [TeamDetailController::class, 'getNotInTeamPlayersData'])->name('new-players');
+    Route::post('invite-players/{userId}', [TeamDetailController::class, 'invitePlayer'])->name('invite-players');
     Route::get('matches', [TeamDetailController::class, 'matches'])->name('matches');
 });
 

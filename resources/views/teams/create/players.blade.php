@@ -112,6 +112,8 @@
             },
             extraParams: {
                 full_name: '',
+                city_id: '{{ $datas['city_id'] }}',
+                sport_type_id: '{{ $datas['sport_type_id'] }}',
             },
             spinnerDelay: 200,
             showMoreText: '⬇️ {{ __('messages.show_more') }}',

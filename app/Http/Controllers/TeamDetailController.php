@@ -109,8 +109,13 @@ class TeamDetailController extends Controller
     public function getNotInTeamPlayersData(Request $request, string $id)
     {
         // Example: Fetch user's teams data using the service
-        $datas = $this->teamDetailService->getNotInTeamPlayersData($id);
+        $datas = $this->teamDetailService->getNotInTeamPlayersData($request, $id);
         return view('teams.show.players.new-players', compact('datas'));
+    }
+
+    public function invitePlayer(Request $request, string $id, string $userId)
+    {
+        return $this->teamDetailService->invitePlayer( $request, $id, $userId);
     }
 
     public function destroyPlayer(string $id, string $playerTeamId)
