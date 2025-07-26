@@ -5,6 +5,8 @@
 @endsection
 @section('content')
 <div class="flex-row-fluid py-lg-5 px-lg-15">
+    <input type="text" id="searchInput" class="form-control mb-4" placeholder="{{ __('messages.search_full_name') }}">
+
     <form class="form" method="POST" action="{{ route('teams.create.players.store') }}">
         @csrf
         <div class="w-100">
@@ -51,7 +53,7 @@
                                 ⬇️ {{ __('messages.show_more') }}
                             </button>
                             <div id="spinner" class="spinner-border text-primary ms-3 d-none" role="status">
-                                <span class="visually-hidden">Loading...</span>
+                                <span class="visually-hidden">{{ __('messages.loading') }}</span>
                             </div>
                         </div>
                     </div>
@@ -82,48 +84,56 @@
 </div>
 @endsection
 @section('page-scripts')
+{{-- Assuming user-card-list.js contains renderUserCard or other related functions --}}
 <script src="{{ asset('assets/js/card-list/user-card-list.js') }}"></script>
-<script src="{{ asset('assets/js/load-more.js') }}"></script>
-<script>
+
+{{-- Import as a module --}}
+<script type="module">
+    // Import the LoadMoreController, getAvatarUrl, and debounce from load-more.js
+    import { LoadMoreController, getAvatarUrl, debounce } from '{{ asset('assets/js/load-more.js') }}';
+
+    // Initialize selectedUserIds globally as it's used by both initial setup and the LoadMoreController
     window.selectedUserIds = @json(collect($datas['selected_users'])->pluck('id')->toArray());
-</script>
-<script>
-    function getAvatarUrl(avatar) {
-        if (!avatar) return '/assets/media/avatars/blank.png';
 
-        if (avatar.startsWith('http://') || avatar.startsWith('https://')) {
-            return avatar;
-        }
-
-        return `/storage/${avatar}`;
-    }
-
+    // --- DOM Content Loaded Event Listener ---
     document.addEventListener("DOMContentLoaded", function () {
-        // Your existing initializeMobileButtons() if it's defined elsewhere
+        // Ensure initializeMobileButtons is called if it exists
         if (typeof initializeMobileButtons === 'function') {
             initializeMobileButtons();
         }
 
+        // Initialize LoadMoreController if user data is available
         @isset($datas['users']['data'])
-        const userLoadMore = new LoadMoreController({
+        window.userLoadMore = new LoadMoreController({
             apiUrl: '{{ route('api.users.index') }}',
             containerId: 'user_list',
             spinnerId: 'spinner',
             showMoreButtonId: 'showMoreButton',
-            renderItemCallback: renderUserCard,
+            renderItemCallback: renderUserCard, // This function must be defined
             initialMeta: {
                 current_page: {{ (int) $datas['users']['meta']['current_page'] }},
                 last_page: {{ (int) $datas['users']['meta']['last_page'] }}
             },
-            extraParams: { },
-            spinnerDelay: 2000 // Set the delay to 2000 milliseconds (2 seconds)
+            extraParams: {
+                full_name: ''
+            },
+            spinnerDelay: 200,
+            showMoreText: '⬇️ {{ __('messages.show_more') }}',
+            noMoreResultsText: '{{ __('messages.no_more_results') }}'
         });
         @endisset
 
-        // Initial setup for existing checkboxes on page load
-        document.querySelectorAll('input[name="user_ids[]"]').forEach(checkbox => {
-            checkbox.addEventListener('change', userLoadMore.handleCheckboxChange); // Use the handler from the class
-        });
+        // Add event listener to the search input with debounce
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', debounce(function (e) {
+                const searchValue = e.target.value.trim();
+                // When searching, reset to page 1 and apply the filter
+                window.userLoadMore.setFilter({ full_name: searchValue });
+            }, 400));
+        } else {
+            console.warn('Search input with ID "searchInput" not found.');
+        }
     });
 </script>
 @endsection

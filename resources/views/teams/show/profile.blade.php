@@ -192,44 +192,64 @@
 @endsection
 @section('page-scripts')
 <script src="{{ asset('assets/js/card-list/announcement-card-list.js') }}"></script>
-<script src="{{ asset('assets/js/load-more.js') }}"></script>
+
 <script src="{{ asset('assets/js/mobile-buttons.js') }}"></script>
 
-<script>
+<script type="module">
+    import { LoadMoreController, getAvatarUrl, debounce } from '{{ asset('assets/js/load-more.js') }}';
+
     document.addEventListener("DOMContentLoaded", function () {
         if (typeof initializeMobileButtons === 'function') {
             initializeMobileButtons();
         }
+
         @isset($datas['announcements'])
         const announcementLoadMore = new LoadMoreController({
             apiUrl: '{{ route('api.announcements.index') }}',
             containerId: 'profile-announcement-list',
             spinnerId: 'spinner',
             showMoreButtonId: 'showMoreButton',
-            renderItemCallback: renderAnnouncementCard,
+            renderItemCallback: renderAnnouncementCard, // Ensure this function is defined and accessible
             initialMeta: {
                 current_page: {{ (int) $datas['announcements']['meta']['current_page'] }},
                 last_page: {{ (int) $datas['announcements']['meta']['last_page'] }}
             },
             extraParams: {
                 subject_type: 'Team',
-                subject_id: '{{ $datas['team']['id'] }}' // ID burada string ise tırnak içinde, integer ise sayı olarak bırakabilirsiniz
-            }
+                subject_id: "{{ $datas['team']['id'] }}"
+            },
+            spinnerDelay: 200,
+            showMoreText: '⬇️ {{ __('messages.show_more') }}',
+            noMoreResultsText: '{{ __('messages.no_more_results') }}'
         });
+
+        // Example: If you had a search input for announcements, you'd use debounce and setFilter
+        /*
+        const announcementSearchInput = document.getElementById('announcementSearchInput');
+        if (announcementSearchInput) {
+            announcementSearchInput.addEventListener('input', debounce(function (e) {
+                const searchValue = e.target.value.trim();
+                announcementLoadMore.setFilter({ title: searchValue }); // Or whatever your search parameter is
+            }, 400));
+        }
+        */
         @endisset
 
         // Handle desktop scroll-to-top button visibility
-        window.addEventListener('scroll', function () {
-            const desktopBtn = document.getElementById('scrollTopDesktop');
-            if (window.scrollY > 300) {
-                desktopBtn?.classList.remove('d-none');
-            } else {
-                desktopBtn?.classList.add('d-none');
-            }
-        });
+        const desktopBtn = document.getElementById('scrollTopDesktop');
+        if (desktopBtn) { // Check if the button exists before adding listener
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 300) {
+                    desktopBtn.classList.remove('d-none');
+                } else {
+                    desktopBtn.classList.add('d-none');
+                }
+            });
 
-        if (window.innerWidth < 768) {
-            document.getElementById('scrollTopDesktop')?.remove();
+            // Remove desktop scroll button on mobile screens upon initial load
+            if (window.innerWidth < 768) {
+                desktopBtn.remove();
+            }
         }
     });
 </script>

@@ -26,6 +26,7 @@ class UserService extends CrudService
 
     public function index(Request $request, array $with = [], bool $useCache = false) : array
     {
+        $request->merge(['except_me' => [auth()->user()->id]]);
         $datas['users'] = UserResource::collection($this->userRepository->all($request, $with, $useCache))
                                             ->response()
                                             ->getData(true);

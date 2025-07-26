@@ -96,6 +96,7 @@ class TeamCreateService
         $sportTypeId = $this->getSportType();
 
         $request->merge(['sport_type_id' => [$sportTypeId]]);
+        $request->merge(['except_me' => [auth()->user()->id]]);
         // $request->merge(['city_id' => $this->getCity()]); #TODO canlıya geçerken açılacak
         $data['users'] = UserResource::collection(
             $userRepo->all($request, ['sportTypes', 'userActiveAddress'])
@@ -170,7 +171,7 @@ class TeamCreateService
             'sport_type_name' => $sportType?->title ?? 'N/A',
             'city_name' => $city?->title ?? 'N/A',
             'player_names' => $playerNames,
-        ]), 5, true); // ✅ show_last_step = true here only
+        ]), 5, true);
     }
 
     public function createTeamFromSession(): RedirectResponse
