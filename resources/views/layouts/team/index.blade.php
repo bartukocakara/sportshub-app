@@ -50,9 +50,9 @@
                         'visible_status' => ['leader', 'member', 'none'], // sadece lider görebilir
                         'children' => [
                             [
-                                'route' => 'teams.requested-players',
+                                'route' => 'teams.requested-players.invite',
                                 'params' => ['id' => $id],
-                                'label' => __('messages.requested_players'),
+                                'label' => __('messages.invited_players'),
                                 'visible_status' => ['leader'],
                             ],
                             [
@@ -68,9 +68,9 @@
                                 'visible_status' => ['leader'],
                             ],
                             [
-                                'route' => 'teams.invited-players',
+                                'route' => 'teams.requested-players.join',
                                 'params' => ['id' => $id],
-                                'label' => __('messages.invited_players'),
+                                'label' => __('messages.requested_players'),
                                 'visible_status' => ['leader'],
                             ],
                         ],

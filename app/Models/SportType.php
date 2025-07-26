@@ -26,4 +26,14 @@ class SportType extends Model
     {
         return  (new FilterBuilder($query, $filters, $with, 'SportTypeFilters'))->apply();
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_sport_types', 'sport_type_id', 'user_id');
+    }
+
+    public function userCount()
+    {
+        return $this->users()->count();
+    }
 }

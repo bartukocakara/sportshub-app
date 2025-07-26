@@ -17,10 +17,10 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 use App\Enums\Request\RequestStatusEnum;
 use App\Enums\TypeEnums\RequestReceiverNameEnum;
-use App\Jobs\SendTeamInvitationJob;
 use App\Models\PlayerTeam;
 use App\Models\RequestReceiver;
 use App\Models\TeamLeader;
+use App\Repositories\SportTypeRepository;
 use Illuminate\Support\Facades\Validator;
 use App\Support\Messages\TeamSwalMessages;
 use Illuminate\Validation\ValidationException;
@@ -55,9 +55,10 @@ class TeamCreateService
         return $data;
     }
 
-    public function getAvailableSportTypes(): array
+    public function getAvailableSportTypes(Request $request): array
     {
-        $data['sport_types'] = SportType::all();
+        $sportTypeRepo = app(SportTypeRepository::class);
+        $data['sport_types'] = $sportTypeRepo->all($request);
         $data['sport_type_id'] = $this->getSportType();
         return $this->withStep($data, 1);
     }
@@ -319,7 +320,6 @@ class TeamCreateService
     private function addPlayerToTeam(User $user): void
     {
         PlayerTeam::create([
-            'id' => Str::uuid()->toString(),
             'user_id' => $user->id,
             'team_id' => $this->team->id,
             'created_at' => now(),

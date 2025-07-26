@@ -21,7 +21,7 @@ class TeamCreateController extends Controller
     public function listSportTypes(Request $request)
     {
         // Example: Get sport types from service or directly from a model
-        $datas = $this->teamCreateService->getAvailableSportTypes();
+        $datas = $this->teamCreateService->getAvailableSportTypes($request);
         return view('teams.create.sport-types', compact('datas'));
     }
 

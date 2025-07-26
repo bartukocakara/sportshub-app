@@ -29,7 +29,43 @@
                     <div class="w-100 flex-lg-row-fluid ">
                         <div class="row g-6 mb-6 g-xl-9 ">
                             <x-filter :clearRoute="route(Route::currentRouteName(), ['id' => request()->route('id')])" />
-                            @include('components.users.card-list')
+                            @foreach ($datas['users'] as $user)
+                                @php
+                                    $deleteModalId = 'delete-request-' . $user->id;
+                                @endphp
+                                <div class="col-md-6 col-xxl-4">
+                                    <div class="card border shadow-sm">
+                                        <div class="card-body d-flex flex-center flex-column py-9 px-5">
+                                            <div class="symbol symbol-65px symbol-circle mb-5">
+                                                @if (!empty($user['avatar']))
+                                                    <img src="{{ $user['avatar'] }}" alt="image" />
+                                                @else
+                                                    <span class="symbol-label fs-2 fw-bold text-white bg-primary">
+                                                        {{ strtoupper(substr($user['first_name'], 0, 1)) }}
+                                                    </span>
+                                                @endif
+                                                <div class="bg-success position-absolute rounded-circle translate-middle start-100 top-100 border-4 border-body h-15px w-15px ms-n3 mt-n3"></div>
+                                            </div>
+                                            <a href="{{ route('users.profile', ['id' => $user['id']]) }}" class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">{{ $user['full_name'] }}</a>
+                                            <div class="fw-semibold text-gray-500 mb-6"></div>
+
+                                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#{{ $deleteModalId }}">
+                                                <i class="fas fa-trash me-2"></i> {{ __('messages.cancel') }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <x-modals.delete-confirmation-modal
+                                    id="{{ $deleteModalId }}"
+                                    :route="route('teams.delete-requested-players', ['id' => request()->route('id'), 'requestId' => $user->id])"
+                                    :title="__('messages.delete_confirmation')"
+                                    :message="__('messages.delete_request_player_team_message')"
+                                    icon="fas fa-trash"
+                                    color="danger"
+                                    emoji="😢"
+                                />
+                            @endforeach
                         </div>
                     </div>
                 </div>

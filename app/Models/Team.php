@@ -31,6 +31,12 @@ class Team extends Model
     {
         return  (new FilterBuilder($query, $filters, $with, 'TeamFilters'))->apply();
     }
+
+    public function playerTeams()
+    {
+        return $this->hasMany(PlayerTeam::class);
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class, 'player_teams', 'team_id', 'user_id');
