@@ -12,7 +12,7 @@ class MatchController extends Controller
 {
     private MatchService $matchService;
 
-    private array $relations = ['statusDefinition', 'sportType', 'court.courtImages', 'matchTeams.matchTeamPlayers'];
+    private array $relations = ['statusDefinition', 'sportType', 'court.courtImages', 'court.courtAddress.city', 'matchTeams.matchTeamPlayers'];
 
     /**
      * Service interface tanımlanıyor.

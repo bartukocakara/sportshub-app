@@ -8,6 +8,11 @@ use App\Enums\TypeEnums\RequestTypeEnum;
 use App\Models\Court;
 use App\Models\Definition;
 use App\Models\Matches;
+use App\Models\MatchOwner;
+use App\Models\MatchTeam;
+use App\Models\MatchTeamPlayer;
+use App\Models\RequestMatchTeamPlayer;
+use App\Models\RequestReceiver;
 use App\Models\RequestTeamMatch;
 use App\Models\RequestTeamMatchPlayer;
 use App\Models\SportType;
@@ -18,7 +23,6 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Container\Container;
 use Faker\Generator;
 
@@ -100,6 +104,12 @@ class MatchesSeeder extends Seeder
                 'match_id' => $matchId,
                 'team_id' => $teamId1,
             ];
+            $matchOwnerInsertRows[] = [
+                    'user_id' => $userId1,
+                    'match_id' => $matchId,
+                    'created_at' => now()
+            ];
+
             $teamMatchPlayerId1 = Str::uuid()->toString();
             $teamMatchPlayerInsertRows[] = [
                 'id' => $teamMatchPlayerId1,
@@ -154,19 +164,26 @@ class MatchesSeeder extends Seeder
         }
         }
 
+
         Matches::insert($matchInsertRows);
-
+        // TeamMatchSetting::insert($teamMatchSettingRows);
+        MatchOwner::insert($matchOwnerInsertRows);
         TeamMatch::insert($teamMatchInsertRows);
-        RequestTeamMatch::insert($requestTeamMatchRows);
 
+        RequestTeamMatch::insert($requestTeamMatchRows);
         TeamMatchPlayer::insert($teamMatchPlayerInsertRows);
         RequestTeamMatchPlayer::insert($requestTeamMatchPlayerInsertRows);
 
-
+        // PLAYER MATCH
         // PLAYER MATCH
         $playerMatchRows = [];
+        $matchTeamInsertRows = [];
+        $matchOwnerInsertRows = [];
+        $matchTeamPlayerInsertRows = [];
+        $requestMatchTeamPlayerInsertRows = [];
+        $requestReceiverInsertRows = [];
 
-
+        $me = User::where('email', 'kocakarabartu@gmail.com')->first();
 
         $x = 0;
 
@@ -185,7 +202,7 @@ class MatchesSeeder extends Seeder
                 $matchTitle = $this->faker->word . ' Match';
 
                 $sportTypeId = $this->faker->randomElement(SportType::all()->pluck('id'));
-                $fromHour = sprintf('%02d', $hour) . ':00'; // Start from 08:00 and increment by an hour
+                $fromHour = sprintf('%02d', $hour) . ':00'; // Start from 12:00 and increment by an hour
                 $toHour = date('H:i:s', strtotime($fromHour . ' + 1 hour'));
 
                 $playerMatchRows[] = [
@@ -193,10 +210,8 @@ class MatchesSeeder extends Seeder
                     'court_id' => $courtId,
                     'match_status' => $this->faker->randomElement(Definition::where('group_key', 'match_status')->get()->pluck('value')),
                     'sport_type_id' => $sportTypeId,
-                    // 'reservation_id' => $reservationId,
                     'type' => 1,
                     'is_court_private' => $this->faker->boolean(),
-                    // 'field_usage_type' => $this->faker->randomElement([FieldUsageTypeEnum::HALF->value, FieldUsageTypeEnum::FULL->value]),
                     'gender' => $this->faker->randomElement(Definition::where('group_key', 'gender')->get()->pluck('value')),
                     'price' => $this->faker->randomFloat(2, 100, 500),
                     'title' => $matchTitle,
@@ -213,120 +228,109 @@ class MatchesSeeder extends Seeder
                     'created_at' => now()
                 ];
 
-
+                $y = 0;
                 for ($j = 0; $j < 5; $j++) {
-                    // if ($y % 5 == 0) {
-                    //     $userId1 = $me->id;  // Assign $myId if $x is a multiple of 5
-                    // } else {
-                    //     $userId1 = $this->faker->randomElement(User::all()->pluck('id')); // Assign random user id otherwise
-                    // }
-                    // $matchTeamPlayerId1 = Str::uuid()->toString();
-                    // $matchTeamPlayerInsertRows[] = [
-                    //     'id' => $matchTeamPlayerId1,
-                    //     'user_id' => $userId1 ,
-                    //     'match_team_id' => $matchTeamId1,
-                    //     'status' => $this->faker->randomElement(Definition::where(['group_key' => 'participant_status'])->get()->pluck('value'))
-                    // ];
-                    // $matchTeamPlayerId2 = Str::uuid()->toString();
-                    // $userId2 = $this->faker->randomElement(User::all()->pluck('id'));
-                    // $positionId = $this->faker->randomElement(Position::where(['sport_type_id' => $sportTypeId])->get()->pluck('id'));
-                    // $matchTeamPlayerInsertRows[] = [
-                    //     'id' => $matchTeamPlayerId2,
-                    //     'user_id' => $userId2,
-                    //     'match_team_id' => $matchTeamId2,
-                    //     'status' => $this->faker->randomElement(Definition::where(['group_key' => 'participant_status'])->get()->pluck('value'))
-                    // ];
+                    if ($y % 5 == 0) {
+                        $userId1 = $me->id;  // Assign $me->id if $y is a multiple of 5
+                    } else {
+                        $userId1 = $this->faker->randomElement(User::all()->pluck('id')); // Assign random user id otherwise
+                    }
 
-                    // $requestMatchTeamPlayerInsertRows[] = [
-                    //     'id' => Str::uuid()->toString(),
-                    //     'requested_user_id' => $this->faker->randomElement(User::all()->pluck('id')),
-                    //     'match_team_id' => $matchTeamId1,
-                    //     'status' => $this->faker->randomElement([RequestStatusEnum::WAITING_FOR_APPROVAL->value,
-                    //         RequestStatusEnum::ACCEPTED->value,
-                    //         RequestStatusEnum::REJECTED->value]),
-                    //     'type' => $this->faker->randomElement([RequestTypeEnum::JOIN->value, RequestTypeEnum::INVITE->value]),
-                    //     'title' => $this->faker->word,
-                    //     'expiring_date' => $expiringDate,
-                    //     'created_at' => now(),
-                    //     'updated_at' => now()
-                    // ];
-                    // $requestMatchTeamPlayerId = Str::uuid()->toString();
-                    // $requestMatchTeamPlayerInsertRows[] = [
-                    //     'id' => $requestMatchTeamPlayerId,
-                    //     'requested_user_id' => $this->faker->randomElement(User::all()->pluck('id')),
-                    //     'match_team_id' => $matchTeamId2,
-                    //     'status' => $this->faker->randomElement([RequestStatusEnum::WAITING_FOR_APPROVAL->value,
-                    //         RequestStatusEnum::ACCEPTED->value,
-                    //         RequestStatusEnum::REJECTED->value]),
-                    //     'type' => $this->faker->randomElement([RequestTypeEnum::JOIN->value, RequestTypeEnum::INVITE->value]),
-                    //     'title' => $this->faker->word,
-                    //     'expiring_date' => $expiringDate,
-                    //     'created_at' => now(),
-                    //     'updated_at' => now()
-                    // ];
-                    // $requestReceiverInsertRows[] = [
-                    //     'id' => Str::uuid()->toString(),
-                    //     'requestable_id' => $requestMatchTeamPlayerId,
-                    //     'requestable_type' => 'App\Models\RequestMatchTeamPlayer',
-                    //     'receiver_user_id' => $userId2,
-                    //     'name' => 'match_team_player',
-                    //     'created_at' => now(),
-                    //     'updated_at' => now()
-                    // ];
+                    $matchTeamId1 = Str::uuid()->toString();
+                    // Add match_team record for matchTeamId1
+                    $matchTeamInsertRows[] = [
+                        'id' => $matchTeamId1,
+                        'match_id' => $id,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ];
 
-                    // $chatUser1Insert[] = [
-                    //     'id' => Str::uuid()->toString(),
-                    //     'user_id' => $userId1,
-                    //     'chat_channel_id' => $playerMatchChatChannelId,
-                    //     'created_at' => now()
-                    // ];
+                    $matchTeamPlayerId1 = Str::uuid()->toString();
+                    $matchTeamPlayerInsertRows[] = [
+                        'id' => $matchTeamPlayerId1,
+                        'user_id' => $userId1,
+                        'match_team_id' => $matchTeamId1,
+                        'status' => $this->faker->randomElement(Definition::where(['group_key' => 'participant_status'])->get()->pluck('value'))
+                    ];
 
-                    // $chatUser2Insert[] = [
-                    //     'id' => Str::uuid()->toString(),
-                    //     'user_id' => $userId2,
-                    //     'chat_channel_id' => $playerMatchChatChannelId,
-                    //     'created_at' => now()
-                    // ];
-                    // $y++;
+                    $matchTeamId2 = Str::uuid()->toString();
+                    // Add match_team record for matchTeamId2
+                    $matchTeamInsertRows[] = [
+                        'id' => $matchTeamId2,
+                        'match_id' => $id,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ];
+
+                    $matchTeamPlayerId2 = Str::uuid()->toString();
+                    $userId2 = $this->faker->randomElement(User::all()->pluck('id'));
+                    $matchTeamPlayerInsertRows[] = [
+                        'id' => $matchTeamPlayerId2,
+                        'user_id' => $userId2,
+                        'match_team_id' => $matchTeamId2,
+                        'status' => $this->faker->randomElement(Definition::where(['group_key' => 'participant_status'])->get()->pluck('value'))
+                    ];
+
+                    $requestMatchTeamPlayerInsertRows[] = [
+                        'id' => Str::uuid()->toString(),
+                        'requested_user_id' => $this->faker->randomElement(User::all()->pluck('id')),
+                        'match_team_id' => $matchTeamId1,
+                        'status' => $this->faker->randomElement([
+                            RequestStatusEnum::WAITING_FOR_APPROVAL->value,
+                            RequestStatusEnum::ACCEPTED->value,
+                            RequestStatusEnum::REJECTED->value
+                        ]),
+                        'type' => $this->faker->randomElement([
+                            RequestTypeEnum::JOIN->value,
+                            RequestTypeEnum::INVITE->value
+                        ]),
+                        'title' => $this->faker->word,
+                        'expiring_date' => $expiringDate,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ];
+
+                    $requestMatchTeamPlayerId = Str::uuid()->toString();
+                    $requestMatchTeamPlayerInsertRows[] = [
+                        'id' => $requestMatchTeamPlayerId,
+                        'requested_user_id' => $this->faker->randomElement(User::all()->pluck('id')),
+                        'match_team_id' => $matchTeamId2,
+                        'status' => $this->faker->randomElement([
+                            RequestStatusEnum::WAITING_FOR_APPROVAL->value,
+                            RequestStatusEnum::ACCEPTED->value,
+                            RequestStatusEnum::REJECTED->value
+                        ]),
+                        'type' => $this->faker->randomElement([
+                            RequestTypeEnum::JOIN->value,
+                            RequestTypeEnum::INVITE->value
+                        ]),
+                        'title' => $this->faker->word,
+                        'expiring_date' => $expiringDate,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ];
+
+                    $requestReceiverInsertRows[] = [
+                        'id' => Str::uuid()->toString(),
+                        'requestable_id' => $requestMatchTeamPlayerId,
+                        'requestable_type' => 'App\Models\RequestMatchTeamPlayer',
+                        'receiver_user_id' => $userId2,
+                        'name' => 'match_team_player',
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ];
+
+                    $y++;
                 }
 
-                // $matchOwnerInsertRows[] = [
-                //     'user_id' => $userId1,
-                //     'match_id' => $id,
-                //     'created_at' => now()
-                // ];
-
-                // foreach ($matchSettingFields as $value) {
-                //     $playerMatchSettingRows[] = [
-                //         'match_id' => $id,
-                //         'match_setting_field_id' => $value->id,
-                //         'value' => $this->faker->randomElement([false, true]),
-                //     ];
-                // }
+                $matchOwnerInsertRows[] = [
+                    'user_id' => $userId1,
+                    'match_id' => $id,
+                    'created_at' => now()
+                ];
 
                 $x++;
             }
         }
-
-        // Reservation::insert($reservations);
-        // ReservationSportType::insert($reservationSportTypes);
-        // RequestReservation::insert($requestReservationRows);
-        // RequestReceiver::insert($requestReceiverInsertRows);
-
-        Matches::insert($playerMatchRows);
-        // RequestReservationMatch::insert($requestReservationMatchRows);
-
-        // MatchSetting::insert($playerMatchSettingRows);
-        // MatchOwner::insert($matchOwnerInsertRows);
-        // MatchTeam::insert($matchTeamInsertRows);
-        // MatchTeamPlayer::insert($matchTeamPlayerInsertRows);
-        // RequestMatchTeamPlayer::insert($requestMatchTeamPlayerInsertRows);
-        // ChatUser::insert($chatUser1Insert);
-        // ChatUser::insert($chatUser2Insert);
-        // ChatMessage::create([
-        //     'id' => Str::uuid()->toString(),
-        //     'chat_user_id' => $this->faker->randomElement(collect($chatUser1Insert)->pluck('id')->toArray()),
-        //     'content' => $this->faker->paragraph(3),
-        // ]);
     }
 }

@@ -15,7 +15,7 @@ class TeamMatchPlayer extends Model
     protected $fillable = [
         'user_id',
         'team_match_id',
-        'team_match_player_status_id'
+        'status'
     ];
 
     public $timestamps = false;

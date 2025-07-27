@@ -19,35 +19,68 @@
                             </li>
                             <li class="breadcrumb-item text-gray-700 fw-bold lh-1">{{ __('messages.matches') }}</li>
                         </ul>
+                        <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bolder fs-1 lh-0">{{ __('messages.matches') }}</h1>
                     </div>
+                    @if($datas['is_team_leader'])
                     <a href="{{ route('matches.create') }}" class="btn btn-sm btn-success ms-3 px-4 py-3" >
                         {{ __('messages.create_match') }}
                     </a>
+                    @endif
                 </div>
             </div>
         </div>
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div id="kt_app_content_container" class="app-container container-fluid">
-                    <x-filter :clearRoute="route(Route::currentRouteName(), ['id' => request()->route('id')])" />
-                    @php
-                        $cityTitles = collect($datas['cities'] ?? [])->pluck('title', 'id')->toArray();
-                        $sportTypeTitles = collect($datas['sport_types'] ?? [])->pluck('title', 'id')->toArray();
-                    @endphp
-                    <x-filter-tags
-                        :excludedFilters="['page', 'per_page']"
-                        :titleMaps="[
-                            'city_id' => $cityTitles,
-                            'sport_type_id' => $sportTypeTitles,
-                        ]"
-                        translationsPrefix="messages"
-                    />
-                @include('components.pagination.default', ['data' => $datas['matches']])
-                <div class="row g-6 g-xl-9 mt-2">
+                <div id="profile-match-list" class="row g-6 g-xl-9">
                     @include('components.matches.card-list')
                 </div>
+                @if($datas['matches']['meta']['current_page'] < $datas['matches']['meta']['last_page'])
+                <div class="text-center my-4">
+                    <button id="showMoreButton" class="btn fw-semibold d-flex align-items-center justify-content-center gap-2" style="background-color: #f4f4f4; color: grey; border-radius: 25px; padding: 10px 20px;">
+                        ⬇️ {{ __('messages.show_more') }}
+                    </button>
+                </div>
+                @endif
             </div>
         </div>
     </div>
 </div>
 
 @endsection
+@section('page-scripts')
+<script>
+    window.ASSET_URL = "{{ asset('') }}"; // Base asset URL
+    window.MATCHES_ACTIVITIES_ROUTE = "{{ route('matches.activities', ['id' => '__ID__']) }}"; // Placeholder for ID
+    window.DEFAULT_XING_ICON = "{{ asset('assets/media/svg/brand-logos/xing-icon.svg') }}"; // Default icon path
+</script>
+<script src="{{ asset('assets/js/card-list/match-card-list.js') }}"></script>
+<script type="module">
+
+    import { LoadMoreController, getAvatarUrl, debounce } from '{{ asset('assets/js/load-more.js') }}';
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        @isset($datas['matches'])
+        const matchLoadMore = new LoadMoreController({
+            apiUrl: '{{ route('api.matches.index') }}',
+            containerId: 'profile-match-list',
+            spinnerId: 'spinner',
+            showMoreButtonId: 'showMoreButton',
+            renderItemCallback: renderMatchCard, // Pass the function reference
+            initialMeta: {
+                current_page: {{ (int) $datas['matches']['meta']['current_page'] }},
+                last_page: {{ (int) $datas['matches']['meta']['last_page'] }}
+            },
+            extraParams: {
+                team_id: '{{ $datas['team']->id }}',
+                type: 2
+            },
+            spinnerDelay: 200,
+            showMoreText: '⬇️ {{ __('messages.show_more') }}',
+            noMoreResultsText: '{{ __('messages.no_more_results') }}'
+        });
+        @endisset
+    });
+</script>
+@endsection
+

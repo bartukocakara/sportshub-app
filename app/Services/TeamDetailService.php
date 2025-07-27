@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\Request\RequestStatusEnum;
+use App\Enums\TypeEnums\MatchTypeEnum;
 use App\Enums\TypeEnums\RequestTypeEnum;
 use App\Http\Resources\ActivityResource;
 use App\Http\Resources\AnnouncementResource;
@@ -26,6 +27,8 @@ use App\Repositories\UserRepository;
 use App\Services\AccessServices\TeamAccessService;
 use App\Support\Messages\TeamSwalMessages;
 use App\Traits\LogsActivity;
+use App\ViewModels\TeamActivitiesViewModel;
+use App\ViewModels\TeamMatchesViewModel;
 use App\ViewModels\TeamNotInPlayersViewModel;
 use App\ViewModels\TeamPlayersViewModel;
 use App\ViewModels\TeamProfileViewModel;
@@ -307,11 +310,15 @@ class TeamDetailService extends CrudService
      */
     public function getTeamMatchesData(Request $request, string $teamId): array
     {
-        $datas['matches'] = MatchResource::collection((new MatchRepository(new Matches()))->all($request, ['sportType', 'court.courtAddress.district.city'], false))->response()->getData(true);
-        $datas['cities']  = $this->metaDataService->getCitiesByRequest();
-        $datas['sport_types'] = $this->metaDataService->getSportTypes();
-
-        return $datas;
+        $team = $this->teamRepository->find($teamId, ['users', 'teamLeaders', 'requestPlayerTeams']);
+        $matchRepo = app(MatchRepository::class);
+        $request->merge([
+            'team_id' => $teamId,
+            'type' => MatchTypeEnum::TEAM->value
+        ]);
+        $matches = $matchRepo->all($request, ['teamMatches', 'statusDefinition', 'court.courtAddress.city']);
+        $viewModel = new TeamMatchesViewModel($team, $matches, new TeamAccessService());
+        return $viewModel->toArray();
     }
 
     /**
@@ -323,13 +330,10 @@ class TeamDetailService extends CrudService
      */
     public function getTeamActivitiesData(Request $request, string $teamId): array
     {
-        // $request->merge(['causer_id' => $userId]);
-        $relations = ['subject'];
-        $datas['activities'] = ActivityResource::collection((new ActivityRepository(new Activity()))->all($request, $relations, false))->response()->getData(true);
-        $datas['cities']     = $this->metaDataService->getCitiesByRequest();
-        $datas['sport_types'] = $this->metaDataService->getSportTypes();
+        $team = $this->teamRepository->find($teamId, ['users', 'teamLeaders', 'requestPlayerTeams']);
+        $viewModel = new TeamActivitiesViewModel($team, new TeamAccessService());
 
-        return $datas;
+        return $viewModel->toArray($request);
     }
 
     /**

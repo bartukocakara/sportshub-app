@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Matches;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -13,12 +15,12 @@ class ActivityResource extends JsonResource
         $subjectTitle = null;
 
         // Subject route üretimi
-        if ($this->subject_type === \App\Models\Matches::class) {
+        if ($this->subject_type === Matches::class) {
             $subjectUrl = route('matches.profile', ['id' => $this->subject_id]);
             $subjectTitle = 'Match #' . $this->subject->title;
         }
 
-        if ($this->subject_type === \App\Models\Team::class) {
+        if ($this->subject_type === Team::class) {
             $subjectUrl = route('teams.profile', ['id' => $this->subject_id]);
             $subjectTitle = 'Team #' . $this->subject->title;
         }

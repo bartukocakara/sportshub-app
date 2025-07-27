@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Api\ActivityController;
 use App\Http\Controllers\Api\AnnouncementController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\CommissionController;
 use App\Http\Controllers\CourtBusinessController;
 use App\Http\Controllers\Api\DistrictController; // DistrictController might still be API specific
 use App\Http\Controllers\Api\CourtReservationPricingController; // CourtReservationPricingController might still be API specific
+use App\Http\Controllers\Api\MatchController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +26,9 @@ Route::prefix('api')->middleware(['auth:web'])->name('api.')->group(function () 
     // Announcements Routes (URL: /api/announcements, Name: api.announcements.index)
     Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
     Route::post('/announcements', [AnnouncementController::class, 'store'])->name('announcements.store');
+
+    Route::get('/activities', [ActivityController::class, 'index'])->name('activities.index');
+    Route::get('/matches', [MatchController::class, 'index'])->name('matches.index');
 
     // User/Players Routes (URL: /api/users, Name: api.users.index)
     Route::get('/users', [UserController::class, 'index'])->name('users.index');

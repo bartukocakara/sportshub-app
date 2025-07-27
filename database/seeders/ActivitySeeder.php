@@ -2,10 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Enums\TypeEnums\ActivityTypeEnum;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\Matches;
 use App\Models\Activity;
+use App\Models\Court;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 
@@ -17,10 +19,14 @@ class ActivitySeeder extends Seeder
 
         foreach ($users as $user) {
             $activities = [
-                ['type' => 'match.created', 'subject' => Matches::inRandomOrder()->first()],
-                ['type' => 'match.joined',  'subject' => Matches::inRandomOrder()->first()],
-                ['type' => 'team.created',  'subject' => Team::inRandomOrder()->first()],
-                ['type' => 'team.joined',   'subject' => Team::inRandomOrder()->first()],
+                ['type' => ActivityTypeEnum::MatchCreated,  'subject' => Matches::inRandomOrder()->first()],
+                ['type' => ActivityTypeEnum::MatchUpdated,  'subject' => Matches::inRandomOrder()->first()],
+                ['type' => ActivityTypeEnum::MatchCanceled, 'subject' => Matches::inRandomOrder()->first()],
+                ['type' => ActivityTypeEnum::MatchJoined,   'subject' => Matches::inRandomOrder()->first()],
+                ['type' => ActivityTypeEnum::TeamCreated,   'subject' => Team::inRandomOrder()->first()],
+                ['type' => ActivityTypeEnum::TeamUpdated,   'subject' => Team::inRandomOrder()->first()],
+                ['type' => ActivityTypeEnum::TeamJoined,    'subject' => Team::inRandomOrder()->first()],
+                ['type' => ActivityTypeEnum::CourtCreated,  'subject' => Court::inRandomOrder()->first()],
             ];
 
             foreach ($activities as $item) {
@@ -31,11 +37,11 @@ class ActivitySeeder extends Seeder
                 Activity::create([
                     'id'            => Str::uuid(),
                     'causer_id'     => $user->id,
-                    'type'          => $item['type'],
+                    'type'          => $item['type']->value,
                     'subject_type'  => get_class($item['subject']),
                     'subject_id'    => $item['subject']->id,
                     'properties'    => [
-                        'key'    => $item['type'],
+                        'key'    => $item['type']->value,
                         'params' => [
                             'user' => $user->first_name,
                             'id'   => $item['subject']->id,

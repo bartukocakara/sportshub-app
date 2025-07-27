@@ -39,9 +39,14 @@ class Matches extends Model
         'to_hour'
     ];
 
-    public function scopeFilterBy($query, $filters, array $with = [])
+    public function scopeFilterByPlayer($query, $filters, array $with = [])
     {
-        return  (new FilterBuilder($query, $filters, $with, 'MatchFilters'))->apply($with);
+        return  (new FilterBuilder($query, $filters, $with, 'PlayerMatchFilters'))->apply();
+    }
+
+    public function scopeFilterByTeam($query, $filters, array $with = [])
+    {
+        return  (new FilterBuilder($query, $filters, $with, 'TeamMatchFilters'))->apply();
     }
 
     public function statusDefinition()
@@ -89,5 +94,47 @@ class Matches extends Model
     public function matchTeams()
     {
         return $this->hasMany(MatchTeam::class, 'match_id', 'id');
+    }
+
+    public function teamMatches()
+    {
+        return $this->hasMany(TeamMatch::class, 'match_id', 'id');
+    }
+
+    public function scopeIsAvailableAt($query, $fromDate, $toDate, $fromHour, $toHour, $playDate = null)
+    {
+        // ->where('match_status_id', StatusEnum::APPROVED)
+        return $query->where(function ($query) use ($fromDate, $toDate, $playDate) {
+            if ($playDate) {
+                $query->where('play_date', '=', $playDate);
+            } else {
+                $query->whereBetween('play_date', [$fromDate, $toDate]);
+            }
+            })->whereBetween('start_date', [$fromDate, $toDate])
+                    ->where(function ($query) use ($fromHour, $toHour) {
+
+                        $query->where(function ($query) use ($fromHour, $toHour) {
+                            $query->where('from_hour', '>=', $fromHour)
+                                ->where('from_hour', '<', $toHour);
+                        })
+                        ->orWhere(function ($query) use ($fromHour) {
+                            $query->where('from_hour', '<', $fromHour)
+                                ->where('to_hour', '>', $fromHour);
+                        });
+        });
+    }
+
+    public function scopeIsNotAvailableAt($query, $fromDate, $toDate, $fromTime, $toTime)
+    {
+        return $query->where('start_date', $fromDate)->orWhereBetween('play_date', [$fromDate, $toDate])
+            ->where(function ($query) use ($fromTime) {
+                        $query->where('from_hour', '>', $fromTime)
+                            ->where('to_hour', '<', $fromTime);
+                });
+    }
+
+    public function matchOwners()
+    {
+        return $this->belongsToMany(User::class, 'match_owners', 'match_id', 'user_id');
     }
 }

@@ -70,6 +70,7 @@ class DatabaseSeeder extends Seeder
             RequestCreateCourtSeeder::class,
             RequestReceiverSeeder::class,
             FollowSeeder::class,
+            MatchOwnerSeeder::class
             // CourtAddressSeeder::class
         ]);
     }
