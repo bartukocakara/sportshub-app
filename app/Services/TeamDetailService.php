@@ -66,8 +66,9 @@ class TeamDetailService extends CrudService
      */
     public function getTeamProfileData(Request $request, string $id, array $with, bool $useCache = false): array
     {
-        $team = $this->teamRepository->find($id, ['users', 'teamLeaders', 'city', 'sportType', 'statusDefinition', 'requestPlayerTeams']);
+        $team = $this->teamRepository->find($id, ['users', 'teamLeaders.user', 'city', 'sportType', 'statusDefinition', 'requestPlayerTeams']);
         $viewModel = new TeamProfileViewModel($team, new TeamAccessService(), $this->metaDataService);
+
         return $viewModel->toArray($request);
     }
 

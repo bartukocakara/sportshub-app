@@ -136,7 +136,6 @@
                             </div>
                         </form>
                     @endif
-
                     @isset($datas['announcements'])
                         <div class="mb-10" id="kt_social_feeds_posts">
                             <div>
@@ -202,17 +201,6 @@
             showMoreText: '⬇️ {{ __('messages.show_more') }}',
             noMoreResultsText: '{{ __('messages.no_more_results') }}'
         });
-
-        // Example: If you had a search input for announcements, you'd use debounce and setFilter
-        /*
-        const announcementSearchInput = document.getElementById('announcementSearchInput');
-        if (announcementSearchInput) {
-            announcementSearchInput.addEventListener('input', debounce(function (e) {
-                const searchValue = e.target.value.trim();
-                announcementLoadMore.setFilter({ title: searchValue }); // Or whatever your search parameter is
-            }, 400));
-        }
-        */
     @endisset
 </script>
 @endsection

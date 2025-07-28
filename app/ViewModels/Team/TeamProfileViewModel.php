@@ -4,6 +4,7 @@ namespace App\ViewModels\Team;
 
 use App\Http\Resources\AnnouncementResource;
 use App\Http\Resources\DefinitionResource;
+use App\Http\Resources\TeamLeaderResource;
 use App\Http\Resources\TeamResource;
 use App\Models\Announcement;
 use App\Models\Definition;
@@ -36,6 +37,7 @@ class TeamProfileViewModel
             'user_status' => $this->accessService->getUserRequestStatus($user, $this->team),
             'user_role' => $this->accessService->getUserRole($user, $this->team),
             'is_team_leader' => $this->accessService->isTeamLeader($user, $this->team),
+            'team_leaders' => TeamLeaderResource::collection($this->accessService->getTeamLeaders($this->team)),
             'request_id' => $this->accessService->getUserTeamRequest($user, $this->team)?->id,
             'is_request_receiver' => $this->accessService->isRequestReceiver($user, $this->team),
             'is_following' => $this->accessService->isFollowing($user, $this->team),

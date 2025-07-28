@@ -18,6 +18,26 @@
                     <p class="badge {{ $datas['team']->status_badge }} text-900 fs-10 mb-0">
                         {!! $datas['team']->status_badge_with_icon !!}
                     </p>
+                    <h6 class="my-3 fw-semibold fs-6 text-gray-700">
+                        {{ __('messages.team_leaders') }}
+                    </h6>
+                    <div class="symbol-group symbol-hover">
+                        @foreach ($datas['team_leaders'] as $index => $teamLeader)
+                            @if ($index < 3)
+                                @if ($teamLeader->user->avatar)
+                                    <a href="{{ route('users.profile', ['id' => $teamLeader->user->id]) }}" class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" aria-label="{{ $teamLeader->user->full_name }}" data-bs-original-title="{{ $teamLeader->user->full_name }}">
+                                        <img alt="Pic" src="{{ asset('storage/' . $teamLeader->user->avatar) }}" class="symbol symbol-35px symbol-circle" />
+                                    </a>
+                                @else
+                                    <a href="{{ route('users.profile', ['id' => $teamLeader->user->id]) }}" class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" data-bs-original-title="{{ $teamLeader->user->full_name }}">
+                                        <span class="symbol-label bg-primary text-inverse-primary fw-bold">
+                                            {{ strtoupper(Str::substr($teamLeader->user->full_name, 0, 1)) }}
+                                        </span>
+                                    </a>
+                                @endif
+                            @endif
+                        @endforeach
+                    </div>
                 </div>
                 <div class="d-flex align-items-center text-gray-700">
                     📍

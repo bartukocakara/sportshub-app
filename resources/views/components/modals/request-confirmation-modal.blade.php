@@ -76,7 +76,7 @@
                         <textarea name="title"
                                   id="message_textarea"
                                   class="form-control"
-                                  placeholder="{{ __('messages.write_a_message') }}"
+                                  placeholder="{{ __('messages.write_a_message_to_join') }}"
                                   rows="3"
                                   maxlength="255"></textarea>
                     </div>

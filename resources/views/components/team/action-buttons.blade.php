@@ -46,15 +46,15 @@
         <i class="fas fa-user-check me-1"></i> {{ __('messages.member') }}
     </button>
 
-    <a href="#" class="btn btn-sm btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#kt_modal_quit_membership">
-        <i class="fas fa-sign-out-alt me-1"></i> {{ __('messages.quit_membership') }}
+    <a href="#" class="btn btn-sm btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#kt_modal_quit_team">
+        <i class="fas fa-sign-out-alt me-1"></i> {{ __('messages.quit_team') }}
     </a>
 
     <x-modals.delete-confirmation-modal
-        id="kt_modal_quit_membership"
+        id="kt_modal_quit_team"
         :route="route('player-teams.destroy', $team->id)"
         :title="__('messages.quit')"
-        :message="__('messages.quit_membership')"
+        :message="__('messages.quit_team')"
         :emotionalWarning="__('messages.quit_team_emotional_warning')"
         :buttonText="__('messages.quit')"
         icon="fas fa-sign-out-alt"

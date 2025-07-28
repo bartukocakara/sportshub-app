@@ -14,6 +14,9 @@ class TeamLeaderResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'user_id' => $this->user_id,
+            'user' => new UserResource($this->user),
+        ];
     }
 }

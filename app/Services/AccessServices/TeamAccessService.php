@@ -5,6 +5,7 @@ namespace App\Services\AccessServices;
 use App\Enums\FollowStatusEnum;
 use App\Models\Team;
 use App\Models\User;
+use Illuminate\Support\Collection;
 
 class TeamAccessService
 {
@@ -30,6 +31,11 @@ class TeamAccessService
     public function isTeamLeader(User $user, Team $team): bool
     {
         return $team->teamLeaders->pluck('user_id')->contains(fn ($id) => $id === $user->id);
+    }
+
+    public function getTeamLeaders(Team $team): Collection
+    {
+        return $team->teamLeaders;
     }
 
     public function getUserTeamRequest(User $user, Team $team): ?\App\Models\RequestPlayerTeam
