@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\TypeEnums\RequestTypeEnum;
 use Illuminate\Http\Request;
 use App\Services\MatchDetailService; // Import your service
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;

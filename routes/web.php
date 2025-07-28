@@ -67,9 +67,17 @@ Route::prefix('users/{id}')->name('users.')->group(function () {
 
 Route::prefix('matches/{id}')->name('matches.')->group(function () {
     Route::get('activities', [MatchDetailController::class, 'activities'])->name('activities');
-    Route::get('announcements', [MatchDetailController::class, 'announcements'])->name('announcements');
     Route::get('profile', [MatchDetailController::class, 'profile'])->name('profile');
-    Route::get('teams', [MatchDetailController::class, 'teams'])->name('teams');
+    Route::get('players', [MatchDetailController::class, 'players'])->name('players');
+    Route::delete('match-team-players/{matchTeamPlayerId}', [MatchDetailController::class, 'destroyPlayer'])->name('match-team-players.destroy');
+    Route::get('invited-players', [MatchDetailController::class, 'getRequestPlayerTeamsInviteData'])->name('requested-players.invite');
+    Route::delete('invited-players/{requestId}', [MatchDetailController::class, 'deleteRequestPlayerTeamsData'])->name('delete-requested-players');
+    Route::get('requested-players', [MatchDetailController::class, 'getRequestPlayerTeamsJoinData'])->name('requested-players.join');
+    Route::post('requested-players/{requestId}/accept', [MatchDetailController::class, 'acceptRequestPlayerTeamData'])->name('accept-requested-player');
+    Route::delete('requested-players/{requestId}/reject', [MatchDetailController::class, 'rejectRequestPlayerTeamData'])->name('delete-requested-player');
+    Route::get('new-players', [MatchDetailController::class, 'getNotInTeamPlayersData'])->name('new-players');
+    Route::post('invite-players/{userId}', [MatchDetailController::class, 'invitePlayer'])->name('invite-players');
+    Route::get('match-teams', [MatchDetailController::class, 'teams'])->name('teams');
 });
 
 Route::prefix('teams/{id}')->name('teams.')->group(function () {

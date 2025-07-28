@@ -137,4 +137,9 @@ class Matches extends Model
     {
         return $this->belongsToMany(User::class, 'match_owners', 'match_id', 'user_id');
     }
+
+    public function requestMatchTeamPlayers()
+    {
+        return $this->hasManyThrough(RequestMatchTeamPlayer::class, MatchTeam::class, 'match_id', 'match_team_id');
+    }
 }

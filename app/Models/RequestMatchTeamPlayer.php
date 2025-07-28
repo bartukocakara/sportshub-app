@@ -64,4 +64,10 @@ class RequestMatchTeamPlayer extends Model
     {
         return $this->belongsTo(User::class, 'requested_user_id', 'id');
     }
+
+    public function receivers()
+    {
+        return $this->hasMany(RequestReceiver::class, 'requestable_id')
+            ->where('requestable_type', self::class);
+    }
 }

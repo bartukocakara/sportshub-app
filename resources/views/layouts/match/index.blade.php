@@ -79,7 +79,7 @@
                         'route' => 'matches.teams',
                         'icon' => "<i class='fas fa-handshake'></i>",
                         'params' => ['id' => $id],
-                        'label' => __('messages.matches'),
+                        'label' => __('messages.teams'),
                         'visible_status' => ['leader', 'member', 'none'],
                     ],
                     [

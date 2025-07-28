@@ -11,10 +11,10 @@ class MatchAccessService
     public function getUserRole(User $user, Matches $match): string
     {
         if ($this->isMatchOwner($user, $match)) {
-            return 'leader';
+            return 'match_owner';
         }
 
-        if ($match->users->contains('id', $user->id)) {
+        if ($match->matchTeams()->whereHas('matchTeamPlayers', fn ($query) => $query->where('user_id', $user->id))->exists()) {
             return 'member';
         }
 
@@ -34,7 +34,7 @@ class MatchAccessService
 
     public function getMatchTeamPlayerRequest(User $user, Matches $match): ?RequestMatchTeamPlayer
     {
-        return $match->matchTeams()
+        return $match->requestMatchTeamPlayers()
             ->where('requested_user_id', $user->id)
             ->latest()
             ->first();
