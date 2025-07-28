@@ -33,4 +33,9 @@ class HomeController extends Controller
     }
 
 
+    public function welcome(Request $request) : View
+    {
+        return view('welcome');
+    }
+
 }

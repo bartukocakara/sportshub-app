@@ -30,8 +30,8 @@ use App\Http\Controllers\UserDetailController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/home', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'welcome'])->name('welcome');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/subscription-plans', [SubscriptionPlanController::class, 'index']);
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
 
