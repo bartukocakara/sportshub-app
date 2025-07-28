@@ -168,41 +168,21 @@
             </div>
         </div>
         @endisset
-        <div class="d-md-none position-fixed bottom-0 start-0 end-0 bg-white shadow py-2 px-4 z-index-50 d-flex gap-2">
-            <button onclick="scrollToAnnouncements()" class="btn btn-secondary w-100 fw-semibold py-3" style="background-color:#F4F4F4">
-                📢 {{ __('messages.go_to_announcements') }}
-            </button>
-            <button id="scrollTopButton" class="btn btn-light fw-semibold d-flex align-items-center justify-content-center" style="width: 56px; height: 100%; font-size: 1.5rem;">
-                ⬆️
-            </button>
-            <button id="openSidebarButton" class="btn btn-light fw-semibold d-flex align-items-center justify-content-center" style="width: 56px; height: 100%; font-size: 1.5rem;">
-                ☰
-            </button>
-        </div>
-        <button id="kt_app_sidebar_mobile_toggle" class="d-none"></button>
+
     </div>
 </div>
 @include('components.team.modals.edit-profile-modal')
-<div id="scrollTopDesktop" style="position: fixed; bottom: 20px; right: 20px; z-index: 100; display: none; ">
-    <button onclick="scrollToTop()" class="btn btn-icon shadow rounded-circle"
-            style="background-color:#f4f4f4; color: white; width: 48px; height: 48px; font-size: 1.2rem;">
-        ⬆️
-    </button>
-</div>
+
 @endsection
 @section('page-scripts')
 <script src="{{ asset('assets/js/card-list/announcement-card-list.js') }}"></script>
 
-<script src="{{ asset('assets/js/mobile-buttons.js') }}"></script>
-
 <script type="module">
     import { LoadMoreController, getAvatarUrl, debounce } from '{{ asset('assets/js/load-more.js') }}';
-
     document.addEventListener("DOMContentLoaded", function () {
         if (typeof initializeMobileButtons === 'function') {
             initializeMobileButtons();
         }
-
         @isset($datas['announcements'])
         const announcementLoadMore = new LoadMoreController({
             apiUrl: '{{ route('api.announcements.index') }}',
@@ -233,24 +213,6 @@
             }, 400));
         }
         */
-        @endisset
-
-        // Handle desktop scroll-to-top button visibility
-        const desktopBtn = document.getElementById('scrollTopDesktop');
-        if (desktopBtn) { // Check if the button exists before adding listener
-            window.addEventListener('scroll', function () {
-                if (window.scrollY > 300) {
-                    desktopBtn.classList.remove('d-none');
-                } else {
-                    desktopBtn.classList.add('d-none');
-                }
-            });
-
-            // Remove desktop scroll button on mobile screens upon initial load
-            if (window.innerWidth < 768) {
-                desktopBtn.remove();
-            }
-        }
-    });
+    @endisset
 </script>
 @endsection

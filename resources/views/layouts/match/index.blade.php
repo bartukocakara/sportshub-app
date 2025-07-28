@@ -1,3 +1,27 @@
+@section('custom-styles')
+<style>
+        /* Masaüstünde scroll-to-top butonunu göster, mobilde gizle */
+        #scrollTopDesktop {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            display: none; /* Varsayılan olarak gizli */
+        }
+
+        @media (min-width: 768px) {
+            #scrollTopDesktop {
+                display: flex !important; /* Sadece md ve üzeri görünür */
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            #scrollTopDesktop {
+                display: none !important; /* Mobilde gizle (önlem amaçlı tekrar) */
+            }
+        }
+    </style>
+@endsection
 @include('components.header')
 <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
     <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
@@ -9,70 +33,79 @@
         </div>
 
         <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
-            @include('components.sidebar')
+            @php
+                $id = request()->route('id');
+                $menuItems = [
+                    [
+                        'route' => 'matches.profile',
+                        'icon' => "<i class='fas fa-user me-1'></i>",
+                        'params' => ['id' => $id],
+                        'label' => __('messages.details'),
+                        'visible_status' => ['leader', 'member', 'none'], // bu menüyü sadece lider ve üyeler görebilir
+                    ],
+                    [
+                        'route' => 'matches.players',
+                        'icon' => "<i class='fas fa-users me-1'></i>",
+                        'label' => __('messages.players'),
+                        'visible_status' => ['leader', 'member', 'none'], // sadece lider görebilir
+                        'children' => [
+                            [
+                                'route' => 'matches.requested-players.invite',
+                                'params' => ['id' => $id],
+                                'label' => __('messages.invited_players'),
+                                'visible_status' => ['leader'],
+                            ],
+                            [
+                                'route' => 'matches.players',
+                                'params' => ['id' => $id],
+                                'label' => __('messages.players'),
+                                'visible_status' => ['leader', 'member', 'none'],
+                            ],
+                            [
+                                'route' => 'matches.new-players',
+                                'params' => ['id' => $id],
+                                'label' => __('messages.add_new_players'),
+                                'visible_status' => ['leader'],
+                            ],
+                            [
+                                'route' => 'matches.requested-players.join',
+                                'params' => ['id' => $id],
+                                'label' => __('messages.requested_players'),
+                                'visible_status' => ['leader'],
+                            ],
+                        ],
+                    ],
+                    [
+                        'route' => 'matches.teams',
+                        'icon' => "<i class='fas fa-handshake'></i>",
+                        'params' => ['id' => $id],
+                        'label' => __('messages.matches'),
+                        'visible_status' => ['leader', 'member', 'none'],
+                    ],
+                    [
+                        'route' => 'matches.activities',
+                        'icon' => "<i class='fas fa-map-marker-alt'></i>",
+                        'params' => ['id' => $id],
+                        'label' => __('messages.activities'),
+                        'visible_status' => ['leader', 'member', 'none'],
+                    ],
+                ];
+
+            @endphp
+            @include('components.matches.show.sidebar', [
+                'menuItems' => $menuItems,
+                'userStatus' => $datas['user_status'],
+                'isMatchOwner' => $datas['is_match_owner'],
+            ])
             <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
                 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
                     @php
-                        $matchId = request()->route('id'); // Get the 'id' parameter from the URL
+                        $userId = request()->route('id'); // Get the 'id' parameter from the URL
                         $currentRoute = Route::currentRouteName();
                     @endphp
                     <div class="d-flex flex-column flex-column-fluid">
-                        <div id="kt_app_toolbar" class="app-toolbar pt-5">
-                            <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
-                                <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
-                                    <div class="page-title d-flex flex-column gap-1 me-3 mb-2">
-                                        <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bolder fs-1 lh-0">
-                                            {{ __('messages.details') }}
-                                        </h1>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                            <div id="kt_app_content" class="app-content flex-column-fluid">
-                                <div id="kt_app_content_container" class="app-container container-fluid">
-                                    <div class="card mb-5 mb-xxl-8">
-                                        <div class="card-body p-4">
-                                            @php
-                                                $navItems = [
-                                                    [
-                                                        'route' => 'matches.announcements',
-                                                        'icon' => 'fas fa-bell',
-                                                        'label' => __('messages.announcements'),
-                                                    ],
-                                                    [
-                                                        'route' => 'matches.profile',
-                                                        'icon' => 'fas fa-file-alt',
-                                                        'label' => __('messages.details'),
-                                                    ],
-                                                    [
-                                                        'route' => 'matches.teams',
-                                                        'icon' => 'fas fa-users',
-                                                        'label' => __('messages.teams'),
-                                                    ],
-                                                    [
-                                                        'route' => 'matches.activities',
-                                                        'icon' => 'fas fa-map-marker-alt',
-                                                        'label' => __('messages.activities'),
-                                                    ],
-                                                ];
-                                            @endphp
-
-                                            <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-6">
-                                                @foreach($navItems as $item)
-                                                    <li class="nav-item mt-2">
-                                                        <a class="nav-link text-active-primary ms-0 me-10 py-5 {{ $currentRoute === $item['route'] ? 'active' : '' }}"
-                                                        href="{{ route($item['route'], ['id' => $matchId]) }}">
-                                                            <i class="{{ $item['icon'] }} me-1"></i>
-                                                            {{ $item['label'] }}
-                                                        </a>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    @yield('content')
-                                </div>
-                            </div>
+                        <div id="kt_app_content" class="app-content flex-column-fluid">
+                            @yield('content')
                         </div>
                     </div>
 
@@ -104,13 +137,14 @@
 <script src="{{ asset('assets/js/toaster.min.js') }}"></script>
 <script>
     toastr.options = {
-        closeButton: true, // Show close button
-        progressBar: true, // Show progress bar
-        positionClass: 'toast-top-right', // Position of the toast
-        timeOut: 3000, // Auto-close after 3 seconds
-        extendedTimeOut: 1000, // Additional time if hovered
+        closeButton: true,
+        progressBar: true,
+        positionClass: 'toast-top-right',
+        timeOut: 3000,
+        extendedTimeOut: 1000,
     };
 </script>
+<x-toast-message />
 <script src="{{ asset('assets/js/custom/auth-modal.js') }}"></script>
 <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
 <script src="{{ asset('assets/js/custom/form.js') }}"></script>
@@ -118,6 +152,8 @@
 <script src="{{ asset('assets/js/widgets.bundle.js') }}"></script>
 <script src="{{ asset('assets/js/custom/widgets.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/tr.js"></script>
+<x-swal-message />
+
 @yield('page-scripts')
 </body>
 </html>

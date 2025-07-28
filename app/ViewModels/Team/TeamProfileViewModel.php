@@ -1,8 +1,7 @@
 <?php
 
-namespace App\ViewModels;
+namespace App\ViewModels\Team;
 
-use App\Enums\UserTeamStatusEnum;
 use App\Http\Resources\AnnouncementResource;
 use App\Http\Resources\DefinitionResource;
 use App\Http\Resources\TeamResource;

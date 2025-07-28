@@ -1,19 +1,19 @@
 <?php
 
-namespace App\ViewModels;
+namespace App\ViewModels\Team;
 
-use App\Http\Resources\ActivityResource;
-use App\Http\Resources\TeamResource;
-use App\Models\Activity;
+use App\Enums\Request\RequestStatusEnum;
+use App\Http\Resources\Request\RequestPlayerTeamResource;
 use App\Models\Team;
 use App\Services\AccessServices\TeamAccessService;
 use Illuminate\Http\Request;
 
-class TeamActivitiesViewModel
+class TeamRequestPlayerTeamViewModel
 {
     public function __construct(
         protected Team $team,
         protected TeamAccessService $accessService,
+        protected string $type
     ) {}
 
     public function toArray(Request $request): array
@@ -23,13 +23,14 @@ class TeamActivitiesViewModel
             'subject_id' => $this->team->id,
             'subject_type' => 'Team',
         ]);
-        $activities =  Activity::filterBy($request->all(), []);
+        $requestPlayerTeams = $this->team->requestPlayerTeams()->where([
+            'type' => $this->type,
+            'status' => RequestStatusEnum::WAITING_FOR_APPROVAL->value
+            ])->get();
         return [
-            'team' => TeamResource::make($this->team),
-            'user_status' => $this->accessService->getUserRequestStatus($user, $this->team),
+            'request_player_teams' => RequestPlayerTeamResource::collection($requestPlayerTeams),
             'user_role' => $this->accessService->getUserRole($user, $this->team),
             'is_team_leader' => $this->accessService->isTeamLeader($user, $this->team),
-            'activities' => ActivityResource::collection($activities)->response()->getData(true),
         ];
     }
 }

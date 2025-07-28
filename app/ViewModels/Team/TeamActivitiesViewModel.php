@@ -1,34 +1,34 @@
 <?php
 
-namespace App\ViewModels;
+namespace App\ViewModels\Team;
 
-use App\Enums\Request\RequestStatusEnum;
+use App\Http\Resources\ActivityResource;
 use App\Http\Resources\TeamResource;
-use App\Http\Resources\UserResource;
+use App\Models\Activity;
 use App\Models\Team;
 use App\Services\AccessServices\TeamAccessService;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Http\Request;
 
-class TeamNotInPlayersViewModel
+class TeamActivitiesViewModel
 {
     public function __construct(
         protected Team $team,
-        protected LengthAwarePaginator $users,
-        protected array $exceptIds,
         protected TeamAccessService $accessService,
     ) {}
 
-    public function toArray(): array
+    public function toArray(Request $request): array
     {
         $user = auth()->user();
-
+        $request->merge([
+            'subject_id' => $this->team->id,
+            'subject_type' => 'Team',
+        ]);
+        $activities =  Activity::filterBy($request->all(), []);
         return [
             'team' => TeamResource::make($this->team),
-            'users' => UserResource::collection($this->users)->response()->getData(true),
-            'except_ids' => $this->exceptIds,
             'user_role' => $this->accessService->getUserRole($user, $this->team),
-            'user_status' => $this->accessService->getUserRequestStatus($user, $this->team),
             'is_team_leader' => $this->accessService->isTeamLeader($user, $this->team),
+            'activities' => ActivityResource::collection($activities)->response()->getData(true),
         ];
     }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.team.index')
+@extends('layouts.match.index')
 
 @section('title', __('messages.players'))
 @section('content')

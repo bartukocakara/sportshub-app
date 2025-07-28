@@ -101,7 +101,7 @@
             @endphp
             @include('components.team.show.sidebar', [
                 'menuItems' => $menuItems,
-                'userStatus' => $datas['user_status'],
+                'userRole' => $datas['user_role'],
                 'isTeamLeader' => $datas['is_team_leader'],
             ])
             <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
@@ -114,6 +114,24 @@
                         <div id="kt_app_content" class="app-content flex-column-fluid">
                             @yield('content')
                         </div>
+                        <div class="d-md-none position-fixed bottom-0 start-0 end-0 bg-white shadow py-2 px-4 z-index-50 d-flex gap-2">
+                            <button onclick="scrollToAnnouncements()" class="btn btn-secondary w-100 fw-semibold py-3" style="background-color:#F4F4F4">
+                                📢 {{ __('messages.go_to_announcements') }}
+                            </button>
+                            <button id="scrollTopButton" class="btn btn-light fw-semibold d-flex align-items-center justify-content-center" style="width: 56px; height: 100%; font-size: 1.5rem;">
+                                ⬆️
+                            </button>
+                            <button id="openSidebarButton" class="btn btn-light fw-semibold d-flex align-items-center justify-content-center" style="width: 56px; height: 100%; font-size: 1.5rem;">
+                                ☰
+                            </button>
+                        </div>
+                        <button id="kt_app_sidebar_mobile_toggle" class="d-none"></button>
+                        <div id="scrollTopDesktop" style="position: fixed; bottom: 20px; right: 20px; z-index: 100; display: none; ">
+                            <button onclick="scrollToTop()" class="btn btn-icon shadow rounded-circle"
+                                    style="background-color:#f4f4f4; color: white; width: 48px; height: 48px; font-size: 1.2rem;">
+                                ⬆️
+                            </button>
+                        </div>
                     </div>
 
                 @include('components.footer')
@@ -124,33 +142,52 @@
 </div>
 @include('components.modals.auth-modal')
 
+<script src="{{ asset('assets/plugins/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/js/toaster.min.js') }}"></script>
 <script>
-    window.showKVKK = function() {
+    window.showKVKK = function () {
         $('#authContainer').addClass('d-none');
         $('#kvkkContainer').removeClass('d-none');
     };
 
-    window.returnToRegister = function() {
-        // Mark KVKK as read by setting the hidden input value
+    window.returnToRegister = function () {
         $('#kvkk_read').val('1');
-        // Enable the register button since KVKK has been read
         $('#registerButton').prop('disabled', false);
-        // Revert the view to the authentication content
         $('#kvkkContainer').addClass('d-none');
         $('#authContainer').removeClass('d-none');
     };
+
+    $(document).ready(function () {
+        if (typeof initializeMobileButtons === 'function') {
+            initializeMobileButtons();
+        }
+
+        const $desktopBtn = $('#scrollTopDesktop');
+        if ($desktopBtn.length) {
+            $(window).on('scroll', function () {
+                if ($(this).scrollTop() > 300) {
+                    $desktopBtn.removeClass('d-none');
+                } else {
+                    $desktopBtn.addClass('d-none');
+                }
+            });
+
+            if ($(window).width() < 768) {
+                $desktopBtn.remove();
+            }
+        }
+
+        // Toastr configuration inside ready block
+        toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            positionClass: 'toast-top-right',
+            timeOut: 3000,
+            extendedTimeOut: 1000,
+        };
+    });
 </script>
-<script src="{{ asset('assets/plugins/jquery.min.js') }}"></script>
-<script src="{{ asset('assets/js/toaster.min.js') }}"></script>
-<script>
-    toastr.options = {
-        closeButton: true,
-        progressBar: true,
-        positionClass: 'toast-top-right',
-        timeOut: 3000,
-        extendedTimeOut: 1000,
-    };
-</script>
+
 <x-toast-message />
 <script src="{{ asset('assets/js/custom/auth-modal.js') }}"></script>
 <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
@@ -160,6 +197,7 @@
 <script src="{{ asset('assets/js/custom/widgets.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/tr.js"></script>
 <x-swal-message />
+<script src="{{ asset('assets/js/mobile-buttons.js') }}"></script>
 
 @yield('page-scripts')
 </body>

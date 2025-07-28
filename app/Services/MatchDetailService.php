@@ -2,76 +2,289 @@
 
 namespace App\Services;
 
-use App\Http\Resources\ActivityResource;
-use App\Http\Resources\AnnouncementResource;
-use App\Http\Resources\MatchResource;
-use App\Http\Resources\MatchTeamResource;
-use App\Http\Resources\TeamResource;
-use App\Models\Activity;
-use App\Models\Announcement;
+use App\Enums\Request\RequestStatusEnum;
+use App\Enums\TypeEnums\RequestTypeEnum;
 use App\Models\Matches;
-use App\Models\MatchTeam;
-use App\Models\Team;
-use App\Repositories\ActivityRepository;
-use App\Repositories\AnnouncementRepository;
-use App\Repositories\CityRepository;
-use App\Repositories\SportTypeRepository;
-use App\Repositories\TeamRepository;
+use App\Models\MatchTeamPlayer;
+use App\Models\RequestMatchTeamPlayer;
 use App\Repositories\MatchRepository;
-use App\Repositories\MatchTeamRepository;
+use App\Repositories\MatchTeamPlayerRepository;
+use App\Repositories\Request\RequestMatchTeamPlayerRepository;
+use App\Repositories\UserRepository;
+use App\Services\AccessServices\MatchAccessService;
+use App\Support\Messages\MatchSwalMessages;
+use App\Traits\LogsActivity;
+use App\ViewModels\Match\MatchActivitiesViewModel;
+use App\ViewModels\Match\MatchNotInMatchTeamPlayersViewModel;
+use App\ViewModels\Match\MatchProfileViewModel;
+use App\ViewModels\Match\MatchRequestMatchTeamPlayerViewModel;
+use App\ViewModels\Match\MatchTeamsViewModel;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MatchDetailService extends CrudService
 {
+    use LogsActivity;
+
     protected MatchRepository $matchRepository;
-    protected CityRepository $cityRepository; // You might need these later, but for now, we'll focus on Match
-    protected SportTypeRepository $sportTypeRepository; // You might need these later
+    protected MetaDataService $metaDataService;
 
     /**
      * @param MatchRepository $matchRepository
-     * @param CityRepository $cityRepository // Inject if you need them
-     * @param SportTypeRepository $sportTypeRepository // Inject if you need them
+     * @param MetaDataService $metaDataService
      * @return void
      */
     public function __construct(
-        MatchRepository $matchRepository
+        MatchRepository $matchRepository,
+        MetaDataService $metaDataService
     )
     {
         $this->matchRepository = $matchRepository;
-        // $this->cityRepository = $cityRepository; // Uncomment if needed
-        // $this->sportTypeRepository = $sportTypeRepository; // Uncomment if needed
+        $this->metaDataService = $metaDataService;
 
         parent::__construct($this->matchRepository); // Keep if Crud operations are handled here
     }
 
-    /**
-     * Get match profile data.
-     *
-     * @param string $matchId
-     * @return mixed
-     */
-    public function getMatchProfileData(string $matchId):array
+    public function getMatchById(string $id): Matches
     {
-        $datas['match'] = MatchResource::make($this->matchRepository->find($matchId));
-        return $datas;
+        return $this->matchRepository->find($id);
     }
 
     /**
-     * Get match's teams data.
+     * Get user profile data.
      *
+     * @param string $id
+     * @param array $with
+     * @return array
+     */
+    public function getMatchProfileData(Request $request, string $id, array $with, bool $useCache = false): array
+    {
+        $match = $this->matchRepository->find($id, ['matchTeams', 'court', 'sportType', 'statusDefinition']);
+        $viewModel = new MatchProfileViewModel($match, new MatchAccessService(), $this->metaDataService);
+        dd($viewModel->toArray($request));
+        return $viewModel->toArray($request);
+    }
+
+    /**
+     * Get user profile data.
+     *
+     * @param Request $request
+     * @param string $id
+     * @return array
+     */
+    public function getRequestMatchTeamPlayerData(Request $request, string $id, string $type):array
+    {
+        $match = $this->matchRepository->find($id, ['users', 'matchOwners', 'statusDefinition', 'matchTeams.matchTeamPlayers.requestedUser']);
+        $viewModel = new MatchRequestMatchTeamPlayerViewModel($match, new MatchAccessService(), $type);
+
+        return $viewModel->toArray($request);
+    }
+
+    /**
+     * Get user profile data.
+     *
+     * @param string $id
+     * @return array
+     */
+    public function deleteRequestMatchTeamPlayerData(string $id): RedirectResponse
+    {
+        try {
+            $requestMatchTeamPlayerRepo = app(RequestMatchTeamPlayerRepository::class);
+
+            $requestMatchTeamPlayer = $requestMatchTeamPlayerRepo->find($id);
+            if (!$requestMatchTeamPlayer) {
+                return redirect()->back()->with('error', __('messages.request_player_team_not_found'));
+            }
+
+            $requestMatchTeamPlayer->receivers()->delete();
+
+            $requestMatchTeamPlayerRepo->delete($id);
+
+            return redirect()->back()->with('success', __('messages.request_player_team_deleted_successfully'));
+
+        } catch (\Throwable $th) {
+
+            return redirect()->back()->with('error', __('messages.error_occurred_while_deleting'));
+        }
+    }
+
+    public function acceptRequestMatchTeamPlayer(string $requestId): RedirectResponse
+    {
+        try {
+            $requestMatchTeamPlayerRepo = app(RequestMatchTeamPlayerRepository::class);
+
+            $requestMatchTeamPlayer = $requestMatchTeamPlayerRepo->find($requestId);
+            if (!$requestMatchTeamPlayer) {
+                return redirect()->back()->with('error', __('messages.request_player_team_not_found'));
+            }
+
+            $match = $requestMatchTeamPlayer->team;
+
+            $currentPlayerCount = $match->users()->count();
+            $maxPlayer = $match->max_player ?? 0;
+            if ($currentPlayerCount >= $maxPlayer) {
+                return redirect()->back()->with('swal', MatchSwalMessages::teamPlayersMaxCountError()->toArray());
+            }
+
+            // İstek kabul işlemleri
+            $requestMatchTeamPlayer->receivers()->delete();
+
+            $requestMatchTeamPlayer->update([
+                'status' => RequestStatusEnum::ACCEPTED->value,
+            ]);
+
+            MatchTeamPlayer::create([
+                'user_id' => $requestMatchTeamPlayer->requested_user_id,
+                'team_id' => $match->id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            $this->logActivity(
+                'team.joined',
+                $match,
+                [
+                    'user' => $requestMatchTeamPlayer->requestedUser->first_name ?? 'Unknown',
+                    'id'   => $match->id,
+                ]
+            );
+
+            return redirect()->back()->with('success', __('messages.request_player_team_accepted_successfully'));
+
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', __('messages.error_occurred_while_accepting'));
+        }
+    }
+
+    public function rejectRequestMatchTeamPlayer(string $requestId): RedirectResponse
+    {
+        try {
+            $requestMatchTeamPlayerRepo = app(RequestMatchTeamPlayerRepository::class);
+            $requestMatchTeamPlayer = $requestMatchTeamPlayerRepo->find($requestId);
+            if (!$requestMatchTeamPlayer) {
+                return redirect()->back()->with('error', __('messages.request_player_team_not_found'));
+            }
+            $requestMatchTeamPlayer->receivers()->delete();
+
+            $requestMatchTeamPlayer->delete();
+
+            return redirect()->back()->with('success', __('messages.request_player_team_rejected_successfully'));
+
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', __('messages.error_occurred_while_rejecting'));
+        }
+    }
+
+    /**
+     * Get user's teams data.
+     *
+     * @param Request $request
      * @param string $matchId
      * @return array
      */
     public function getMatchTeamsData(Request $request, string $matchId): array
     {
-        $request->merge(['match_id' => $matchId]);
-        $datas['match_teams'] = MatchTeamResource::collection((new MatchTeamRepository(new MatchTeam()))->all($request, ['matchTeamPlayers.user'], false))->response()->getData(true);
+        $match = $this->matchRepository->find($matchId, ['matchTeams.player', 'matchOwners', 'statusDefinition', 'matchTeams.matchTeamPlayers.requestedUser']);
+        $viewModel = new MatchTeamsViewModel($match, new MatchAccessService());
 
-        return $datas;
+        return $viewModel->toArray();
     }
 
     /**
-     * Get match's activities data.
+     * Get user's match data.
+     *
+     * @param Request $request
+     * @param string $matchId
+     * @return array
+     */
+    public function getNotInMatchTeamPlayersData(Request $request, string $matchId): array
+    {
+        $userRepo = app(UserRepository::class);
+        $match = $this->matchRepository->find($matchId, ['users', 'matchOwners', 'statusDefinition', 'matchTeams.matchTeamPlayers.requestedUser']);
+
+        $existingPlayerIds = $match->users->pluck('id')->toArray();
+        $requestedUserIds = $match
+            ->matchTeams()
+            ->where(['status' => RequestStatusEnum::WAITING_FOR_APPROVAL->value])
+            ->pluck('requested_user_id')
+            ->toArray();
+
+        $exceptIds = array_merge($existingPlayerIds, $requestedUserIds, [auth()->id()]);
+        $request->merge([
+            'except_ids' => $exceptIds,
+            // 'city_id' => $match->city_id,
+            'sport_type_id' => $match->sport_type_id
+        ]);
+        $filteredUsers = $userRepo->all($request, ['userAddresses.district', 'sportTypes', 'statusDefinition']);
+        $viewModel = new MatchNotInMatchTeamPlayersViewModel($match, $filteredUsers, $exceptIds, new MatchAccessService());
+        return $viewModel->toArray();
+    }
+
+    public function invitePlayer(Request $request, string $id, string $userId) : RedirectResponse
+    {
+        try {
+            DB::beginTransaction();
+            $requestMatchTeamPlayerRepo = app(RequestMatchTeamPlayerRepository::class);
+
+            $requestMatchTeamPlayer = $requestMatchTeamPlayerRepo->create([
+                'team_id' => $id,
+                'requested_user_id' => $userId,
+                'type' => RequestTypeEnum::INVITE->value,
+                'title' => $request->input('title'),
+                'status' => RequestStatusEnum::WAITING_FOR_APPROVAL->value,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            $requestMatchTeamPlayer->receivers()->create([
+                'requestable_id' => $requestMatchTeamPlayer->id,
+                'requestable_type' => RequestMatchTeamPlayer::class,
+                'name' => 'match_team_player',
+                'receiver_user_id' => $userId,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            DB::commit();
+
+            return redirect()->back()->with('success', __('messages.player_invited_successfully'));
+        } catch (\Throwable $th) {
+
+            DB::rollBack();
+            return redirect()->back()->with('error', __('messages.contact_support'));
+        }
+    }
+
+    public function destroyPlayer(string $playerMatchId) : RedirectResponse
+    {
+        try {
+            $matchTeamPlayerRepo = app(MatchTeamPlayerRepository::class);
+
+            $matchTeamPlayer = $matchTeamPlayerRepo->find($playerMatchId);
+
+            if (!$matchTeamPlayer) {
+                return redirect()->back()->with('error', __('messages.player_team_not_found'));
+            }
+
+            $match = $matchTeamPlayer->team;
+
+            $currentPlayerCount = $match->users()->count();
+
+            if ($currentPlayerCount <= $match->min_player) {
+                return redirect()->back()->with('swal', MatchSwalMessages::matchPlayersMinCountError()->toArray());
+            }
+
+            $matchTeamPlayerRepo->delete($playerMatchId);
+
+            return redirect()->back()->with('success', __('messages.player_team_deleted_successfully'));
+        } catch (\Throwable $th) {
+
+            return redirect()->back()->with('error', __('messages.contact_support'));
+        }
+    }
+
+    /**
+     * Get user's activities data.
      *
      * @param Request $request
      * @param string $matchId
@@ -79,28 +292,9 @@ class MatchDetailService extends CrudService
      */
     public function getMatchActivitiesData(Request $request, string $matchId): array
     {
-        // $request->merge(['camatch_id' => $matchId]);
-        $relations = ['subject'];
-        $datas['activities'] = ActivityResource::collection((new ActivityRepository(new Activity()))->all($request, $relations, false))->response()->getData(true);
-        return $datas;
-    }
+        $match = $this->matchRepository->find($matchId, ['users', 'matchOwners', 'matchTeams.matchTeamPlayers']);
+        $viewModel = new MatchActivitiesViewModel($match, new MatchAccessService());
 
-    /**
-     * Get match's announcements data.
-     *
-     * @param Request $request
-     * @param string $matchId
-     * @return array
-     */
-    public function getMatchAnnouncementsData(Request $request, string $matchId): array
-    {
-        // $request->merge(['created_match_id' => $matchId]);
-
-        $request->merge([
-            'subject_type' => 'Matches',
-            'subject_id' => $matchId,
-        ]);
-        $datas['announcements'] = AnnouncementResource::collection((new AnnouncementRepository(new Announcement()))->all($request, ['user'], false))->response()->getData(true);
-        return $datas;
+        return $viewModel->toArray($request);
     }
 }

@@ -5,19 +5,11 @@ namespace App\Services;
 use App\Enums\Request\RequestStatusEnum;
 use App\Enums\TypeEnums\MatchTypeEnum;
 use App\Enums\TypeEnums\RequestTypeEnum;
-use App\Http\Resources\ActivityResource;
 use App\Http\Resources\AnnouncementResource;
-use App\Http\Resources\MatchResource;
-use App\Http\Resources\Request\RequestPlayerTeamResource;
-use App\Http\Resources\UserResource;
-use App\Models\Activity;
 use App\Models\Announcement;
-use App\Models\Matches;
 use App\Models\PlayerTeam;
 use App\Models\RequestPlayerTeam;
 use App\Models\Team;
-use App\Models\User;
-use App\Repositories\ActivityRepository;
 use App\Repositories\AnnouncementRepository;
 use App\Repositories\MatchRepository;
 use App\Repositories\PlayerTeamRepository;
@@ -27,15 +19,14 @@ use App\Repositories\UserRepository;
 use App\Services\AccessServices\TeamAccessService;
 use App\Support\Messages\TeamSwalMessages;
 use App\Traits\LogsActivity;
-use App\ViewModels\TeamActivitiesViewModel;
-use App\ViewModels\TeamMatchesViewModel;
-use App\ViewModels\TeamNotInPlayersViewModel;
-use App\ViewModels\TeamPlayersViewModel;
-use App\ViewModels\TeamProfileViewModel;
-use App\ViewModels\TeamRequestPlayerTeamViewModel;
+use App\ViewModels\Team\TeamActivitiesViewModel;
+use App\ViewModels\Team\TeamMatchesViewModel;
+use App\ViewModels\Team\TeamNotInPlayersViewModel;
+use App\ViewModels\Team\TeamPlayersViewModel;
+use App\ViewModels\Team\TeamProfileViewModel;
+use App\ViewModels\Team\TeamRequestPlayerTeamViewModel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class TeamDetailService extends CrudService
@@ -57,8 +48,6 @@ class TeamDetailService extends CrudService
     {
         $this->teamRepository = $teamRepository;
         $this->metaDataService = $metaDataService;
-        // $this->cityRepository = $cityRepository; // Uncomment if needed
-        // $this->sportTypeRepository = $sportTypeRepository; // Uncomment if needed
 
         parent::__construct($this->teamRepository); // Keep if Crud operations are handled here
     }

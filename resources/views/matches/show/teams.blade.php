@@ -1,46 +1,84 @@
 @extends('layouts.match.index')
 
-@section('title', __('messages.teams'))
-@section('custom-styles')
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css" />
-@endsection
+@section('title', __('messages.matches'))
 @section('content')
-<div class="row g-5 g-xxl-8">
-    <div class="card mb-5 mb-xxl-8">
-    <div class="card-body pt-9 pb-0">
-        <div class="d-flex flex-wrap flex-stack mb-6">
-            <div class="d-flex flex-wrap my-2">
-                <div class="me-4">
-                    <a href="#" class="btn btn-sm btn-light-primary px-4 py-3" data-bs-toggle="modal" data-bs-target="#kt_filter_modal">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="me-2" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M3 5h18v2H3V5zm4 6h10v2H7v-2zm-2 6h14v2H5v-2z"/>
-                        </svg>
-                        {{ __('messages.filter') }}
+<div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+    <div class="d-flex flex-column flex-column-fluid">
+        <div id="kt_app_toolbar" class="app-toolbar pt-5">
+            <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex align-items-stretch">
+                <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+                    <div class="page-title d-flex flex-column gap-1 me-3 mb-2">
+                        <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-6">
+                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
+                                <a href="/index.html" class="text-gray-500 text-hover-primary">
+                                    <i class="ki-duotone ki-home fs-3 text-gray-500 me-n1"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
+                            </li>
+                            <li class="breadcrumb-item text-gray-700 fw-bold lh-1">{{ __('messages.matches') }}</li>
+                        </ul>
+                        <h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bolder fs-1 lh-0">{{ __('messages.matches') }}</h1>
+                    </div>
+                    @if($datas['is_match_owner'])
+                    <a href="{{ route('match-teams.create') }}" class="btn btn-sm btn-success ms-3 px-4 py-3" >
+                        {{ __('messages.create_match_team') }}
                     </a>
-                    @if (request()->query())
-                    <a href="{{ route('teams.index') }}" class="btn btn-sm btn-light-danger px-4 py-3">
-                        <i class="bi bi-x-circle me-2"></i>
-                        {{ __('messages.clear_filter') }}
-                    </a>
-                @endif
+                    @endif
                 </div>
             </div>
         </div>
-        @php
-            $cityTitles = collect($datas['cities'] ?? [])->pluck('title', 'id')->toArray();
-            $sportTypeTitles = collect($datas['sport_types'] ?? [])->pluck('title', 'id')->toArray();
-        @endphp
-            <x-filter-tags
-                :excludedFilters="['page', 'per_page']"
-                :titleMaps="[
-                    'city_id' => $cityTitles,
-                    'sport_type_id' => $sportTypeTitles,
-                ]"
-                translationsPrefix="messages"
-            />
-            @include('components.pagination.default', ['data' => $datas['match_teams']])
-            @include('components.matches.match-teams')
+        <div id="kt_app_content" class="app-content flex-column-fluid">
+            <div id="kt_app_content_container" class="app-container container-fluid">
+                <div id="profile-match-list" class="row g-6 g-xl-9">
+                    @include('components.teams.card-list')
+                </div>
+                @if($datas['matches']['meta']['current_page'] < $datas['matches']['meta']['last_page'])
+                <div class="text-center my-4">
+                    <button id="showMoreButton" class="btn fw-semibold d-flex align-items-center justify-content-center gap-2" style="background-color: #f4f4f4; color: grey; border-radius: 25px; padding: 10px 20px;">
+                        ⬇️ {{ __('messages.show_more') }}
+                    </button>
+                </div>
+                @endif
+            </div>
         </div>
     </div>
 </div>
+
 @endsection
+@section('page-scripts')
+<script>
+    window.ASSET_URL = "{{ asset('') }}"; // Base asset URL
+    window.MATCHES_ACTIVITIES_ROUTE = "{{ route('matches.activities', ['id' => '__ID__']) }}"; // Placeholder for ID
+    window.DEFAULT_XING_ICON = "{{ asset('assets/media/svg/brand-logos/xing-icon.svg') }}"; // Default icon path
+</script>
+<script src="{{ asset('assets/js/card-list/match-card-list.js') }}"></script>
+<script type="module">
+    import { LoadMoreController, getAvatarUrl, debounce } from '{{ asset('assets/js/load-more.js') }}';
+
+    document.addEventListener("DOMContentLoaded", function () {
+        @isset($datas['matches'])
+        const matchLoadMore = new LoadMoreController({
+            apiUrl: '{{ route('api.matches.index') }}',
+            containerId: 'profile-match-list',
+            spinnerId: 'spinner',
+            showMoreButtonId: 'showMoreButton',
+            renderItemCallback: renderMatchCard, // Pass the function reference
+            initialMeta: {
+                current_page: {{ (int) $datas['matches']['meta']['current_page'] }},
+                last_page: {{ (int) $datas['matches']['meta']['last_page'] }}
+            },
+            extraParams: {
+                team_id: '{{ $datas['team']->id }}',
+                type: 2
+            },
+            spinnerDelay: 200,
+            showMoreText: '⬇️ {{ __('messages.show_more') }}',
+            noMoreResultsText: '{{ __('messages.no_more_results') }}'
+        });
+        @endisset
+    });
+</script>
+@endsection
+

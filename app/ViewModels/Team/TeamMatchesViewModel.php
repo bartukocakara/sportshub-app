@@ -1,6 +1,6 @@
 <?php
 
-namespace App\ViewModels;
+namespace App\ViewModels\Team;
 
 use App\Http\Resources\MatchResource;
 use App\Http\Resources\TeamResource;
@@ -22,7 +22,6 @@ class TeamMatchesViewModel
         $user = auth()->user();
         return [
             'team' => TeamResource::make($this->team),
-            'user_status' => $this->accessService->getUserRequestStatus($user, $this->team),
             'user_role' => $this->accessService->getUserRole($user, $this->team),
             'is_team_leader' => $this->accessService->isTeamLeader($user, $this->team),
             'matches' => MatchResource::collection($this->matches)->response()->getData(true),

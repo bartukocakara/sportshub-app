@@ -23,14 +23,15 @@
              data-kt-menu-expand="false"
              class="flex-column-fluid menu -indention menu-column menu-rounded menu-active-bg mb-7">
             @php
-                $isTeamLeader = $datas['is_team_leader'] ?? false;
+                $userStatus = $datas['user_role'] ?? 'none';
+                $isMatchOwner = $datas['is_match_owner'] ?? false;
             @endphp
             @foreach($menuItems as $item)
                 @php
-                    $itemVisibleStatuses = $item['visible_status'] ?? ['leader', 'member', 'none'];
+                    $itemVisibleStatuses = $item['visible_status'] ?? ['match_owner', 'member', 'none'];
                 @endphp
 
-                @if(in_array($datas['user_role'], $itemVisibleStatuses))
+                @if(in_array($userStatus, $itemVisibleStatuses))
                     @if(isset($item['children']))
                         @php
                             $isChildActive = collect($item['children'])->contains(function ($child) {
@@ -49,7 +50,7 @@
                                 @foreach($item['children'] as $child)
                                     @php
                                         $childVisibleStatuses = $child['visible_status'] ?? ['leader', 'member', 'none'];
-                                        $childVisible = in_array($datas['user_role'], $childVisibleStatuses);
+                                        $childVisible = in_array($userStatus, $childVisibleStatuses);
                                         $isActive = Route::currentRouteName() === $child['route'];
                                     @endphp
 

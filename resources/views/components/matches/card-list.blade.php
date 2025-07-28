@@ -29,7 +29,7 @@
                             style="width: 50px; height: 50px;" />
                     @endif
                 <div class="fs-3 fw-bold text-gray-900">
-                    <a href="{{ route('matches.activities', ['id' => $match['id']]) }}">{{ $match['title'] }}</a>
+                    <a href="{{ route('matches.profile', ['id' => $match['id']]) }}">{{ $match['title'] }}</a>
                 </div>
             </div>
 
