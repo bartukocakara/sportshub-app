@@ -552,4 +552,7 @@ return [
     'unknown' => 'Bilinmeyen',
     'me_match_team_player_quit_successfully' => 'Maçtan başarıyla ayrıldınız.',
     'match_owner' => 'Maç Sahibi',
+    'join_match_title' => 'Maça Katıl',
+    'join_match_confirmation' => 'Maça katılmak istediğinize emin misiniz?',
+    'join_match_emotional_warning' => 'Takım arkadaşların seni bekliyor olacak 🤝. Unutma, birlikte daha güçlüsünüz.',
 ];

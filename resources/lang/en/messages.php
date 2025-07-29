@@ -532,4 +532,7 @@ return [
     'unknown' => 'Unknown',
     'me_match_team_player_quit_successfully' => 'You quit successfully.',
     'match_owner' => 'Match Owner',
+    'join_match_title' => 'Join Match',
+    'join_match_confirmation' => 'Are you sure you want to join this match?',
+    'join_match_emotional_warning' => 'Your teammates will be waiting for you 🤝. Remember, you are stronger together.',
 ];
