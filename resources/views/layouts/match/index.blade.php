@@ -41,37 +41,37 @@
                         'icon' => "<i class='fas fa-user me-1'></i>",
                         'params' => ['id' => $id],
                         'label' => __('messages.details'),
-                        'visible_status' => ['leader', 'member', 'none'], // bu menüyü sadece lider ve üyeler görebilir
+                        'visible_status' => ['match_owner', 'participant', 'none'], // bu menüyü sadece lider ve üyeler görebilir
                     ],
                     [
                         'route' => 'matches.players',
                         'icon' => "<i class='fas fa-users me-1'></i>",
                         'label' => __('messages.players'),
-                        'visible_status' => ['leader', 'member', 'none'], // sadece lider görebilir
+                        'visible_status' => ['match_owner', 'participant', 'none'], // sadece lider görebilir
                         'children' => [
                             [
                                 'route' => 'matches.requested-players.invite',
                                 'params' => ['id' => $id],
                                 'label' => __('messages.invited_players'),
-                                'visible_status' => ['leader'],
+                                'visible_status' => ['match_owner'],
                             ],
                             [
                                 'route' => 'matches.players',
                                 'params' => ['id' => $id],
                                 'label' => __('messages.players'),
-                                'visible_status' => ['leader', 'member', 'none'],
+                                'visible_status' => ['match_owner', 'participant', 'none'],
                             ],
                             [
                                 'route' => 'matches.new-players',
                                 'params' => ['id' => $id],
                                 'label' => __('messages.add_new_players'),
-                                'visible_status' => ['leader'],
+                                'visible_status' => ['match_owner'],
                             ],
                             [
                                 'route' => 'matches.requested-players.join',
                                 'params' => ['id' => $id],
                                 'label' => __('messages.requested_players'),
-                                'visible_status' => ['leader'],
+                                'visible_status' => ['match_owner'],
                             ],
                         ],
                     ],
@@ -80,14 +80,14 @@
                         'icon' => "<i class='fas fa-handshake'></i>",
                         'params' => ['id' => $id],
                         'label' => __('messages.teams'),
-                        'visible_status' => ['leader', 'member', 'none'],
+                        'visible_status' => ['match_owner', 'participant', 'none'],
                     ],
                     [
                         'route' => 'matches.activities',
                         'icon' => "<i class='fas fa-map-marker-alt'></i>",
                         'params' => ['id' => $id],
                         'label' => __('messages.activities'),
-                        'visible_status' => ['leader', 'member', 'none'],
+                        'visible_status' => ['match_owner', 'participant', 'none'],
                     ],
                 ];
 

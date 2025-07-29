@@ -60,8 +60,6 @@ class MatchDetailController extends Controller
         return $this->matchDetailService->deleteRequestMatchTeamPlayerData($requestId);
     }
 
-
-
     public function acceptRequestMatchTeamPlayerData(string $id, string $requestId): RedirectResponse
     {
         return $this->matchDetailService->acceptRequestMatchTeamPlayer($requestId);
@@ -117,9 +115,9 @@ class MatchDetailController extends Controller
         return $this->matchDetailService->invitePlayer( $request, $id, $userId);
     }
 
-    public function destroyPlayer(string $id, string $playerTeamId)
+    public function destroyPlayer(string $id, string $matchTeamPlayerId)
     {
-        return $this->matchDetailService->destroyPlayer($playerTeamId);
+        return $this->matchDetailService->destroyPlayer($matchTeamPlayerId);
     }
     /**
      * Displays the user's matches.

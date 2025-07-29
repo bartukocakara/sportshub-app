@@ -547,4 +547,9 @@ return [
     'welcome_to_sportshub'=> 'Sportshuba hoş geldiniz! 🚀',
     'min_team' => 'Minimum Takım',
     'max_team' => 'Maksimum Takım',
+    'quit_match' => 'Maçtan Ayrıl',
+    'participant' => 'Katılımcı',
+    'unknown' => 'Bilinmeyen',
+    'me_match_team_player_quit_successfully' => 'Maçtan başarıyla ayrıldınız.',
+    'match_owner' => 'Maç Sahibi',
 ];

@@ -37,6 +37,7 @@ class MatchProfileViewModel
             'user_status' => $this->accessService->getUserRequestStatus($user, $this->match),
             'user_role' => $this->accessService->getUserRole($user, $this->match),
             'is_match_owner' => $this->accessService->isMatchOwner($user, $this->match),
+            'match_team_player_id' => $this->accessService->getMatchTeamPlayerId($user, $this->match),
             'request_id' => $this->accessService->getMatchTeamPlayerRequest($user, $this->match)?->id,
             'is_request_receiver' => $this->accessService->isRequestReceiver($user, $this->match),
             'announcements' => AnnouncementResource::collection($announcements)->response()->getData(true),

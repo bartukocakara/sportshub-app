@@ -22,6 +22,7 @@ class MatchResource extends JsonResource
             'sport_type' => SportTypeResource::make($this->whenLoaded('sportType')),
             'status_definition' => $this->match_status_text,
             'status_badge' => $this->status_badge,
+            'status_badge_with_icon ' => $this->status_badge_with_icon,
             'city_title' => $this->court?->courtAddress?->district?->city?->title,
             'play_date' => $this->play_date,
             'expiring_date' => $this->expiring_date,

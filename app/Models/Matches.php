@@ -72,17 +72,59 @@ class Matches extends Model
 
     public function getCityTitleAttribute(): string
     {
-        return $this->city->title ?? 'Bilinmiyor';
+        return $this->court?->courtAddress?->district?->city?->title ?? 'Bilinmiyor';
     }
 
     public function getStatusBadgeAttribute(): string
     {
         return match ($this->match_status) {
-            'pending'   => 'badge-light-warning',
-            'confirmed' => 'badge-light-success',
-            'completed' => 'badge-light-info',
-            'canceled'   => 'badge-light-danger',
-            default    => 'badge-light-secondary',
+            'completed' => 'badge-light-success',   // For completed matches
+            'pending'   => 'badge-light-warning',   // For pending matches
+            'confirmed' => 'badge-light-primary',   // For confirmed matches (using primary for a distinct look)
+            'canceled'  => 'badge-light-danger',    // For canceled matches (using danger as it's a negative status)
+            'banned'    => 'badge-light-danger',    // For banned matches (also danger)
+            default     => 'badge-light-secondary', // Default for any unhandled status
+        };
+    }
+
+    /**
+     * Get the status badge with icon attribute.
+     *
+     * @return string
+     */
+    public function getStatusBadgeWithIconAttribute(): string
+    {
+        return match ($this->match_status) {
+            'completed' => '<span class="badge badge-light-success">
+                            <i class="fas fa-check-circle text-success me-1"></i> ' . $this->match_status_text . '
+                        </span>',
+
+            'pending' => '<span class="badge badge-light-warning">
+                            <i class="fas fa-hourglass-half text-warning me-1"></i> ' . $this->match_status_text . '
+                        </span>',
+
+            'confirmed' => '<span class="badge badge-light-primary">
+                            <i class="fas fa-calendar-check text-primary me-1"></i> ' . $this->match_status_text . '
+                        </span>',
+
+            'canceled' => '<span class="badge badge-light-danger">
+                            <i class="fas fa-times-circle text-danger me-1"></i> ' . $this->match_status_text . '
+                        </span>',
+
+            'banned' => '<span class="badge badge-light-danger">
+                            <i class="fas fa-ban text-danger me-1"></i> ' . $this->match_status_text . '
+                        </span>',
+            'active' => '<span class="badge badge-light-success">
+                            <i class="fas fa-check-circle text-success me-1"></i> ' . $this->match_status_text . '
+                        </span>',
+
+            'inactive' => '<span class="badge badge-light-warning">
+                            <i class="fas fa-pause-circle text-warning me-1"></i> ' . $this->match_status_text . '
+                        </span>',
+
+            default => '<span class="badge badge-light-secondary">
+                            <i class="fas fa-question-circle text-muted me-1"></i> Bilinmiyor
+                        </span>',
         };
     }
 

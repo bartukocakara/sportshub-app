@@ -4,6 +4,7 @@
     $isMatchOwner = $datas['is_match_o'] ?? false;
     $isRequestReceiver = $datas['is_request_receiver'] ?? false;
     $requestId = $datas['request_id'] ?? null;
+    $matchTeamPlayerId = $datas['match_team_player_id'] ?? null;
 @endphp
 
 @if ($isRequestReceiver && $userStatus === 'waiting_for_approval')
@@ -30,9 +31,9 @@
         emoji="🙅‍♂️"
     />
 
-@elseif ($userRole === 'leader')
+@elseif ($userRole === 'match_owner')
     <button class="btn btn-sm btn-info me-2" disabled>
-        <i class="fas fa-star me-1"></i> {{ __('messages.leader') }}
+        <i class="fas fa-star me-1"></i> {{ __('messages.match_owner') }}
     </button>
 
     @if ($isMatchOwner || (isset($match) && auth()->user()->can('update', $match)))
@@ -41,20 +42,20 @@
         </a>
     @endif
 
-@elseif ($userRole === 'member')
+@elseif ($userRole === 'participant')
     <button class="btn btn-sm btn-success me-2" disabled>
-        <i class="fas fa-user-check me-1"></i> {{ __('messages.member') }}
+        <i class="fas fa-user-check me-1"></i> {{ __('messages.participant') }}
     </button>
 
-    <a href="#" class="btn btn-sm btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#kt_modal_quit_membership">
-        <i class="fas fa-sign-out-alt me-1"></i> {{ __('messages.quit_membership') }}
+    <a href="#" class="btn btn-sm btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#kt_modal_quit_match">
+        <i class="fas fa-sign-out-alt me-1"></i> {{ __('messages.quit_match') }}
     </a>
 
     <x-modals.delete-confirmation-modal
-        id="kt_modal_quit_membership"
-        :route="route('matches.match-team-players.destroy', ['id' => $match->id, 'matchTeamPlayerId' => $match->id])"
+        id="kt_modal_quit_match"
+        :route="route('matches.match-team-players.destroy', ['id' => $match->id, 'matchTeamPlayerId' => $matchTeamPlayerId])"
         :title="__('messages.quit')"
-        :message="__('messages.quit_membership')"
+        :message="__('messages.quit_match')"
         :emotionalWarning="__('messages.quit_match_emotional_warning')"
         :buttonText="__('messages.quit')"
         icon="fas fa-sign-out-alt"
@@ -63,9 +64,12 @@
     />
 
 @elseif ($userStatus === 'waiting_for_approval')
-    <button class="btn btn-sm btn-success me-2" disabled>
-        <i class="fas fa-user-clock me-1"></i> {{ __('messages.waiting_for_approval') }}
-    </button>
+    <form action="{{ route('request-match-team-players.accept', ['id' => $requestId]) }}" method="POST" class="d-inline">
+        @csrf
+        <button type="submit" class="btn btn-sm btn-success me-2">
+            <i class="fas fa-check-circle me-1"></i> {{ __('messages.accept_invitation') }}
+        </button>
+    </form>
 
     <a href="#" class="btn btn-sm btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#kt_modal_cancel_request">
         <i class="fas fa-times-circle me-1"></i> {{ __('messages.cancel_request') }}

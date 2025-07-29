@@ -454,6 +454,7 @@ return [
     'please_review_the_details_below_before_creating_your_team' => 'Please review the details below before creating your team.',
     'yes' => 'Yes',
     'no' => 'No',
+    'quit_match_emotional_warning' => 'This action cannot be undone. You will no longer be a participant in this match.',
     'confirm_team_details' => 'Confirm Team Details',
     'team_invite_request_title' => 'You have been invited to join a :title team!',
     'team_invite_email_body' => ':inviter_name seni :team_title takımına katılman için davet etti.',
@@ -526,4 +527,9 @@ return [
     'welcome_to_sportshub'=> 'Welcome to Sportshub! 🚀',
     'min_team' => 'Minimum Team',
     'max_team' => 'Maximum Team',
+    'quit_match' => 'Quit Match',
+    'participant' => 'Participant',
+    'unknown' => 'Unknown',
+    'me_match_team_player_quit_successfully' => 'You quit successfully.',
+    'match_owner' => 'Match Owner',
 ];

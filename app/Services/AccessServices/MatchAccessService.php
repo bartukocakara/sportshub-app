@@ -15,7 +15,7 @@ class MatchAccessService
         }
 
         if ($match->matchTeams()->whereHas('matchTeamPlayers', fn ($query) => $query->where('user_id', $user->id))->exists()) {
-            return 'member';
+            return 'participant';
         }
 
         return 'none';
@@ -30,6 +30,20 @@ class MatchAccessService
     public function isMatchOwner(User $user, Matches $match): bool
     {
         return $match->matchOwners->pluck('user_id')->contains(fn ($id) => $id === $user->id);
+    }
+
+    public function getMatchTeamPlayerId(User $user, Matches $match): ?string
+    {
+        $matchTeam = $match->matchTeams()->whereHas('matchTeamPlayers', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->first();
+
+        if ($matchTeam) {
+            $matchTeamPlayer = $matchTeam->matchTeamPlayers()->where('user_id', $user->id)->first();
+            return $matchTeamPlayer?->id;
+        }
+
+        return null;
     }
 
     public function getMatchTeamPlayerRequest(User $user, Matches $match): ?RequestMatchTeamPlayer

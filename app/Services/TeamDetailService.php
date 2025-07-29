@@ -276,12 +276,6 @@ class TeamDetailService extends CrudService
 
             $team = $playerTeam->team;
 
-            $currentPlayerCount = $team->users()->count();
-
-            if ($currentPlayerCount <= $team->min_player) {
-                return redirect()->back()->with('swal', TeamSwalMessages::teamPlayersMinCountError()->toArray());
-            }
-
             $playerTeamRepo->delete($playerTeamId);
 
             return redirect()->back()->with('success', __('messages.player_team_deleted_successfully'));

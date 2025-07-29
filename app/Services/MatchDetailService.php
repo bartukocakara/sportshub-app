@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Enums\Request\RequestStatusEnum;
 use App\Enums\TypeEnums\RequestTypeEnum;
+use App\Http\Resources\MatchResource;
 use App\Models\Matches;
 use App\Models\MatchTeamPlayer;
 use App\Models\RequestMatchTeamPlayer;
@@ -22,6 +23,7 @@ use App\ViewModels\Match\MatchTeamsViewModel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class MatchDetailService extends CrudService
 {
@@ -63,14 +65,17 @@ class MatchDetailService extends CrudService
         $match = $this->matchRepository->find($id, [
             'matchTeams',
             'matchTeams.matchTeamPlayers',
-            'court',
+            'court.courtAddress',
+            'court.courtBusiness',
             'sportType',
             'statusDefinition',
             'matchOwners',
             'requestMatchTeamPlayers',
             'requestMatchTeamPlayers.receivers',
         ]);
+
         $viewModel = new MatchProfileViewModel($match, new MatchAccessService(), $this->metaDataService);
+
         return $viewModel->toArray($request);
     }
 
@@ -85,7 +90,6 @@ class MatchDetailService extends CrudService
     {
         $match = $this->matchRepository->find($id, ['users', 'matchOwners', 'statusDefinition', 'matchTeams.matchTeamPlayers.requestedUser']);
         $viewModel = new MatchRequestMatchTeamPlayerViewModel($match, new MatchAccessService(), $type);
-
         return $viewModel->toArray($request);
     }
 
@@ -263,30 +267,22 @@ class MatchDetailService extends CrudService
         }
     }
 
-    public function destroyPlayer(string $playerMatchId) : RedirectResponse
+    public function destroyPlayer(string $matchTeamPlayerId) : RedirectResponse
     {
         try {
             $matchTeamPlayerRepo = app(MatchTeamPlayerRepository::class);
 
-            $matchTeamPlayer = $matchTeamPlayerRepo->find($playerMatchId);
+            $matchTeamPlayer = $matchTeamPlayerRepo->find($matchTeamPlayerId);
 
             if (!$matchTeamPlayer) {
                 return redirect()->back()->with('error', __('messages.player_team_not_found'));
             }
 
-            $match = $matchTeamPlayer->team;
+            $matchTeamPlayerRepo->delete($matchTeamPlayerId);
 
-            $currentPlayerCount = $match->users()->count();
-
-            if ($currentPlayerCount <= $match->min_player) {
-                return redirect()->back()->with('swal', MatchSwalMessages::matchPlayersMinCountError()->toArray());
-            }
-
-            $matchTeamPlayerRepo->delete($playerMatchId);
-
-            return redirect()->back()->with('success', __('messages.player_team_deleted_successfully'));
+            return redirect()->back()->with('success', __('messages.me_match_team_player_quit_successfully'));
         } catch (\Throwable $th) {
-
+            Log::error('Error while destroying match team player: ' . $th->getMessage());
             return redirect()->back()->with('error', __('messages.contact_support'));
         }
     }

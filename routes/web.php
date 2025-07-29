@@ -1,12 +1,9 @@
 <?php
 
-use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\Auth\GoogleController;
-use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommissionController;
 use App\Http\Controllers\CourtBusinessController;
 use App\Http\Controllers\CourtController;
@@ -19,6 +16,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PlayerTeamController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RefundController;
+use App\Http\Controllers\Request\RequestMatchTeamPlayerController;
 use App\Http\Controllers\Request\RequestPlayerTeamController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\SubscriptionPlanController;
@@ -121,6 +119,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/request-player-teams', [RequestPlayerTeamController::class, 'store'])->name('request-player-teams.store');
     Route::delete('/request-player-teams/{id}', [RequestPlayerTeamController::class, 'destroy'])->name('request-player-teams.destroy');
     Route::post('/request-player-teams/{id}/accept', [RequestPlayerTeamController::class, 'accept'])->name('request-player-teams.accept');
+
+
+    Route::post('/request-match-team-players', [RequestMatchTeamPlayerController::class, 'store'])->name('request-match-team-players.store');
+    Route::delete('/request-match-team-players/{id}', [RequestMatchTeamPlayerController::class, 'store'])->name('request-match-team-players.destroy');
+    Route::post('/request-match-team-players/{id}/accept', [RequestMatchTeamPlayerController::class, 'accept'])->name('request-match-team-players.accept');
+
 
     Route::post('follows', [FollowController::class, 'store'])->name('follows.store');
     Route::delete('follows/{id}', [FollowController::class, 'destroy'])->name('follows.destroy');
