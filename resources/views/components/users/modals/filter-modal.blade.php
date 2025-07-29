@@ -18,13 +18,7 @@
                             @include('components.filters.location-filtering')
                         </div>
                         <div class="col-12">
-                            <label class="form-label">{{ __('messages.gender') }}</label>
-                            <select name="gender" class="form-select" data-control="select2" data-placeholder="{{ __('messages.select_gender') }}">
-                                <option></option>
-                                <option value="male">👨 {{ __('messages.male') }}</option>
-                                <option value="female">👩 {{ __('messages.female') }}</option>
-                                <option value="mixed">👫 {{ __('messages.others') }}</option>
-                            </select>
+                            @include('components.filters.gender-filtering')
                         </div>
                     </div>
                     <div class="row mb-5">

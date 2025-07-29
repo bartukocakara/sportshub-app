@@ -25,6 +25,8 @@ class MatchResource extends JsonResource
             'city_title' => $this->court?->courtAddress?->district?->city?->title,
             'play_date' => $this->play_date,
             'expiring_date' => $this->expiring_date,
+            'min_team' => $this->min_team,
+            'max_team' => $this->max_team,
             'from_hour' => $this->from_hour,
             'to_hour' => $this->to_hour,
             'created_at' => $this->created_at,

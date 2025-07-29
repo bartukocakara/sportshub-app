@@ -142,4 +142,11 @@ class Matches extends Model
     {
         return $this->hasManyThrough(RequestMatchTeamPlayer::class, MatchTeam::class, 'match_id', 'match_team_id');
     }
+
+    public function getMatchTeamPlayersCountAttribute(): int
+    {
+        return $this->matchTeams->sum(function ($team) {
+            return $team->matchTeamPlayers->count();
+        });
+    }
 }

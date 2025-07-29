@@ -57,7 +57,6 @@
 
 @section('page-scripts')
     @include('components.home.scripts.leaflet-scripts')
-    @include('components.home.scripts.filter-scripts')
     @include('components.scripts.court-scripts')
     @include('components.checkout.scripts.slider-scripts')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

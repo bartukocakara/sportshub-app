@@ -240,7 +240,7 @@
                     </div>
                     <div class="feature-item">
                         <span class="icon">📣</span>
-                        <h3>{{ __('messages.announcements') }}</h3>
+                        <h3>{{ __('messages.announcements_short') }}</h3>
                         <p>{{ __('messages.announcements_desc') }}</p>
                     </div>
                     <div class="feature-item">
@@ -254,7 +254,7 @@
             <section class="cta-section">
                 <h2>{{ __('messages.cta_title') }}</h2>
                 <p>{{ __('messages.cta_desc') }}</p>
-                <a href="#" class="btn-fancy">{{ __('messages.sign_up_now') }}</a>
+                <a href="#" class="btn-fancy" data-bs-toggle="modal" data-bs-target="#authModal">{{ __('messages.sign_up_now') }}</a>
             </section>
 
             <div id="myTinySlider" class="tns-outer tns-slider tns-nav-dots">

@@ -46,13 +46,25 @@
             <div class="col">
                 <div class="border border-gray-300 border-dashed rounded py-3 px-4 text-center h-100">
                     <div class="fw-semibold fs-6 text-gray-900 mb-1">{{ __('messages.current_players') }}</div>
-                    <div class="fs-3 fw-bold">{{ $datas['match']['users_count'] }}</div>
+                    <div class="fs-3 fw-bold">{{ $datas['match']['match_team_players_count'] }}</div>
                 </div>
             </div>
             <div class="col">
                 <div class="border border-gray-300 border-dashed rounded py-3 px-4 text-center h-100">
                     <div class="fw-semibold fs-6 text-gray-900 mb-1">{{ __('messages.gender') }}</div>
                     <div class="fs-3">{{ $genderEmoji }} {{ $genderText }}</div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="border border-gray-300 border-dashed rounded py-3 px-4 text-center h-100">
+                    <div class="fw-semibold fs-6 text-gray-900 mb-1">{{ __('messages.min_team') }}</div>
+                    <div class="fs-3 fw-bold">{{ $datas['match']['min_team'] }}</div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="border border-gray-300 border-dashed rounded py-3 px-4 text-center h-100">
+                    <div class="fw-semibold fs-6 text-gray-900 mb-1">{{ __('messages.max_team') }}</div>
+                    <div class="fs-3 fw-bold">{{ $datas['match']['max_team'] }}</div>
                 </div>
             </div>
             <div class="col">

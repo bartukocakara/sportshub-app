@@ -7,7 +7,7 @@
         ],
         [
             'route' => 'announcements.index',
-            'icon' => '🔔',
+            'icon' => '📣',
             'label' => __('messages.announcements')
         ],
         [

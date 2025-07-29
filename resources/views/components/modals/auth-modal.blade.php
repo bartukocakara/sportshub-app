@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered mw-900px">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">{{ __('Welcome to Our Application!') }}</h5>
+                <h3 class="modal-title">{{ __('messages.welcome_to_sportshub') }}</h3>
                 <button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal" aria-label="Close">
                     <i class="ki-duotone ki-cross fs-1">
                         <span class="path1"></span>

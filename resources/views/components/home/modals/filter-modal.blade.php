@@ -17,29 +17,15 @@
                         <div class="col-12 mb-5">
                             @include('components.filters.location-filtering')
                         </div>
-                        <div class="col-12">
-                            <label class="form-label">{{ __('messages.gender') }}</label>
-                            <select name="gender" class="form-select" data-control="select2" data-placeholder="Select Gender">
-                                <option></option>
-                                <option value="male">👨 Male</option>
-                                <option value="female">👩 Female</option>
-                                <option value="mixed">👫 Mixed</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-5">
-                        <div class="col-12">
-                            <label class="form-label">{{ __('messages.min_player') }}</label>
-                            <input type="number" name="min_player" class="form-control" placeholder="Min player">
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label">{{ __('messages.max_player') }}</label>
-                            <input type="number" name="max_player" class="form-control" placeholder="Max player">
-                        </div>
                     </div>
                     <div class="row mb-5">
                         <div class="col-12">
                             @include('components.filters.sport-type-filter')
+                        </div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="col-12">
+                            @include('components.filters.gender-filtering')
                         </div>
                     </div>
                 </div>

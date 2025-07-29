@@ -509,7 +509,7 @@ return [
     'organize_matches' => 'Organize & Find Matches',
     'organize_matches_desc' => 'Set up casual games or competitive matches with ease. Browse upcoming fixtures, challenge other teams, and keep track of your scores and stats. 🔥',
 
-    'announcements' => 'Stay Updated with Announcements',
+    'announcements_short' => 'Stay Updated with Announcements',
     'announcements_desc' => 'Receive real-time notifications for game changes, team updates, league news, and special events. Never miss a beat! 🔔',
 
     'track_progress' => 'Track Your Progress',
@@ -523,4 +523,7 @@ return [
     'find_court' => 'Find a Court',
     'find_player' => 'Find Player',
     'be_informed_about_announcements' => 'Be Informed About Announcements',
+    'welcome_to_sportshub'=> 'Welcome to Sportshub! 🚀',
+    'min_team' => 'Minimum Team',
+    'max_team' => 'Maximum Team',
 ];

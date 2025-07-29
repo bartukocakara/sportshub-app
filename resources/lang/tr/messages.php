@@ -530,7 +530,7 @@ return [
     'organize_matches' => 'Maçları Düzenle ve Bul',
     'organize_matches_desc' => 'Gündelik oyunlar veya rekabetçi maçlar kurun. Yaklaşan maçları görüntüleyin, diğer takımlara meydan okuyun ve skorlarınızı takip edin. 🔥',
 
-    'announcements' => 'Duyurularla Güncel Kal',
+    'announcements_short' => 'Duyurularla Güncel Kal',
     'announcements_desc' => 'Maç değişiklikleri, takım güncellemeleri, lig haberleri ve özel etkinlikler için anlık bildirimler alın. Hiçbir gelişmeyi kaçırmayın! 🔔',
 
     'track_progress' => 'Gelişimini Takip Et',
@@ -544,4 +544,7 @@ return [
     'find_court' => 'Saha Bul',
     'find_player' => 'Oyuncu Bul',
     'be_informed_about_announcements' => 'Duyurulardan Haberdar Ol',
+    'welcome_to_sportshub'=> 'Sportshuba hoş geldiniz! 🚀',
+    'min_team' => 'Minimum Takım',
+    'max_team' => 'Maksimum Takım',
 ];
