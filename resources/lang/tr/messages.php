@@ -512,4 +512,36 @@ return [
     'invite_confirmation' => 'Oyuncuyu Davet Et',
     'enter_title' => 'Bir baslık yazın',
     'player_invited_successfully' => 'Oyuncu basarıyla davet edildi.',
+    'welcome_to_sportshub' => '👋 Sportshub\'a Hoş Geldin! Sporun Yeni Merkezi Burada! 🚀',
+    'discover_intro' => 'Yeni oyuncular keşfet, hayalindeki takımı bul, en iyi sahaları rezerve et ve maçları kaçırma! Oyunun seviyesini yükseltmeye hazır ol. 🥇',
+    'get_started' => 'Hemen Başla! 🎉',
+    'explore_features' => 'Özellikleri Keşfet 👇',
+    'whats_inside' => 'Sportshub\'ta Neler Var? ✨',
+
+    'find_new_players' => 'Yeni Oyuncular Bul',
+    'find_new_players_desc' => 'Bölgenizdeki sporcularla bağlantı kurun, ağınızı genişletin ve her spor için mükemmel takım arkadaşlarını bulun. Beceriye, konuma ve oyun tercihine göre arayın! 🤝',
+
+    'join_create_teams' => 'Takımlara Katıl / Takım Kur',
+    'join_create_teams_desc' => 'Bir takım mı arıyorsunuz yoksa kendi ekibinizi mi kuruyorsunuz? Sportshub ile takımları kolayca yönetin, antrenmanları organize edin ve birlikte yarışın. 🏅',
+
+    'book_courts' => 'Saha ve Mekan Rezerve Et',
+    'book_courts_desc' => 'Yakındaki spor sahalarını ve mekanlarını kolayca bulun ve anında rezerve edin. Müsaitlik durumunu kontrol edin ve oyuna hazır olun! 🗓️',
+
+    'organize_matches' => 'Maçları Düzenle ve Bul',
+    'organize_matches_desc' => 'Gündelik oyunlar veya rekabetçi maçlar kurun. Yaklaşan maçları görüntüleyin, diğer takımlara meydan okuyun ve skorlarınızı takip edin. 🔥',
+
+    'announcements' => 'Duyurularla Güncel Kal',
+    'announcements_desc' => 'Maç değişiklikleri, takım güncellemeleri, lig haberleri ve özel etkinlikler için anlık bildirimler alın. Hiçbir gelişmeyi kaçırmayın! 🔔',
+
+    'track_progress' => 'Gelişimini Takip Et',
+    'track_progress_desc' => 'Performansınızı izleyin, maç sonuçlarını takip edin ve istatistiklerinizin zamanla nasıl geliştiğini görün. Başarılarınızı kutlayın, hedeflerinize odaklanın! 🚀',
+
+    'cta_title' => 'Oyuna Katılmaya Hazır mısın? 🏃‍♀️💨',
+    'cta_desc' => 'Bugün Sportshub topluluğuna katıl ve spor deneyimini bir üst seviyeye taşı!',
+    'sign_up_now' => 'Hemen Kaydol! 🥳',
+    'find_match' => 'Maç Bul',
+    'find_team' => 'Takım Bul',
+    'find_court' => 'Saha Bul',
+    'find_player' => 'Oyuncu Bul',
+    'be_informed_about_announcements' => 'Duyurulardan Haberdar Ol',
 ];

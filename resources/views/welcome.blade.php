@@ -33,23 +33,6 @@
         display: none;
     }
 
-    .tns-controls button {
-
-    }
-
-    .tns-controls button:hover {
-
-    }
-
-    /* Customizing the arrow icons (using Unicode characters) */
-    .tns-controls button[data-controls="prev"]::before {
-
-    }
-
-    .tns-controls button[data-controls="next"]::before {
-        content: '›'; /* Unicode right arrow */
-        font-weight: bold;
-    }
     .tns-nav {
         text-align: center;
         margin-top: 15px;
@@ -69,7 +52,6 @@
         background: #007bff;
     }
 
-    /* Hero Section */
     .hero-section {
         padding: 20px 20px;
         position: relative;
@@ -112,30 +94,18 @@
 
     .btn-primary-fancy {
         background-color: var(--accent-color);
-        color: white;
     }
 
     .btn-primary-fancy:hover {
         background-color: #218838;
         transform: translateY(-3px) scale(1.02);
+        color:whitesmoke
     }
-
-    .btn-secondary-fancy {
-        background-color: transparent;
-        color: white;
-        border: 2px solid white;
-    }
-
-    .btn-secondary-fancy:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-        transform: translateY(-3px) scale(1.02);
-    }
-
 
     .features-section {
         background-color: var(--dark-bg);
         color: var(--light-text-color);
-        padding: 80px 20px;
+        padding: 20px 20px;
         text-align: center;
     }
      .features-section h2 {
@@ -167,8 +137,8 @@
     }
 
     .feature-item {
-        background-color: #2a2a47; /* Slightly lighter dark for feature cards */
         padding: 30px;
+        border:0.1px solid grey;
         border-radius: 15px;
         box-shadow: var(--shadow-dark);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -208,11 +178,8 @@
         background-color: var(--primary-color);
         padding: 80px 20px;
         text-align: center;
-        color: white;
-        background-image: url('{{ asset('assets/media/misc/pattern.png') }}'); /* Add a subtle pattern */
         background-size: cover;
         background-blend-mode: overlay;
-        background-color: rgba(0, 123, 255, 0.8);
     }
 
     .cta-section h2 {
@@ -223,16 +190,14 @@
 
     .cta-section .btn-fancy {
         background-color: white;
-        color: var(--primary-color);
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        margin: 10px 0 10px 0 !important;
     }
 
     .cta-section .btn-fancy:hover {
         color: #0056b3;
         transform: translateY(-5px) scale(1.05);
     }
-
-
 </style>
 @endsection
 @section('content')
@@ -241,85 +206,92 @@
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
                 <div class="hero-section m-auto">
-                    <h1 class="animate-text">👋 Welcome to <span class="text-white-50">Sportshub!</span> Your Ultimate Sports Hub! 🚀</h1>
-                    <p class="animate-text-delay">
-                        Discover new players, find your dream team, book top-notch courts, and never miss a match! Get ready to elevate your game. 🥇
-                    </p>
+                    <h1>{{ __('messages.welcome_to_sportshub') }}</h1>
+                    <p>{{ __('messages.discover_intro') }}</p>
                     <div class="hero-buttons">
-                        <a href="#" class="btn-fancy btn-primary-fancy"> Get Started! <span class="emoji">🎉</span> </a>
-                        <a href="#features" class="btn-fancy btn-secondary-fancy"> Explore Features <span class="emoji">👇</span> </a>
+                        <a href="#" class="btn btn-primary-fancy">{{ __('messages.get_started') }}</a>
+                        <a href="#features" class="btn btn-fancy btn-secondary">{{ __('messages.explore_features') }}</a>
                     </div>
                 </div>
             </div>
 
             <section id="features" class="features-section">
-                <h2>What's Inside Sportshub? <span class="emoji">✨</span></h2>
+                <h2>{{ __('messages.whats_inside') }}</h2>
                 <div class="feature-grid">
-                    <div class="feature-item reveal-item">
+                    <div class="feature-item">
                         <span class="icon">⛹️‍♂️</span>
-                        <h3>Find New Players</h3>
-                        <p>Connect with athletes in your area, expand your network, and find the perfect teammates for any sport. Search by skill, location, and preferred game! <span class="emoji">🤝</span></p>
+                        <h3>{{ __('messages.find_new_players') }}</h3>
+                        <p>{{ __('messages.find_new_players_desc') }}</p>
                     </div>
-                    <div class="feature-item reveal-item">
+                    <div class="feature-item">
                         <span class="icon">🏆</span>
-                        <h3>Join/Create Teams</h3>
-                        <p>Looking for a team or building your own squad? Sportshub makes it easy to find and manage teams, organize practices, and compete together. <span class="emoji">🏅</span></p>
+                        <h3>{{ __('messages.join_create_teams') }}</h3>
+                        <p>{{ __('messages.join_create_teams_desc') }}</p>
                     </div>
-                    <div class="feature-item reveal-item">
+                    <div class="feature-item">
                         <span class="icon">🏟️</span>
-                        <h3>Book Courts & Venues</h3>
-                        <p>Seamlessly discover and reserve local sports courts, fields, and venues. Check availability, book instantly, and get ready to play! <span class="emoji">🗓️</span></p>
+                        <h3>{{ __('messages.book_courts') }}</h3>
+                        <p>{{ __('messages.book_courts_desc') }}</p>
                     </div>
-                    <div class="feature-item reveal-item">
+                    <div class="feature-item">
                         <span class="icon">⚽</span>
-                        <h3>Organize & Find Matches</h3>
-                        <p>Set up casual games or competitive matches with ease. Browse upcoming fixtures, challenge other teams, and keep track of your scores and stats. <span class="emoji">🔥</span></p>
+                        <h3>{{ __('messages.organize_matches') }}</h3>
+                        <p>{{ __('messages.organize_matches_desc') }}</p>
                     </div>
-                    <div class="feature-item reveal-item">
+                    <div class="feature-item">
                         <span class="icon">📣</span>
-                        <h3>Stay Updated with Announcements</h3>
-                        <p>Receive real-time notifications for game changes, team updates, league news, and special events. Never miss a beat! <span class="emoji">🔔</span></p>
+                        <h3>{{ __('messages.announcements') }}</h3>
+                        <p>{{ __('messages.announcements_desc') }}</p>
                     </div>
-                    <div class="feature-item reveal-item">
+                    <div class="feature-item">
                         <span class="icon">📈</span>
-                        <h3>Track Your Progress</h3>
-                        <p>Monitor your performance, track game results, and see your stats improve over time. Celebrate your wins and work on your goals! <span class="emoji">🚀</span></p>
+                        <h3>{{ __('messages.track_progress') }}</h3>
+                        <p>{{ __('messages.track_progress_desc') }}</p>
                     </div>
                 </div>
             </section>
 
             <section class="cta-section">
-                <h2>Ready to Jump into the Game? <span class="emoji">🏃‍♀️💨</span></h2>
-                <p>Join the Sportshub community today and take your sports experience to the next level!</p>
-                <a href="#" class="btn-fancy"> Sign Up Now! <span class="emoji">🥳</span> </a>
+                <h2>{{ __('messages.cta_title') }}</h2>
+                <p>{{ __('messages.cta_desc') }}</p>
+                <a href="#" class="btn-fancy">{{ __('messages.sign_up_now') }}</a>
             </section>
-            <div id="kt_app_content_container" class="app-container container-fluid">
-                <div class="my-carousel-container">
-                    {{-- Add a container for easier targeting with JS --}}
-                    <div id="myTinySlider" class="tns-outer tns-slider tns-nav-dots">
-                        <div class="text-center px-5 py-5">
-                            <img src="{{ asset('assets/media/products/matches.png') }}" class="card-rounded mw-100" alt="Image 2" />
-                        </div>
-                        <div class="text-center px-5 py-5">
-                            <img src="{{ asset('assets/media/products/courts.png') }}" class="card-rounded mw-100" alt="Image 3" />
-                        </div>
-                        <div class="text-center px-5 py-5">
-                            <img src="{{ asset('assets/media/products/players.png') }}" class="card-rounded mw-100" alt="Image 1" />
-                        </div>
-                        <div class="text-center px-5 py-5">
-                            <img src="{{ asset('assets/media/products/teams.png') }}" class="card-rounded mw-100" alt="Image 4" />
-                        </div>
-                        <div class="text-center px-5 py-5">
-                            <img src="{{ asset('assets/media/products/announcements.png') }}" class="card-rounded mw-100" alt="Image 5" />
-                        </div>
-                    </div>
+
+            <div id="myTinySlider" class="tns-outer tns-slider tns-nav-dots">
+                <div class="text-center px-5 py-5">
+                    <h3 class="py-5">{{ __('messages.find_match') }}</h3>
+                    <img src="{{ asset('assets/media/products/matches.png') }}" class="card-rounded mw-100" alt="Image 2" onclick="openImageModal(this)"/>
                 </div>
-                <div class="separator separator-dashed my-5"></div>
+                <div class="text-center px-5 py-5">
+                    <h3 class="py-5">{{ __('messages.find_court') }}</h3>
+                    <img src="{{ asset('assets/media/products/courts.png') }}" class="card-rounded mw-100" alt="Image 3" onclick="openImageModal(this)"/>
+                </div>
+                <div class="text-center px-5 py-5">
+                    <h3 class="py-5">{{ __('messages.find_player') }}</h3>
+                    <img src="{{ asset('assets/media/products/players.png') }}" class="card-rounded mw-100" alt="Image 1" onclick="openImageModal(this)"/>
+                </div>
+                <div class="text-center px-5 py-5">
+                    <h3 class="py-5">{{ __('messages.find_team') }}</h3>
+                    <img src="{{ asset('assets/media/products/teams.png') }}" class="card-rounded mw-100" alt="Image 4" onclick="openImageModal(this)"/>
+                </div>
+                <div class="text-center px-5 py-5">
+                    <h3 class="py-5">{{ __('messages.be_informed_about_announcements') }}</h3>
+                    <img src="{{ asset('assets/media/products/announcements.png') }}" class="card-rounded mw-100" alt="Image 5" onclick="openImageModal(this)"/>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
+<div class="modal fade" id="carouselImageModal" tabindex="-1" aria-labelledby="carouselImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl"> 
+        <div class="modal-content bg-dark p-0">
+            <div class="modal-body text-center p-0 m-0">
+                <img id="modalImage" src="" alt="Preview" class="img-fluid rounded" />
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('page-scripts')
 @include('components.scripts.pagination-scripts')
@@ -349,5 +321,12 @@
             }
         });
     });
+    function openImageModal(imageElement) {
+        const src = imageElement.getAttribute('src');
+        const modalImage = document.getElementById('modalImage');
+        modalImage.setAttribute('src', src);
+        const modal = new bootstrap.Modal(document.getElementById('carouselImageModal'));
+        modal.show();
+    }
 </script>
 @endsection

@@ -491,4 +491,36 @@ return [
     'invitet_player_team_message' => 'Bu oyuncuyu takımına davet etmek istediğine emin misin?',
     'enter_title' => 'Enter Title',
     'player_invited_successfully' => 'The player has been invited successfully.',
+    'welcome_to_sportshub' => '👋 Welcome to Sportshub! Your Ultimate Sports Hub! 🚀',
+    'discover_intro' => 'Discover new players, find your dream team, book top-notch courts, and never miss a match! Get ready to elevate your game. 🥇',
+    'get_started' => 'Get Started! 🎉',
+    'explore_features' => 'Explore Features 👇',
+    'whats_inside' => "What's Inside Sportshub? ✨",
+
+    'find_new_players' => 'Find New Players',
+    'find_new_players_desc' => 'Connect with athletes in your area, expand your network, and find the perfect teammates for any sport. Search by skill, location, and preferred game! 🤝',
+
+    'join_create_teams' => 'Join/Create Teams',
+    'join_create_teams_desc' => 'Looking for a team or building your own squad? Sportshub makes it easy to find and manage teams, organize practices, and compete together. 🏅',
+
+    'book_courts' => 'Book Courts & Venues',
+    'book_courts_desc' => 'Seamlessly discover and reserve local sports courts, fields, and venues. Check availability, book instantly, and get ready to play! 🗓️',
+
+    'organize_matches' => 'Organize & Find Matches',
+    'organize_matches_desc' => 'Set up casual games or competitive matches with ease. Browse upcoming fixtures, challenge other teams, and keep track of your scores and stats. 🔥',
+
+    'announcements' => 'Stay Updated with Announcements',
+    'announcements_desc' => 'Receive real-time notifications for game changes, team updates, league news, and special events. Never miss a beat! 🔔',
+
+    'track_progress' => 'Track Your Progress',
+    'track_progress_desc' => 'Monitor your performance, track game results, and see your stats improve over time. Celebrate your wins and work on your goals! 🚀',
+
+    'cta_title' => 'Ready to Jump into the Game? 🏃‍♀️💨',
+    'cta_desc' => 'Join the Sportshub community today and take your sports experience to the next level!',
+    'sign_up_now' => 'Sign Up Now! 🥳',
+    'find_match' => 'Find a Match',
+    'find_team' => 'Find a Team',
+    'find_court' => 'Find a Court',
+    'find_player' => 'Find Player',
+    'be_informed_about_announcements' => 'Be Informed About Announcements',
 ];
