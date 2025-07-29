@@ -5,6 +5,7 @@ namespace App\ViewModels\Match;
 use App\Http\Resources\AnnouncementResource;
 use App\Http\Resources\DefinitionResource;
 use App\Http\Resources\MatchResource;
+use App\Http\Resources\MatchTeamResource;
 use App\Http\Resources\TeamResource;
 use App\Models\Announcement;
 use App\Models\Definition;
@@ -34,6 +35,7 @@ class MatchProfileViewModel
             'match' => MatchResource::make($this->match),
             'cities' => $this->metaDataService->getCitiesByRequest(),
             'sport_types' => $this->metaDataService->getSportTypes(),
+            'match_teams' => MatchTeamResource::collection($this->match->matchTeams),
             'user_status' => $this->accessService->getUserRequestStatus($user, $this->match),
             'user_role' => $this->accessService->getUserRole($user, $this->match),
             'is_match_owner' => $this->accessService->isMatchOwner($user, $this->match),

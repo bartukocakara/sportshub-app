@@ -1,6 +1,19 @@
 @extends('layouts.match.index')
 
 @section('title', __('messages.profile'))
+@section('custom-styles')
+<style>
+    .match-team-card {
+        cursor: pointer;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .match-team-card.selected {
+        border: 1px solid #0d6efd !important;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(13, 110, 253, 0.5);
+    }
+</style>
+@endsection
 @section('content')
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
     <div class="d-flex flex-column flex-column-fluid">
@@ -211,5 +224,25 @@
         }
         */
     @endisset
+    const joinMatchModalEl = document.getElementById('kt_modal_join_match');
+        if (joinMatchModalEl) {
+            const radios = joinMatchModalEl.querySelectorAll('.match-team-radio');
+            const cards = joinMatchModalEl.querySelectorAll('.match-team-card');
+
+            radios.forEach((radio) => {
+                radio.addEventListener('change', function () {
+                    cards.forEach(card => card.classList.remove('selected')); // Remove from all
+                    // Find the parent .match-team-card of the changed radio and add 'selected'
+                    this.closest('.match-team-card').classList.add('selected');
+                });
+            });
+
+            // Optional: Set initial selection if a radio button is checked by default (e.g., from old('match_team_id'))
+            const initiallyCheckedRadio = joinMatchModalEl.querySelector('.match-team-radio:checked');
+            if (initiallyCheckedRadio) {
+                initiallyCheckedRadio.closest('.match-team-card').classList.add('selected');
+            }
+        }
+    });
 </script>
 @endsection

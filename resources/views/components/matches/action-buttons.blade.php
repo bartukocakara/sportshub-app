@@ -70,7 +70,6 @@
             <i class="fas fa-check-circle me-1"></i> {{ __('messages.accept_invitation') }}
         </button>
     </form>
-
     <a href="#" class="btn btn-sm btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#kt_modal_cancel_request">
         <i class="fas fa-times-circle me-1"></i> {{ __('messages.cancel_request') }}
     </a>
@@ -92,7 +91,7 @@
         <i class="fas fa-plus me-1"></i> {{ __('messages.join') }}
     </a>
 
-    <x-modals.request-confirmation-modal
+    <x-modals.request-match-join-modal
         id="kt_modal_join_match"
         :route="route('request-match-team-players.store')"
         :title="__('messages.join_match_title')"
@@ -105,6 +104,7 @@
             'match_id' => $match->id,
             'type' => 'join',
         ]"
+        :matchTeams="$datas['match_teams'] ?? []"
     />
 @endif
 
