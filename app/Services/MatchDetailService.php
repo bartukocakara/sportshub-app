@@ -187,9 +187,8 @@ class MatchDetailService extends CrudService
      */
     public function getMatchTeamsData(Request $request, string $matchId): array
     {
-        $match = $this->matchRepository->find($matchId, ['matchTeams.player', 'matchOwners', 'statusDefinition', 'matchTeams.matchTeamPlayers.requestedUser']);
+        $match = $this->matchRepository->find($matchId, ['matchOwners', 'statusDefinition', 'matchTeams.matchTeamPlayers.user']);
         $viewModel = new MatchTeamsViewModel($match, new MatchAccessService());
-
         return $viewModel->toArray();
     }
 

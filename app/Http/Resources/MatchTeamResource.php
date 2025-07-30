@@ -17,6 +17,7 @@ class MatchTeamResource extends JsonResource
         return [
             'id' => $this->id,
             'match_id' => $this->match_id,
+            'title' => $this->title,
             'match_team_players' => MatchTeamPlayerResource::collection($this->whenLoaded('matchTeamPlayers')),
             'created_at' => $this->created_at,
         ];

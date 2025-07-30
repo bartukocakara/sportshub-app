@@ -56,4 +56,9 @@ class MatchTeamPlayer extends Model
             default     => 'badge-light-secondary',
         };
     }
+
+    public function requestedUser()
+    {
+        return $this->belongsTo(RequestMatchTeamPlayer::class, 'requested_user_id', 'user_id');
+    }
 }

@@ -22,7 +22,7 @@ class MatchTeamPlayerResource extends JsonResource
             'gender' => $this->user?->gender,
             'avatar' => $this->user?->avatar,
             'status_badge' => $this->status_badge,
-
+            'user_id' => $this->user?->id,
         ];
     }
 }

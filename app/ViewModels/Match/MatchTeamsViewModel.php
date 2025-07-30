@@ -12,7 +12,6 @@ class MatchTeamsViewModel
 {
     public function __construct(
         protected Matches $match,
-        protected LengthAwarePaginator $matchTeams,
         protected MatchAccessService $accessService,
     ) {}
 
@@ -24,7 +23,7 @@ class MatchTeamsViewModel
             'user_status' => $this->accessService->getUserRequestStatus($user, $this->match),
             'user_role' => $this->accessService->getUserRole($user, $this->match),
             'is_match_owner' => $this->accessService->isMatchOwner($user, $this->match),
-            'teams' => MatchTeamResource::collection($this->matchTeams)->response()->getData(true),
+            'match_teams' => MatchTeamResource::collection($this->match->matchTeams)->response()->getData(true),
         ];
     }
 }

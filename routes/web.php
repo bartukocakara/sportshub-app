@@ -67,6 +67,7 @@ Route::prefix('matches/{id}')->name('matches.')->group(function () {
     Route::get('activities', [MatchDetailController::class, 'activities'])->name('activities');
     Route::get('profile', [MatchDetailController::class, 'profile'])->name('profile');
     Route::get('players', [MatchDetailController::class, 'players'])->name('players');
+    Route::get('match-teams-create', [MatchDetailController::class, 'matchTeamCreate'])->name('match-teams.create');
     Route::delete('match-team-players/{matchTeamPlayerId}', [MatchDetailController::class, 'destroyPlayer'])->name('match-team-players.destroy');
     Route::get('invited-players', [MatchDetailController::class, 'getRequestPlayerTeamsInviteData'])->name('requested-players.invite');
     Route::delete('invited-players/{requestId}', [MatchDetailController::class, 'deleteRequestPlayerTeamsData'])->name('delete-requested-players');

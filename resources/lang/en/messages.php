@@ -542,4 +542,8 @@ return [
     'confirmed' => 'Confirmed',
     'accepted' => 'Accepted',
     'match_deleted_body_line_1' => 'You have successfully deleted the match.',
+    'you_can_drag_and_drop_players_between_teams_to_reorganize' => 'You can drag and drop players between teams to reorganize.',
+    'drag_and_drop_players' => 'Drag and drop players',
+    'no_teams_found' => 'No teams found.',
+
 ];

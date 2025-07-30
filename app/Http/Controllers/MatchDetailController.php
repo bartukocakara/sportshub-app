@@ -130,17 +130,29 @@ class MatchDetailController extends Controller
     {
         return $this->matchDetailService->destroyPlayer($matchTeamPlayerId);
     }
+
     /**
      * Displays the user's matches.
      *
      * @param string $id The user ID.
      * @return \Illuminate\View\View
      */
-    public function matches(Request $request, string $id)
+    public function teams(Request $request, string $id)
     {
         $datas = $this->matchDetailService->getMatchTeamsData($request, $id); // You'll create this method
 
         return view('matches.show.teams', compact('datas'));
+    }
+
+    /**
+     * Displays the user's matches.
+     *
+     * @param string $id The user ID.
+     * @return \Illuminate\View\View
+     */
+    public function matchTeamCreate(Request $request, string $id)
+    {
+        return view('matches.show.match-teams-create');
     }
 
     /**
