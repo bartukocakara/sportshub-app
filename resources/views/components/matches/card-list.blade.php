@@ -5,7 +5,7 @@
                 <div class="card-title m-0">
                     <div class="symbol symbol-50px w-50px bg-light">
                         @if (isset($match['sport_type']) && $match['sport_type']['path'])
-                            <img src="{{ $match['sport_type']['img'] }}" alt="{{ $match['sport_type']['title'] }}" class="p-3" />
+                            <img src="{{ asset('storage/' . $match['sport_type']['img']) }}" alt="{{ $match['sport_type']['title'] }}" class="p-3" />
                         @else
                             <img src="/assets/media/svg/brand-logos/xing-icon.svg" alt="Default Icon" class="p-3" />
                         @endif

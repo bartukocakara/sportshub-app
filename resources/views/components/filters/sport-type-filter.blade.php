@@ -5,7 +5,7 @@
         @foreach ($datas['sport_types'] as $item)
             <option value="{{ $item->id }}"
                 @if(old('sport_type_id', request()->get('sport_type_id')) == $item->id) selected @endif
-                data-image="{{ $item->img }}">
+                data-image="{{ asset("storage/".$item->img) }}">
                 {{ $item->title }}
             </option>
         @endforeach

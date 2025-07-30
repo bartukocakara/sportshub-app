@@ -16,7 +16,7 @@
         <div class="card border shadow-sm">
             <div class="card-body d-flex flex-center flex-column py-9 px-5">
                 <div class="symbol symbol-65px symbol-circle mb-5">
-                    <img src="{{ $user['avatar'] }}" alt="image" />
+                    <img src="{{ asset('storage/' . $user['avatar'] ?? '') }}" alt="image" />
                     <div class="bg-success position-absolute rounded-circle translate-middle start-100 top-100 border-4 border-body h-15px w-15px ms-n3 mt-n3"></div>
                 </div>
                 <a href="{{ route('users.profile', ['id' => $user['id']]) }}" class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">{{ $user['full_name'] }}</a>
