@@ -22,7 +22,6 @@
 
         /* Individual Team Card */
         .team-card {
-            background-color: #ffffff;
             border-radius: 12px; /* rounded-xl */
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
             padding: 24px; /* p-6 */
@@ -99,9 +98,8 @@
         }
 
         .player-name a {
-            color: #111827; /* text-gray-900 */
-            font-weight: 600; /* font-semibold */
-            font-size: 18px; /* text-lg */
+            font-weight: 500;
+            font-size: 13px;
             transition: color 0.2s ease-in-out;
         }
 
