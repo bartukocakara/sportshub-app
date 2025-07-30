@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Request\RequestMatchTeamPlayerRequest;
 use App\Http\Requests\Request\RequestMultipleMatchTeamPlayerRequest;
-use App\Http\Resources\Request\RequestMatchTeamPlayerMatchResource;
 use App\Http\Resources\Request\RequestMatchTeamPlayerResource;
 use App\Services\Request\RequestMatchTeamPlayerService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class RequestMatchTeamPlayerController extends Controller
@@ -62,55 +62,31 @@ class RequestMatchTeamPlayerController extends Controller
      * Yeni bir kaynağı kaydetmek için kullanılır.
      *
      * @param  RequestMatchTeamPlayerRequest $request
-     * @return JsonResponse
+     * @return RedirectResponse
     */
-    public function store(RequestMatchTeamPlayerRequest $request) : JsonResponse
+    public function store(RequestMatchTeamPlayerRequest $request) : RedirectResponse
     {
-        return $this->createdApiResponse(RequestMatchTeamPlayerResource::make($this->requestMatchTeamPlayerService->store($request->validated())));
+        return $this->requestMatchTeamPlayerService->create($request->validated());
     }
 
-        /**
-     * Yeni bir kaynağı kaydetmek için kullanılır.
-     *
-     * @param  RequestMultipleMatchTeamPlayerRequest $request
-     * @return JsonResponse
-    */
-    public function storeMultiple(RequestMultipleMatchTeamPlayerRequest $request) : JsonResponse
+    public function accept(string $id) : RedirectResponse
     {
-        return $this->createdApiResponse($this->requestMatchTeamPlayerService->storeMultiple($request->validated()));
+        return $this->requestMatchTeamPlayerService->accept($id);
     }
 
-    /**
-     * Kaynağı görüntülemek için kullanılır.
-     *
-     * @param string $id
-     * @return JsonResponse
-    */
-    public function show(string $id) : JsonResponse
+    public function reject(string $id) : RedirectResponse
     {
-        return $this->okApiResponse(new RequestMatchTeamPlayerResource($this->requestMatchTeamPlayerService->show($id)));
+        return $this->requestMatchTeamPlayerService->reject($id);
     }
 
-    /**
-     * Kaynağı güncellemek için kullanılır.
-     *
-     * @param  RequestMatchTeamPlayerRequest $request
-     * @param  string $id
-     * @return JsonResponse
-    */
-    public function update(RequestMatchTeamPlayerRequest $request, string $id) : JsonResponse
-    {
-        return $this->noContentApiResponse($this->requestMatchTeamPlayerService->update($request->validated(), $id));
-    }
-
-    /**
-     * Kaynağı kaldırmak için kullanılır.
+     /**
+     * destroy
      *
      * @param  string $id
-     * @return JsonResponse
+     * @return RedirectResponse
      */
-    public function destroy(string $id) : JsonResponse
+    public function destroy(string $id) : RedirectResponse
     {
-        return $this->noContentApiResponse($this->requestMatchTeamPlayerService->destroy($id));
+        return $this->requestMatchTeamPlayerService->delete($id);
     }
 }

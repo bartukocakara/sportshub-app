@@ -6,7 +6,6 @@
     $requestId = $datas['request_id'] ?? null;
     $matchTeamPlayerId = $datas['match_team_player_id'] ?? null;
 @endphp
-
 @if ($isRequestReceiver && $userStatus === 'waiting_for_approval')
     <form action="{{ route('request-match-team-players.accept', ['id' => $requestId]) }}" method="POST" class="d-inline">
         @csrf
@@ -64,12 +63,9 @@
     />
 
 @elseif ($userStatus === 'waiting_for_approval')
-    <form action="{{ route('request-match-team-players.accept', ['id' => $requestId]) }}" method="POST" class="d-inline">
-        @csrf
-        <button type="submit" class="btn btn-sm btn-success me-2">
-            <i class="fas fa-check-circle me-1"></i> {{ __('messages.accept_invitation') }}
-        </button>
-    </form>
+    <button class="btn btn-sm btn-success me-2" disabled>
+        <i class="fas fa-user-clock me-1"></i> {{ __('messages.waiting_for_approval') }}
+    </button>
     <a href="#" class="btn btn-sm btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#kt_modal_cancel_request">
         <i class="fas fa-times-circle me-1"></i> {{ __('messages.cancel_request') }}
     </a>

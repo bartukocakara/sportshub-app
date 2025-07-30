@@ -6,8 +6,8 @@ use App\Enums\TypeEnums\MatchTypeEnum;
 use App\Models\Matches;
 use Illuminate\Http\Request;
 use App\Repositories\BaseRepository;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class MatchRepository extends BaseRepository
 {
@@ -54,6 +54,7 @@ class MatchRepository extends BaseRepository
             return $query->whereHas('matchTeams')
                 ->with(['matchTeams.matchTeamPlayers.user',
                         'matchOwners',
+                        'sportType',
                         'statusDefinition',
                         'court.courtAddress.district.city'])
                 ->filterByPlayer($request->all());
@@ -62,6 +63,7 @@ class MatchRepository extends BaseRepository
             ->with(['teamMatches.team.users',
                     'statusDefinition',
                     'matchOwners',
+                    'sportType',
                     'court.courtAddress.district.city'])
             ->filterByTeam($request->all());
     }

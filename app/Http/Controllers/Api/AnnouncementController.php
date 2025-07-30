@@ -34,7 +34,7 @@ class AnnouncementController extends Controller
     public function index(Request $request) : JsonResponse
     {
         return $this->okApiResponse(
-            AnnouncementResource::collection($this->announcementService->all($request))
+            AnnouncementResource::collection($this->announcementService->all($request, ['user', 'teamTypeDefinition', 'courtTypeDefinition', 'reservationTypeDefinition', 'userTypeDefinition', 'matchTypeDefinition'], false))
                 ->response()
                 ->getData(true)
         );
@@ -49,17 +49,6 @@ class AnnouncementController extends Controller
     public function store(AnnouncementRequest $request) : JsonResponse
     {
         return $this->createdApiResponse($this->announcementService->store($request->validated()));
-    }
-
-    /**
-     * Yeni bir kaynağı kaydetmek için kullanılır.
-     *
-     * @param  AnnouncementRequest $request
-     * @return JsonResponse
-    */
-    public function storeMultiple(AnnouncementMultipleRequest $request) : JsonResponse
-    {
-        return $this->createdApiResponse($this->announcementService->storeMultiple($request->validated()));
     }
 
     /**

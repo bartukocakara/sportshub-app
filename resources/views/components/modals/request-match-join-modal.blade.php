@@ -43,7 +43,7 @@
     $selectedCardScriptId = $id . '_card_selector_script';
 @endphp
 
-<div class="modal fade" id="{{ $id }}" tabindex="-1" aria-labelledby="{{ $id }}_label" aria-hidden="true">
+<div class="modal modal-lg fade" id="{{ $id }}" tabindex="-1" aria-labelledby="{{ $id }}_label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content {{ $borderColor }} shadow-lg">
             <div class="modal-header {{ $bgColor }}">
@@ -74,12 +74,12 @@
                     @if (!empty($matchTeams))
                     <div class="row">
                         @foreach ($matchTeams as $team)
-                        <div class="col-md-6 col-xl-4">
-                        <label class="w-100 match-team-card">
+                        <div class="col-md-6 col-xl-4 my-3 h-125">
+                        <label class="w-100 text-center match-team-card">
                                 <input type="radio" name="match_team_id" value="{{ $team['id'] }}" class="d-none match-team-radio">
-                                <div class="card border shadow-sm h-100 match-team-card">
+                                <div class="card border shadow-sm match-team-card">
                                     <div class="card-header border-0 pt-9">
-                                        <div class="card-title m-0">
+                                        <div class="card-title m-0 m-auto">
                                             <div class="symbol-group symbol-hover">
                                                 @foreach ($team['matchTeamPlayers'] as $index => $matchTeamPlayer)
                                                     @if ($index < 3)

@@ -2,199 +2,206 @@
 
 namespace App\Services\Request;
 
-use App\Enums\StatusEnums\Player\MAtchTeamPlayerStatusEnum;
 use App\Enums\Request\RequestStatusEnum;
-use App\Enums\TypeEnums\LogSubjectTypeEnums\MatchLogSubjectTypeEnum;
-use App\Enums\TypeEnums\RequestTypeEnum;
-use App\Models\Matches;
-use App\Models\MatchLog;
-use App\Models\RequestMatchTeamPlayer;
-use App\Models\User;
-use App\Repositories\Chat\ChatChannelRepository;
-use App\Repositories\Chat\ChatUserRepository;
-use App\Repositories\Match\MatchLogRepository;
+use App\Loggers\LoggerManager;
+use App\Models\Definition;
+use App\Repositories\MatchOwnerRepository;
+use App\Repositories\MatchRepository;
 use App\Repositories\MatchTeamPlayerRepository;
-use App\Repositories\Player\PlayerRepository;
 use App\Services\CrudService;
 use App\Repositories\Request\RequestMatchTeamPlayerRepository;
 use App\Repositories\Request\RequestReceiverRepository;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
+use App\Support\Messages\MatchSwalMessages;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class RequestMatchTeamPlayerService extends CrudService
 {
-    // Crud işlemleri gerekmiyorsa extends'i kaldırınız. //
-
     protected RequestMatchTeamPlayerRepository $requestMatchTeamPlayerRepository;
-
-    protected MatchOwnerRepository $matchOwnerRepository;
-
     protected RequestReceiverRepository $requestReceiverRepository;
-
+    protected MatchOwnerRepository $matchOwnerRepository;
     protected MatchTeamPlayerRepository $matchTeamPlayerRepository;
-
-    protected ChatChannelRepository $chatChannelRepository;
-
-    protected ChatUserRepository $chatUserRepository;
-
     /**
      * @param RequestMatchTeamPlayerRepository $requestMatchTeamPlayerRepository
+     * @param RequestReceiverRepository $requestReceiverRepository
+     * @param MatchOwnerRepository $matchOwnerRepository
+     * @param MatchTeamPlayerRepository $matchTeamPlayerRepository
      * @return void
     */
-    public function __construct(RequestMatchTeamPlayerRepository $requestMatchTeamPlayerRepository,
-                                MatchOwnerRepository $matchOwnerRepository,
-                                RequestReceiverRepository $requestReceiverRepository,
-                                MatchTeamPlayerRepository $matchTeamPlayerRepository,
-                                ChatChannelRepository $chatChannelRepository,
-                                ChatUserRepository $chatUserRepository)
+    public function __construct(RequestMatchTeamPlayerRepository $requestMatchTeamPlayerRepository, RequestReceiverRepository $requestReceiverRepository, MatchOwnerRepository $matchOwnerRepository, MatchTeamPlayerRepository $matchTeamPlayerRepository)
     {
         $this->requestMatchTeamPlayerRepository = $requestMatchTeamPlayerRepository;
-        $this->matchOwnerRepository = $matchOwnerRepository;
         $this->requestReceiverRepository = $requestReceiverRepository;
+        $this->matchOwnerRepository = $matchOwnerRepository;
         $this->matchTeamPlayerRepository = $matchTeamPlayerRepository;
-        $this->chatChannelRepository = $chatChannelRepository;
-        $this->chatUserRepository = $chatUserRepository;
-        // Extend ettiğimiz CrudService'in __construct methoduna repositoryi gönderiyoruz.
-        parent::__construct($this->requestMatchTeamPlayerRepository); // Crud işlemleri yoksa kaldırınız.
-        // Repository bu serviste kullanılmak üzere değişkene tanımlanıyor.
+        parent::__construct($this->requestMatchTeamPlayerRepository);
     }
 
-    public function store(array $data) : Model
+    public function create(array $data): RedirectResponse
     {
-        $model = $this->requestMatchTeamPlayerRepository->create($data);
-        $type = $data['type'];
-        switch ($type) {
-            case RequestTypeEnum::INVITE->value:
-                 $this->invite($model, $data);
-                break;
-            case RequestTypeEnum::JOIN->value:
-                $this->join($model, $data);
-                break;
-            default:
-                break;
-        }
+        $data['requested_user_id'] = auth()->id();
+        try {
+            DB::beginTransaction();
+            $matchRepo = app()->make(MatchRepository::class);
 
-        return $model;
-    }
+            $match = $matchRepo->find($data['match_id'], ['matchTeams.matchTeamPlayers']); 
 
-    /**
-     * join
-     *
-     * @param  RequestMatchTeamPlayer $model
-     * @param  array $data
-     * @return void
-     */
-    private function join(RequestMatchTeamPlayer $model, array $data)
-    {
-        $matchOwners = $this->matchOwnerRepository->getByParams([
-            'match_id' => $data['match_id']
-        ]);
-        $requestReceiverRows = [];
-        foreach($matchOwners as $value) {
-            $requestReceiverRows[] = [
-                'id' => Str::uuid()->toString(),
-                'requestable_id' => $model->id,
-                'requestable_type' => 'App\Models\RequestMatchTeamPlayer',
-                'receiver_user_id' => $value->user->id,
-                'created_at' => now(),
-                'updated_at' => now()
-            ];
-        }
-        $this->requestReceiverRepository->insert($requestReceiverRows);
-    }
-
-    /**
-     * invite
-     *
-     * @param  RequestMatchTeamPlayer $model
-     * @param  array $data
-     * @return void
-     */
-    private function invite(RequestMatchTeamPlayer $model, array $data)
-    {
-        $requestReceiverRow = [
-            'requestable_id' => $model->id,
-            'requestable_type' => 'App\Models\RequestMatchTeamPlayer',
-            'receiver_user_id' => $data['user_id'],
-            'created_at' => now(),
-            'updated_at' => now()
-        ];
-        $this->requestReceiverRepository->create($requestReceiverRow);
-    }
-
-    /**
-     * storeMultiple
-     *
-     * @param  array $data
-     * @return bool
-     */
-    public function storeMultiple(array $data) : void
-    {
-        $requestMatchTeamPlayerRows = [];
-        $requestReceiverRows = [];
-        foreach ($data['match_teams'] as $matchTeam) {
-            foreach ($matchTeam['requested_user_ids'] as $requestedUserId) {
-                $requestableId = Str::uuid()->toString();
-                $requestMatchTeamPlayerRows[] = [
-                    'id' => $requestableId,
-                    'requested_user_id' => $requestedUserId,
-                    'match_team_id' => $matchTeam['id'],
-                    'status' => RequestStatusEnum::WAITING_FOR_APPROVAL->value,
-                    'title' => $data['title'],
-                    'type' => RequestTypeEnum::INVITE->value,
-                    'created_at' => now(),
-                    'updated_at' => now()
-                ];
-                $requestReceiverRows[] = [
-                    'id' => Str::uuid()->toString(),
-                    'requestable_id' => $requestableId,
-                    'requestable_type' => 'App\Models\RequestMatchTeamPlayer',
-                    'receiver_user_id' => $requestedUserId,
-                    'created_at' => now(),
-                    'updated_at' => now()
-                ];
+            if (!isset($data['match_team_id'])) {
+                $lowestTeam = $match->matchTeams->sortBy(function ($team) {
+                    return $team->matchTeamPlayers->count();
+                })->first();
+    
+                $data['match_team_id'] = $lowestTeam?->id;
             }
-        }
+            // Kullanıcı id'sini garantiye alalım
+            $data['requested_user_id'] = auth()->id();
+            $data['expiring_date'] = now()->addWeek();
+            $data['status'] = RequestStatusEnum::WAITING_FOR_APPROVAL->value;
+            // İstek kaydı oluştur
+            $requestMatchTeamPlayer = $this->requestMatchTeamPlayerRepository->create($data);
 
-        $this->requestMatchTeamPlayerRepository->insert($requestMatchTeamPlayerRows);
-        $this->requestReceiverRepository->insert($requestReceiverRows);
-    }
-
-    public function update(array $data, int|string $id) : bool
-    {
-        $model = $this->requestMatchTeamPlayerRepository->find($id);
-        $update = $model->update($data);
-        if($data['status'] == RequestStatusEnum::ACCEPTED->value) {
-            $this->matchTeamPlayerRepository->create([
-                'user_id' => $model->requested_user_id,
-                'match_team_id' => $model->match_team_id,
-                'match_team_player_status_id' => MatchTeamPlayerStatusEnum::APPROVED
+            $matchOwners = $this->matchOwnerRepository->getByParams([
+                'match_id' => $data['match_id']
             ]);
 
-            $chatChannel = $this->chatChannelRepository->findByChattableId($data['match_id']);
-            $this->chatUserRepository->create([
-                'user_id' => $model->requested_user_id,
-                'chat_channel_id' => $chatChannel->id
-            ]);
-            $playerRepository = new PlayerRepository(new User());
-            $player = $playerRepository->find($model->requested_user_id);
-            $matchLogRepository = new MatchLogRepository(new MatchLog());
-            $matchLogRepository->create([
-                    'match_id' => $data['match_id'],
-                    'description' => __('messages.player_joined', ['player' => $player->first_name . ' ' . $player->last_name]),
-                    'subject_type' => MatchLogSubjectTypeEnum::MATCH_PLAYER_JOIN->value
-                ]
-            );
-        }
+            // Bildirim alıcılarını oluştur (örnek)
+            foreach ($matchOwners as $matchOwner) {
+                $this->requestReceiverRepository->create([
+                    'receiver_user_id' => $matchOwner->user_id, // lider user id
+                    'requestable_id' => $requestMatchTeamPlayer->id,
+                    'requestable_type' => 'App\Models\RequestMatchTeamPlayer',
+                    'name' => 'match_team_player',
+                ]);
+            }
 
-        return $update;
+            DB::commit();
+
+            return redirect()->back()->with('swal', MatchSwalMessages::matchJoinRequestSuccess()->toArray());
+            
+        } catch (Throwable $th) {
+            DB::rollBack();
+            Log::error('Error creating match join request', [
+                'error' => $th->getMessage(),
+                'data' => $data
+            ]);
+            // LoggerManager::log('error', $th->getMessage());
+
+            return redirect()->back()->with('swal', MatchSwalMessages::matchJoinRequestError()->toArray());
+        }
     }
 
-    public function destroy(string $id) : bool
+    public function accept(string $id) : RedirectResponse
     {
-        $delete = $this->requestMatchTeamPlayerRepository->delete($id);
-        $this->requestReceiverRepository->deleteByRequestableId($id);
+        try {
+            DB::beginTransaction();
 
-        return $delete;
+            $requestMatchTeamPlayer = $this->requestMatchTeamPlayerRepository->find($id);
+            if (!$requestMatchTeamPlayer) {
+                throw new \Exception('Request not found');
+            }
+
+            $playerTeam = $this->mathTeamPlayerRepository->getByParams([
+                'team_id' => $requestMatchTeamPlayer->team_id,
+                'user_id' => $requestMatchTeamPlayer->requested_user_id
+            ]);
+
+            if (is_null($playerTeam)) {
+                $this->matchTeamPlayerRepository->create([
+                    'team_id' => $requestMatchTeamPlayer->team_id,
+                    'user_id' => $requestMatchTeamPlayer->requested_user_id,
+                ]);
+            }
+
+            $requestMatchTeamPlayer->update([
+                'status' => RequestStatusEnum::ACCEPTED->value,
+            ]);
+            $this->requestReceiverRepository->deleteByRequestableId($id);
+
+            DB::commit();
+
+            return redirect()->back()->with('swal', MatchSwalMessages::acceptInvitationSuccess()->toArray());
+        } catch (Throwable $th) {
+            DB::rollBack();
+            LoggerManager::log('error', $th->getMessage());
+
+            return redirect()->back()->with('swal', MatchSwalMessages::acceptInvitationError()->toArray());
+        }
+    }
+
+    public function reject(string $id) : RedirectResponse
+    {
+        try {
+            DB::beginTransaction();
+
+            $requestMatchTeamPlayer = $this->requestMatchTeamPlayerRepository->find($id);
+
+            $requestMatchTeamPlayer->update([
+                'status' => RequestStatusEnum::REJECTED->value,
+            ]);
+
+            $this->requestReceiverRepository->deleteByRequestableId($id);
+
+            // Takımı takip eden kayıt varsa sil
+            $teamId = $requestMatchTeamPlayer->team_id;
+            $userId = $requestMatchTeamPlayer->requested_user_id;
+
+            DB::commit();
+
+            return redirect()->back()->with('swal', MatchSwalMessages::rejectInvitationSuccess()->toArray());
+
+        } catch (Throwable $th) {
+            DB::rollBack();
+            LoggerManager::log('error', $th->getMessage());
+
+            return redirect()->back()->with('swal', MatchSwalMessages::rejectRequestError()->toArray());
+        }
+    }
+
+    public function delete(string $id): RedirectResponse
+    {
+        try {
+            DB::beginTransaction();
+
+            // İlk olarak veriyi bul
+            $request = $this->requestMatchTeamPlayerRepository->find($id);
+
+            if (!$request) {
+                throw new \Exception('RequestPlayerTeam not found');
+            }
+
+            // Tipi kontrol et (join mi invite mi vs.)
+            $type = $request->type;
+
+            // RequestReceiver'ları sil
+            $this->requestReceiverRepository->deleteByRequestableId($id);
+
+            // Ana request'i sil
+            $deleted = $this->requestMatchTeamPlayerRepository->delete($id);
+
+            if (!$deleted) {
+                throw new \Exception('RequestPlayerTeam could not be deleted');
+            }
+
+            DB::commit();
+
+            if ($type === 'join') {
+                $message = MatchSwalMessages::cancelJoinRequestSuccess();
+            } elseif ($type === 'invite') {
+                $message = MatchSwalMessages::rejectInviteSuccess();
+            } else {
+                $message = MatchSwalMessages::genericSuccess();
+            }
+
+            return redirect()->back()->with('swal', $message->toArray());
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            LoggerManager::log('RequestPlayerTeam Delete Error', $th->getMessage(), ['request_id' => $id]);
+
+            return redirect()->back()->with('swal', MatchSwalMessages::cancelRequestError()->toArray());
+        }
     }
 }

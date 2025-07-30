@@ -555,4 +555,10 @@ return [
     'join_match_title' => 'Maça Katıl',
     'join_match_confirmation' => 'Maça katılmak istediğinize emin misiniz?',
     'join_match_emotional_warning' => 'Takım arkadaşların seni bekliyor olacak 🤝. Unutma, birlikte daha güçlüsünüz.',
+    'match_join_request_sent_successfully' => 'Maç katılım isteği gönderildi.',
+    'match_join_request_sent_failed' => 'Maç katılım isteği gönderilemedi. Lütfen tekrar deneyin veya destek ile iletişime geçin.',
+    'none' => 'Yok',
+    'canceled' => 'İptal Edildi',
+    'confirmed' => 'Onaylandı',
+    'accepted' => 'Kabul Edildi',
 ];

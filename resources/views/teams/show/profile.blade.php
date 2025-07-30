@@ -178,10 +178,12 @@
 
 <script type="module">
     import { LoadMoreController, getAvatarUrl, debounce } from '{{ asset('assets/js/load-more.js') }}';
+
     document.addEventListener("DOMContentLoaded", function () {
         if (typeof initializeMobileButtons === 'function') {
             initializeMobileButtons();
         }
+
         @isset($datas['announcements'])
         const announcementLoadMore = new LoadMoreController({
             apiUrl: '{{ route('api.announcements.index') }}',
@@ -201,6 +203,7 @@
             showMoreText: '⬇️ {{ __('messages.show_more') }}',
             noMoreResultsText: '{{ __('messages.no_more_results') }}'
         });
-    @endisset
+        @endisset
+    });
 </script>
 @endsection

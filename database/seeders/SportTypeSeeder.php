@@ -39,7 +39,7 @@ class SportTypeSeeder extends Seeder
                 'title' => 'Volleyball',
                 'description' => 'Two teams of six players separated by a net try to score points.',
                 'active' => true,
-                'img' => 'sport-types/volleyball.png',
+                'img' => 'sport-types/volleyball.webp',
             ],
             // [
             //     'path' => 'badminton',

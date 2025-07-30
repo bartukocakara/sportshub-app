@@ -535,4 +535,10 @@ return [
     'join_match_title' => 'Join Match',
     'join_match_confirmation' => 'Are you sure you want to join this match?',
     'join_match_emotional_warning' => 'Your teammates will be waiting for you 🤝. Remember, you are stronger together.',
+    'match_join_request_sent_successfully' => 'Match join request sent successfully.',
+    'match_join_request_sent_failed' => 'Match join request failed. Please try again or contact support.',
+    'none' => 'None',
+    'canceled' => 'Canceled',
+    'confirmed' => 'Confirmed',
+    'accepted' => 'Accepted',
 ];

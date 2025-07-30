@@ -122,7 +122,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::post('/request-match-team-players', [RequestMatchTeamPlayerController::class, 'store'])->name('request-match-team-players.store');
-    Route::delete('/request-match-team-players/{id}', [RequestMatchTeamPlayerController::class, 'store'])->name('request-match-team-players.destroy');
+    Route::delete('/request-match-team-players/{id}', [RequestMatchTeamPlayerController::class, 'destroy'])->name('request-match-team-players.destroy');
     Route::post('/request-match-team-players/{id}/accept', [RequestMatchTeamPlayerController::class, 'accept'])->name('request-match-team-players.accept');
 
 
