@@ -116,7 +116,7 @@
         id="kt_modal_delete_team_confirm"
         :route="route('teams.destroy', $team->id)"
         :message="__('messages.delete_team_warning')"
-        :emotionalWarning="__('messages.delete_team_emotional_warning')"
+        :emotionalWarning="__('messages.delete_emotional_warning')"
         icon="fas fa-trash"
         color="secondary"
         emoji="🗑️"

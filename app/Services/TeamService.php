@@ -132,7 +132,7 @@ class TeamService extends CrudService
             Log::error("message", [$th->getMessage()]);
             // LoggerManager::log('Error deleting team: ', $th->getMessage(), ['user_id' => $id]);
 
-            return redirect()->route('teams.index')->with('swal', TeamSwalMessages::deleteError()->toArray());
+            return redirect()->back()->with('swal', TeamSwalMessages::deleteError()->toArray());
         }
     }
 }

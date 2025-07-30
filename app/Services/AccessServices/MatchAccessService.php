@@ -29,7 +29,7 @@ class MatchAccessService
 
     public function isMatchOwner(User $user, Matches $match): bool
     {
-        return $match->matchOwners->pluck('user_id')->contains(fn ($id) => $id === $user->id);
+        return $match->matchOwners->pluck('id')->contains(fn ($id) => $id === $user->id);
     }
 
     public function getMatchTeamPlayerId(User $user, Matches $match): ?string

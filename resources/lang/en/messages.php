@@ -376,7 +376,7 @@ return [
     'player_deleted_successfully' => 'You have successfully left the team.',
     'failed_to_delete_player' => 'There was an error leaving the team. Please try again or contact support.',
     'quit_team_emotional_warning' => 'This action cannot be undone. Your team will be deleted and all related information will be permanently deleted.',
-    'delete_team_emotional_warning' => 'This action cannot be undone. All related information will be permanently deleted.',
+    'delete_emotional_warning' => 'This action cannot be undone. All related information will be permanently deleted.',
     'quit_team_successfull_title' => 'You have successfully left the team.',
     'quit_team_successfull_body' => 'You have successfully left the team.',
     'see_you_again' => 'See you again!',
@@ -541,4 +541,5 @@ return [
     'canceled' => 'Canceled',
     'confirmed' => 'Confirmed',
     'accepted' => 'Accepted',
+    'match_deleted_body_line_1' => 'You have successfully deleted the match.',
 ];

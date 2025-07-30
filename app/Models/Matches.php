@@ -133,6 +133,11 @@ class Matches extends Model
         return $this->morphMany(Activity::class, 'subject');
     }
 
+    public function announcements()
+    {
+        return $this->morphMany(Announcement::class, 'subject');
+    }
+
     public function matchTeams()
     {
         return $this->hasMany(MatchTeam::class, 'match_id', 'id');

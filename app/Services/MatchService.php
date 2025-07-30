@@ -8,7 +8,11 @@ use App\Models\SportType;
 use App\Repositories\CityRepository;
 use App\Repositories\MatchRepository;
 use App\Repositories\SportTypeRepository;
+use App\Support\Messages\MatchSwalMessages;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class MatchService extends CrudService
 {
@@ -42,5 +46,36 @@ class MatchService extends CrudService
         $datas = [];
 
         return $datas;
+    }
+
+    public function delete(string $id): RedirectResponse
+    {
+        try {
+            $match = $this->matchRepository->find($id);
+
+            // Related models üzerinden silme işlemi
+            $match->announcements()->delete();
+            $match->activities()->delete();
+
+            $playerRequests = $match->requestMatchTeamPlayers;
+
+            foreach ($playerRequests as $request) {
+                $request->receivers()->delete();
+                $request->delete();
+            }
+
+            $match->delete();
+
+            DB::commit();
+
+            // TODO: Delete match images, send notifications...
+
+            return redirect()->route('matches.index')->with('swal', MatchSwalMessages::deletedSuccessfully()->toArray());
+        } catch (\Throwable $th) {
+            Log::error("message", [$th->getMessage()]);
+            // LoggerManager::log('Error deleting match: ', $th->getMessage(), ['user_id' => $id]);
+
+            return redirect()->back()->with('swal', MatchSwalMessages::deleteError()->toArray());
+        }
     }
 }

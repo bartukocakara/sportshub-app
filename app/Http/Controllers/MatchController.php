@@ -104,7 +104,6 @@ class MatchController extends Controller
      */
     public function destroy(string $id) : RedirectResponse
     {
-        $this->matchService->destroy($id);
-        return redirect()->route('matches.index')->with('success', 'Match deleted successfully.');
+        return $this->matchService->delete($id);
     }
 }

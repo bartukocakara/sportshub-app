@@ -391,7 +391,7 @@ return [
     'player_deleted_successfully' => 'Takımdan başarıyla ayrıldınız.',
     'failed_to_delete_player' => 'Takımdan ayrılırken hata oluştu. Lütfen tekrar deneyin veya destek ile iletişime geçin.',
     'quit_team_emotional_warning' => 'Bu işlem geri alınamaz.Bütün iliskileriniz kalıcı olarak silinecektir.',
-    'delete_team_emotional_warning' => 'Bu işlem geri alınamaz.Bütün iliskileriniz kalıcı olarak silinecektir.',
+    'delete_emotional_warning' => 'Bu işlem geri alınamaz.Bütün verileriniz kalıcı olarak silinecektir.',
     'quit_team_successfull_title' => 'Takımdan basarıyla ayrıldınız!',
     'quit_team_successfull_body' => 'Takımdan basarıyla ayrıldınız.',
     'see_you_again' => 'Yeniden görüşmek üzere!',
@@ -561,4 +561,5 @@ return [
     'canceled' => 'İptal Edildi',
     'confirmed' => 'Onaylandı',
     'accepted' => 'Kabul Edildi',
+    'match_deleted_body_line_1' => 'Maç basarıyla silindi.',
 ];

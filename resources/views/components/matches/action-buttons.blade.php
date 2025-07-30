@@ -1,7 +1,7 @@
 @php
     $userRole = $datas['user_role'] ?? 'none';
     $userStatus = $datas['user_status'] ?? 'none';
-    $isMatchOwner = $datas['is_match_o'] ?? false;
+    $isMatchOwner = $datas['is_match_owner'] ?? false;
     $isRequestReceiver = $datas['is_request_receiver'] ?? false;
     $requestId = $datas['request_id'] ?? null;
     $matchTeamPlayerId = $datas['match_team_player_id'] ?? null;
@@ -105,18 +105,18 @@
 @endif
 
 {{-- Delete team button - only visible if not request receiver --}}
-@if (!$isRequestReceiver && (($isMatchOwner ?? false) || (isset($team) && auth()->user()->can('delete', $team))))
+@if (!$isRequestReceiver && (($isMatchOwner ?? false) || (isset($match) && auth()->user()->can('delete', $match))))
     <div style="width: 1px; height: 34px; background-color: #ccc;" class="mx-2"></div>
 
-    <a href="#" id="kt_team_delete_button" class="btn btn-sm btn-grey-action mx-5" data-bs-toggle="modal" data-bs-target="#kt_modal_delete_team_confirm">
+    <a href="#" id="kt_team_delete_button" class="btn btn-sm btn-grey-action mx-5" data-bs-toggle="modal" data-bs-target="#kt_modal_delete_match_confirm">
         <i class="fas fa-trash me-1"></i> {{ __('messages.delete') }}
     </a>
 
     <x-modals.delete-confirmation-modal
-        id="kt_modal_delete_team_confirm"
-        :route="route('teams.destroy', $team->id)"
-        :message="__('messages.delete_team_warning')"
-        :emotionalWarning="__('messages.delete_team_emotional_warning')"
+        id="kt_modal_delete_match_confirm"
+        :route="route('matches.destroy', $match->id)"
+        :message="__('messages.delete_match_warning')"
+        :emotionalWarning="__('messages.delete_emotional_warning')"
         icon="fas fa-trash"
         color="secondary"
         emoji="🗑️"
