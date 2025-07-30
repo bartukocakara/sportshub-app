@@ -32,7 +32,18 @@ class MatchDetailController extends Controller
      */
     public function profile(Request $request, string $id)
     {
-        $datas = $this->matchDetailService->getMatchProfileData($request, $id, ['city', 'sportType', 'statusDefinition', 'requestPlayerTeams']);
+        $datas = $this->matchDetailService->getMatchProfileData($request, $id, [
+            'matchTeams',
+            'matchTeams.matchTeamPlayers',
+            'court.courtAddress',
+            'court.courtBusiness',
+            'court.courtImages',
+            'sportType',
+            'statusDefinition',
+            'matchOwners',
+            'requestMatchTeamPlayers',
+            'requestMatchTeamPlayers.receivers',
+        ]);
         return view('matches.show.profile', compact('datas'));
     }
 

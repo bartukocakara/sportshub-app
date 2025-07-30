@@ -14,7 +14,6 @@
             $.each(courtImages, function(index, image) {
                 var isActive = index === 0 ? 'active' : '';  // Set the first image as active
                 var imgSrc = '{{ asset("storage/") }}/' + image.file_path;
-
                 var slide = $('<div>').addClass('carousel-item ' + isActive);
                 var img = $('<img>').addClass('d-block w-100').attr('src', imgSrc).attr('alt', 'Court Image ' + (index + 1));
 

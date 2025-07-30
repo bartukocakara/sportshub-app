@@ -187,6 +187,7 @@
 @endsection
 @section('page-scripts')
 <script src="{{ asset('assets/js/card-list/announcement-card-list.js') }}"></script>
+@include('components.checkout.scripts.slider-scripts')
 
 <script type="module">
     import { LoadMoreController, getAvatarUrl, debounce } from '{{ asset('assets/js/load-more.js') }}';

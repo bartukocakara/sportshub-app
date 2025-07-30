@@ -62,17 +62,7 @@ class MatchDetailService extends CrudService
      */
     public function getMatchProfileData(Request $request, string $id, array $with, bool $useCache = false): array
     {
-        $match = $this->matchRepository->find($id, [
-            'matchTeams',
-            'matchTeams.matchTeamPlayers',
-            'court.courtAddress',
-            'court.courtBusiness',
-            'sportType',
-            'statusDefinition',
-            'matchOwners',
-            'requestMatchTeamPlayers',
-            'requestMatchTeamPlayers.receivers',
-        ]);
+        $match = $this->matchRepository->find($id, $with);
 
         $viewModel = new MatchProfileViewModel($match, new MatchAccessService(), $this->metaDataService);
 

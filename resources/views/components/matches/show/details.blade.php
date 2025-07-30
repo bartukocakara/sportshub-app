@@ -1,3 +1,7 @@
+@php
+    $court = $datas['match']->court;
+    $images = $court->courtImages;
+@endphp
 <div class="card mb-5 border shadow-sm px-4 px-lg-10 px-xxl-20">
     <div class="card-body pt-9 pb-0">
         <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-4 mb-6">
@@ -5,7 +9,7 @@
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
                     <h2 class="text-gray-900 text-primary fs-3 fs-md-2 fw-bold mb-0 text-break">
                         {{ $datas['match']->title }}
-                        
+
                     </h2>
                 </div>
                 <div class="d-flex align-items-center gap-3">
@@ -22,6 +26,19 @@
                     <span class="fw-semibold fs-6 ms-2">
                         {{ $datas['match']->city_title }}
                     </span>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-3 text-center">
+                <div class="float-start w-75">
+                    <h6>{{ $datas['match']->court->title }}</h6>
+                    <img class="w-100"
+                        src="{{ isset($images[0]['file_path']) ? asset('storage/' . $images[0]['file_path']) : asset('placeholder-court.webp') }}"
+                        alt="Court Image"
+                        id="courtImage"
+                        data-court-images="{{ json_encode($images) }}"
+                        style="cursor: pointer;"
+                        data-bs-toggle="modal"
+                        data-bs-target="#imageModal">
                 </div>
             </div>
             <div class="d-flex flex-wrap gap-2">
@@ -85,7 +102,8 @@
                     <div class="fs-3 fw-bold">{{ $datas['match']['max_player'] }}</div>
                 </div>
             </div>
-            
+
         </div>
     </div>
 </div>
+@include('components.modals.court-images-modal')
