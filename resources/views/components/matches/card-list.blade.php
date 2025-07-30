@@ -21,7 +21,7 @@
             <div class="card-body p-9">
                 <div class="d-flex align-items-center mb-5">
                     @if (!empty($match['court']['first_image']) && file_exists(public_path('storage/' . $match['court']['first_image'])))
-                        <img src="{{ url($match['court']['first_image']) }}"
+                        <img src="{{ asset('storage/' . $match['court']['first_image']) }}"
                              alt="Court Image"
                              class="me-3 rounded"
                              style="width: 50px; height: 50px; object-fit: cover;" />
