@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\TypeEnums\RequestTypeEnum;
 use Illuminate\Http\Request;
 use App\Services\TeamDetailService; // Import your service
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -60,8 +59,6 @@ class TeamDetailController extends Controller
 
         return $this->teamDetailService->deleteRequestPlayerTeamsData($requestId);
     }
-
-
 
     public function acceptRequestPlayerTeamData(string $id, string $requestId): RedirectResponse
     {

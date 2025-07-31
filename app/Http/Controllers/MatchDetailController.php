@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MatchTeamRequest;
+use App\Http\Requests\MatchTeamSortRequest;
 use Illuminate\Http\Request;
 use App\Services\MatchDetailService; // Import your service
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -147,14 +149,32 @@ class MatchDetailController extends Controller
     /**
      * Displays the user's matches.
      *
-     * @param string $id The user ID.
+     * @param MatchTeamRequest $request
+     * @param string $matchId
      * @return \Illuminate\View\View
      */
-    public function matchTeamCreate(Request $request, string $id)
+    public function matchTeamCreate(MatchTeamRequest $request, string $matchId) : RedirectResponse
     {
-        $datas = $this->matchDetailService->getPlayersData($request, $id); // You'll create this method
+        $match = $this->matchDetailService->getMatchById($matchId);
+        $this->authorize('createMatchTeam', $match);
 
-        return view('matches.show.teams.create', compact('datas'));
+        return $this->matchDetailService->matchTeamCreate($request->validated(), $matchId);
+    }
+
+    /**
+     * Displays the user's matches.
+     *
+     * @param MatchTeamRequest $request
+     * @param string $matchId
+     * @return \Illuminate\View\View
+     */
+    public function matchTeamsSort(MatchTeamSortRequest $request, string $matchId) : RedirectResponse
+    {
+        $match = $this->matchDetailService->findMatchById($matchId);
+        $this->authorize('matchTeamsSort', $match);
+        $validatedData = $request->validated();
+        $transfers = $validatedData['transfers_json_decoded'];
+        return $this->matchDetailService->matchTeamsSort($transfers, $matchId);
     }
 
     /**

@@ -86,13 +86,7 @@
                                 'params' => ['id' => $id],
                                 'label' => __('messages.team_list'),
                                 'visible_status' => ['match_owner', 'participant',  'none'],
-                            ],
-                            [
-                                'route' => 'matches.match-teams.create',
-                                'params' => ['id' => $id],
-                                'label' => __('messages.create_match_team'),
-                                'visible_status' => ['match_owner', 'participant', 'none'],
-                            ],
+                            ]
                         ],
                     ],
                     [

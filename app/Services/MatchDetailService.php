@@ -10,6 +10,7 @@ use App\Models\MatchTeamPlayer;
 use App\Models\RequestMatchTeamPlayer;
 use App\Repositories\MatchRepository;
 use App\Repositories\MatchTeamPlayerRepository;
+use App\Repositories\MatchTeamRepository;
 use App\Repositories\Request\RequestMatchTeamPlayerRepository;
 use App\Repositories\UserRepository;
 use App\Services\AccessServices\MatchAccessService;
@@ -49,7 +50,7 @@ class MatchDetailService extends CrudService
         parent::__construct($this->matchRepository); // Keep if Crud operations are handled here
     }
 
-    public function getMatchById(string $id): Matches
+    public function findMatchById(string $id): Matches
     {
         return $this->matchRepository->find($id);
     }
@@ -82,6 +83,48 @@ class MatchDetailService extends CrudService
         $match = $this->matchRepository->find($matchId, ['matchOwners', 'statusDefinition', 'matchTeams.matchTeamPlayers.user']);
         $viewModel = new MatchTeamsViewModel($match, new MatchAccessService());
         return $viewModel->toArray();
+    }
+
+    public function matchTeamCreate(array $data, string $matchId): RedirectResponse
+    {
+        try {
+            $matchTeamRepo = app(MatchTeamRepository::class);
+            $createData = [
+                'match_id' => $matchId,
+                'title' => $data['title']
+            ];
+            $matchTeamRepo->create($createData);
+
+            return redirect()->back()->with('success', __('messages.match_team_created_successfully'));
+
+        } catch (\Throwable $th) {
+            Log::error('Error while creating match team: ' . $th->getMessage());
+            return redirect()->back()->with('error', __('messages.contact_support'));
+        }
+    }
+
+    public function matchTeamsSort(array $transfers, string $matchId): RedirectResponse
+    {
+        try {
+            DB::beginTransaction();
+
+            foreach ($transfers as $transfer) {
+                MatchTeamPlayer::where('user_id', $transfer['user_id'])
+                               ->whereHas('matchTeam', function ($query) use ($matchId) {
+                                   $query->where('match_id', $matchId);
+                               })
+                               ->update(['match_team_id' => $transfer['match_team_id']]);
+            }
+            DB::commit(); //
+
+            return redirect()->back()->with('success', __('messages.team_changes_saved'));
+
+        } catch (\Throwable $th) {
+            DB::rollBack(); 
+
+            Log::error('Error while sorting match teams: ' . $th->getMessage());
+            return redirect()->back()->with('error', __('messages.contact_support'));
+        }
     }
 
     public function getPlayersData(Request $request, string $id): array

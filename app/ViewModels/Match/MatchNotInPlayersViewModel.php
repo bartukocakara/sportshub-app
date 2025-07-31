@@ -18,7 +18,6 @@ class MatchNotInPlayersViewModel
     public function toArray(): array
     {
         $user = auth()->user();
-        $currentUserId = $user->id;
         
         return [
             'users' => UserResource::collection($this->users)->response()->getData(true),

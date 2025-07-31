@@ -26,7 +26,6 @@ return [
     'match_invite_greeting' => 'Hello :name,',
     'match_invite_message' => 'You have been invited to join a match! Here are the details: :matchDetails.',
     'accept_invite' => 'Accept Invitation',
-    'contact_support' => 'Contact Support',
     'match_join_request_subject' => 'Match Join Request',
     'match_join_request_greeting' => 'Hello :name,',
     'match_join_request_message' => ':playerName has requested to join your match! Here are the match details: :matchDetails.',
@@ -547,4 +546,9 @@ return [
     'no_teams_found' => 'No teams found.',
     'team_list' => 'Team List',
     'create_match_team' => 'Create Match Team',
+    'team_title' => 'Team title',
+    'match_team_created_successfully' => 'Match team created successfully',
+    'save_team_changes' => 'Save Team Changes',
+    'team_changes_saved' => 'Team changes saved successfully',
+    'error_occurred' => 'An error occurred. Please try again.',
 ];

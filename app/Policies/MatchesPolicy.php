@@ -5,7 +5,7 @@ namespace App\Policies;
 use App\Models\Matches;
 use App\Models\User;
 
-class MatchPolicy
+class MatchesPolicy
 {
     public function viewRequestedPlayers(User $user, Matches $match): bool
     {
@@ -23,6 +23,16 @@ class MatchPolicy
     }
 
     public function delete(User $user, Matches $match): bool
+    {
+        return $match->matchOwners()->where('user_id', $user->id)->exists();
+    }
+
+    public function createMatchTeam(User $user, Matches $match): bool
+    {
+        return $match->matchOwners()->where('user_id', $user->id)->exists();
+    }
+
+    public function matchTeamsSort(User $user, Matches $match): bool
     {
         return $match->matchOwners()->where('user_id', $user->id)->exists();
     }

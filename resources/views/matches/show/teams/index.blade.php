@@ -2,113 +2,7 @@
 
 @section('title', __('messages.teams'))
 @section('custom-styles')
-    <style>
-        /* Grid for Teams */
-        .team-grid {
-            display: grid;
-            grid-template-columns: 1fr; /* grid-cols-1 */
-            gap: 32px; /* gap-8 */
-        }
-        @media (min-width: 768px) { /* md breakpoint */
-            .team-grid {
-                grid-template-columns: repeat(2, 1fr); /* md:grid-cols-2 */
-            }
-        }
-        @media (min-width: 1024px) { /* lg breakpoint */
-            .team-grid {
-                grid-template-columns: repeat(2, 1fr); /* lg:grid-cols-2 */
-            }
-        }
-
-        /* Individual Team Card */
-        .team-card {
-            border-radius: 12px; /* rounded-xl */
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
-            padding: 24px; /* p-6 */
-            border: 1px solid #e5e7eb; /* border border-gray-200 */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .team-card h2 {
-            font-size: 24px; /* text-xl */
-            font-weight: 700; /* font-bold */
-            color: #1f2937; /* text-gray-800 */
-            margin-bottom: 16px; /* mb-4 */
-            text-align: center;
-        }
-
-        /* Grid for Players within a Team */
-        .player-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* grid-cols-2 */
-            gap: 16px; /* gap-4 */
-            width: 100%;
-            justify-content: center;
-            margin-top: 16px; /* mt-4 */
-        }
-        @media (min-width: 640px) { /* sm breakpoint */
-            .player-grid {
-                grid-template-columns: repeat(3, 1fr); /* sm:grid-cols-3 */
-            }
-        }
-        @media (min-width: 1024px) { /* lg breakpoint */
-            .player-grid {
-                grid-template-columns: repeat(4, 1fr); /* lg:grid-cols-4 */
-            }
-        }
-        @media (min-width: 1280px) { /* xl breakpoint */
-            .player-grid {
-                grid-template-columns: repeat(5, 1fr); /* xl:grid-cols-5 */
-            }
-        }
-
-        /* Individual Player Card */
-        .player-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .player-avatar {
-            width: 80px; /* w-20 */
-            height: 80px; /* h-20 */
-            border-radius: 9999px; /* rounded-full */
-            overflow: hidden;
-            border: 4px solid; /* border-2 */
-            cursor: pointer;
-        }
-        .player-avatar.blue-border {
-            border-color: #60a5fa; /* border-blue-400 */
-        }
-        .player-avatar.red-border {
-            border-color: #f87171; /* border-red-400 */
-        }
-
-        .player-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .player-name {
-            margin-top: 8px; /* mt-2 */
-        }
-
-        .player-name a {
-            font-weight: 500;
-            font-size: 13px;
-            transition: color 0.2s ease-in-out;
-        }
-
-        .player-name a:hover {
-            color: #2563eb; /* hover:text-blue-600 */
-        }
-    </style>
-
-@endsection
+<link rel="stylesheet" href="{{ asset('assets/css/match-teams.css') }}">
 @section('content')
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
     <div class="d-flex flex-column flex-column-fluid">
@@ -132,9 +26,50 @@
                         </h1>
                     </div>
                     @if($datas['is_match_owner'])
-                        <a href="{{ route('matches.match-teams.create', ['id' => $datas['match']->id]) }}" class="btn btn-sm btn-success ms-3 px-4 py-3">
-                            {{ __('messages.create_match_team') }}
-                        </a>
+                    <button type="button"
+                            class="btn btn-sm btn-success ms-3 px-4 py-3"
+                            data-bs-toggle="modal"
+                            data-bs-target="#createTeamModal"
+                            data-match-id="{{ $datas['match']->id }}"
+                            data-title="{{ __('messages.create_match_team') }}">
+                        {{ __('messages.create_match_team') }}
+                    </button>
+                    <div class="modal fade" id="createTeamModal" tabindex="-1" aria-labelledby="createTeamModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <form method="POST" action="{{ route('matches.teams.create', ['id' => $datas['match']->id] ) }}" class="modal-content">
+                                @csrf
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="createTeamModalLabel">{{ __('messages.create_match_team') }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ __('Close') }}"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" name="match_id" id="modalMatchId">
+                                    <div class="mb-3">
+                                        <label for="teamTitle" class="form-label">{{ __('messages.team_title') }}</label>
+                                        <input type="text" name="title" id="teamTitle" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ __('messages.cancel') }}</button>
+                                    <button type="submit" class="btn btn-primary">{{ __('messages.save') }}</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <form method="POST" action="{{ route('matches.teams.sort', ['id' => $datas['match']->id]) }}" id="teamTransferForm">
+                        @csrf
+                        <input type="hidden" name="transfers_json" id="transfersInput">
+                        @if ($errors->has('transfers_json'))
+                            <div class="alert alert-danger mt-4">
+                                {{ $errors->first('transfers_json') }}
+                            </div>
+                        @endif
+                        <div class="d-flex justify-content-end mt-6">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('messages.save_team_changes') }}
+                            </button>
+                        </div>
+                    </form>
                     @endif
                 </div>
             </div>
@@ -159,7 +94,7 @@
                                 <div class="player-grid" id="team-{{ $team['id'] }}">
                                     @if(isset($team['match_team_players']))
                                         @foreach ($team['match_team_players'] as $item)
-                                            <div class="player-card">
+                                            <div class="player-card" data-user-id="{{ $item['user_id'] }}">
                                                 <div class="player-avatar {{ ($loop->parent->index % 2 == 0) ? 'blue-border' : 'red-border' }}">
                                                     <img src="{{ isset($item['avatar']) ? asset('storage/' . $item['avatar']) : 'https://placehold.co/80x80/' . (($loop->parent->index % 2 == 0) ? 'E0F2F7/2C5282' : 'FEE2E2/991B1B') . '?text=' . urlencode($item['full_name'] ?? 'Player') }}" alt="{{ $item['full_name'] ?? 'Player Avatar' }}">
                                                 </div>
@@ -188,39 +123,35 @@
 <script src="{{ asset('assets/js/sortable.min.js') }}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const teamGrids = document.querySelectorAll('.player-grid');
+    const teamGrids = document.querySelectorAll('.player-grid');
+    teamGrids.forEach(grid => {
+        new Sortable(grid, {
+            group: 'players',
+            animation: 150,
+            ghostClass: 'sortable-ghost'
+        });
+    });
 
+    const form = document.getElementById('teamTransferForm');
+    const transfersInput = document.getElementById('transfersInput');
+
+    form.addEventListener('submit', function (e) {
+        const playerTransfers = [];
         teamGrids.forEach(grid => {
-            new Sortable(grid, {
-                group: 'players',
-                animation: 150,
-                ghostClass: 'sortable-ghost',
-                onEnd: function (evt) {
-                    const fromTeam = evt.from.id;
-                    const toTeam = evt.to.id;
-                    const movedPlayerEl = evt.item;
-                    const userId = movedPlayerEl.getAttribute('data-user-id');
-
-                    console.log('Moved user ID:', userId);
-                    console.log('From team:', fromTeam, 'To team:', toTeam);
-
-                    /*
-                    fetch('/api/match-teams/move-player', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            user_id: userId,
-                            from_team_id: fromTeam.replace('team-', ''),
-                            to_team_id: toTeam.replace('team-', '')
-                        })
+            const teamId = grid.id.replace('team-', '');
+            grid.querySelectorAll('.player-card').forEach(player => {
+                const userId = player.getAttribute('data-user-id');
+                if (userId) {
+                    playerTransfers.push({
+                        user_id: userId,
+                        match_team_id: teamId 
                     });
-                    */
                 }
             });
         });
+
+        transfersInput.value = JSON.stringify(playerTransfers);
     });
+});
 </script>
 @endsection

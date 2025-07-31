@@ -567,4 +567,9 @@ return [
     'no_teams_found' => 'Takım bulunamadı.',
     'team_list' => 'Takım Listesi',
     'create_match_team' => 'Maç Takımı Oluştur',
+    'team_title' => 'Takım Başlığı',
+    'match_team_created_successfully' => 'Maç takımı başarıyla oluşturuldu',
+    'save_team_changes' => 'Değişiklikleri Kaydet',
+    'team_changes_saved' => 'Oyuncu değişiklikleri başarıyla kaydedildi.',
+    'error_occurred' => 'Bir hata oluştu.',
 ];

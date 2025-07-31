@@ -76,7 +76,8 @@ Route::prefix('matches/{id}')->name('matches.')->group(function () {
     Route::get('new-players', [MatchDetailController::class, 'getNotInTeamPlayersData'])->name('new-players');
     Route::post('invite-players/{userId}', [MatchDetailController::class, 'invitePlayer'])->name('invite-players');
     Route::get('match-teams', [MatchDetailController::class, 'teams'])->name('teams.list');
-    Route::get('match-teams-create', [MatchDetailController::class, 'matchTeamCreate'])->name('match-teams.create');
+    Route::post('match-teams', [MatchDetailController::class, 'matchTeamCreate'])->name('teams.create');
+    Route::post('match-teams-sort', [MatchDetailController::class, 'matchTeamsSort'])->name('teams.sort');
 });
 
 Route::prefix('teams/{id}')->name('teams.')->group(function () {
