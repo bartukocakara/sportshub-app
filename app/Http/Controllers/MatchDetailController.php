@@ -141,7 +141,7 @@ class MatchDetailController extends Controller
     {
         $datas = $this->matchDetailService->getMatchTeamsData($request, $id); // You'll create this method
 
-        return view('matches.show.teams', compact('datas'));
+        return view('matches.show.teams.index', compact('datas'));
     }
 
     /**
@@ -152,7 +152,9 @@ class MatchDetailController extends Controller
      */
     public function matchTeamCreate(Request $request, string $id)
     {
-        return view('matches.show.match-teams-create');
+        $datas = $this->matchDetailService->getPlayersData($request, $id); // You'll create this method
+
+        return view('matches.show.teams.create', compact('datas'));
     }
 
     /**

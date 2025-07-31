@@ -76,11 +76,24 @@
                         ],
                     ],
                     [
-                        'route' => 'matches.teams',
+                        'route' => 'matches.players',
                         'icon' => "<i class='fas fa-handshake'></i>",
-                        'params' => ['id' => $id],
                         'label' => __('messages.teams'),
-                        'visible_status' => ['match_owner', 'participant', 'none'],
+                        'visible_status' => ['match_owner', 'participant', 'none'], // sadece lider görebilir
+                        'children' => [
+                            [
+                                'route' => 'matches.teams.list',
+                                'params' => ['id' => $id],
+                                'label' => __('messages.team_list'),
+                                'visible_status' => ['match_owner', 'participant',  'none'],
+                            ],
+                            [
+                                'route' => 'matches.match-teams.create',
+                                'params' => ['id' => $id],
+                                'label' => __('messages.create_match_team'),
+                                'visible_status' => ['match_owner', 'participant', 'none'],
+                            ],
+                        ],
                     ],
                     [
                         'route' => 'matches.activities',

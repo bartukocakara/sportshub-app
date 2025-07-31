@@ -565,5 +565,6 @@ return [
     'you_can_drag_and_drop_players_between_teams_to_reorganize' => 'Takımları yeniden döndürmek için oyuncuları takımlar arasında tıklayın ve bırakın.',
     'drag_and_drop_players' => 'Oyuncuları takımlar arasında tıklayın ve bırakın.',
     'no_teams_found' => 'Takım bulunamadı.',
-
+    'team_list' => 'Takım Listesi',
+    'create_match_team' => 'Maç Takımı Oluştur',
 ];

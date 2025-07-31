@@ -16,6 +16,7 @@ use App\Services\AccessServices\MatchAccessService;
 use App\Support\Messages\MatchSwalMessages;
 use App\Traits\LogsActivity;
 use App\ViewModels\Match\MatchActivitiesViewModel;
+use App\ViewModels\Match\MatchNotInPlayersViewModel;
 use App\ViewModels\Match\MatchNotInMatchTeamPlayersViewModel;
 use App\ViewModels\Match\MatchProfileViewModel;
 use App\ViewModels\Match\MatchRequestMatchTeamPlayerViewModel;
@@ -67,6 +68,49 @@ class MatchDetailService extends CrudService
         $viewModel = new MatchProfileViewModel($match, new MatchAccessService(), $this->metaDataService);
 
         return $viewModel->toArray($request);
+    }
+
+    /**
+     * Get user's teams data.
+     *
+     * @param Request $request
+     * @param string $matchId
+     * @return array
+     */
+    public function getMatchTeamsData(Request $request, string $matchId): array
+    {
+        $match = $this->matchRepository->find($matchId, ['matchOwners', 'statusDefinition', 'matchTeams.matchTeamPlayers.user']);
+        $viewModel = new MatchTeamsViewModel($match, new MatchAccessService());
+        return $viewModel->toArray();
+    }
+
+    public function getPlayersData(Request $request, string $id): array
+    {
+        $userRepo = app(UserRepository::class);
+        $match = $this->matchRepository->find($id, ['matchOwners', 'matchTeams.matchTeamPlayers.requestedUser']);
+
+        $matchPlayerUserIds = $match->matchTeams
+                                    ->flatMap(fn ($team) => $team->matchTeamPlayers)
+                                    ->pluck('user_id')
+                                    ->unique()
+                                    ->toArray();
+
+        $currentUserId = auth()->user()->id;
+        if ($currentUserId) {
+            $matchPlayerUserIds[] = $currentUserId;
+        }
+
+        $exceptIds = array_unique($matchPlayerUserIds);
+        $request->merge([
+            'sport_type_id' => $match->sport_type_id,
+            'city_id' => $match->city_id,
+            'except_ids' => $exceptIds,
+        ]);
+
+        $users = $userRepo->all($request, ['userAddresses.district', 'sportTypes', 'statusDefinition']);
+        $viewModel = new MatchNotInPlayersViewModel($match, $users, new MatchAccessService());
+
+        return $viewModel->toArray();
     }
 
     /**
@@ -178,19 +222,7 @@ class MatchDetailService extends CrudService
         }
     }
 
-    /**
-     * Get user's teams data.
-     *
-     * @param Request $request
-     * @param string $matchId
-     * @return array
-     */
-    public function getMatchTeamsData(Request $request, string $matchId): array
-    {
-        $match = $this->matchRepository->find($matchId, ['matchOwners', 'statusDefinition', 'matchTeams.matchTeamPlayers.user']);
-        $viewModel = new MatchTeamsViewModel($match, new MatchAccessService());
-        return $viewModel->toArray();
-    }
+    
 
     /**
      * Get user's match data.
@@ -290,4 +322,6 @@ class MatchDetailService extends CrudService
 
         return $viewModel->toArray($request);
     }
+
+    
 }

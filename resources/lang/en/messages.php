@@ -545,5 +545,6 @@ return [
     'you_can_drag_and_drop_players_between_teams_to_reorganize' => 'You can drag and drop players between teams to reorganize.',
     'drag_and_drop_players' => 'Drag and drop players',
     'no_teams_found' => 'No teams found.',
-
+    'team_list' => 'Team List',
+    'create_match_team' => 'Create Match Team',
 ];
