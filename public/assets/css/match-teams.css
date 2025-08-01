@@ -65,6 +65,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    position: relative; /* Added for absolute positioning of delete form */
 }
 
 .player-avatar {
@@ -100,4 +101,28 @@
 
 .player-name a:hover {
     color: #2563eb; /* hover:text-blue-600 */
+}
+
+/* Player delete form and button styling */
+.player-card .player-delete-form {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 10;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.2s ease-in-out;
+}
+
+.player-card:hover .player-delete-form {
+    opacity: 1; /* Visible on hover */
+}
+
+.player-card .player-delete-form .btn-light-danger {
+    padding: 4px; /* Smaller padding */
+    width: 28px; /* Fixed width */
+    height: 28px; /* Fixed height */
+    border-radius: 50%; /* Make it round */
+    display: flex; /* For centering icon */
+    justify-content: center; /* For centering icon */
+    align-items: center; /* For centering icon */
 }

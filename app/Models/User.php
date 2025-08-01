@@ -170,6 +170,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Activity::class, 'causer_id');
     }
+
+    public function announcements()
+    {
+        return $this->hasMany(Announcement::class, 'created_user_id');
+    }
     // public function matchTeamPlayer()
     // {
     //     return $this->belongsTo(MatchTeamPlayer::class, 'id', 'user_id');

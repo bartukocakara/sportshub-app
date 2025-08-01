@@ -551,6 +551,7 @@ return [
     'participant' => 'Katılımcı',
     'unknown' => 'Bilinmeyen',
     'me_match_team_player_quit_successfully' => 'Maçtan başarıyla ayrıldınız.',
+    'match_team_player_delete_successfully' => 'Oyuncu maçtan başarıyla çıkarıldı.',
     'match_owner' => 'Maç Sahibi',
     'join_match_title' => 'Maça Katıl',
     'join_match_confirmation' => 'Maça katılmak istediğinize emin misiniz?',
@@ -579,4 +580,8 @@ return [
     'match_type_and_gender' => 'Maç Türü ve Cinsiyet',
     'player_limits' => 'Oyuncu Sınırları',
     'schedule' => 'Program',
+    'remove_player' => 'Oyuncuyu Kaldır',
+    'delete_player_title' => 'Oyuncuyu Sil',
+    'delete_player_message' => 'Bu oyuncuyu takımdan çıkarmak istediğinize emin misiniz?',
+    'delete_player_emotion' => 'Bu işlem geri alınamaz. Oyuncu ve tüm ilişkili bilgileri kalıcı olarak kaldırılacaktır.',
 ];

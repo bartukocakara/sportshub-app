@@ -523,6 +523,7 @@ return [
     'participant' => 'Participant',
     'unknown' => 'Unknown',
     'me_match_team_player_quit_successfully' => 'You quit successfully.',
+    'match_team_player_delete_successfully' => 'Player removed successfully.',
     'match_owner' => 'Match Owner',
     'join_match_title' => 'Join Match',
     'join_match_confirmation' => 'Are you sure you want to join this match?',
@@ -551,4 +552,8 @@ return [
     'match_type_and_gender' => 'Match type and gender',
     'player_limits' => 'Player limits',
     'schedule' => 'Schedule',
+    'remove_player' => 'Remove Player',
+    'delete_player_title' => 'Delete Player',
+    'delete_player_message' => 'Are you sure you want to remove this player from the match?',
+    'delete_player_emotion' => 'This action cannot be undone. The player will be removed from the match and all related information will be permanently deleted.',
 ];

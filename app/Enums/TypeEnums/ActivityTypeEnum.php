@@ -8,6 +8,7 @@ enum ActivityTypeEnum: string
     case MatchUpdated  = 'match.updated';
     case MatchCanceled = 'match.canceled';
     case MatchJoined   = 'match.joined';
+    case MatchDeleted   = 'match.deleted';
 
     case TeamCreated   = 'team.created';
     case TeamUpdated   = 'team.updated';

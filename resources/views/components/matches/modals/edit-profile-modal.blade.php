@@ -65,13 +65,31 @@
                             <div id="collapseTypeGender" class="accordion-collapse collapse" aria-labelledby="headingTypeGender" data-bs-parent="#matchInfoAccordion">
                                 <div class="accordion-body">
                                     <div class="mb-5">
-                                        @include('components.filters.sport-type-filter', ['selectedSportTypeId' => old('sport_type_id', $datas['match']->sport_type_id)])
+                                        <div class="form-group">
+                                            <h4 for="sport_type">{{ __('messages.sport_type') }}</h4>
+                                            <select id="sport_type" data-control="select2" name="sport_type_id" class="form-control form-select text-dark">
+                                                <option value="">{{ __('messages.select_sport') }}</option>
+                                                @foreach ($datas['sport_types'] as $item)
+                                                    <option value="{{ $item->id }}"
+                                                        @if(old('sport_type_id', $datas['match']->sport_type_id) == $item->id) selected @endif
+                                                        data-image="{{ asset("storage/".$item->img) }}">
+                                                        {{ $item->title }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                         @error('sport_type_id')
                                             <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="mb-5">
-                                        @include('components.filters.gender-filtering', ['selectedGender' => old('gender', $datas['match']->gender)])
+                                        <label class="form-label">{{ __('messages.gender') }}</label>
+                                        <select name="gender" class="form-select" data-control="select2" data-placeholder="{{ __('messages.select_gender') }}">
+                                            <option></option>
+                                            <option value="male" {{ old('gender', $datas['match']->gender) == 'male' ? 'selected' : '' }}>👨 {{ __('messages.male') }}</option>
+                                            <option value="female" {{ old('gender', $datas['match']->gender) == 'female' ? 'selected' : '' }}>👩 {{ __('messages.female') }}</option>
+                                            <option value="mixed" {{ old('gender', $datas['match']->gender) == 'mixed' ? 'selected' : '' }}>👫 {{ __('messages.mixed') }}</option>
+                                        </select>
                                         @error('gender')
                                             <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror

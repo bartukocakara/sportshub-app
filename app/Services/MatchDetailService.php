@@ -334,18 +334,27 @@ class MatchDetailService extends CrudService
     public function destroyPlayer(string $matchTeamPlayerId) : RedirectResponse
     {
         try {
+            DB::beginTransaction();
             $matchTeamPlayerRepo = app(MatchTeamPlayerRepository::class);
 
             $matchTeamPlayer = $matchTeamPlayerRepo->find($matchTeamPlayerId);
-
-            if (!$matchTeamPlayer) {
-                return redirect()->back()->with('error', __('messages.player_team_not_found'));
+            $user = $matchTeamPlayer->user;
+            if ($user) {
+                $user->announcements()
+                    ->where('subject_type', Matches::class)
+                    ->where('subject_id', $matchTeamPlayer->match_id)
+                    ->delete();
+            
+                $user->activities()
+                    ->where('subject_type', Matches::class)
+                    ->where('subject_id', $matchTeamPlayer->match_id)
+                    ->delete();
             }
-
-            $matchTeamPlayerRepo->delete($matchTeamPlayerId);
-
-            return redirect()->back()->with('success', __('messages.me_match_team_player_quit_successfully'));
+            $matchTeamPlayer->delete();
+            DB::commit();
+            return redirect()->back()->with('success', __('messages.match_team_player_delete_successfully'));
         } catch (\Throwable $th) {
+            DB::rollback();
             Log::error('Error while destroying match team player: ' . $th->getMessage());
             return redirect()->back()->with('error', __('messages.contact_support'));
         }

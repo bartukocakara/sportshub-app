@@ -93,7 +93,7 @@ class MatchController extends Controller
     public function update(MatchRequest $request, string $id) : RedirectResponse
     {
         $this->matchService->update($request->validated(), $id);
-        return redirect()->route('matches.index')->with('success', 'Match updated successfully.');
+        return redirect()->back()->with('success', __('messages.match_updated_successfully'));
     }
 
     /**

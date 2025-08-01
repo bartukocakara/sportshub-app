@@ -94,16 +94,48 @@
                                 <div class="player-grid" id="team-{{ $team['id'] }}">
                                     @if(isset($team['match_team_players']))
                                         @foreach ($team['match_team_players'] as $item)
-                                            <div class="player-card" data-user-id="{{ $item['user_id'] }}">
-                                                <div class="player-avatar {{ ($loop->parent->index % 2 == 0) ? 'blue-border' : 'red-border' }}">
-                                                    <img src="{{ isset($item['avatar']) ? asset('storage/' . $item['avatar']) : 'https://placehold.co/80x80/' . (($loop->parent->index % 2 == 0) ? 'E0F2F7/2C5282' : 'FEE2E2/991B1B') . '?text=' . urlencode($item['full_name'] ?? 'Player') }}" alt="{{ $item['full_name'] ?? 'Player Avatar' }}">
-                                                </div>
-                                                <div class="player-name">
-                                                    <a href="{{ route('users.profile', ['id' => $item['user_id']]) }}">
-                                                        {{ $item['full_name'] ?? 'Unknown Player' }}
-                                                    </a>
-                                                </div>
+                                        <div class="player-card" data-user-id="{{ $item['user_id'] }}">
+                                            @if ($datas['is_match_owner'])
+                                                <form action="{{ route('matches.match-team-players.destroy', ['id' => $datas['match']->id, 'matchTeamPlayerId' => $item['id']]) }}"
+                                                    method="POST"
+                                                    onsubmit="return confirm('{{ __('messages.confirm_delete_player') }}')"
+                                                    class="player-delete-form"> {{-- Added class for styling --}}
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button  type="button"
+                                                            class="btn btn-sm btn-icon btn-light-danger"
+                                                            title="{{ __('messages.remove_player') }}"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#delete-player-{{ $item['id'] }}"
+                                                            class="btn btn-sm btn-icon btn-light-danger"
+                                                            title="{{ __('messages.remove_player') }}">
+                                                            💫
+                                                    </button>
+                                                </form>
+                                            @endif
+
+                                            <div class="player-avatar {{ ($loop->parent->index % 2 == 0) ? 'blue-border' : 'red-border' }}">
+                                            <img src="{{ isset($item['avatar']) ? asset('storage/' . $item['avatar']) : 'https://placehold.co/80x80/' . (($loop->parent->index % 2 == 0) ? 'E0F2F7/2C5282' : 'FEE2E2/991B1B') . '?text=' . urlencode($item['full_name'] ?? 'Player') }}" alt="{{ $item['full_name'] ?? 'Player Avatar' }}">
                                             </div>
+                                            <div class="player-name">
+                                                <a href="{{ route('users.profile', ['id' => $item['user_id']]) }}">
+                                                    {{ $item['full_name'] ?? 'Unknown Player' }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                        @if ($datas['is_match_owner'])
+                                            @include('components.modals.delete-confirmation-modal', [
+                                                'id' => 'delete-player-' . $item['id'],
+                                                'route' => route('matches.match-team-players.destroy', ['id' => $datas['match']->id, 'matchTeamPlayerId' => $item['id']]),
+                                                'title' => __('messages.delete_player_title'),
+                                                'message' => __('messages.delete_player_message', ['player' => $item['full_name']]),
+                                                'emotionalWarning' => __('messages.delete_player_emotion'),
+                                                'buttonText' => __('messages.remove_player'),
+                                                'icon' => 'fas fa-user-slash',
+                                                'color' => 'danger',
+                                                'emoji' => '💫',
+                                            ])
+                                        @endif
                                         @endforeach
                                     @endif
                                 </div>
