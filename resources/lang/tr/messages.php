@@ -572,4 +572,11 @@ return [
     'save_team_changes' => 'Değişiklikleri Kaydet',
     'team_changes_saved' => 'Oyuncu değişiklikleri başarıyla kaydedildi.',
     'error_occurred' => 'Bir hata oluştu.',
+    'edit_match' => 'Maçı Düzenle',
+    'play_date' => 'Oynama Tarihi',
+    'basic_info' => 'Temel Bilgiler',
+    'description' => 'Açıklama',
+    'match_type_and_gender' => 'Maç Türü ve Cinsiyet',
+    'player_limits' => 'Oyuncu Sınırları',
+    'schedule' => 'Program',
 ];

@@ -186,8 +186,8 @@
             extendedTimeOut: 1000,
         };
     });
+    
 </script>
-
 <x-toast-message />
 <script src="{{ asset('assets/js/custom/auth-modal.js') }}"></script>
 <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
@@ -198,6 +198,7 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/tr.js"></script>
 <x-swal-message />
 <script src="{{ asset('assets/js/mobile-buttons.js') }}"></script>
+<script src="{{ asset('assets/js/img-select2.js') }}"></script>
 
 @yield('page-scripts')
 </body>

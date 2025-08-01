@@ -39,6 +39,7 @@
         <a href="#" id="kt_match_edit_button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_update_match_info">
             <i class="fas fa-pencil-alt me-1"></i> {{ __('messages.edit') }}
         </a>
+        @include('components.matches.modals.edit-profile-modal')
     @endif
 
 @elseif ($userRole === 'participant')

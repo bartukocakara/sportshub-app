@@ -27,6 +27,19 @@
                         {{ $datas['match']->city_title }}
                     </span>
                 </div>
+                <div class="d-flex align-items-center text-gray-700">
+                    📅
+                    <span class="fw-semibold fs-6 ms-2">
+                        {{ \Carbon\Carbon::parse($datas['match']->play_date)->translatedFormat('d F Y') }}
+                    </span>
+                </div>
+
+                <div class="d-flex align-items-center text-gray-700">
+                    ⏰
+                    <span class="fw-semibold fs-6 ms-2">
+                        {{ \Carbon\Carbon::parse($datas['match']->from_hour)->format('H:i') }} - {{ \Carbon\Carbon::parse($datas['match']->to_hour)->format('H:i') }}
+                    </span>
+                </div>
             </div>
             <div class="col-12 col-md-4 col-lg-3 text-center">
                 <div class="float-start w-75">
@@ -51,6 +64,12 @@
             </div>
         </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6 g-4 my-5">
+            <div class="col">
+                <div class="border border-gray-300 border-dashed rounded py-3 px-4 text-center h-100">
+                    <div class="fw-semibold fs-6 text-gray-900 mb-1">{{ __('messages.price') }}</div>
+                    <div class="fs-3 fw-bold">{{ $datas['match']['price'] }} ₺</div>
+                </div>
+            </div>
             @php
                 $gender = $datas['match']->gender ?? 'mixed';
                 $genderEmoji = match($gender) {

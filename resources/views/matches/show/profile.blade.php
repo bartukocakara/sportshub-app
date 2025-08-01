@@ -182,7 +182,6 @@
         @endisset
     </div>
 </div>
-@include('components.matches.modals.edit-profile-modal')
 
 @endsection
 @section('page-scripts')

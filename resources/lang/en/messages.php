@@ -496,25 +496,18 @@ return [
     'get_started' => 'Get Started! 🎉',
     'explore_features' => 'Explore Features 👇',
     'whats_inside' => "What's Inside Sportshub? ✨",
-
     'find_new_players' => 'Find New Players',
     'find_new_players_desc' => 'Connect with athletes in your area, expand your network, and find the perfect teammates for any sport. Search by skill, location, and preferred game! 🤝',
-
     'join_create_teams' => 'Join/Create Teams',
     'join_create_teams_desc' => 'Looking for a team or building your own squad? Sportshub makes it easy to find and manage teams, organize practices, and compete together. 🏅',
-
     'book_courts' => 'Book Courts & Venues',
     'book_courts_desc' => 'Seamlessly discover and reserve local sports courts, fields, and venues. Check availability, book instantly, and get ready to play! 🗓️',
-
     'organize_matches' => 'Organize & Find Matches',
     'organize_matches_desc' => 'Set up casual games or competitive matches with ease. Browse upcoming fixtures, challenge other teams, and keep track of your scores and stats. 🔥',
-
     'announcements_short' => 'Stay Updated with Announcements',
     'announcements_desc' => 'Receive real-time notifications for game changes, team updates, league news, and special events. Never miss a beat! 🔔',
-
     'track_progress' => 'Track Your Progress',
     'track_progress_desc' => 'Monitor your performance, track game results, and see your stats improve over time. Celebrate your wins and work on your goals! 🚀',
-
     'cta_title' => 'Ready to Jump into the Game? 🏃‍♀️💨',
     'cta_desc' => 'Join the Sportshub community today and take your sports experience to the next level!',
     'sign_up_now' => 'Sign Up Now! 🥳',
@@ -551,4 +544,11 @@ return [
     'save_team_changes' => 'Save Team Changes',
     'team_changes_saved' => 'Team changes saved successfully',
     'error_occurred' => 'An error occurred. Please try again.',
+    'edit_match' => 'Edit Match',
+    'play_date' => 'Play Date',
+    'basic_info' => 'Basic Info',
+    'description' => 'Description',
+    'match_type_and_gender' => 'Match type and gender',
+    'player_limits' => 'Player limits',
+    'schedule' => 'Schedule',
 ];
