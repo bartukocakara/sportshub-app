@@ -155,10 +155,25 @@ class MatchDetailController extends Controller
      */
     public function matchTeamCreate(MatchTeamRequest $request, string $matchId) : RedirectResponse
     {
-        $match = $this->matchDetailService->getMatchById($matchId);
+        $match = $this->matchDetailService->findMatchById($matchId);
         $this->authorize('createMatchTeam', $match);
 
         return $this->matchDetailService->matchTeamCreate($request->validated(), $matchId);
+    }
+
+    /**
+     * Displays the user's matches.
+     *
+     * @param MatchTeamRequest $request
+     * @param string $matchId
+     * @return \Illuminate\View\View
+     */
+    public function matchTeamUpdate(MatchTeamRequest $request, string $matchId, string $matchTeamId) : RedirectResponse
+    {
+        $match = $this->matchDetailService->findMatchById($matchId);
+        $this->authorize('createMatchTeam', $match);
+
+        return $this->matchDetailService->matchTeamUpdate($request->validated(), $matchId, $matchTeamId);
     }
 
     /**

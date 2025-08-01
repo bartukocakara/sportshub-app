@@ -558,4 +558,5 @@ return [
     'delete_player_emotion' => 'This action cannot be undone. The player will be removed from the match and all related information will be permanently deleted.',
     'open_delete_mode' => 'Open delete mode',
     'close_delete_mode' => 'Close delete mode',
+    'match_team_updated_successfully' => 'Match team updated successfully',
 ];

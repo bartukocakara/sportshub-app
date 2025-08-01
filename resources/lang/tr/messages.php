@@ -586,4 +586,5 @@ return [
     'delete_player_emotion' => 'Bu işlem geri alınamaz. Oyuncu ve tüm ilişkili bilgileri kalıcı olarak kaldırılacaktır.',
     'open_delete_mode' => 'Silme Modunu Aç',
     'close_delete_mode' => 'Silme Modunu Kapat',
+    'match_team_updated_successfully' => 'Maç takımı başarıyla güncellendi',
 ];

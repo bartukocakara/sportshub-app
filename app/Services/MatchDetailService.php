@@ -94,7 +94,14 @@ class MatchDetailService extends CrudService
                 'title' => $data['title']
             ];
             $matchTeamRepo->create($createData);
-
+            $this->logActivity(
+                'match.match-team-created',
+                $matchTeamRepo->find($matchId),
+                [
+                    'user' => auth()->user()->first_name ?? 'Unknown',
+                    'id'   => $matchId,
+                ]
+            );
             return redirect()->back()->with('success', __('messages.match_team_created_successfully'));
 
         } catch (\Throwable $th) {
@@ -102,6 +109,33 @@ class MatchDetailService extends CrudService
             return redirect()->back()->with('error', __('messages.contact_support'));
         }
     }
+
+    public function matchTeamUpdate(array $data, string $matchId, string $matchTeamId): RedirectResponse
+    {
+        try {
+            $matchTeamRepo = app(MatchTeamRepository::class);
+            $matchTeam = $matchTeamRepo->find($matchTeamId);
+            if (!$matchTeam) {
+                return redirect()->back()->with('error', __('messages.match_team_not_found'));
+            }
+
+            $matchTeam->update(['title' => $data['title']]);
+            $this->logActivity(
+                'match.match-team-updated',
+                $matchTeam,
+                [
+                    'user' => auth()->user()->first_name ?? 'Unknown',
+                    'id'   => $matchId,
+                ]
+            );
+            return redirect()->back()->with('success', __('messages.match_team_updated_successfully'));
+
+        } catch (\Throwable $th) {
+            Log::error('Error while updating match team: ' . $th->getMessage());
+            return redirect()->back()->with('error', __('messages.contact_support'));
+        }
+    }
+
 
     public function matchTeamsSort(array $transfers, string $matchId): RedirectResponse
     {

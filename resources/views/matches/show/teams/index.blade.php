@@ -97,7 +97,9 @@
                     @if(isset($datas['match_teams']['data']))
                         @foreach ($datas['match_teams']['data'] as $team)
                             <div class="team-card">
-                                <h2 class="text-gray-900 fw-bold fs-3 mb-0 text-center">{{ $team['title'] ?? 'Team Name' }}</h2>
+                                <h2 class="text-gray-900 fw-bold fs-3 mb-0 text-center team-title-editable" data-team-id="{{ $team['id'] }}">
+                                    {{ $team['title'] ?? 'Team Name' }}
+                                </h2>
                                 <div class="player-grid" id="team-{{ $team['id'] }}">
                                     @if(isset($team['match_team_players']))
                                         @foreach ($team['match_team_players'] as $item)
@@ -164,52 +166,116 @@
 <script src="{{ asset('assets/js/sortable.min.js') }}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-    const teamGrids = document.querySelectorAll('.player-grid');
-    teamGrids.forEach(grid => {
-        new Sortable(grid, {
-            group: 'players',
-            animation: 150,
-            ghostClass: 'sortable-ghost'
-        });
-    });
-
-    const form = document.getElementById('teamTransferForm');
-    const transfersInput = document.getElementById('transfersInput');
-
-    form.addEventListener('submit', function (e) {
-        const playerTransfers = [];
+        const teamGrids = document.querySelectorAll('.player-grid');
         teamGrids.forEach(grid => {
-            const teamId = grid.id.replace('team-', '');
-            grid.querySelectorAll('.player-card').forEach(player => {
-                const userId = player.getAttribute('data-user-id');
-                if (userId) {
-                    playerTransfers.push({
-                        user_id: userId,
-                        match_team_id: teamId 
-                    });
-                }
+            new Sortable(grid, {
+                group: 'players',
+                animation: 150,
+                ghostClass: 'sortable-ghost'
             });
         });
 
-        transfersInput.value = JSON.stringify(playerTransfers);
-    });
-    let deleteMode = false;
+        const form = document.getElementById('teamTransferForm');
+        const transfersInput = document.getElementById('transfersInput');
 
-    function toggleDeleteMode() {
-        deleteMode = !deleteMode;
+        form.addEventListener('submit', function (e) {
+            const playerTransfers = [];
+            teamGrids.forEach(grid => {
+                const teamId = grid.id.replace('team-', '');
+                grid.querySelectorAll('.player-card').forEach(player => {
+                    const userId = player.getAttribute('data-user-id');
+                    if (userId) {
+                        playerTransfers.push({
+                            user_id: userId,
+                            match_team_id: teamId
+                        });
+                    }
+                });
+            });
 
-        const deleteButtons = document.querySelectorAll('.player-delete-form');
-        deleteButtons.forEach(btn => {
-            btn.style.display = deleteMode ? 'inline-block' : 'none';
+            transfersInput.value = JSON.stringify(playerTransfers);
         });
 
-        // Butonun metnini değiştir
-        const toggleBtn = document.getElementById('toggleDeleteModeBtn');
-        if (toggleBtn) {
-            toggleBtn.textContent = deleteMode ? '{{ __("messages.close_delete_mode") }}' : '{{ __("messages.open_delete_mode") }}';
+        let deleteMode = false;
+
+        function toggleDeleteMode() {
+            deleteMode = !deleteMode;
+
+            const deleteButtons = document.querySelectorAll('.player-delete-form');
+            deleteButtons.forEach(btn => {
+                btn.style.display = deleteMode ? 'inline-block' : 'none';
+            });
+
+            const toggleBtn = document.getElementById('toggleDeleteModeBtn');
+            if (toggleBtn) {
+                toggleBtn.textContent = deleteMode ? '{{ __("messages.close_delete_mode") }}' : '{{ __("messages.open_delete_mode") }}';
+            }
         }
-    }
-    window.toggleDeleteMode = toggleDeleteMode;
-});
+        window.toggleDeleteMode = toggleDeleteMode;
+
+        // Team Title Editing Functionality
+        document.querySelectorAll('.team-title-editable').forEach(titleElement => {
+            if ("{{ $datas['is_match_owner'] }}" === "1") { // Only enable for match owner
+                titleElement.addEventListener('dblclick', function() {
+                    const currentTitle = this.textContent.trim();
+                    const teamId = this.dataset.teamId;
+                    const originalElement = this;
+
+                    // Create a form element
+                    const form = document.createElement('form');
+                    form.method = 'POST'; // Use POST for form submission
+                    form.action = `/matches/{{ $datas['match']->id }}/match-teams/${teamId}`; // Your route
+                    form.style.display = 'inline'; // Keep the form in line with the text
+
+                    // Add CSRF token
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = '_token';
+                    csrfInput.value = '{{ csrf_token() }}';
+                    form.appendChild(csrfInput);
+
+                    // Add PUT method spoofing for Laravel
+                    const methodInput = document.createElement('input');
+                    methodInput.type = 'hidden';
+                    methodInput.name = '_method';
+                    methodInput.value = 'PUT';
+                    form.appendChild(methodInput);
+
+                    // Create the input field for the title
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.name = 'title'; // Important: name attribute for form submission
+                    input.value = currentTitle;
+                    input.className = 'form-control text-center'; // Apply some Bootstrap styling
+                    input.style.width = 'auto'; // Adjust width as needed
+                    input.style.display = 'inline-block'; // Keep it inline
+                    form.appendChild(input);
+
+                    // Replace the h2 with the form containing the input
+                    originalElement.parentNode.replaceChild(form, originalElement);
+                    input.focus();
+
+                    // Handle blur and enter key
+                    const submitForm = () => {
+                        const newTitle = input.value.trim();
+                        if (newTitle !== currentTitle && newTitle !== '') {
+                            form.submit(); // Submit the form
+                        } else {
+                            // If title is same or empty, revert to original h2
+                            form.parentNode.replaceChild(originalElement, form);
+                        }
+                    };
+
+                    input.addEventListener('blur', submitForm); // Submit on blur
+                    input.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault(); // Prevent default Enter key behavior (like new line)
+                            submitForm(); // Submit on Enter
+                        }
+                    });
+                });
+            }
+        });
+    });
 </script>
 @endsection

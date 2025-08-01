@@ -19,14 +19,16 @@ class ActivitySeeder extends Seeder
 
         foreach ($users as $user) {
             $activities = [
-                ['type' => ActivityTypeEnum::MatchCreated,  'subject' => Matches::inRandomOrder()->first()],
-                ['type' => ActivityTypeEnum::MatchUpdated,  'subject' => Matches::inRandomOrder()->first()],
-                ['type' => ActivityTypeEnum::MatchCanceled, 'subject' => Matches::inRandomOrder()->first()],
-                ['type' => ActivityTypeEnum::MatchJoined,   'subject' => Matches::inRandomOrder()->first()],
-                ['type' => ActivityTypeEnum::TeamCreated,   'subject' => Team::inRandomOrder()->first()],
-                ['type' => ActivityTypeEnum::TeamUpdated,   'subject' => Team::inRandomOrder()->first()],
-                ['type' => ActivityTypeEnum::TeamJoined,    'subject' => Team::inRandomOrder()->first()],
-                ['type' => ActivityTypeEnum::CourtCreated,  'subject' => Court::inRandomOrder()->first()],
+                ['type' => ActivityTypeEnum::MatchCreated,          'subject' => Matches::inRandomOrder()->first()],
+                ['type' => ActivityTypeEnum::MatchUpdated,          'subject' => Matches::inRandomOrder()->first()],
+                ['type' => ActivityTypeEnum::MatchCanceled,         'subject' => Matches::inRandomOrder()->first()],
+                ['type' => ActivityTypeEnum::MatchJoined,           'subject' => Matches::inRandomOrder()->first()],
+                ['type' => ActivityTypeEnum::MatchTeamCreated,      'subject' => Matches::inRandomOrder()->first()],
+                ['type' => ActivityTypeEnum::MatchTeamUpdated,      'subject' => Matches::inRandomOrder()->first()],
+                ['type' => ActivityTypeEnum::TeamCreated,           'subject' => Team::inRandomOrder()->first()],
+                ['type' => ActivityTypeEnum::TeamUpdated,           'subject' => Team::inRandomOrder()->first()],
+                ['type' => ActivityTypeEnum::TeamJoined,            'subject' => Team::inRandomOrder()->first()],
+                ['type' => ActivityTypeEnum::CourtCreated,          'subject' => Court::inRandomOrder()->first()],
             ];
 
             foreach ($activities as $item) {
