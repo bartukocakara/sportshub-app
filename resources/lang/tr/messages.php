@@ -584,4 +584,6 @@ return [
     'delete_player_title' => 'Oyuncuyu Sil',
     'delete_player_message' => 'Bu oyuncuyu takımdan çıkarmak istediğinize emin misiniz?',
     'delete_player_emotion' => 'Bu işlem geri alınamaz. Oyuncu ve tüm ilişkili bilgileri kalıcı olarak kaldırılacaktır.',
+    'open_delete_mode' => 'Silme Modunu Aç',
+    'close_delete_mode' => 'Silme Modunu Kapat',
 ];

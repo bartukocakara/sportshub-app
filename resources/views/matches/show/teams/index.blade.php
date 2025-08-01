@@ -34,6 +34,13 @@
                             data-title="{{ __('messages.create_match_team') }}">
                         {{ __('messages.create_match_team') }}
                     </button>
+                    <button type="button"
+                            class="btn btn-outline-danger ms-3 px-4 py-3"
+                            id="toggleDeleteModeBtn"
+                            onclick="toggleDeleteMode()">
+                        {{ __('messages.open_delete_mode') }}
+                    </button>
+
                     <div class="modal fade" id="createTeamModal" tabindex="-1" aria-labelledby="createTeamModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <form method="POST" action="{{ route('matches.teams.create', ['id' => $datas['match']->id] ) }}" class="modal-content">
@@ -96,10 +103,12 @@
                                         @foreach ($team['match_team_players'] as $item)
                                         <div class="player-card" data-user-id="{{ $item['user_id'] }}">
                                             @if ($datas['is_match_owner'])
-                                                <form action="{{ route('matches.match-team-players.destroy', ['id' => $datas['match']->id, 'matchTeamPlayerId' => $item['id']]) }}"
+
+                                            <form action="{{ route('matches.match-team-players.destroy', ['id' => $datas['match']->id, 'matchTeamPlayerId' => $item['id']]) }}"
                                                     method="POST"
                                                     onsubmit="return confirm('{{ __('messages.confirm_delete_player') }}')"
-                                                    class="player-delete-form"> {{-- Added class for styling --}}
+                                                    class="player-delete-form"
+                                                    style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button  type="button"
@@ -109,7 +118,7 @@
                                                             data-bs-target="#delete-player-{{ $item['id'] }}"
                                                             class="btn btn-sm btn-icon btn-light-danger"
                                                             title="{{ __('messages.remove_player') }}">
-                                                            💫
+                                                            ❌
                                                     </button>
                                                 </form>
                                             @endif
@@ -184,6 +193,23 @@
 
         transfersInput.value = JSON.stringify(playerTransfers);
     });
+    let deleteMode = false;
+
+    function toggleDeleteMode() {
+        deleteMode = !deleteMode;
+
+        const deleteButtons = document.querySelectorAll('.player-delete-form');
+        deleteButtons.forEach(btn => {
+            btn.style.display = deleteMode ? 'inline-block' : 'none';
+        });
+
+        // Butonun metnini değiştir
+        const toggleBtn = document.getElementById('toggleDeleteModeBtn');
+        if (toggleBtn) {
+            toggleBtn.textContent = deleteMode ? '{{ __("messages.close_delete_mode") }}' : '{{ __("messages.open_delete_mode") }}';
+        }
+    }
+    window.toggleDeleteMode = toggleDeleteMode;
 });
 </script>
 @endsection

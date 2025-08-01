@@ -556,4 +556,6 @@ return [
     'delete_player_title' => 'Delete Player',
     'delete_player_message' => 'Are you sure you want to remove this player from the match?',
     'delete_player_emotion' => 'This action cannot be undone. The player will be removed from the match and all related information will be permanently deleted.',
+    'open_delete_mode' => 'Open delete mode',
+    'close_delete_mode' => 'Close delete mode',
 ];
