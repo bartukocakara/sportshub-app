@@ -10,6 +10,7 @@ enum ActivityTypeEnum: string
     case MatchJoined        = 'match.joined';
     case MatchTeamCreated   = 'match.match-team-created';
     case MatchTeamUpdated   = 'match.match-team-updated';
+    case MatchTeamDeleted   = 'match.match-team-deleted';
     case MatchDeleted       = 'match.deleted';
 
     case TeamCreated        = 'team.created';
@@ -26,6 +27,7 @@ enum ActivityTypeEnum: string
             self::MatchCanceled     => 'Maç iptal edildi',
             self::MatchTeamCreated  => 'Maç Takımı oluşturuldu',
             self::MatchTeamUpdated  => 'Maç Takımı güncellendi',
+            self::MatchTeamDeleted  => 'Maç Takımı silindi',
             self::MatchJoined       => 'Maça katıldı',
             self::TeamCreated       => 'Takım oluşturuldu',
             self::TeamUpdated       => 'Takım güncellendi',

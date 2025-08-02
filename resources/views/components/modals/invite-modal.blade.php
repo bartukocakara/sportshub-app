@@ -85,7 +85,7 @@
 
             <div class="modal-footer justify-content-center pb-4">
                 <button type="button" class="btn btn-outline-secondary btn-lg" data-bs-dismiss="modal">
-                    {{ __('messages.not_now') }}
+                    {{ __('messages.cancel') }}
                 </button>
             </div>
         </div>

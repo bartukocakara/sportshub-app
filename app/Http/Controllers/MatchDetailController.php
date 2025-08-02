@@ -57,10 +57,10 @@ class MatchDetailController extends Controller
      */
     public function getRequestMatchTeamPlayersInviteData(Request $request, string $id)
     {
-        $team = $this->matchDetailService->getMatchById($id); // You must implement this
-        $this->authorize('viewRequestedPlayers', $team);
+        $match = $this->matchDetailService->findMatchById($id); // You must implement this
+        $this->authorize('viewRequestedPlayers', $match);
 
-        $datas = $this->matchDetailService->getRequestMatchTeamPlayerData($request, $id, 'invite'); // You'll create this method
+        $datas = $this->matchDetailService->getRequestMatchTeamPlayerData($request, $match, 'invite'); // You'll create this method
 
         return view('matches.show.players.invited-players', compact('datas'));
     }
@@ -91,9 +91,10 @@ class MatchDetailController extends Controller
      */
     public function getRequestMatchTeamPlayersJoinData(Request $request, string $id)
     {
-        $team = $this->matchDetailService->getMatchById($id);
-        $this->authorize('viewRequestedPlayers', $team);
-        $datas = $this->matchDetailService->getRequestMatchTeamPlayerData($request, $id, 'join');
+        $match = $this->matchDetailService->findMatchById($id);
+
+        $this->authorize('viewRequestedPlayers', $match);
+        $datas = $this->matchDetailService->getRequestMatchTeamPlayerData($request, $match, 'join');
 
         return view('matches.show.players.requested-players', compact('datas'));
     }
@@ -174,6 +175,21 @@ class MatchDetailController extends Controller
         $this->authorize('createMatchTeam', $match);
 
         return $this->matchDetailService->matchTeamUpdate($request->validated(), $matchId, $matchTeamId);
+    }
+
+        /**
+     * Displays the user's matches.
+     *
+     * @param MatchTeamRequest $request
+     * @param string $matchId
+     * @return \Illuminate\View\View
+     */
+    public function matchTeamDelete(string $matchId, string $matchTeamId) : RedirectResponse
+    {
+        $match = $this->matchDetailService->findMatchById($matchId);
+        $this->authorize('createMatchTeam', $match);
+
+        return $this->matchDetailService->matchTeamDelete($matchId, $matchTeamId);
     }
 
     /**

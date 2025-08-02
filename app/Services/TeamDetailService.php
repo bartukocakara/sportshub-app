@@ -218,7 +218,7 @@ class TeamDetailService extends CrudService
             ->pluck('requested_user_id')
             ->toArray();
 
-        $exceptIds = array_merge($existingPlayerIds, $requestedUserIds, [auth()->id()]);
+        $exceptIds = array_values(array_unique(array_merge($existingPlayerIds, $requestedUserIds, [auth()->id()])));
         $request->merge([
             'except_ids' => $exceptIds,
             // 'city_id' => $team->city_id,

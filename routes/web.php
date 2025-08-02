@@ -68,15 +68,16 @@ Route::prefix('matches/{id}')->name('matches.')->group(function () {
     Route::get('profile', [MatchDetailController::class, 'profile'])->name('profile');
     Route::get('players', [MatchDetailController::class, 'players'])->name('players');
     Route::delete('match-team-players/{matchTeamPlayerId}', [MatchDetailController::class, 'destroyPlayer'])->name('match-team-players.destroy');
-    Route::get('invited-players', [MatchDetailController::class, 'getRequestPlayerTeamsInviteData'])->name('requested-players.invite');
+    Route::get('invited-players', [MatchDetailController::class, 'getRequestMatchTeamPlayersInviteData'])->name('requested-players.invite');
     Route::delete('invited-players/{requestId}', [MatchDetailController::class, 'deleteRequestPlayerTeamsData'])->name('delete-requested-players');
-    Route::get('requested-players', [MatchDetailController::class, 'getRequestPlayerTeamsJoinData'])->name('requested-players.join');
+    Route::get('requested-match-team-players', [MatchDetailController::class, 'getRequestMatchTeamPlayersJoinData'])->name('requested-match-team-players.join');
     Route::post('requested-players/{requestId}/accept', [MatchDetailController::class, 'acceptRequestPlayerTeamData'])->name('accept-requested-player');
     Route::delete('requested-players/{requestId}/reject', [MatchDetailController::class, 'rejectRequestPlayerTeamData'])->name('delete-requested-player');
     Route::get('new-players', [MatchDetailController::class, 'getNotInTeamPlayersData'])->name('new-players');
     Route::post('invite-players/{userId}', [MatchDetailController::class, 'invitePlayer'])->name('invite-players');
     Route::get('match-teams', [MatchDetailController::class, 'teams'])->name('teams.list');
     Route::put('match-teams/{matchTeamId}', [MatchDetailController::class, 'matchTeamUpdate'])->name('teams.update');
+    Route::delete('match-teams/{matchTeamId}', [MatchDetailController::class, 'matchTeamDelete'])->name('teams.destroy');
     Route::post('match-teams', [MatchDetailController::class, 'matchTeamCreate'])->name('teams.create');
     Route::post('match-teams-sort', [MatchDetailController::class, 'matchTeamsSort'])->name('teams.sort');
 });

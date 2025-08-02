@@ -559,4 +559,15 @@ return [
     'open_delete_mode' => 'Open delete mode',
     'close_delete_mode' => 'Close delete mode',
     'match_team_updated_successfully' => 'Match team updated successfully',
+    'delete_team_title' => 'Delete Team',
+    'delete_team_message' => 'Are you sure you want to delete this team?',
+    'delete_team_emotion' => 'This action cannot be undone. The team will be deleted and all related information will be permanently deleted.',
+    'match_team_not_found' => 'Match team not found.',
+    'match_team_deleted_successfully' => 'Match team deleted successfully',
+    'remove_team' => 'Remove Team',
+    'no_requested_players_found' => 'No requested players found.',
+    'no_invited_players_found' => 'No invited players found',
+    'invite_player_message' => 'Are you sure you want to invite this player?',
+    'invite_emotional_warning' => 'You are about to add a player. This action can be undone.',
+
 ];

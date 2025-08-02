@@ -28,10 +28,10 @@ class MatchTeam extends Model
         return $this->hasMany(MatchTeamPlayer::class, 'match_team_id', 'id');
     }
 
-    // public function requestMatchTeamPlayers()
-    // {
-    //     return $this->hasMany(RequestMatchTeamPlayer::class, 'match_team_player_id', 'id');
-    // }
+    public function requestMatchTeamPlayers()
+    {
+        return $this->hasMany(RequestMatchTeamPlayer::class, 'match_team_id', 'id');
+    }
 
     public function match()
     {

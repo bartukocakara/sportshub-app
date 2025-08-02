@@ -57,9 +57,10 @@
 
                                 <x-modals.invite-modal
                                     id="{{ $inviteModalId }}"
-                                    :route="route('teams.invite-players', ['id' => request()->route('id'), 'userId' => $user['id']])"
+                                    :route="route('matches.invite-players', ['id' => request()->route('id'), 'userId' => $user['id']])"
                                     :title="__('messages.invite_confirmation')"
-                                    :message="__('messages.invite_player_team_message')"
+                                    :message="__('messages.invite_player_message')"
+                                    :emotionalWarning="__('messages.invite_emotional_warning')"
                                     icon="fas fa-handshake"
                                     color="danger"
                                 />
@@ -85,13 +86,16 @@
 @section('page-scripts')
 <script>
     window.csrfToken = '{{ csrf_token() }}';
-    window.teamId = '{{ request()->route("id") }}';
+    window.matchId = '{{ request()->route("id") }}';
     window.translations = {
+        enter_title: '{{ __("messages.enter_title") }}',
         invite: '{{ __("messages.invite") }}',
         invite_confirmation: '{{ __("messages.invite_confirmation") }}',
-        invite_player_team_message: '{{ __("messages.invite_player_team_message") }}',
+        invite_player_message: '{{ __("messages.invite_player_message") }}',
+        invite_emotional_warning : '{{ __("messages.invite_emotional_warning") }}',
         cancel: '{{ __("messages.cancel") }}',
         confirm: '{{ __("messages.confirm") }}',
+        title: '{{ __("messages.title") }}',
     };
 </script>
 <script src="{{ asset('assets/js/card-list/user-invite-card-list.js') }}"></script>
@@ -120,9 +124,9 @@
             },
             extraParams: {
                 // full_name: '',
-                // city_id: '{{ $datas['team']['city_id'] }}',
-                sport_type_id: '{{ $datas['team']['sport_type_id'] }}',
-                not_team_id: '{{ $datas['team']['id'] }}',
+                // city_id: '{{ $datas['match']['city_id'] }}',
+                sport_type_id: '{{ $datas['match']['sport_type_id'] }}',
+                not_match_id: '{{ $datas['match']['id'] }}',
                 except_ids: @json($datas['except_ids'])
             },
             spinnerDelay: 200,

@@ -30,8 +30,19 @@ class MatchRequestMatchTeamPlayerViewModel
             'type' => $this->type,
             'status' => RequestStatusEnum::WAITING_FOR_APPROVAL->value
             ])->get();
+        $groupedRequests = $requestMatchTeamPlayers->groupBy('match_team_id');
+        $teamsWithRequestedPlayers = $groupedRequests->map(function ($teamRequestsForThisGroup, $teamId) {
+            $matchTeam = $teamRequestsForThisGroup->first()->matchTeam;
+            return [
+                'id' => $teamId,
+                'title' => $matchTeam->title, // Access the team's title
+                'players' => RequestMatchTeamPlayerResource::collection($teamRequestsForThisGroup), // Apply resource to players in this group
+            ];
+        })->values(); // Use values() to reset keys if you want a simple array of groups
+    
         return [
-            'request_match_team_players' => RequestMatchTeamPlayerResource::collection($requestMatchTeamPlayers),
+            'grouped_requested_players_by_team' => $teamsWithRequestedPlayers,
+            'user_status' => $this->accessService->getUserRequestStatus($user, $this->match),
             'user_role' => $this->accessService->getUserRole($user, $this->match),
             'is_match_owner' => $this->accessService->isMatchOwner($user, $this->match),
         ];

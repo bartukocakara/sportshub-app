@@ -17,7 +17,6 @@
                             <li class="breadcrumb-item">
                                 <i class="ki-duotone ki-right fs-4 text-gray-700 mx-n1"></i>
                             </li>
-                            {{-- Changed breadcrumb text to reflect players requesting to join --}}
                             <li class="breadcrumb-item text-gray-700 fw-bold lh-1">{{ __('messages.requested_players') }}</li>
                         </ul>
                     </div>
@@ -28,67 +27,58 @@
             <div id="kt_app_content_container" class="app-container container-fluid">
                 <div class="d-flex flex-row">
                     <div class="w-100 flex-lg-row-fluid">
-                        <div class="row g-6 mb-6 g-xl-9 border">
-                            @foreach ($datas['request_player_teams'] as $user)
-                                @php
-                                    $acceptModalId = 'accept-request-' . $user->id;
-                                    $rejectModalId = 'reject-request-' . $user->id;
-                                @endphp
-                                <div class="col-md-6 col-xxl-4">
-                                    <div class="card border shadow-sm">
-                                        <div class="card-body d-flex flex-center flex-column py-9 px-5">
-                                            <div class="symbol symbol-65px symbol-circle mb-5">
-                                                @if (!empty($user->requestedUser['avatar']))
-                                                    <img src="{{ $user->requestedUser['avatar'] }}" alt="image" />
-                                                @else
-                                                    <span class="symbol-label fs-2 fw-bold text-white bg-primary">
-                                                        {{ strtoupper(substr($user->requestedUser['first_name'], 0, 1)) }}
-                                                    </span>
-                                                @endif
-                                                {{-- Status indicator based on acceptance status (optional, but good UX) --}}
-                                                {{-- You might want to add dynamic classes based on $user->status if available --}}
-                                                <div class="bg-warning position-absolute rounded-circle translate-middle start-100 top-100 border-4 border-body h-15px w-15px ms-n3 mt-n3"
-                                                     title="{{ __('messages.pending_request') }}"></div>
-                                            </div>
-                                            <a href="{{ route('users.profile', ['id' => $user->requestedUser['id']]) }}" class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">{{ $user->requestedUser['full_name'] }}</a>
-                                            <div class="fw-semibold text-gray-500 mb-6"></div>
+                        @forelse ($datas['grouped_requested_players_by_team'] as $teamGroup)
+                            <div class="card card-xl-stretch mb-xl-9">
+                                <div class="card-header pt-5">
+                                    <h3 class="card-title align-items-start flex-column">
+                                        <span class="card-label fw-bold text-gray-900">{{ __('messages.team') }}: {{ $teamGroup['title'] }}</span>
+                                    </h3>
+                                </div>
+                                <div class="card-body py-3">
+                                    <div class="row g-6 g-xl-9">
+                                        @foreach ($teamGroup['players'] as $user)
+                                            @php
+                                                $deleteModalId = 'delete-request-' . $user->id;
+                                            @endphp
+                                            <div class="col-md-6 col-xxl-4">
+                                                <div class="card border shadow-sm">
+                                                    <div class="card-body d-flex flex-center flex-column py-9 px-5">
+                                                        <div class="symbol symbol-65px symbol-circle mb-5">
+                                                            @if (!empty($user->requestedUser->avatar)) {{-- Use $user->avatar directly from resource --}}
+                                                                <img src="{{ $user->requestedUser->avatar }}" alt="image" />
+                                                            @else
+                                                                <span class="symbol-label fs-2 fw-bold text-white bg-primary">
+                                                                    {{ strtoupper(substr($user->first_name, 0, 1)) }} {{-- Use $user->first_name directly --}}
+                                                                </span>
+                                                            @endif
+                                                            <div class="bg-success position-absolute rounded-circle translate-middle start-100 top-100 border-4 border-body h-15px w-15px ms-n3 mt-n3"></div>
+                                                        </div>
+                                                        <a href="{{ route('users.profile', ['id' => $user->requested_user_id]) }}" class="fs-4 text-gray-800 text-hover-primary fw-bold mb-0">{{ $user->full_name }}</a> {{-- Use $user->full_name --}}
+                                                        <div class="fw-semibold text-gray-500 mb-6"></div>
 
-                                            <div class="d-flex gap-2">
-                                                <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#{{ $acceptModalId }}">
-                                                    <i class="fas fa-check me-2"></i> {{ __('messages.accept') }}
-                                                </button>
-
-                                                <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#{{ $rejectModalId }}">
-                                                    <i class="fas fa-times me-2"></i> {{ __('messages.reject') }}
-                                                </button>
+                                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#{{ $deleteModalId }}">
+                                                            <i class="fas fa-trash me-2"></i> {{ __('messages.cancel') }}
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
+
+                                            <x-modals.delete-confirmation-modal
+                                                id="{{ $deleteModalId }}"
+                                                :route="route('request-match-team-players.destroy', ['id' => $user->id])"
+                                                :title="__('messages.delete_confirmation')"
+                                                :message="__('messages.delete_request_player_team_message')"
+                                                icon="fas fa-trash"
+                                                color="danger"
+                                                emoji="😢"
+                                            />
+                                        @endforeach
                                     </div>
                                 </div>
-
-                                <x-modals.accept-confirmation-modal
-                                    id="{{ $acceptModalId }}"
-                                    :route="route('teams.accept-requested-player', ['id' => request()->route('id'), 'requestId' => $user->id])"
-                                    :title="__('messages.accept_confirmation')"
-                                    :message="__('messages.accept_request_player_team_message', ['full_name' => $user->requestedUser['full_name']])"
-                                    icon="fas fa-check"
-                                    color="success"
-                                    emoji="🎉"
-                                    method="POST"
-                                />
-
-                                <x-modals.delete-confirmation-modal
-                                    id="{{ $rejectModalId }}"
-                                    :route="route('teams.delete-requested-player', ['id' => request()->route('id'), 'requestId' => $user->id])"
-                                    :title="__('messages.reject_confirmation')"
-                                    :message="__('messages.reject_request_player_team_message', ['full_name' => $user->requestedUser['full_name']])"
-                                    icon="fas fa-times"
-                                    color="secondary"
-                                    emoji="😔"
-                                    method="DELETE"
-                                />
-                            @endforeach
-                        </div>
+                            </div>
+                        @empty
+                            <div class="alert alert-info text-center">{{ __('messages.no_requested_players_found') }}</div>
+                        @endforelse
                     </div>
                 </div>
             </div>

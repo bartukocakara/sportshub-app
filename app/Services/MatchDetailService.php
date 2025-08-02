@@ -136,6 +136,39 @@ class MatchDetailService extends CrudService
         }
     }
 
+    public function matchTeamDelete(string $matchId, string $matchTeamId): RedirectResponse
+    {
+        try {
+            $matchTeamRepo = app(MatchTeamRepository::class);
+            $matchTeam = $matchTeamRepo->find($matchTeamId);
+
+            if (!$matchTeam) {
+                return redirect()->back()->with('error', __('messages.match_team_not_found'));
+            }
+
+           
+            $matchTeam->requestMatchTeamPlayers()->delete();
+
+            
+            $matchTeam->matchTeamPlayers()->delete();
+
+            $matchTeam->delete();
+
+            $this->logActivity(
+                'match.match-team-deleted',
+                $matchTeam,
+                [
+                    'user' => auth()->user()->first_name ?? 'Unknown',
+                    'id'   => $matchId,
+                ]
+            );
+            return redirect()->back()->with('success', __('messages.match_team_deleted_successfully'));
+
+        } catch (\Throwable $th) {
+            Log::error('Error while deleting match team: ' . $th->getMessage());
+            return redirect()->back()->with('error', __('messages.contact_support'));
+        }
+    }
 
     public function matchTeamsSort(array $transfers, string $matchId): RedirectResponse
     {
@@ -149,7 +182,7 @@ class MatchDetailService extends CrudService
                                })
                                ->update(['match_team_id' => $transfer['match_team_id']]);
             }
-            DB::commit(); //
+            DB::commit(); //    
 
             return redirect()->back()->with('success', __('messages.team_changes_saved'));
 
@@ -161,35 +194,6 @@ class MatchDetailService extends CrudService
         }
     }
 
-    public function getPlayersData(Request $request, string $id): array
-    {
-        $userRepo = app(UserRepository::class);
-        $match = $this->matchRepository->find($id, ['matchOwners', 'matchTeams.matchTeamPlayers.requestedUser']);
-
-        $matchPlayerUserIds = $match->matchTeams
-                                    ->flatMap(fn ($team) => $team->matchTeamPlayers)
-                                    ->pluck('user_id')
-                                    ->unique()
-                                    ->toArray();
-
-        $currentUserId = auth()->user()->id;
-        if ($currentUserId) {
-            $matchPlayerUserIds[] = $currentUserId;
-        }
-
-        $exceptIds = array_unique($matchPlayerUserIds);
-        $request->merge([
-            'sport_type_id' => $match->sport_type_id,
-            'city_id' => $match->city_id,
-            'except_ids' => $exceptIds,
-        ]);
-
-        $users = $userRepo->all($request, ['userAddresses.district', 'sportTypes', 'statusDefinition']);
-        $viewModel = new MatchNotInPlayersViewModel($match, $users, new MatchAccessService());
-
-        return $viewModel->toArray();
-    }
-
     /**
      * Get user profile data.
      *
@@ -197,9 +201,10 @@ class MatchDetailService extends CrudService
      * @param string $id
      * @return array
      */
-    public function getRequestMatchTeamPlayerData(Request $request, string $id, string $type):array
+    public function getRequestMatchTeamPlayerData(Request $request, $match, string $type):array
     {
-        $match = $this->matchRepository->find($id, ['users', 'matchOwners', 'statusDefinition', 'matchTeams.matchTeamPlayers.requestedUser']);
+        $match->load(['matchOwners', 'statusDefinition', 'matchTeams.matchTeamPlayers.requestedUser.user']);
+
         $viewModel = new MatchRequestMatchTeamPlayerViewModel($match, new MatchAccessService(), $type);
         return $viewModel->toArray($request);
     }
@@ -311,16 +316,29 @@ class MatchDetailService extends CrudService
     public function getNotInMatchTeamPlayersData(Request $request, string $matchId): array
     {
         $userRepo = app(UserRepository::class);
-        $match = $this->matchRepository->find($matchId, ['users', 'matchOwners', 'statusDefinition', 'matchTeams.matchTeamPlayers.requestedUser']);
+        $match = $this->matchRepository->find($matchId, [
+            'matchOwners',
+            'statusDefinition',
+            'matchTeams.matchTeamPlayers',
+            'requestMatchTeamPlayers',
+        ]);
 
-        $existingPlayerIds = $match->users->pluck('id')->toArray();
-        $requestedUserIds = $match
-            ->matchTeams()
-            ->where(['status' => RequestStatusEnum::WAITING_FOR_APPROVAL->value])
+        $existingPlayerIds = $match->matchTeams->flatMap(function ($matchTeam) {
+            return $matchTeam->matchTeamPlayers->pluck('user_id');
+        })->toArray();
+
+        $requestedUserIds = $match->requestMatchTeamPlayers()
+            ->where('status', RequestStatusEnum::WAITING_FOR_APPROVAL->value)
             ->pluck('requested_user_id')
             ->toArray();
 
-        $exceptIds = array_merge($existingPlayerIds, $requestedUserIds, [auth()->id()]);
+        $exceptIds = array_values(array_unique(
+            array_merge(
+                $existingPlayerIds,
+                $requestedUserIds,
+                [(string) auth()->id()]
+            )
+        ));
         $request->merge([
             'except_ids' => $exceptIds,
             // 'city_id' => $match->city_id,

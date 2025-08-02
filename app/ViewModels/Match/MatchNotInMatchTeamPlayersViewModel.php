@@ -22,11 +22,12 @@ class MatchNotInMatchTeamPlayersViewModel
         $user = auth()->user();
 
         return [
-            'Match' => MatchResource::make($this->match),
+            'match' => MatchResource::make($this->match),
             'users' => UserResource::collection($this->users)->response()->getData(true),
             'except_ids' => $this->exceptIds,
             'user_role' => $this->accessService->getUserRole($user, $this->match),
-            'is_match_leader' => $this->accessService->isMatchOwner($user, $this->match),
+            'is_match_owner' => $this->accessService->isMatchOwner($user, $this->match),
+            'user_status' => $this->accessService->getUserRequestStatus($user, $this->match),
         ];
     }
 }

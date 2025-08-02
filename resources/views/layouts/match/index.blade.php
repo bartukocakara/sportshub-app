@@ -56,19 +56,13 @@
                                 'visible_status' => ['match_owner'],
                             ],
                             [
-                                'route' => 'matches.players',
-                                'params' => ['id' => $id],
-                                'label' => __('messages.players'),
-                                'visible_status' => ['match_owner', 'participant', 'none'],
-                            ],
-                            [
                                 'route' => 'matches.new-players',
                                 'params' => ['id' => $id],
                                 'label' => __('messages.add_new_players'),
                                 'visible_status' => ['match_owner'],
                             ],
                             [
-                                'route' => 'matches.requested-players.join',
+                                'route' => 'matches.requested-match-team-players.join',
                                 'params' => ['id' => $id],
                                 'label' => __('messages.requested_players'),
                                 'visible_status' => ['match_owner'],
@@ -160,6 +154,7 @@
 <script src="{{ asset('assets/js/custom/widgets.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/tr.js"></script>
 <x-swal-message />
+<script src="{{ asset('assets/js/mobile-buttons.js') }}"></script>
 <script src="{{ asset('assets/js/img-select2.js') }}"></script>
 
 @yield('page-scripts')

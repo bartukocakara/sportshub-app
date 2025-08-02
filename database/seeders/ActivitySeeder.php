@@ -43,10 +43,10 @@ class ActivitySeeder extends Seeder
                     'subject_type'  => get_class($item['subject']),
                     'subject_id'    => $item['subject']->id,
                     'properties'    => [
-                        'key'    => $item['type']->value,
-                        'params' => [
-                            'user' => $user->first_name,
-                            'id'   => $item['subject']->id,
+                        'key'       => $item['type']->value,
+                        'params'    => [
+                            'user'  => $user->first_name,
+                            'id'    => $item['subject']->id,
                         ],
                     ],
                     'is_public'     => true,

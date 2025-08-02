@@ -12,6 +12,7 @@ class MatchNotInPlayersViewModel
     public function __construct(
         protected Matches $match,
         protected LengthAwarePaginator $users,
+        protected array $exceptIds,
         protected MatchAccessService $accessService,
     ) {}
 
@@ -21,6 +22,7 @@ class MatchNotInPlayersViewModel
         
         return [
             'users' => UserResource::collection($this->users)->response()->getData(true),
+            'except_ids' => $this->exceptIds,
             'user_role' => $this->accessService->getUserRole($user, $this->match),
             'is_match_owner' => $this->accessService->isMatchOwner($user, $this->match),
             'user_status' => $this->accessService->getUserRequestStatus($user, $this->match),

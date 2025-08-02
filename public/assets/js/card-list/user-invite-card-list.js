@@ -25,8 +25,8 @@ function renderUserCard(user) {
         bgColor: 'bg-primary', // Example: 'bg-info', 'bg-success', etc.
         iconColor: 'text-white', // Example: 'text-white', 'text-dark', etc.
         title: window.translations?.invite_confirmation || 'Invite Player to Team', // Ensure this translation key exists
-        message: window.translations?.invite_player_team_message || 'Are you sure you want to invite this player?',
-        emotionalWarning: null, // Optional: "This action cannot be undone."
+        message: window.translations?.invite_player_message || 'Are you sure you want to invite this player?',
+        emotionalWarning: window.translations?.invite_emotional_warning, // Optional: "This action cannot be undone."
         emoji: '🚀', // Optional: '�', '⭐'
         btnClass: 'btn-primary', // Example: 'btn-info', 'btn-success'
         buttonText: window.translations?.invite || 'Invite',
@@ -97,7 +97,7 @@ function renderInviteModal(modalData, userId) {
 
                     <div class="modal-footer justify-content-center pb-4">
                         <button type="button" class="btn btn-outline-secondary btn-lg" data-bs-dismiss="modal">
-                            ${window.translations?.not_now || 'Not Now'}
+                            ${window.translations?.cancel || 'Not Now'}
                         </button>
                     </div>
 

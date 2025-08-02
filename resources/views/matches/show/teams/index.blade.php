@@ -97,6 +97,18 @@
                     @if(isset($datas['match_teams']['data']))
                         @foreach ($datas['match_teams']['data'] as $team)
                             <div class="team-card">
+                                @if ($datas['is_match_owner'])
+                                <div class="team-actions">
+                                    <button type="button"
+                                            class="btn btn-sm btn-icon btn-light-danger team-delete-btn"
+                                            title="{{ __('messages.remove_team') }}"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#delete-team-{{ $team['id'] }}"
+                                            style="display: none;">
+                                            ❌
+                                    </button>
+                                </div>
+                                @endif
                                 <h2 class="text-gray-900 fw-bold fs-3 mb-0 text-center team-title-editable" data-team-id="{{ $team['id'] }}">
                                     {{ $team['title'] ?? 'Team Name' }}
                                 </h2>
@@ -105,7 +117,7 @@
                                         @foreach ($team['match_team_players'] as $item)
                                         <div class="player-card" data-user-id="{{ $item['user_id'] }}">
                                             @if ($datas['is_match_owner'])
-
+                                            {{-- Player delete button --}}
                                             <form action="{{ route('matches.match-team-players.destroy', ['id' => $datas['match']->id, 'matchTeamPlayerId' => $item['id']]) }}"
                                                     method="POST"
                                                     onsubmit="return confirm('{{ __('messages.confirm_delete_player') }}')"
@@ -113,13 +125,11 @@
                                                     style="display: none;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button  type="button"
+                                                    <button type="button"
                                                             class="btn btn-sm btn-icon btn-light-danger"
                                                             title="{{ __('messages.remove_player') }}"
                                                             data-bs-toggle="modal"
-                                                            data-bs-target="#delete-player-{{ $item['id'] }}"
-                                                            class="btn btn-sm btn-icon btn-light-danger"
-                                                            title="{{ __('messages.remove_player') }}">
+                                                            data-bs-target="#delete-player-{{ $item['id'] }}">
                                                             ❌
                                                     </button>
                                                 </form>
@@ -151,6 +161,19 @@
                                     @endif
                                 </div>
                             </div>
+                            @if ($datas['is_match_owner'])
+                                @include('components.modals.delete-confirmation-modal', [
+                                    'id' => 'delete-team-' . $team['id'],
+                                    'route' => route('matches.teams.destroy', ['id' => $datas['match']->id, 'matchTeamId' => $team['id']]),
+                                    'title' => __('messages.delete_team_title'),
+                                    'message' => __('messages.delete_team_message', ['team' => $team['title']]),
+                                    'emotionalWarning' => __('messages.delete_team_emotion'),
+                                    'buttonText' => __('messages.remove_team'),
+                                    'icon' => 'fas fa-trash-alt',
+                                    'color' => 'danger',
+                                    'emoji' => '🙅‍♂️'
+                                ])
+                            @endif
                         @endforeach
                     @else
                         <p style="text-align: center; color: #6b7280; margin-top: 20px;">{{ __('messages.no_teams_found') }}</p>
@@ -201,8 +224,14 @@
         function toggleDeleteMode() {
             deleteMode = !deleteMode;
 
-            const deleteButtons = document.querySelectorAll('.player-delete-form');
-            deleteButtons.forEach(btn => {
+            const playerDeleteButtons = document.querySelectorAll('.player-delete-form');
+            playerDeleteButtons.forEach(btn => {
+                btn.style.display = deleteMode ? 'inline-block' : 'none';
+            });
+
+            // New: Select and toggle visibility for team delete buttons
+            const teamDeleteButtons = document.querySelectorAll('.team-delete-btn');
+            teamDeleteButtons.forEach(btn => {
                 btn.style.display = deleteMode ? 'inline-block' : 'none';
             });
 
@@ -248,29 +277,26 @@
                     input.value = currentTitle;
                     input.className = 'form-control text-center'; // Apply some Bootstrap styling
                     input.style.width = 'auto'; // Adjust width as needed
-                    input.style.display = 'inline-block'; // Keep it inline
+                    input.style.display = 'inline-block';
                     form.appendChild(input);
 
-                    // Replace the h2 with the form containing the input
                     originalElement.parentNode.replaceChild(form, originalElement);
                     input.focus();
 
-                    // Handle blur and enter key
                     const submitForm = () => {
                         const newTitle = input.value.trim();
                         if (newTitle !== currentTitle && newTitle !== '') {
-                            form.submit(); // Submit the form
+                            form.submit(); 
                         } else {
-                            // If title is same or empty, revert to original h2
                             form.parentNode.replaceChild(originalElement, form);
                         }
                     };
 
-                    input.addEventListener('blur', submitForm); // Submit on blur
+                    input.addEventListener('blur', submitForm);
                     input.addEventListener('keypress', function(e) {
                         if (e.key === 'Enter') {
-                            e.preventDefault(); // Prevent default Enter key behavior (like new line)
-                            submitForm(); // Submit on Enter
+                            e.preventDefault();
+                            submitForm(); 
                         }
                     });
                 });

@@ -59,7 +59,7 @@
                                     id="{{ $inviteModalId }}"
                                     :route="route('teams.invite-players', ['id' => request()->route('id'), 'userId' => $user['id']])"
                                     :title="__('messages.invite_confirmation')"
-                                    :message="__('messages.invite_player_team_message')"
+                                    :message="__('messages.invite_player_message')"
                                     icon="fas fa-handshake"
                                     color="danger"
                                 />
@@ -87,12 +87,15 @@
     window.csrfToken = '{{ csrf_token() }}';
     window.teamId = '{{ request()->route("id") }}';
     window.translations = {
+        enter_title: '{{ __("messages.enter_title") }}',
         invite: '{{ __("messages.invite") }}',
         invite_confirmation: '{{ __("messages.invite_confirmation") }}',
-        invite_player_team_message: '{{ __("messages.invite_player_team_message") }}',
+        invite_player_message: '{{ __("messages.invite_player_message") }}',
+        invite_emotional_warning : '{{ __("messages.invite_emotional_warning") }}',
         cancel: '{{ __("messages.cancel") }}',
         confirm: '{{ __("messages.confirm") }}',
-    };
+        title: '{{ __("messages.title") }}',
+    };    
 </script>
 <script src="{{ asset('assets/js/card-list/user-invite-card-list.js') }}"></script>
 
